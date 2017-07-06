@@ -61,7 +61,7 @@ exports.setRightContent = function(view, options) {
 };
 
 exports.setTitle = function(title, options) {
-    var view = Widget.createController('page/title', title).getView();
+    var view = Widget.createController('page/title', title,	properties.opacity).getView();
     setContent('center', view, options);
 };
 
@@ -128,7 +128,10 @@ if (properties.title) {
 if (properties.center) {
     exports.setCenterContent(properties.center, properties.centerOptions ? properties.centerOptions : {});
 }
-
+if (typeof properties.logo != "undefined"){
+	$.titleImage.image = WPATH(properties.logo);
+}
+$.navBar.height = (typeof properties.height != "undefined")?properties.height:50;
 if (properties.backgroundColor) {
     exports.setBackgroundColor(properties.backgroundColor);
 }

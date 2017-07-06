@@ -3,10 +3,12 @@ function init(){
 	$.password.ANIMATION_DOWN();
 }
 function forgetPassword(e){
-	Alloy.Globals.pageFlow.addChild({
-	    controller: 'forgetPassword',
-	    navBar: {
-	        title: 'Forget Password'
-	    }
-	});
+	addPage("forgetPassword","Forget Password");
+}
+function doLogin(e){
+	Alloy.Globals.pageFlow.startLoading("Loading...");
+	setTimeout(function(){
+		Alloy.Globals.pageFlow.stopLoading();
+		Ti.App.fireEvent("index:homePage");				
+	},3000);	
 }

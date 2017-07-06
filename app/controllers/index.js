@@ -1,16 +1,21 @@
 Alloy.Globals.pageFlow = $.pageflow;
+var isExistPage = false;
 function homePage(){
+	Alloy.Globals.pageFlow.clear();		
 	$.pageflow.addChild({
 	    controller: 'homepage',
 	    navBar: {
-	        title: 'Homepage',
+	    	logo:'images/asp_square_logo.png',
+	    	height:"60",
+	        title: '',
 	        androidTitleOptions: {
 	            marginLeft: 14
 	        }
 	    }
-	});	
+	});			
 }
 function loginPage(){
+	Alloy.Globals.pageFlow.clear();	
 	$.pageflow.addChild({
 	    controller: 'loginPage',
 	    navBar: {
@@ -19,7 +24,7 @@ function loginPage(){
 	            marginLeft: 14
 	        }
 	    }
-	});	
+	});			
 }
 init();
 function init(){
@@ -27,12 +32,20 @@ function init(){
 	if(u_id == ""){
 		loginPage();
 	}else{
-
+		homePage();
 	}
 }
 function closeApp(){
 	var activity = Titanium.Android.currentActivity;
 	activity.finish();	
 }
+$.index.addEventListener("android:back",function(e){
+	Alloy.Globals.pageFlow.back();
+	if(Alloy.Globals.pageFlow.countPages() <=1){
+		closeApp();
+	}
+});
 $.index.open();	
-Ti.App.addEventListener("index:init",init);
+
+Ti.App.addEventListener("index:login",loginPage);
+Ti.App.addEventListener("index:homePage",homePage);

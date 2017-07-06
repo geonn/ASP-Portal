@@ -1,5 +1,9 @@
 <Alloy>
     <View id="homepage">
-        <Button id="button" class="button" title="Next" />
+	    <ScrollableView id="scrollableView" scrollingEnabled="false" zIndex="1">    	
+	    	<View id="discussion" backgroundColor='#FFA000'></View>
+	    	<View id="notification" backgroundColor="#F57C00"></View>
+	    	<View id="more" backgroundColor="#E64A19"></View>
+    	</ScrollableView>
     </View>
 </Alloy>

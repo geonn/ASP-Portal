@@ -1,3 +1,4 @@
+Alloy.Globals.loading.init($.win);	
 var pageflow = {
     // lists of the pages controllers
     pages: [],
@@ -9,7 +10,12 @@ var pageflow = {
     // each position is an object with two attributes (top and left). The first page is at (0,0).
     // sample values can be: (-1, 0), (2, 1), etc.
     pagesGridPositions: [],
-
+	startLoading: function(param){
+	    Alloy.Globals.loading.start(param);	
+	},
+	stopLoading: function(){
+    	Alloy.Globals.loading.stop();
+	},
     addChild: function(properties) {
         // Launch previous Page preHide
         if (pageflow.pages.length >= 1) {
@@ -302,6 +308,8 @@ var pageflow = {
 pageflow.initialize();
 
 // expose widget's public API
+exports.startLoading = pageflow.startLoading;
+exports.stopLoading = pageflow.stopLoading;
 exports.addChild = pageflow.addChild;
 exports.back = pageflow.back;
 exports.clear = pageflow.clear;
