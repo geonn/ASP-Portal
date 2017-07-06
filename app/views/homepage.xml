@@ -1,0 +1,5 @@
+<Alloy>
+    <View id="homepage">
+        <Button id="button" class="button" title="Next" />
+    </View>
+</Alloy>

@@ -1,0 +1,225 @@
+".hr" :{
+	width: Ti.UI.FILL,
+	height: '1',
+	backgroundColor: '#ED1C24',
+},
+".hr1" :{
+	width: Ti.UI.FILL,
+	height: '2',
+	backgroundColor: '#ED1C24',
+},
+'Window': {
+   orientationModes :[
+        Ti.UI.PORTRAIT
+    ]
+},
+"Window[platform=android]":{
+	//windowSoftInputMode: Ti.UI.Android.SOFT_INPUT_STATE_HIDDEN
+},
+".line":{
+	height: '1',
+	backgroundColor: '#404041',
+	bottom: '0',
+},
+"centerc":{
+	textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER,	
+}
+'.button': {
+	height: 50,
+	borderColor: "#C6C8CA",
+	textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER,
+	backgroundColor: "#ED1C24",
+	borderRadius: 6,
+	color: "#ffffff",
+	width: Titanium.UI.FILL, 
+	font:{
+			fontFamily: 'FrutigerLT-Light'
+	},
+	top: 10,
+},
+
+".grey_line":{
+	height: '1',
+	width: Ti.UI.FILL,
+	backgroundColor: '#aaa',
+},
+"#activityIndicator" : { 
+	top:30,
+	left:30,
+	width:60, 
+},
+".container": {
+	backgroundColor: '#F6F6F6',
+	fullscreen: true,
+	layout: "vertical",
+	width: Ti.UI.FILL,
+	height: Ti.UI.FILL
+},
+"#header": {
+	width: Ti.UI.FILL,
+	height: "45",
+	top: '0',
+},
+"#main":{
+	width: Ti.UI.FILL,
+}, 
+".big_font":{
+	font: {fontSize: '20dp'},
+},
+".normal_font":{
+	font: {fontSize: '16dp'},
+},
+".small_font":{
+	font: {fontSize: '12dp'},
+}
+'.vert':{
+	layout: "vertical"
+}
+
+'.horz':{
+	layout: "horizontal"
+}
+
+'.wfill':{
+	width: Ti.UI.FILL
+}
+
+'.wsize':{
+	width: Ti.UI.SIZE
+}
+
+'.hfill':{
+	height: Ti.UI.FILL
+}
+
+'.hsize':{
+	height: Ti.UI.SIZE,
+}
+
+'.conthsize':{
+	contentHeight: Ti.UI.SIZE
+}
+".rounded":{
+	borderRadius: 4
+},
+'.box':{
+	borderColor: "#a5a5a5",
+	backgroundColor: "#ffffff",
+},
+'.conthfill':{
+	contentHeight: Ti.UI.FILL
+}
+
+'.contwsize':{
+	contentWidth: Ti.UI.SIZE
+}
+
+'.contwfill':{
+	contentWidth: Ti.UI.FILL
+}
+'.padding20':{
+	top: 20,
+	left: 20,
+	right: 20,
+	bottom: 20
+}
+'.padding':{
+	top: 10,
+	left: 10,
+	right: 10,
+	bottom: 10,
+}
+'.padding4':{
+	top:4,
+	left:4,
+	right:4,
+	bottom:4
+}
+
+'.small-padding':{
+	top: 5,
+	left: 5,
+	right: 5,
+	bottom: 5,
+}
+
+".h1":{
+	font:{
+		fontSize: 36,
+		fontFamily: 'FrutigerLT-Light'
+	}
+},
+
+".h2":{
+	font:{
+		fontSize: 30,
+		fontFamily: 'FrutigerLT-Light'
+	}
+},
+
+".h3":{
+	font:{
+		fontSize: 24,
+		fontFamily: 'FrutigerLT-Light'
+	}
+},
+
+".h4":{
+	font:{
+		fontSize: 18,
+		fontFamily: 'FrutigerLT-Light'
+	},
+},
+
+".h5":{
+	font:{
+		fontSize: 14,
+		fontFamily: 'FrutigerLT-Light'
+	}
+},
+"Label":{
+	font:{
+		fontFamily: 'FrutigerLT-Light'
+	},
+	color: "#404041"
+	
+},
+"Button":{
+	font:{
+		fontFamily: 'FrutigerLT-Light'
+	}
+},
+".h6":{
+	font:{
+		fontSize: 12,
+		fontFamily: 'FrutigerLT-Light'
+	}
+},
+
+".h7":{
+	font:{
+		fontSize: 10,
+		fontFamily: 'Frutiger-Bold'
+	}
+},
+
+".bold":{
+	font: {
+		fontFamily: 'Lato-Regular',
+		fontWeight: "bold",
+	},
+	color: "#404041"
+},
+
+".red": {
+	color: "#ED1C24"
+},
+".grey": {
+	color: "#88919D"
+}
+".dark_grey":{
+	color: "#404041"
+} 
+".lighter_grey":{
+	color: "#E3E5E8"
+}

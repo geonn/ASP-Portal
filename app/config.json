@@ -1,0 +1,15 @@
+{
+	"global": {},
+	"env:development": {},
+	"env:test": {},
+	"env:production": {},
+	"os:android": {},
+	"os:blackberry": {},
+	"os:ios": {},
+	"os:mobileweb": {},
+    "dependencies": {
+        "com.jolicode.pageflow": "1.4",
+        "input-materialdesign":"1.2",
+        "nl.fokkezb.button": "1.4"
+    }
+}

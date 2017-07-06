@@ -1,0 +1,6 @@
+"#title": {
+	width: Ti.UI.SIZE,
+	height: Ti.UI.SIZE,
+	touchEnabled: true,
+	textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER,
+}

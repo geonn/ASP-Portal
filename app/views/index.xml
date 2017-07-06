@@ -1,0 +1,5 @@
+<Alloy>
+	<Window class="container" theme="Theme.AppCompat.NoTitleBar" fullscreen="false">
+		<Widget src="com.jolicode.pageflow" id="pageflow" />
+	</Window>
+</Alloy>
