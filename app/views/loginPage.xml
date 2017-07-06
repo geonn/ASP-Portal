@@ -6,8 +6,8 @@
 			<Widget src="input-materialdesign" titleHint="Password" id="password" password="true"/>   
 			<Widget src="nl.fokkezb.button" class="wfill" paramCenter="true" height="40" left="40" right="40" title="Login" bottom="10" style="bs-success"/>	
 			<View class="wfill hsize padding20" top="0">
-				<View class="grey_line" width="25%" left="0"></View>
-				<Widget src="nl.fokkezb.button" onClick="forgetPassword" title="Forget Password ?" style="bs-link" />
+				<View class="grey_line" width="25%" left="0" zIndex="1"></View>
+				<Widget class="wfill hsize" paramCenter="true" src="nl.fokkezb.button" onClick="forgetPassword" title="Forget Password ?" style="bs-link" />
 				<View class="grey_line" width="25%" right="0"></View>
 			</View>	
 		</View>    			
