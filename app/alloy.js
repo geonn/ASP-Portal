@@ -29,7 +29,7 @@ function addPage(pageName,title,args){
 	args = (typeof args != "undefined")?args:{};
 	Alloy.Globals.pageFlow.addChild({
 		arguments:args,
-	    controller: 'forgetPassword',
+	    controller: pageName,
 	    navBar: {
 	        title: title
 	    }

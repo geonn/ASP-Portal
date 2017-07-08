@@ -2,7 +2,11 @@
     <View id="homepage">
   		<View class="wfill hfill vert">
 		    <ScrollableView id="scrollableView" onScrollend="doScroll" bottom="60" scrollingEnabled="true">    	
-		    	<View id="discussion" backgroundColor='#eff3f6' onClick="post"></View>
+		    	<View id="discussion" backgroundColor='#eff3f6'>
+		    		<View class="hsize wsize" borderWidth="1" borderColor="ed1c24" borderRadius="5">
+		    			<Button class="wsize hsize padding" color="#ed1c24" title="Post Detail" onClick="post_detail"></Button>
+		    		</View>
+		    	</View>
 		    	<View id="notification" backgroundColor="#000"></View>
 		    	<View id="more" backgroundColor="#fff"></View>
 	    	</ScrollableView>

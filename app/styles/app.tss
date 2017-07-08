@@ -1,12 +1,12 @@
 ".hr" :{
 	width: Ti.UI.FILL,
 	height: '1',
-	backgroundColor: '#ED1C24',
+	backgroundColor: '#E1E1E1',
 },
 ".hr1" :{
 	width: Ti.UI.FILL,
 	height: '2',
-	backgroundColor: '#ED1C24',
+	backgroundColor: '#E1E1E1',
 },
 'Window': {
    orientationModes :[
