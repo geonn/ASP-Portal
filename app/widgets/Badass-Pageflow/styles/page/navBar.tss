@@ -17,7 +17,8 @@
 },
 ".com.jolicode.pageflow.navBar.right": {
     backgroundColor: 'transparent',
-    height: Ti.UI.FILL,
+    height: Ti.UI.SIZE,
     right: 0,
     width: Ti.UI.SIZE
 }
+

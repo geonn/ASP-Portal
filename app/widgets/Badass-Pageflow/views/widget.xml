@@ -1,3 +1,5 @@
 <Alloy>
-	<View id="pageflow" class="com.jolicode.pageflow" />
+	<View id="win">
+		<View id="pageflow" class="com.jolicode.pageflow" />		
+	</View>	
 </Alloy>

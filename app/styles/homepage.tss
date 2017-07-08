@@ -1,8 +1,5 @@
 "#homepage": {
     width: Ti.UI.FILL,
     height: Ti.UI.FILL,
-    backgroundColor: '#1B91BF'
-}
-".button": {
-    color: '#FFF'
+    backgroundColor: '#eff3f6'
 }

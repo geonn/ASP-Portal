@@ -1,7 +1,9 @@
 <Alloy>
     <View id="navBar" class="com.jolicode.pageflow.navBar">
         <View id="left" class="com.jolicode.pageflow.navBar.left" />
-        <View id="center" class="com.jolicode.pageflow.navBar.center" />
+        <View id="center" class="com.jolicode.pageflow.navBar.center">
+    		<ImageView id="titleImage" zIndex="99"></ImageView>        	
+        </View>
         <View id="right" class="com.jolicode.pageflow.navBar.right" />
     </View>
 </Alloy>
