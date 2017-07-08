@@ -1,6 +1,6 @@
 <Alloy>
 	<View class="wfill hfill" backgroundColor="#fff">
-		<View class="wfill hfill vert" bottom="55" backgroundColor="#fff">
+		<View class="wfill hfill vert" bottom="60" backgroundColor="#fff">
 			<View class="wfill horz" height="75" top="0">
 				<View class="wsize hsize padding" borderWidth="1" borderColor="#E1E1E1">
 					<ImageView height="55" width="55" image="/images/user.png"></ImageView>
@@ -20,7 +20,10 @@
 				</View>
 			</View>
 		</View>
-		<View class="wfill vert" height="50" bottom="0" zIndex="99" backgroundColor="#fff">
+		<View class="wfill" height="20" bottom="40" zIndex="99" backgroundColor="#fff">
+			<Label class="wsize hsize h6" left="10" color="#90949C" text="10 comments" id="count_coment"></Label>
+		</View>
+		<View class="wfill vert" height="40" bottom="0" zIndex="99" backgroundColor="#fff">
 			<View class="hr"></View>
 			<View class="wfill hfill">
 				<View class="wsize hsize horz" right="10">
