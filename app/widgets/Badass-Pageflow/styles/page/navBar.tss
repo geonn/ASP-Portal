@@ -10,7 +10,7 @@
     right: 50
 },
 ".com.jolicode.pageflow.navBar.left": {
-    backgroundColor: "transparent",
+ //   backgroundColor: "transparent",
     height: Ti.UI.SIZE,
     left: 0,
     width: Ti.UI.SIZE
