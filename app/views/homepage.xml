@@ -1,9 +1,22 @@
 <Alloy>
     <View id="homepage">
-	    <ScrollableView id="scrollableView" scrollingEnabled="false" zIndex="1">    	
-	    	<View id="discussion" backgroundColor='#FFA000'></View>
-	    	<View id="notification" backgroundColor="#F57C00"></View>
-	    	<View id="more" backgroundColor="#E64A19"></View>
-    	</ScrollableView>
+  		<View class="wfill hfill vert">
+		    <ScrollableView id="scrollableView" onScrollend="doScroll" bottom="60" scrollingEnabled="true">    	
+		    	<View id="discussion" backgroundColor='#eff3f6'></View>
+		    	<View id="notification" backgroundColor="#000"></View>
+		    	<View id="more" backgroundColor="#fff"></View>
+	    	</ScrollableView>
+    	</View>
+    	<View class="wfill horz" height="60" backgroundColor="#fff" bottom="0" zIndex="1" id="bottomNavigation">
+    		<View class="hfill" width="33%" onClick="scrollto" page="0">
+    			<ImageView class="wsize hsize" touchEnabled="false" image="/images/navigationButton/0_green.png"></ImageView>
+    		</View>
+    		<View class="hfill" width="33%" onClick="scrollto" page="1">
+    			<ImageView class="wsize hsize" touchEnabled="false" image="/images/navigationButton/1_grey.png"></ImageView>
+    		</View>
+    		<View class="hfill" width="33%" onClick="scrollto" page="2">
+    			<ImageView class="wsize hsize" touchEnabled="false" image='/images/navigationButton/2_grey.png'></ImageView>
+    		</View>    		    		
+    	</View> 
     </View>
 </Alloy>

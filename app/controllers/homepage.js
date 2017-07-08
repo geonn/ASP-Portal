@@ -1,35 +1,16 @@
-var BottomNavigation = require('BottomNavigation');
 
-var buttonsSpecs = [
-	{
-		title : 'First',
-		activeIcon : '/images/discussion_green_logo.png',
-		inactiveIcon : '/images/discussion_grey_logo.png',
-	},
-	{
-		title : 'Second',
-		activeIcon : '/images/notification_green_logo.png',
-		inactiveIcon : '/images/notification_grey_logo.png',
-	},
-	{
-		title : 'Third',
-		activeIcon : '/images/friend_green_logo.png',
-		inactiveIcon : '/images/friend_grey_logo.png',
+function scrollImage(page){
+	var arr = [0,1,2].filter(function(a){ return a!=page;});	
+	$.bottomNavigation.getChildren()[page].children[0].image = "/images/navigationButton/"+page+"_green.png";
+	for(var i=0;i<$.bottomNavigation.getChildren().length-1;i++){
+		$.bottomNavigation.getChildren()[arr[i]].children[0].image = "/images/navigationButton/"+arr[i]+"_grey.png";	
 	}
-]; 
-
-var bottomNavigation = BottomNavigation.create({
-	buttons : buttonsSpecs,
-	activeButtonIndex : 0,
-	activeFontColor : "#000",
-	//inactiveFontColor : "#A8A8A8",
-	rippleColor : "#4DB6AC",
-	backgroundColor : '#fff',
-	backgroundRipple : true,
-	hideInactiveButtonTitle : true
-});
-$.homepage.add(bottomNavigation);
-
-bottomNavigation.addEventListener('clicked', function(e){
-	$.scrollableView.scrollToView(e.index);
-});
+	arr = null;
+}
+function scrollto(e){
+	$.scrollableView.scrollToView(e.source.page);
+	scrollImage(e.source.page);	
+}
+function doScroll(e){
+	scrollImage(e.currentPage);
+}
