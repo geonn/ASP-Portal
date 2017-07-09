@@ -17,7 +17,3 @@ function scrollto(e){
 function doScroll(e){
 	scrollImage(e.currentPage);
 }
-function post_detail(){
-	console.log("go to post detail page!!!");
-	addPage("post_detail","Post Detail");
-}

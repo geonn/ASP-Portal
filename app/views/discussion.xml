@@ -1,5 +1,19 @@
 <Alloy>
- 	<SwipeRefresh module="com.rkam.swiperefreshlayout" id="swipeRefresh" platform="android">	
- 		<ListView class="hfill wfill contwfill conthsize padding vert" top="0" left="0"></ListView>
- 	</SwipeRefresh>	 
+	<SwipeRefresh module="com.rkam.swiperefreshlayout" id="swipeRefresh" platform="android">
+		<View class="vert wfill hfill" backgroundColor="#EFF1F4">
+			<View class="horz wfill hsize" onClick="post" backgroundColor="#fff">
+				<View class="wsize hsize">
+					<ImageView class="padding" width="70" height="70" image="/images/asp_square_logo.png"></ImageView>
+				</View>
+				<View class="wsize hsize">
+					<Label class="hsize h4 padding" width="auto">Posting something...</Label>
+				</View>
+			</View>
+			<View class="hsize wsize" borderWidth="1" borderColor="ed1c24" borderRadius="5">
+				<Button class="wsize hsize padding" color="#ed1c24" title="Post Detail" onClick="post_detail"></Button>
+			</View>
+			<ListView class="hfill wfill contwfill conthsize padding vert" top="0" left="0">
+			</ListView>
+		</View>
+	</SwipeRefresh>	 
 </Alloy>

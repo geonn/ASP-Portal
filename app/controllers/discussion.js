@@ -5,3 +5,10 @@ if(OS_ANDROID) {
 		},2000);
 	});
 };
+function post_detail(e){
+	console.log("go to post detail page!!!");
+	addPage("post_detail","Post Detail");
+}
+function post(e) {
+	addPage("post", "Post");
+}
