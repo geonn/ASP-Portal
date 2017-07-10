@@ -1,7 +1,11 @@
+".view_class":{
+	width:Ti.UI.FILL,
+	height:Ti.UI.SIZE,
+},
 ".hr" :{
 	width: Ti.UI.FILL,
 	height: '1',
-	backgroundColor: '#E1E1E1',
+	backgroundColor: '#eff3f6',
 },
 ".hr1" :{
 	width: Ti.UI.FILL,

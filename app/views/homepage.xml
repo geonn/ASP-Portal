@@ -2,7 +2,7 @@
     <View id="homepage">
   		<View class="wfill hfill vert">
 		    <ScrollableView id="scrollableView" onScrollend="doScroll" bottom="60" scrollingEnabled="true">    	
-		    	<View class="vert" id="discussion" backgroundColor='#eff3f6'></View>
+		    	<View class="wfill hfill vert" id="discussion" backgroundColor='#eff3f6'></View>
 		    	<View id="notification" backgroundColor="#000"></View>
 		    	<View id="more" backgroundColor="#fff"></View>
 	    	</ScrollableView>

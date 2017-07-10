@@ -1,0 +1,5 @@
+<Alloy>
+    <View id="view">
+        <Button id="navBarMenubutton" class="com.jolicode.pageflow.burgerButton" />
+    </View>
+</Alloy>
