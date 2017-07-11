@@ -1,11 +1,11 @@
 <Alloy>
 	<View class="wfill hfill" backgroundColor="#EFF1F4">
-		<View class="wfill hfill padding20" backgroundColor="#fff">
+		<View class="wfill hfill" backgroundColor="#fff">
 			<ScrollView class="wfill hfill">
 				<View class="vert wfill hsize" top="0">
 					<View class="horz wfill hsize">
 						<View class="wsize hsize padding">
-							<ImageView width="80" height="80" image="/images/asp_square_logo.png"></ImageView>
+							<ImageView width="55" height="55" image="/images/asp_square_logo.png"></ImageView>
 						</View>
 						<View class="vert hsize" width="60%">
 							<View class="wfill hsize">

@@ -1,5 +1,6 @@
 function init(){
 	$.discussion.add(Alloy.createController("discussion").getView());
+	$.more.add(Alloy.createController("more").getView());
 }
 init();
 function scrollImage(page){
