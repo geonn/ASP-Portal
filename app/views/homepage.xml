@@ -11,8 +11,7 @@
 					    <View width="60" height="60" backgroundColor="red" onClick="doLogout" borderColor="#fff" borderRadius="30" left="0" bottom="0" zIndex="3" />
 					</Widget>			    		
 		    	</View>
-		    	<View class="wfill hfill" id="notification">	    		
-		    	</View>
+		    	<View class="wfill hfill" id="notification"></View>
 		    	<View id="more" backgroundColor="#fff"></View>
 	    	</ScrollableView>
     	</View>
