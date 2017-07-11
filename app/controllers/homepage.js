@@ -1,3 +1,4 @@
+var buttonsExpanded = false;
 function init(){
 	$.discussion.add(Alloy.createController("discussion").getView());
 }
@@ -17,3 +18,15 @@ function scrollto(e){
 function doScroll(e){
 	scrollImage(e.currentPage);
 }
+function clickButtons(){
+	var size;
+	if(buttonsExpanded){
+		size = 60;
+		$.bounceView.height = 0;
+	}else{
+		size = 175;
+		$.bounceView.height = Ti.UI.FILL;
+	}
+	buttonsExpanded = !buttonsExpanded;
+	$.buttonsView.resize(size,size);
+}	

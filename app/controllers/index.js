@@ -15,6 +15,7 @@ function homePage(){
 	});			
 }
 function loginPage(){
+	console.log("Login page");
 	Alloy.Globals.pageFlow.clear();	
 	$.pageflow.addChild({
 	    controller: 'loginPage',
@@ -29,6 +30,7 @@ function loginPage(){
 init();
 function init(){
 	var u_id = Ti.App.Properties.getString("u_id") || "";
+	console.log("u_id:"+u_id);
 	if(u_id == ""){
 		loginPage();
 	}else{

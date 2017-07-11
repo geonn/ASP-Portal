@@ -11,6 +11,7 @@
         "com.jolicode.pageflow": "1.4",
         "input-materialdesign":"1.2",
         "nl.fokkezb.button": "1.4",
-	 	"com.rays.loading": "1.0"
+	 	"com.rays.loading": "1.0",
+	 	"To.BounceView":"0.5"
     }
 }
