@@ -1,11 +1,36 @@
+// Arguments passed into this controller can be accessed via the `$.args` object directly or:
+var args = $.args;
+var cell_width;
+var pwidth = Titanium.Platform.displayCaps.platformWidth;
+var user_name = Ti.App.Properties.getString('username');
+var email = Ti.App.Properties.getString('email');
+var contact = Ti.App.Properties.getString('contact');
+
+if(OS_ANDROID){
+	cell_width = Math.floor((pixelToDp(pwidth) / 2)) - 2;
+}else{
+	cell_width = Math.floor(pwidth / 2) - 2;
+}
+
+console.log(cell_width);
+$.img.setBorderRadius(((cell_width / 2) - 10));
+$.img.setWidth((cell_width - 20));
+
+function pixelToDp(px) {
+    return ( parseInt(px) / (Titanium.Platform.displayCaps.dpi / 160));
+}
+
 function init(){
 	for(var i = 0;i<10;i++){
-	render_post();		
+		render_post();		
 	}
-}init();
-function post(e) {
-	addPage("post", "Post");
+	// $.user_name.setText(user_name);
+	// $.user_email.setText(email);
+	// $.user_contact.setText(contact);
 }
+
+init();	
+
 function render_post(){
 	var container = $.UI.create("View",{classes:['view_class','vert','padding'],left:"0",right:"0",backgroundColor:"#fff"});
 	var title_container = $.UI.create('View',{classes:['wfill','horz'],height:68});
@@ -52,9 +77,6 @@ function render_post(){
 	});
 	more_container.addEventListener("click",function(e){
 		alert("asdf");
-	});
-	user_img.addEventListener("click",function(e){
-		addPage("my_profile","My Profile");
 	});
 	comment_button_container.addEventListener("click",function(e){
 		addPage("post_comment","Post Comment");
