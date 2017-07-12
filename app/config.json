@@ -12,6 +12,8 @@
         "input-materialdesign":"1.2",
         "nl.fokkezb.button": "1.4",
 	 	"com.rays.loading": "1.0",
-	 	"To.BounceView":"0.5"
+	 	"To.BounceView":"0.5",
+	 	"nl.fokkezb.loading":"*",
+	 	"com.imobicloud.checkbox":"1.0"
     }
 }
