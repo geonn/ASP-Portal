@@ -24,7 +24,6 @@ function applyProperties(properties) {
 
 	// textAlign only works with fixed width
 	if (properties.paramCenter) {
-		console.log("asdf");
 		apply.textAlign = Titanium.UI.TEXT_ALIGNMENT_CENTER;
 		apply.width = Ti.UI.FILL;
 	}

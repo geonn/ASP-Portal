@@ -1,4 +1,3 @@
 "#button":{
 	backgroundColor:"transparent",
-	image:WPATH("images/button/btn-forward.png"),
 }

@@ -1,3 +1,6 @@
 "#title": {
-	color:"#fff"
+	color:"#fff",
+	font:{
+		fontSize:16
+	}
 }
