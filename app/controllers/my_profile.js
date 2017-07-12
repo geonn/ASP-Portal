@@ -15,6 +15,7 @@ if(OS_ANDROID){
 console.log(cell_width);
 $.img.setBorderRadius(((cell_width / 2) - 10));
 $.img.setWidth((cell_width - 20));
+$.img.setHeight((cell_width - 20));
 
 function pixelToDp(px) {
     return ( parseInt(px) / (Titanium.Platform.displayCaps.dpi / 160));
