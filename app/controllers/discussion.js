@@ -51,7 +51,7 @@ function render_post(){
 		addPage("post_detail","Post Detail");
 	});
 	more_container.addEventListener("click",function(e){
-		alert("asdf");
+		
 	});
 	comment_button_container.addEventListener("click",function(e){
 		addPage("post_comment","Post Comment");

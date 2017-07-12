@@ -1,0 +1,19 @@
+<Alloy>
+	<View class="wfill hfill">
+		<View class="wfill horz" height="50" top="0" backgroundColor="#fff" zIndex="10" id="groupNavigation">
+			<View class="hfill" width="50%" onClick="scrollto" page="0">
+				<Label class="wsize hsize normal_font" touchEnabled="false" color="#23c282" text="Your Groups"></Label>			
+			</View>
+			<View class="hfill" width="50%" onClick="scrollto" page="1">			
+				<Label class="wsize hsize normal_font" touchEnabled="false" color="#E1E1E1" text="Create Groups"></Label>	
+			</View>    		
+		</View> 
+		<View class="hr" top="51"></View>		
+		<View class="wfill hfill vert" backgroundColor="#fff">	
+			<ScrollableView id="scrollableView" top="50" scrollingEnabled="true" onScrollend="doScroll">
+				<View class="wfill hfill vert" id="group_list" backgroundColor="red"></View>
+				<View class="wfill hfill vert" id="add_group" backgroundColor="yellow"></View>
+			</ScrollableView>
+		</View>		
+	</View>
+</Alloy>

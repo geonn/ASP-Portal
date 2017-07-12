@@ -25,7 +25,7 @@
 	backgroundColor: '#404041',
 	bottom: '0',
 },
-"centerc":{
+"center":{
 	textAlign: Titanium.UI.TEXT_ALIGNMENT_CENTER,	
 }
 '.button': {
