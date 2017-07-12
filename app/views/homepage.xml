@@ -8,7 +8,7 @@
 					    <View width="60" height="60" backgroundImage="/images/pop_more_logo.png" backgroundColor="#23c282" borderColor="#fff" borderRadius="30" right="0" bottom="0" zIndex="5" onClick="clickButtons" />
 					    <View width="60" height="60" backgroundColor="yellow" borderColor="#fff" borderRadius="30" right="0" top="0" zIndex="3" />
 					    <View width="60" height="60" backgroundColor="green" borderColor="#fff" borderRadius="30" left="0" top="0" zIndex="3" />
-					    <View width="60" height="60" backgroundColor="red" onClick="doLogout" borderColor="#fff" borderRadius="30" left="0" bottom="0" zIndex="3" />
+					    <View width="60" height="60" backgroundColor="red" borderColor="#fff" borderRadius="30" left="0" bottom="0" zIndex="3" />
 					</Widget>			    		
 		    	</View>
 		    	<View class="wfill hfill" id="notification"></View>

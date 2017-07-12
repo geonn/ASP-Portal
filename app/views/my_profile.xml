@@ -1,0 +1,38 @@
+<Alloy>
+	<ScrollView id="mother_view" class="hfill wfill contwfill conthsize vert" backgroundColor="#EEF3F6">	
+		<View class="wfill hsize" backgroundColor="#fff" backgroundImage="/images/blur.jpg">
+			<View class="hsize" width="50%" left="0">
+				<ImageView height="auto" top="10" bottom="10" id="img" image="/images/profile_example.jpg"></ImageView>
+			</View>
+			<View class="hsize" width="50%" right="0">
+				<View class="wsize hsize vert" left="0">
+					<View class="wsize hsize horz" left="0">
+						<View class="img_padding" height="30" width="30" left="0">
+							<ImageView image="/images/icon_female.png"></ImageView>
+						</View>	
+						<Label class="wsize hsize" color="#fff" id="user_name" text="Jessica Lim"></Label>
+					</View>
+					<View class="wsize hsize horz" left="0">
+						<View class="img_padding" height="30" width="30" left="0">
+							<ImageView image="/images/icon_email.png"></ImageView>
+						</View>
+						<Label class="wsize hsize" color="#fff" id="user_email" text="Jessica@gmail.com"></Label>
+					</View>
+					<View class="wsize hsize horz" left="0">
+						<View class="img_padding" height="30" width="30" left="0">
+							<ImageView image="/images/icon_contact.png"></ImageView>
+						</View>
+						<Label class="wsize hsize" color="#fff" id="user_contact" text="60177788899"></Label>
+					</View>	
+					<View class="wsize hsize horz" left="0">
+						<View class="img_padding" height="30" width="30" left="0">
+							<ImageView image="/images/icon_position.png"></ImageView>
+						</View>
+						<Label class="wsize hsize" color="#fff" id="user_position" text="Internship"></Label>
+					</View>	
+				</View>
+			</View>
+		</View>
+		<Label top="10" left="10" text="My Posts"></Label>
+	</ScrollView>
+</Alloy>
