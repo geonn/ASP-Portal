@@ -1,3 +1,0 @@
-<Alloy>
-	<View id="container" width="Ti.UI.SIZE" height="Ti.UI.SIZE" onClick="checkboxClick"/>
-</Alloy>

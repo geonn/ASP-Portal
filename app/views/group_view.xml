@@ -4,7 +4,7 @@
 			<View class="hfill" width="50%" onClick="scrollto" page="0">
 				<Label class="wsize hsize normal_font" touchEnabled="false" color="#23c282" text="Your Groups"></Label>			
 			</View>
-			<View class="hfill" width="50%" onClick="scrollto" page="1">			
+			<View class="hfill" width="49%" onClick="scrollto" page="1">			
 				<Label class="wsize hsize normal_font" touchEnabled="false" color="#E1E1E1" text="Create Groups"></Label>	
 			</View>    		
 		</View> 

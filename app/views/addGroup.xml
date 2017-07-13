@@ -2,23 +2,24 @@
 	<View class="wfill hfill">
 		<View class="wfill hfill vert">
 			<View class="wfill hsize horz" bottom="20" backgroundColor="#fff">
-				<View left="10" borderColor="#fff" backgroundImage="/images/camera_icon.png" width="50" id="imageGroup" height="50" borderRadius="25" onClick="add_image"></View>		
+				<View left="10" borderColor="#fff" backgroundImage="/images/camera_icon.png" width="50" id="imageGroup" height="50" platform="android" borderRadius="25" onClick="add_image"></View>		
+				<View left="10" borderColor="#fff" backgroundImage="/images/camera_icon.png" width="50" id="imageGroup" height="50" platform="ios" borderRadius="25" onClick="showGMImagePicker"></View>
 				<Widget left="10" right="10" class="wfill hsize" src="input-materialdesign" titleHint="Group Name" id="groupname"/>   			
 			</View> 	
 			<View class="wfill hsize vert" backgroundColor="#fff">
 				<View class="wfill hsize horz">
-					<View left="10" borderColor="#fff" backgroundImage="/images/zoom_tools.png" width="50" height="50" borderRadius="25"></View>
+					<View left="10" borderColor="#fff" backgroundImage="/images/zoom_tools.png" width="45" height="45" borderRadius="25"></View>
 					<Widget left="10" right="10" class="wfill hsize" src="input-materialdesign" titleHint="Staff Name" id="staffName"/>   													
 				</View>
 				<View class="hr"></View>
 			</View>
-			<ScrollView id="scrollview" class="hfill wfill contwfill conthsize" backgroundColor="#fff">
+			<ScrollView id="scrollview" onScroll="scrollChecker" class="hfill wfill contwfill conthsize" backgroundColor="#fff">
 				<Widget src="nl.fokkezb.loading" name="view" id="myInstance" />
-				<View id="mother_view" bottom="0" opacity="0" class="wfill hfill vert" onClick="showMember">
-					<Label class="wfill hsize h5 padding" color="#999" text="Friends"/>
+				<View id="mother_view" bottom="0" opacity="0" class="wfill hfill vert">
+					<Label class="wfill hsize h5 padding" color="#999" text="Staffs"/>
 				</View>	
 			</ScrollView>
 		</View>		
-		<View class="wfill" borderColor='#eff3f6' id="memberList" zIndex="10" bottom="0" height="0" backgroundColor="#fff"></View>
+		<View class="wfill" borderColor='#eff3f6' id="selectedList" zIndex="10" bottom="0" height="0" backgroundColor="#fff"></View>
 	</View>
 </Alloy>

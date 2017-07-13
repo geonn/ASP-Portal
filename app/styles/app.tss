@@ -227,3 +227,4 @@
 ".lighter_grey":{
 	color: "#E3E5E8"
 }
+".checkbox-indoor": { selected: true, Title: { text: 'Indoor' } }
