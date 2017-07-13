@@ -3,6 +3,6 @@
 		<View class="horz wfill hsize padding" left="0" right="0" onClick="post" backgroundColor="#fff">
 			<ImageView class="padding" width="45" height="45" image="/images/asp_square_logo.png"></ImageView>
 			<Label class="hsize h4" width="auto">Posting something...</Label>
-		</View>						
-	</ScrollView> 
+		</View>
+	</ScrollView>
 </Alloy>

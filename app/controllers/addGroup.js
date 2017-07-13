@@ -117,6 +117,7 @@ function scrollChecker(e){
 		render();
 	}
 }
+<<<<<<< HEAD
 function doSubmit(){
 	var name = $.groupname.getValue() || "";
 	var u_id = Ti.App.Properties.getString("u_id") || "";
@@ -142,3 +143,29 @@ function doSubmit(){
 	});
 }
 Ti.App.addEventListener("addGroup:doSubmit",doSubmit);
+
+function showGMImagePicker(e) { 
+	var picker = require('ti.gmimagepicker');		
+	picker.openPhotoGallery({
+		maxSelectablePhotos: 1,
+		// allowMultiple: false, // default is true
+	    success: function (e) {
+	        Ti.API.error('success: ' + JSON.stringify(e));
+	        renderPhotos(e.media);
+	    },
+	    cancel: function (e) {
+	    	Ti.API.error('cancel: ' + JSON.stringify(e));
+	    },
+	    error: function (e) {
+	        Ti.API.error('error: ' + JSON.stringify(e));
+	    }
+	});
+}
+
+function renderPhotos(media) {
+    $.imageGroup.removeAllChildren();
+    for (var i=0; i < media.length; i++) {
+    	var imgView =Ti.UI.createImageView({ image: media[i],top:0, width:Ti.UI.FILL, height: Ti.UI.FILL });
+		$.imageGroup.add(imgView);    	
+	};
+}

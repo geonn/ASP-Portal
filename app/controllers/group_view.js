@@ -1,6 +1,8 @@
 function init(){
+	$.group_list.add(Alloy.createController("groupList").getView());
 	$.add_group.add(Alloy.createController("addGroup").getView());
-}init();
+}
+init();
 function scrollto(e){
 	$.scrollableView.scrollToView(e.source.page);
 	scrollText(e.source.page);	

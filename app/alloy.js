@@ -12,7 +12,7 @@ Alloy.Globals.jolicode.pageflow.width = Ti.Platform.displayCaps.platformWidth;
 Alloy.Globals.loading = Alloy.createWidget("com.rays.loading");
 Alloy.Globals.naviPath = [];
 if (OS_ANDROID) {
-    Alloy.Globals.jolicode.pageflow.height = Ti.Platform.displayCaps.platformHeight / Ti.Platform.displayCaps.logicalDensityFactor - 25;
+    Alloy.Globals.jolicode.pageflow.height = Ti.Platform.displayCaps.platformHeight / Ti.Platform.displayCaps.logicalDensityFactor - 20;
     Alloy.Globals.jolicode.pageflow.width = Ti.Platform.displayCaps.platformWidth / Ti.Platform.displayCaps.logicalDensityFactor;
 }
 
@@ -23,7 +23,7 @@ Ti.Gesture.addEventListener('orientationchange', function(e) {
     Alloy.Globals.jolicode.pageflow.width = Ti.Platform.displayCaps.platformWidth;
 
     if (OS_ANDROID) {
-        Alloy.Globals.jolicode.pageflow.height = Ti.Platform.displayCaps.platformHeight / Ti.Platform.displayCaps.logicalDensityFactor - 25;
+        Alloy.Globals.jolicode.pageflow.height = Ti.Platform.displayCaps.platformHeight / Ti.Platform.displayCaps.logicalDensityFactor - 20;
         Alloy.Globals.jolicode.pageflow.width = Ti.Platform.displayCaps.platformWidth / Ti.Platform.displayCaps.logicalDensityFactor;
     }
 });

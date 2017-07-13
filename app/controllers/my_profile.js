@@ -14,11 +14,12 @@ if(OS_ANDROID){
 }
 
 var vwTest = mod.createBasicBlurView({
-		width:Ti.UI.FILL,
-		height:"200%",
-		blurRadius:10,
-		image: '/images/profile_example.jpg'
-	});
+	width:Ti.UI.FILL,
+	height:"200%",
+	blurRadius:10,
+	image: '/images/profile_example.jpg'
+});
+
 $.testing.setHeight(cell_width);
 $.testing.add(vwTest);
 

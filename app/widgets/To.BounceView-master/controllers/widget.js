@@ -32,6 +32,12 @@ _.each(props,function(a, name){
 exports.add = $.funky.add;
 exports.remove = $.funky.remove;
 
+if (OS_ANDROID) {
+	$.funky.setBottom("10");
+}else{
+	$.funky.setBottom("55");
+};
+
 /**
  * Resize the widget view with properties. 
  * 

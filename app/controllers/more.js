@@ -1,33 +1,31 @@
 var list_title = ["My Profile", "Groups", "Apply Leave", "Calender", "Favourite", "Feed Back", "Log Out"];
-var list_controller = ['','group_view','','','','',''];
+var list_controller = ['my_profile','group_view','','','','group_post',''];
 init();
 function init() {
 	for(var i = 0; i <= list_title.length; i++) {
 		var list_view = $.UI.create("View", {
-			classes: ['horz', 'wfill', 'small-padding'],
+			classes: ['wfill', 'padding'],
 			pageIndex:list_controller[i],
 			pageTitle:list_title[i],
+			titileIndex:list_title[i],
 			bottom: 0,
 			height: 40
 		});
 		var view_img = $.UI.create("View", {
 			touchEnabled:false,
 			left: 5,
-			right: 5,
-			width: 35,
-			height: 35
+			width: 38,
+			height: 38
 		});
 		var img = $.UI.create("ImageView", {
 			image: "/images/more_page/" + i + ".png",
-			classes: ['wsize', 'hfill'],
-			touchEnabled:false,
-			borderRadius: 5,
+			classes: ['wfill', 'hfill'],
+			touchEnabled:false
 		});
 		var list_label = $.UI.create("Label", {
-			classes: ['hsize', 'h4'],
-			width: '75%',
+			classes: ['wfill', 'hsize', 'h4'],
+			left: 50,
 			touchEnabled:false,
-			left: 10,
 			text: list_title[i]
 		});
 		
@@ -39,6 +37,7 @@ function init() {
 			//if(e.source.pageIndex == 1){
 				addPage(e.source.pageIndex,e.source.pageTitle,{},true);			
 			//}
+		//	addPage(e.source.pageIndex,e.source.titileIndex);
 		});
 	}
 }
