@@ -21,20 +21,24 @@
 										<PickerRow title="Group"></PickerRow>
 									</PickerColumn>
 								</Picker>
-							</View>
+				 			</View>
 						</View>
 					</View>
 					<View class="vert wfill hsize">
 						<TextArea class="h4 wfill hsize small-padding" hintText="Type Something..." hintTextColor="gray" color="#000"></TextArea>
 					</View>
-				</View>
-			</ScrollView>
+				</View> 
+			</ScrollView> 
 		</View>
 		<View class="wfill" height="50" bottom="0" zIndex="10">
-			<View class="horz wfill hsize" left="0" onClick="add_image">
+			<View class="horz wfill hsize" platform="android" left="0" onClick="add_image">
 				<ImageView class="wsize hsize padding" image="/images/blue_pin_logo.png"></ImageView>
 				<Label class="wsize hsize h4">Add image...</Label>
 			</View>
+			<View class="horz wfill hsize" platform="ios" left="0" onClick="showGMImagePicker">
+				<ImageView class="wsize hsize padding" image="/images/blue_pin_logo.png"></ImageView>
+				<Label class="wsize hsize h4">Add image...</Label>
+			</View>			
 			<View class="wsize hsize" right="0">
 				<ImageView class="wsize hsize padding" image="/images/blue_send_logo.png"></ImageView>
 			</View>
