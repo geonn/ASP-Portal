@@ -38,6 +38,6 @@
 			<View class="wsize hsize" right="0">
 				<ImageView class="wsize hsize padding" image="/images/blue_send_logo.png"></ImageView>
 			</View>
-		</View>	
+		</View>
 	</View>
 </Alloy>
