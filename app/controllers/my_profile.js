@@ -5,12 +5,22 @@ var pwidth = Titanium.Platform.displayCaps.platformWidth;
 var user_name = Ti.App.Properties.getString('username');
 var email = Ti.App.Properties.getString('email');
 var contact = Ti.App.Properties.getString('contact');
+var mod = require('bencoding.blur');
 
 if(OS_ANDROID){
 	cell_width = Math.floor((pixelToDp(pwidth) / 2)) - 2;
 }else{
 	cell_width = Math.floor(pwidth / 2) - 2;
 }
+
+var vwTest = mod.createBasicBlurView({
+		width:Ti.UI.FILL,
+		height:"200%",
+		blurRadius:10,
+		image: '/images/profile_example.jpg'
+	});
+$.testing.setHeight(cell_width);
+$.testing.add(vwTest);
 
 console.log(cell_width);
 $.img.setBorderRadius(((cell_width / 2) - 10));

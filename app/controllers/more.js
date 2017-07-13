@@ -4,17 +4,21 @@ init();
 function init() {
 	for(var i = 0; i <= list_title.length; i++) {
 		var list_view = $.UI.create("View", {
-			classes: ['horz', 'wfill', 'padding'],
+			classes: ['horz', 'wfill', 'small-padding'],
 			pageIndex:list_controller[i],
-			height: 70
+			bottom: 0,
+			height: 40
 		});
 		var view_img = $.UI.create("View", {
-			classes: ['hfill'],touchEnabled:false,
-			width: 70,
+			touchEnabled:false,
+			left: 5,
+			right: 5,
+			width: 35,
+			height: 35
 		});
 		var img = $.UI.create("ImageView", {
 			image: "/images/more_page/" + i + ".png",
-			classes: ['wsize', 'hfill', 'padding'],
+			classes: ['wsize', 'hfill'],
 			touchEnabled:false,
 			borderRadius: 5,
 		});
