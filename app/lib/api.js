@@ -13,7 +13,7 @@ var doLogin = "http://"+API_DOMAIN+"/api/doLogin?user="+USER+"&key="+KEY;
 var getStaffList = "http://"+API_DOMAIN+"/api/getStaffList?user="+USER+"&key="+KEY;
 //API that call in sequence 
 var APILoadingList = [
- 
+ {url: "getStaffList", type: "api_model", model: "staff", checkId: "1"}
 ];
 
 /*********************
@@ -177,83 +177,51 @@ exports.sendNotification = function(e){
 	};
 };
 
-exports.loadAPIBySequence = function (ex, counter){ 
-	counter = (typeof counter == "undefined")?0:counter;
-	console.log('a - '+ counter +" == " +  APILoadingList.length);
-	if(counter >=  APILoadingList.length){
-		Ti.App.fireEvent('app:next_loading');
+exports.loadAPIBySequence = function (e){ //counter,
+	var counter = (typeof e.counter == "undefined")?0:e.counter;
+	if(counter >= APILoadingList.length){
+	//	Ti.App.fireEvent('app:loadingViewFinish');
 		return false;
 	}
 	
 	var api = APILoadingList[counter];
-	var model = Alloy.createCollection(api['model']);
 	var checker = Alloy.createCollection('updateChecker'); 
-	
-	var addon_url = "";
-	if(api['model'] == "appointment"){
-		var clinic_id = Ti.App.Properties.getString('clinic_id') || 0;
-		addon_url = "&clinic_id="+clinic_id;
-		var isUpdate = checker.getCheckerById(api['checkId'], clinic_id);
-		console.log(clinic_id+":clinic_id");
-		var last_updated = isUpdate.updated || "";
-		if(!clinic_id){
-			counter++;
-			API.loadAPIBySequence(ex, counter);
-			return;
-		}
-	}else if(api['model'] == "doctor_panel"){
-		var doctor_id = Ti.App.Properties.getString('doctor_id') || 0;
-		addon_url = "&doctor_id="+doctor_id;
-		console.log(addon_url);
-		var isUpdate = checker.getCheckerById(api['checkId'], doctor_id);
-		var last_updated = isUpdate.updated || "";
-		if(!doctor_id){
-			counter++;
-			API.loadAPIBySequence(ex, counter);
-			return;
-		}
-	}else{
-		var isUpdate = checker.getCheckerById(api['checkId']);
-		var last_updated = isUpdate.updated || "";
+	var isUpdate = checker.getCheckerById(api['checkId']);
+	var params ="";
+	var total_item = APILoadingList.length;
+	if(isUpdate != "" && last_update_on){
+		params = {last_updated: isUpdate.updated};
 	}
-	 var url = api['url']+"&last_updated="+last_updated+addon_url;
-	 console.log(url);
-	 var client = Ti.Network.createHTTPClient({
-	     // function called when the response data is available
-	     onload : function(e) {
-	       console.log('apisequence');
-	       console.log(this.responseText);
-	       var res = JSON.parse(this.responseText);
-	       if(res.status == "Success" || res.status == "success"){
-			/**load new set of category from API**/
-	       	var arr = res.data;
-	        model.saveArray(arr);
-	       }
-			Ti.App.fireEvent('app:update_loading_text', {text: APILoadingList[counter]['model']+" loading..."});
-			if(api['model'] == "item_response" || api['model'] == "friends"){
-				var u_id = Ti.App.Properties.getString('user_id') || 0;
-				checker.updateModule(APILoadingList[counter]['checkId'],APILoadingList[counter]['model'], Common.now(), u_id);
-			}else{
-				checker.updateModule(APILoadingList[counter]['checkId'],APILoadingList[counter]['model'], Common.now());
+	
+	var url = api['url'];
+	console.log(url);
+	console.log(params.last_updated);
+	API.callByPost({
+		url: url,
+		params: params
+	},{
+		onload: function(responseText){
+			if(api['type'] == "api_function"){
+				eval("_.isFunction("+api['method']+") && "+api['method']+"(responseText)");
+			}else if(api['type'] == "api_model"){
+				var res = JSON.parse(responseText);
+				var arr = res.data; 
+		       	var model = Alloy.createCollection(api['model']);
+		        model.saveArray(arr);
+		        checker.updateModule(APILoadingList[counter]['checkId'],APILoadingList[counter]['model'],currentDateTime());
 			}
+			//Ti.App.fireEvent('app:update_loading_text', {text: ((counter+1)/total_item*100).toFixed()+"% loading..."});
 			counter++;
-			API.loadAPIBySequence(ex, counter);
-	     },
-	     // function called when an error occurs, including a timeout
-	     onerror : function(err) {
-	     	console.log("loadAPIBySequence error");
-	     	API.loadAPIBySequence(ex, counter);
-	     },
-	     timeout : 30000  // in milliseconds
-	 });
-	 if(Ti.Platform.osname == "android"){
-	 	client.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); 
-	 }
- 
-	 client.open("POST", url);
-	 // Send the request.
-	client.send();
+			API.loadAPIBySequence({counter: counter});
+		},
+		onerror: function(err){
+		//	Ti.App.fireEvent('app:update_loading_text', {text: ((counter+1)/total_item*100).toFixed()+"% loading..."});
+			counter++;
+			API.loadAPIBySequence({counter: counter});
+		}
+	});
 };
+
 
 
 /*********************
