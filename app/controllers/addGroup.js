@@ -117,7 +117,6 @@ function scrollChecker(e){
 		render();
 	}
 }
-<<<<<<< HEAD
 function doSubmit(){
 	var name = $.groupname.getValue() || "";
 	var u_id = Ti.App.Properties.getString("u_id") || "";
