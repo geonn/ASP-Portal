@@ -29,6 +29,7 @@ function loginPage(){
 }
 init();
 function init(){
+	API.loadAPIBySequence({});
 	var u_id = Ti.App.Properties.getString("u_id") || "";
 	console.log("u_id:"+u_id);
 	if(u_id == ""){

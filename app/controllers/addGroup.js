@@ -1,7 +1,8 @@
-var animate_height1 = Ti.UI.createAnimation({duration:100,height:50});
-var animate_bottom1 = Ti.UI.createAnimation({duration:100,bottom:50});	
-var animate_height = Ti.UI.createAnimation({duration:100,height:0});
-var animate_bottom = Ti.UI.createAnimation({duration:100,bottom:0});
+var animate_height1 = Ti.UI.createAnimation({duration:200,height:50});
+var animate_bottom1 = Ti.UI.createAnimation({duration:200,bottom:50});	
+var animate_height = Ti.UI.createAnimation({duration:200,height:0});
+var animate_bottom = Ti.UI.createAnimation({duration:200,bottom:0});
+var offcount = 0;
 function doSubmit(e){
 	console.log("doSubmit");
 	Alloy.Globals.pageFlow.startLoading("Loading...");
@@ -45,12 +46,12 @@ var showmember = false;
 function showMember(e){
 	if(!showmember){
 		showmember = true;		
-		$.memberList.animate(animate_height1);
+		$.selectedList.animate(animate_height1);
 		$.mother_view.animate(animate_bottom1);
 	}else if(showmember){
 		showmember = false;
 		setTimeout(function(){
-			$.memberList.animate(animate_height);
+			$.selectedList.animate(animate_height);
 			$.mother_view.animate(animate_bottom);				
 		},500);		
 	}
@@ -58,23 +59,50 @@ function showMember(e){
 function init(){
 	$.myInstance.show('',false);
 	$.scrollview.scrollingEnabled = false;
-	getStaffList();
+	setTimeout(render,2000);
 }init();
-function getStaffList(){
-	API.callByPost({url:"getStaffList",params:""},{
-		onload:function(responceText){
-			var res = JSON.parse(responceText);
-			var arr = res.data || null;
-			console.log(JSON.stringify(arr));
-		},
-		onerror:function(err){}
-	});
-	setTimeout(function(){
-		$.mother_view.opacity = 1;		
-		$.myInstance.hide();
-		$.scrollview.scrollingEnabled = true;		
-	},2000);
+function render(){
+	var model = Alloy.createCollection("staff");
+	var unchecker = "/images/checkbox_unchecked.png";
+	var checker = "/images/checkbox_checked.png";
+	var arr = model.getDataForRenderStaffList(false,offcount);
+	for(var i=0;i<arr.length||show_MotherView();i++){
+		var container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:0,staffid:arr[i].id,check:false});
+		var small_container = $.UI.create("View",{classes:['hsize','horz'],width:"84%",left:"0",touchEnabled:false});
+		var image = $.UI.create("ImageView",{classes:['padding'],left:5,width:45,height:45,image:"/images/default_profile.png",touchEnabled:false});
+		var title = $.UI.create("Label",{classes:['wfill','hsize'],text:arr[i].name,touchEnabled:false});
+		var checkBox = $.UI.create("ImageView",{width:20,height:20,right:10,image:unchecker,touchEnabled:false});
+		if(OS_ANDROID){
+			title.ellipsize=true;
+			title.wordWrap=false;
+		}
+		small_container.add(image);
+		small_container.add(title);
+		container.add(small_container);
+		container.add(checkBox);	
+		$.mother_view.add(container);
+		container.addEventListener("click",function(e){	
+			e.source.children[1].image =(!e.source.check)?checker:unchecker;
+			e.source.check = !e.source.check;
+		});			
+	}	
 }
+function show_MotherView(){
+	offcount+=20;
+	$.mother_view.opacity = 1;		
+	$.myInstance.hide();
+	$.scrollview.scrollingEnabled = true;	
+	return false;	
+}
+function scrollChecker(e){
+	var theEnd = $.mother_view.rect.height;
+	var total = (OS_ANDROID)?pixelToDp(e.y)+e.source.rect.height: e.y+e.source.rect.height;
+	var nearEnd = theEnd - 200;
+	if (total >= nearEnd){
+		render();
+	}
+}
+
 function showGMImagePicker(e) { 
 	var picker = require('ti.gmimagepicker');		
 	picker.openPhotoGallery({
