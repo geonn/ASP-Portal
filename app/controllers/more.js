@@ -1,11 +1,12 @@
 var list_title = ["My Profile", "Groups", "Apply Leave", "Calender", "Favourite", "Feed Back", "Log Out"];
-var list_controller = ['','group_view','','','','',''];
+var list_controller = ['my_profile','group_view','','','','group_post',''];
 init();
 function init() {
 	for(var i = 0; i <= list_title.length; i++) {
 		var list_view = $.UI.create("View", {
 			classes: ['wfill', 'padding'],
 			pageIndex:list_controller[i],
+			titileIndex:list_title[i],
 			bottom: 0,
 			height: 40
 		});
@@ -32,7 +33,7 @@ function init() {
 		list_view.add(list_label);
 		$.list_more.add(list_view);
 		list_view.addEventListener("click",function(e){
-			addPage(e.source.pageIndex,"Groups");
+			addPage(e.source.pageIndex,e.source.titileIndex);
 		});
 	}
 }
