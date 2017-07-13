@@ -34,9 +34,9 @@ function init(){
 	console.log("u_id:"+u_id);
 	if(u_id == ""){
 		loginPage();
-	}//else{
+	}else{
 		homePage();
-	//}
+	}
 }
 function closeApp(){
 	var activity = Titanium.Android.currentActivity;

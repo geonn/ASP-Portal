@@ -27,20 +27,31 @@ Ti.Gesture.addEventListener('orientationchange', function(e) {
         Alloy.Globals.jolicode.pageflow.width = Ti.Platform.displayCaps.platformWidth / Ti.Platform.displayCaps.logicalDensityFactor;
     }
 });
-function addPage(pageName,title,args){
+function addPage(pageName,title,args,rightNav){
 	if(typeof pageName==undefined){
 		alert("Page Name is undefined");
 		return;		
 	}
 	title = (typeof title != "undefined")?title:"Title";
 	args = (typeof args != "undefined")?args:{};
-	Alloy.Globals.pageFlow.addChild({
-		arguments:args,
-	    controller: pageName,
-	    navBar: {
-	        title: title
-	    }
-	});	
+	if(typeof right != "undefined"){
+		Alloy.Globals.pageFlow.addChild({
+			arguments:args,
+		    controller: pageName,
+		    navBar: {
+		        title: title,
+		    }
+		});			
+	}else{
+		Alloy.Globals.pageFlow.addChild({
+			arguments:args,
+		    controller: pageName,
+		    navBar: {
+		        title: title,
+		        right: "menuButton"
+		    }
+		});			
+	}
 }
 function parent(key, e){
 	// if key.value undefined mean it look for key only

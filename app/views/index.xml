@@ -1,5 +1,5 @@
 <Alloy>
-	<Window class="container" theme="Theme.AppCompat.NoTitleBar" fullscreen="true" platform="ios">
+	<Window class="container" theme="Theme.AppCompat.NoTitleBar" fullscreen="false" platform="ios">
 		<Widget src="com.jolicode.pageflow" id="pageflow" />
 	</Window>
 	<Window class="container" theme="Theme.AppCompat.NoTitleBar" fullscreen="flase" platform="android">

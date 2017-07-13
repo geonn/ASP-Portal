@@ -6,6 +6,7 @@ function init() {
 		var list_view = $.UI.create("View", {
 			classes: ['horz', 'wfill', 'small-padding'],
 			pageIndex:list_controller[i],
+			pageTitle:list_title[i],
 			bottom: 0,
 			height: 40
 		});
@@ -35,7 +36,9 @@ function init() {
 		list_view.add(list_label);
 		$.list_more.add(list_view);
 		list_view.addEventListener("click",function(e){
-			addPage(e.source.pageIndex,"Groups");
+			//if(e.source.pageIndex == 1){
+				addPage(e.source.pageIndex,e.source.pageTitle,{},true);			
+			//}
 		});
 	}
 }

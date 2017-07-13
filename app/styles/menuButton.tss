@@ -1,5 +1,5 @@
 "#navBarMenubutton": {
-    backgroundImage: '/images/burger.png'
+    backgroundImage: ''
 }
 "#navBarMenubutton[platform=android]": {
     width: 48,

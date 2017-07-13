@@ -43,18 +43,32 @@ function add_image(e) {
 	});
 }
 var showmember = false;
-function showMember(e){
-	if(!showmember){
-		showmember = true;		
-		$.selectedList.animate(animate_height1);
-		$.mother_view.animate(animate_bottom1);
-	}else if(showmember){
-		showmember = false;
-		setTimeout(function(){
-			$.selectedList.animate(animate_height);
-			$.mother_view.animate(animate_bottom);				
-		},500);		
+function showBar(param,position){	
+	for(var i=0;i<$.selectedList.getChildren().length;i++){
+		if(param.id == $.selectedList.getChildren()[i].staffId){
+			$.selectedList.remove($.selectedList.getChildren()[i]);
+			if($.selectedList.getChildren().length==0){
+				setTimeout(function(){
+		            $.mother_view.animate(animate_bottom);  
+		            $.selectedList.animate(animate_height);              
+				},500);
+			}			
+			return;
+		}
 	}
+	$.selectedList.animate(animate_height1);
+	$.mother_view.animate(animate_bottom1);
+	var container = $.UI.create("View",{classes:['small-padding'],height:40,width:40,borderRadius:20,backgroundImage:"/images/default_profile.png",staffId:param.id});
+	$.selectedList.add(container);
+	container.addEventListener("click",function(e){
+		$.selectedList.remove(e.source);
+		if($.selectedList.getChildren().length==0){
+			setTimeout(function(){
+	            $.mother_view.animate(animate_bottom);  
+	            $.selectedList.animate(animate_height);              
+			},500);
+		}
+	});		
 }
 function init(){
 	$.myInstance.show('',false);
@@ -67,7 +81,7 @@ function render(){
 	var checker = "/images/checkbox_checked.png";
 	var arr = model.getDataForRenderStaffList(false,offcount);
 	for(var i=0;i<arr.length||show_MotherView();i++){
-		var container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:0,staffid:arr[i].id,check:false});
+		var container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:0,staff:arr[i],check:false,position:i});
 		var small_container = $.UI.create("View",{classes:['hsize','horz'],width:"84%",left:"0",touchEnabled:false});
 		var image = $.UI.create("ImageView",{classes:['padding'],left:5,width:45,height:45,image:"/images/default_profile.png",touchEnabled:false});
 		var title = $.UI.create("Label",{classes:['wfill','hsize'],text:arr[i].name,touchEnabled:false});
@@ -84,6 +98,7 @@ function render(){
 		container.addEventListener("click",function(e){	
 			e.source.children[1].image =(!e.source.check)?checker:unchecker;
 			e.source.check = !e.source.check;
+			showBar(e.source.staff);
 		});			
 	}	
 }
@@ -102,4 +117,28 @@ function scrollChecker(e){
 		render();
 	}
 }
-
+function doSubmit(){
+	var name = $.groupname.getValue() || "";
+	var u_id = Ti.App.Properties.getString("u_id") || "";
+	if(name == ""){
+		alert("Group name Cannot be null!!!");
+		return;
+	}
+	if(u_id == ""){
+		alert("User Id is null\nPlease Login Again");
+		doLogout();
+		return;
+	}
+	var member = [];
+	for(var i=0;i<$.selectedList.getChildren().length;i++){
+		member.push($.selectedList.getChildren()[i].staffId);
+	}
+	console.log(JSON.stringify(member));
+	API.callByPost({url:"addGroup",params:{name:name,u_id:u_id,member:member}},{
+		onload:function(responceText){
+			var res = JSON.parse(responceText);
+			console.log(JSON.stringify(res));
+		},onerror:function(err){}
+	});
+}
+Ti.App.addEventListener("addGroup:doSubmit",doSubmit);
