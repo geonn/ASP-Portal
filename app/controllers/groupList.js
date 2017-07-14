@@ -1,10 +1,10 @@
-var count = 1;
 var cell_width;
 var pwidth = Titanium.Platform.displayCaps.platformWidth;
+
 if(OS_ANDROID){
-	cell_width = Math.floor((pixelToDp(pwidth) - 15) / 2);
+	cell_width = Math.floor((pixelToDp(pwidth) / 2));
 }else{
-	cell_width = Math.floor(pwidth - 15) / 2;
+	cell_width = Math.floor(pwidth / 2);
 }
 
 function init() {
@@ -15,51 +15,31 @@ function init() {
 
 function render_list(e) {
 	var view_group = $.UI.create("View", {
-		classes: ['vert', 'hsize'],
-		width: cell_width,
-		left: 5,
-		top: 5
+		classes: ['vert',"hsize"],
+		width: cell_width
 	});
-	
-	var view_img = $.UI.create("View", {
-		classes: ['wfill', 'hsize', 'vert']
+	var view_img = $.UI.create("View",{
+		height: cell_width - 30,
+		width: cell_width - 30,
+		top: '15',
+		left: '15',
+		right: '15',
+		borderRadius: (cell_width - 30) / 2,
+		backgroundColor: "#000"
 	});
-	
-	var img_radius = $.UI.create("View", {
-		width: cell_width * 0.60,
-		height: cell_width * 0.60,
-		borderRadius: cell_width * 2,
-		borderWidth: 2,
-		borderColor: "#000",
-		zIndex: 1,
-		top: 10,
-		bottom: 10
+	var img = $.UI.create("ImageView",{
+		classes: ["wfill","hsize"],
+		image: "/images/image_example1.png"
 	});
-	
-	var img = $.UI.create("ImageView", {
-		classes: ['wfill', 'hfill'],
-		image: "/images/asp_square_logo.png"
+	var group_title = $.UI.create("Label",{
+		classes: ["hsize","wsize","h4"],
+		text: "IT Department",
+		top: '5'
 	});
-	
-	var title = (OS_ANDROID) ? $.UI.create("Label", {
-		classes: ['wfill', 'h4', 'padding'],
-		height: 25,
-		ellipsize: true,
-		wordWrap: false,
-		text: "abcdefghijklmnopqrstuvw",
-		top: 0
-	}) : $.UI.create("Label", {
-		classes: ['wfill', 'h4', 'padding'],
-		height: 25,
-		text: "abcdefghijklmnopqrstuvw",
-		top: 0
-	});
-	
-	$.group_list.add(view_group);
+	view_img.add(img);
 	view_group.add(view_img);
-	view_group.add(title);
-	view_img.add(img_radius);
-	img_radius.add(img);
+	view_group.add(group_title);
+	$.group_list.add(view_group);
 }
 
 function pixelToDp(px) {
