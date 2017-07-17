@@ -36,7 +36,7 @@
 				<Label class="wsize hsize h4">Add image...</Label>
 			</View>
 			<View class="horz wfill hsize" platform="ios" left="0" onClick="showGMImagePicker">
-				<ImageView class="wsize hsize padding" image="/images/blue_pin_logo.png"></ImageView>
+				<ImageView class="padding" width="40" height="35" image="/images/blue_pin_logo.png"></ImageView>
 				<Label class="wsize hsize h4">Add image...</Label>
 			</View>			
 			<View class="wsize hsize" right="0" onClick="doSubmit">
