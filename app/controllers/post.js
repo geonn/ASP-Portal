@@ -1,6 +1,7 @@
 var args = arguments[0] || {};
 var edit = args.edit || false;
 var p_id = args.p_id || "";
+var refreshName = args.refreshName || null;
 if(edit){
 	setData();
 }else{
@@ -88,8 +89,12 @@ function doSubmit(){
 		setTimeout(function(){
 			Alloy.Globals.loading.stopLoading();		
 			if(res.status == "success"){
-				alert("Success");
-				Ti.App.fireEvent("discussion:refresh");
+				if(refreshName != null){
+					console.log("asdf:"+refreshName);
+					Ti.App.fireEvent("discussion:refresh",{refreshName:refreshName});														
+				}else{
+					Ti.App.fireEvent("discussion:refresh");					
+				}
 				Alloy.Globals.pageFlow.back();			
 			}else{
 				alert("Something wrong!");

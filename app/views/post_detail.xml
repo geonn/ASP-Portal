@@ -9,7 +9,7 @@
 					<Label class="wsize hsize h4 bold" text="Name" left="0" id="user_name"></Label>
 					<Label class="wsize hsize h5 grey" text="23 minutes ago" left="0" top="10" id="date_time"></Label>
 				</View>
-				<View class="wfill hsize padding" right="0">
+				<View class="wfill hsize padding" right="0" onClick="postOptions">
 					<ImageView top="0" right="0" image="/images/btn-down.png"></ImageView>
 				</View>
 			</View>
@@ -24,7 +24,7 @@
 			<View class="hr"></View>
 			<View class="wfill hfill">
 				<View class="wsize hsize" left="10">
-					<Label class="wsize hsize h5" color="#90949C" text="10 comments" id="count_coment"></Label>
+					<Label class="wsize hsize h5" color="#90949C" text="? comments" id="count_coment"></Label>
 				</View>
 				<View class="wsize hsize horz" right="10">
 					<ImageView image="/images/comment.png"></ImageView>
