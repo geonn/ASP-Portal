@@ -1,5 +1,5 @@
 var list_title = ["My Profile", "Groups", "Apply Leave", "Calender", "Favourite", "Feed Back", "Log Out"];
-var list_controller = ['my_profile','group_view','','','','group_post',''];
+var list_controller = ['my_profile','group_view','','calender','','group_post',''];
 init();
 function init() {
 	for(var i = 0; i <= list_title.length; i++) {
