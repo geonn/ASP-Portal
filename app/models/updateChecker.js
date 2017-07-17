@@ -3,6 +3,7 @@ CHECKER CONFIG
 ID       type Name
 ------------------------------------
 1		getStaffList
+2		getPostList
 ************************************/
 
 exports.definition = {

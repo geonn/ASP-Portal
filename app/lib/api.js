@@ -6,15 +6,17 @@ var API_DOMAIN = "www.aspportal.freejini.com.my";
 var USER  = 'portal';
 var KEY   = '73x853043s1014532l49f721ccf546933';
 
-var doLoginUrl = "http://"+API_DOMAIN+"/api/pluxDoctorLogin?user="+USER+"&key="+KEY;
-var doSignUpUrl = "http://"+API_DOMAIN+"/api/pluxDoctorSignup?user="+USER+"&key="+KEY;
-var addAppointmentUrl = "http://"+API_DOMAIN+"/api/addAppointment?user="+USER+"&key="+KEY; 
 var doLogin = "http://"+API_DOMAIN+"/api/doLogin?user="+USER+"&key="+KEY;
 var getStaffList = "http://"+API_DOMAIN+"/api/getStaffList?user="+USER+"&key="+KEY;
+var getPostList = "http://"+API_DOMAIN+"/api/getPostList?user="+USER+"&key="+KEY;
 var addGroup = "http://"+API_DOMAIN+"/api/addGroup?user="+USER+"&key="+KEY;
+var doPost = "http://"+API_DOMAIN+"/api/doPost?user="+USER+"&key="+KEY;
+var deletePost = "http://"+API_DOMAIN+"/api/deletePost?user="+USER+"&key="+KEY;
+var editPost = "http://"+API_DOMAIN+"/api/editPost?user="+USER+"&key="+KEY;
 //API that call in sequence 
 var APILoadingList = [
- {url: "getStaffList", type: "api_model", model: "staff", checkId: "1"}
+ {url: "getStaffList", type: "api_model", model: "staff", checkId: "1"},
+ {url: "getPostList", type: "api_model", model: "post", checkId: "2"}
 ];
 
 /*********************
@@ -28,6 +30,7 @@ exports.callByPost = function(e, handler){
 	var _result = contactServerByPost(url, e.params || {});   
 	_result.onload = function(ex) {  
 		try{
+			console.log(this.responseText);
 			JSON.parse(this.responseText);
 		}
 		catch(e){

@@ -17,6 +17,7 @@ function doLogin(e){
 			Alloy.Globals.pageFlow.stopLoading();	
 			Ti.App.Properties.setString("u_id",arr.id);
 			Ti.App.Properties.setString("username",arr.username);
+			Ti.App.Properties.setString("u_name",arr.name);
 			Ti.App.Properties.setString("empno",arr.empno);	
 			Ti.App.Properties.setString("email",arr.email);	
 			Ti.App.Properties.setString("contact",arr.mobile);	

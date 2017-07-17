@@ -34,7 +34,7 @@ function addPage(pageName,title,args,rightNav){
 	}
 	title = (typeof title != "undefined")?title:"Title";
 	args = (typeof args != "undefined")?args:{};
-	if(typeof right != "undefined"){
+	if(typeof rightNav == "undefined"){
 		Alloy.Globals.pageFlow.addChild({
 			arguments:args,
 		    controller: pageName,

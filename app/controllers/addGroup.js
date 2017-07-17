@@ -3,6 +3,8 @@ var animate_bottom1 = Ti.UI.createAnimation({duration:200,bottom:50});
 var animate_height = Ti.UI.createAnimation({duration:200,height:0});
 var animate_bottom = Ti.UI.createAnimation({duration:200,bottom:0});
 var offcount = 0;
+var unchecker = "/images/checkbox_unchecked.png";
+var checker = "/images/checkbox_checked.png";
 function doSubmit(e){
 	console.log("doSubmit");
 	Alloy.Globals.pageFlow.startLoading("Loading...");
@@ -24,11 +26,14 @@ function add_image(e) {
 	
 			for(var i=0; i<imgArray.length; i++){
 				if(imgArray[i]){
-					var imgView = Ti.UI.createImageView({
-						image: gallerypicker.decodeBitmapResource(imgArray[i], 400, 400),
+					var imgView = Ti.UI.createImageView({						
+						image: gallerypicker.decodeBitmapResource(imgArray[i], 640, 640),
+						nativePath:"file:/"+e.filePath,
 						width:Ti.UI.FILL,
-						height:Ti.UI.FILL
+						height:Ti.UI.FILL,
+						form_type:"image"
 					});
+					console.log(JSON.stringify(imgView.image.nativePath));		
 					$.imageGroup.removeAllChildren();
 					$.imageGroup.add(imgView);
 				}
@@ -62,6 +67,7 @@ function showBar(param,position){
 	$.selectedList.add(container);
 	container.addEventListener("click",function(e){
 		$.selectedList.remove(e.source);
+		$.mother_view.children[position+1].children[1].image = unchecker;
 		if($.selectedList.getChildren().length==0){
 			setTimeout(function(){
 	            $.mother_view.animate(animate_bottom);  
@@ -77,8 +83,6 @@ function init(){
 }init();
 function render(){
 	var model = Alloy.createCollection("staff");
-	var unchecker = "/images/checkbox_unchecked.png";
-	var checker = "/images/checkbox_checked.png";
 	var arr = model.getDataForRenderStaffList(false,offcount);
 	for(var i=0;i<arr.length||show_MotherView();i++){
 		var container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:0,staff:arr[i],check:false,position:i});
@@ -98,7 +102,7 @@ function render(){
 		container.addEventListener("click",function(e){	
 			e.source.children[1].image =(!e.source.check)?checker:unchecker;
 			e.source.check = !e.source.check;
-			showBar(e.source.staff);
+			showBar(e.source.staff,e.source.position);
 		});			
 	}	
 }
@@ -120,6 +124,14 @@ function scrollChecker(e){
 function doSubmit(){
 	var name = $.groupname.getValue() || "";
 	var u_id = Ti.App.Properties.getString("u_id") || "";
+	// var before =Ti.Filesystem.getFile($.imageGroup.children[0].nativePath);
+	// var encode = Titanium.Utils.base64encode($.imageGroup.toImage());
+	// //$.zoom.backgroundImage = before.nativePath;
+	// console.log(JSON.stringify(encode));	
+	// console.log(JSON.stringify(Titanium.Utils.base64decode(String(encode))));
+	// console.log(before.nativePath);
+	// $.zoom.backgroundImage = Titanium.Utils.base64decode(String(encode));
+	
 	if(name == ""){
 		alert("Group name Cannot be null!!!");
 		return;
@@ -133,8 +145,10 @@ function doSubmit(){
 	for(var i=0;i<$.selectedList.getChildren().length;i++){
 		member.push($.selectedList.getChildren()[i].staffId);
 	}
+	var params={name:name,u_id:u_id,member:member};
+	//_.extend(params,{image:image});
 	console.log(JSON.stringify(member));
-	API.callByPost({url:"addGroup",params:{name:name,u_id:u_id,member:member}},{
+	API.callByPost({url:"addGroup",params:params },{
 		onload:function(responceText){
 			var res = JSON.parse(responceText);
 			console.log(JSON.stringify(res));
@@ -142,7 +156,31 @@ function doSubmit(){
 	});
 }
 Ti.App.addEventListener("addGroup:doSubmit",doSubmit);
-
+function addImage2(){
+Titanium.Media.openPhotoGallery({
+	success:function(event) {
+		console.log(JSON.stringify(event));
+		alert("asdf");
+	},
+	cancel:function() {
+		// called when user cancels taking a picture
+	},
+	error:function(error) {
+		// called when there's an error
+		var a = Titanium.UI.createAlertDialog({title:'Camera'});
+		if (error.code == Titanium.Media.NO_CAMERA) {
+			a.setMessage('Please run this test on device');
+		} else {
+			a.setMessage('Unexpected error: ' + error.code);
+		}
+		a.show();
+	},
+    // allowEditing and mediaTypes are iOS-only settings
+	allowEditing: true,
+    mediaTypes : [Ti.Media.MEDIA_TYPE_PHOTO]
+	      
+});
+}
 function showGMImagePicker(e) { 
 	var picker = require('ti.gmimagepicker');		
 	picker.openPhotoGallery({

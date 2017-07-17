@@ -9,7 +9,7 @@
 						</View>
 						<View class="vert hsize" width="60%">
 							<View class="wfill hsize">
-								<Label class="wsize hsize padding h4">Name</Label>
+								<Label class="wsize hsize padding h4" id="u_name"></Label>
 							</View>
 							<View class="wfill hsize">
 								<Picker class="group_picker wsize hsize" left="10">
@@ -25,7 +25,7 @@
 						</View>
 					</View>
 					<View class="vert wfill hsize">
-						<TextArea class="h4 wfill hsize small-padding" hintText="Type Something..." hintTextColor="gray" color="#000"></TextArea>
+						<TextArea class="h4 wfill hsize small-padding" id="description" hintText="Type Something..." hintTextColor="gray" color="#000"></TextArea>
 					</View>
 				</View> 
 			</ScrollView> 
@@ -39,7 +39,7 @@
 				<ImageView class="wsize hsize padding" image="/images/blue_pin_logo.png"></ImageView>
 				<Label class="wsize hsize h4">Add image...</Label>
 			</View>			
-			<View class="wsize hsize" right="0">
+			<View class="wsize hsize" right="0" onClick="doSubmit">
 				<ImageView class="wsize hsize padding" image="/images/blue_send_logo.png"></ImageView>
 			</View>
 		</View>
