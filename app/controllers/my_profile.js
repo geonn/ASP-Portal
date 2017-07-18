@@ -4,8 +4,9 @@ var u_id = args.u_id || null;
 var cell_width;
 var post_index = 0;
 var pwidth = Titanium.Platform.displayCaps.platformWidth;
-var contact = Ti.App.Properties.getString('contact');
 var mod = require('bencoding.blur');
+var u_model = Alloy.createCollection("staff");
+var u_res = u_model.getDataById(u_id); 
 
 if(OS_ANDROID){
 	cell_width = Math.floor((pixelToDp(pwidth) / 2)) - 2;
@@ -33,8 +34,6 @@ function pixelToDp(px) {
 }
 
 function init(){	
-	var u_model = Alloy.createCollection("staff");
-	var u_res = u_model.getDataById(u_id); 
 	setData(u_res);
 	var p_model = Alloy.createCollection("post");
 	var p_res = p_model.getDataByU_id(false,offset,u_id);
@@ -47,8 +46,25 @@ function setData(u_res){
 	$.user_name.setText(u_res.name);
 	$.user_email.setText(u_res.email);
 	$.user_position.setText(u_res.position||"Not yet Assign");
-//	$.user_contact.setText(contact);	
+	$.user_contact.setText(u_res.mobile||"Not yet Assign");	
 }
+
+function hower_name(){
+	alert(u_res.name);
+}
+
+function hower_email(){
+	alert(u_res.email);
+}
+
+function hower_mobile(){
+	alert(u_res.mobile);
+}
+
+function hower_position(){
+	alert(u_res.position);
+}
+
 refresh();
 function refresh(e){
 	if(u_id == null){
