@@ -1,8 +1,8 @@
-var list_title = ["My Profile", "Groups", "Apply Leave", "Calendar", "Favourite", "Feed Back", "Log Out"];
-var list_controller = ['my_profile','group_view','','calendar','','group_post',''];
+var list_title = ["My Profile", "Groups", "Apply Leave", "Calendar", "Favourite Post", "Feed Back", "Log Out"];
+var list_controller = ['my_profile','group_view','','calendar','favourite_post','group_post',''];
 init();
 function init() {
-	for(var i = 0; i <= list_title.length; i++) {
+	for(var i = 0; i < list_title.length; i++) {
 		var list_view = $.UI.create("View", {
 			classes: ['wfill', 'padding'],
 			pageIndex:list_controller[i],
@@ -41,3 +41,5 @@ function init() {
 		});
 	}
 }
+
+init();

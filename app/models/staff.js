@@ -96,7 +96,7 @@ exports.definition = {
                 return arr;
 			},getDataById: function(id){
 				var collection = this;
-				var sql = "select * from "+collection.config.adapter.collection_name+" where id=" + id + " and status = 1;";
+				var sql = "select * from "+collection.config.adapter.collection_name+" where id=" + id + ";";
 				db = Ti.Database.open(collection.config.adapter.db_name);
 				if(Ti.Platform.osname != "android"){
 					db.file.setRemoteBackup(false);

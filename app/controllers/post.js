@@ -1,6 +1,9 @@
 var args = arguments[0] || {};
 var edit = args.edit || false;
 var p_id = args.p_id || "";
+var refreshName = args.refreshName || null;
+var num = 0;
+
 if(edit){
 	setData();
 }else{
@@ -88,8 +91,12 @@ function doSubmit(){
 		setTimeout(function(){
 			Alloy.Globals.loading.stopLoading();		
 			if(res.status == "success"){
-				alert("Success");
-				Ti.App.fireEvent("discussion:refresh");
+				if(refreshName != null){
+					console.log("asdf:"+refreshName);
+					Ti.App.fireEvent("discussion:refresh",{refreshName:refreshName});														
+				}else{
+					Ti.App.fireEvent("discussion:refresh");					
+				}
 				Alloy.Globals.pageFlow.back();			
 			}else{
 				alert("Something wrong!");
@@ -99,9 +106,27 @@ function doSubmit(){
 	},onerror:function(err){}});
 }
 function renderPhotos(media) {
-  
+  	
     for (var i=0; i < media.length; i++) {
-    	var imgView =Ti.UI.createImageView({ image: media[i],top:10, width:Ti.UI.FILL, height: Ti.UI.SIZE });
-		$.mother_post.add(imgView);    	
+ 
+    	var img_view = Ti.UI.createView({ width:Ti.UI.FILL, height:Ti.UI.SIZE });
+    	var delete_img = Ti.UI.createImageView({ image:"/images/Icon_Delete_Round.png", width:30, height:30, top:15, right:5, number:num });
+    	var img = Ti.UI.createImageView({ image:media[i],top:10, width:Ti.UI.FILL, height:Ti.UI.SIZE });
+    	img_view.add(img);
+    	img_view.add(delete_img);
+		$.mother_post.add(img_view);
+		img_view.addEventListener("click",function(e){
+			$.mother_post.children[e.source.number+2].removeAllChildren();
+		});  
+		num++;	
 	};
+	
+}
+function doLogout(){
+	Alloy.Globals.loading.startLoading("Logout...");	
+	Ti.App.Properties.removeAllProperties();
+	setTimeout(function(e){
+		Ti.App.fireEvent('index:login');
+		Alloy.Globals.loading.stopLoading();		
+	},2000);
 }

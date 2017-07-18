@@ -29,16 +29,27 @@ function render_list(e) {
 	});
 	var img = $.UI.create("ImageView",{
 		classes: ["wfill","hsize"],
-		image: "/images/image_example1.png"
+		image: "/images/asp_square_logo.png"
 	});
-	var group_title = $.UI.create("Label",{
+	var group_title = (OS_ANDROID) ? $.UI.create("Label",{
+		classes: ["hsize","wsize","h4"],
+		text: "IT Department",
+		top: '5',
+		ellipsize: true,
+		wordWrap: false,
+	}) : $.UI.create("Label",{
 		classes: ["hsize","wsize","h4"],
 		text: "IT Department",
 		top: '5'
 	});
+	
 	view_img.add(img);
 	view_group.add(view_img);
 	view_group.add(group_title);
+	view_img.addEventListener("click",function(e){
+		console.log("go to group post page!!!");
+		addPage("group_post","Group Posts");
+	});
 	$.group_list.add(view_group);
 }
 

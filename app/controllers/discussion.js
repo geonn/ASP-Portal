@@ -1,6 +1,8 @@
 var offset=0;
+var args = arguments[0] || {};
 var buttonsExpanded = false;
 var post_index = 1;
+var refreshName = args.refreshName||null;
 function init(){
 	offset = 0;
 	Alloy.Globals.loading.startLoading("Loading...");
@@ -24,7 +26,7 @@ function render_post(params,params_img){
 	params.forEach(function(entry){
 		var container = $.UI.create("View",{classes:['view_class','vert','padding'],left:"0",right:"0",backgroundColor:"#fff",post_index:post_index});
 		var title_container = $.UI.create('View',{classes:['wfill','horz'],height:68});
-		var user_img = $.UI.create("ImageView",{classes:['padding'],width:45,height:45,image:"/images/user.png"});
+		var user_img = $.UI.create("ImageView",{classes:['padding'],width:45,height:45,image:"/images/user.png",u_id:entry.u_id});
 		var title_child_container = $.UI.create("View",{classes:['wfill','hfill','padding'],left:0});
 		var username = $.UI.create("Label",{classes:['wsize','hsize','h4','bold'],text:entry.u_name,left:"0",top:"0"});
 		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:"0",bottom:0,text:"50 minutes ago"});
@@ -69,7 +71,7 @@ function render_post(params,params_img){
  			postOptions({u_id:e.source.u_id,p_id:e.source.p_id,post_index:e.source.post_index});
 		});
 		user_img.addEventListener("click",function(e){
-			addPage("my_profile","My Profile");
+			addPage("my_profile","My Profile",{u_id:e.source.u_id});
 		});
 		comment_button_container.addEventListener("click",function(e){
 			addPage("post_comment","Post Comment");
@@ -78,10 +80,11 @@ function render_post(params,params_img){
 	});
 	Alloy.Globals.loading.stopLoading();
 }
-function refresh(){
+function refresh(e){
 	if(buttonsExpanded){
 		clickButtons();
 	}
+	var firename = e.refreshName || null;
 	Alloy.Globals.loading.startLoading("Refreshing...");	
 	$.mother_view.removeAllChildren();	
 	var checker = Alloy.createCollection('updateChecker'); 
@@ -96,6 +99,9 @@ function refresh(){
 			model = null;
 			arr = null;
 			res =null;	
+			if(firename != null){
+				Ti.App.fireEvent(firename);
+			}
 			Alloy.Globals.loading.stopLoading();			
 		}
 	});	
@@ -159,3 +165,11 @@ function clickButtons(){
 	$.buttonsView.resize(size,size);
 }
 Ti.App.addEventListener("discussion:refresh",refresh);
+function doLogout(){
+	Alloy.Globals.loading.startLoading("Logout...");	
+	Ti.App.Properties.removeAllProperties();
+	setTimeout(function(e){
+		Ti.App.fireEvent('index:login');
+		Alloy.Globals.loading.stopLoading();		
+	},2000);
+}
