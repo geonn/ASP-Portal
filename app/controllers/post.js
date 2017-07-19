@@ -38,9 +38,9 @@ function add_image(e) {
 					});
 					img_view.add(imgView);
 			    	img_view.add(delete_img);
-					$.mother_post.add(img_view);
-					img_view.addEventListener("click",function(e){
-						$.mother_post.children[e.source.number+2].removeAllChildren();
+					$.imageMother.add(img_view);
+					delete_img.addEventListener("click",function(e){
+						$.imageMother.removeAllChildren();
 					});  
 					num++;
 				}
@@ -75,7 +75,8 @@ function doSubmit(){
 	var description =$.description.value || "";
 	var u_id = Ti.App.Properties.getString('u_id')||"";
 	var g_id = "";
-	var image = $.mother_post.children[2].children[0];	
+	var image = $.mother_post.children[2].children[0];
+	console.log("asdf:"+JSON.stringify(image));	
 	var img = image.toImage();
 	if(description == ""){
 		alert("Please type something on field box");
@@ -119,9 +120,9 @@ function renderPhotos(media) {
     	var img = Ti.UI.createImageView({ image:media[i],top:10, width:Ti.UI.FILL, height:Ti.UI.SIZE });
     	img_view.add(img);
     	img_view.add(delete_img);
-		$.mother_post.add(img_view);
-		img_view.addEventListener("click",function(e){
-			$.mother_post.children[e.source.number+2].removeAllChildren();
+		$.imageMother.add(img_view);
+		delete_img.addEventListener("click",function(e){
+			$.imageMother.removeAllChildren();
 		});  
 		num++;	
 	};
