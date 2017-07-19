@@ -132,7 +132,7 @@ function deletePost(p_id,p_index){
 					Alloy.Globals.loading.stopLoading();							
 					alert("Something wrong right now please try again later.");
 				}else{
-					refresh();			
+					refresh({});			
 					Alloy.Globals.loading.stopLoading();		
 					alert("Success to delete post.");
 				}

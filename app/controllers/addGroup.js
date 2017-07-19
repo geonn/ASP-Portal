@@ -124,14 +124,11 @@ function scrollChecker(e){
 function doSubmit(){
 	var name = $.groupname.getValue() || "";
 	var u_id = Ti.App.Properties.getString("u_id") || "";
-	// var before =Ti.Filesystem.getFile($.imageGroup.children[0].nativePath);
-	// var encode = Titanium.Utils.base64encode($.imageGroup.toImage());
-	// //$.zoom.backgroundImage = before.nativePath;
-	// console.log(JSON.stringify(encode));	
-	// console.log(JSON.stringify(Titanium.Utils.base64decode(String(encode))));
-	// console.log(before.nativePath);
-	// $.zoom.backgroundImage = Titanium.Utils.base64decode(String(encode));
-	
+	var before =Ti.Filesystem.getFile($.imageGroup.children[0].nativePath);
+	var encode = Titanium.Utils.base64encode($.imageGroup.toImage());
+	console.log(JSON.stringify(encode));	
+	console.log(JSON.stringify(Titanium.Utils.base64decode(String(encode))));
+	console.log(JSON.stringify(before));	
 	if(name == ""){
 		alert("Group name Cannot be null!!!");
 		return;
@@ -146,7 +143,7 @@ function doSubmit(){
 		member.push($.selectedList.getChildren()[i].staffId);
 	}
 	var params={name:name,u_id:u_id,member:member};
-	//_.extend(params,{image:image});
+	_.extend(params,{Filedata:encode});
 	console.log(JSON.stringify(member));
 	API.callByPost({url:"addGroup",params:params },{
 		onload:function(responceText){

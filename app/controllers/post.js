@@ -31,10 +31,8 @@ function add_image(e) {
 					var imgView = Ti.UI.createImageView({
 						top:'10dp',
 						image:"file://"+imgArray[i],
-						nativePath:"file://"+imgArray[i]
 					});
 					$.mother_post.add(imgView);
-					doBlob();
 				}
 			}
 		},
@@ -63,14 +61,12 @@ function showGMImagePicker(e) {
 	    }
 	});
 }
-function doBlob(){
-	var before =Ti.Filesystem.getFile($.mother_post.children[2].nativePath);
-	console.log("asdf:"+JSON.stringify(before));
-}
 function doSubmit(){
 	var description =$.description.value || "";
 	var u_id = Ti.App.Properties.getString('u_id')||"";
 	var g_id = "";
+	var image = $.mother_post.children[2];
+	var img = image.toImage();
 	if(description == ""){
 		alert("Please type something on field box");
 		return;
@@ -81,7 +77,8 @@ function doSubmit(){
 		return;
 	}
 	var url = (edit)?"editPost":"doPost";
-	var params = (edit)?{id:p_id,title:"Public Post",u_id:u_id,description:description,status:1}:{u_id:u_id,g_id:"",title:"Public Post",description:description,status:1};	
+	var params = (edit)?{id:p_id,title:"Public Post",u_id:u_id,description:description,status:1}:{u_id:u_id,g_id:"",title:"Public Post",description:description,status:1};
+	_.extend(params, {Filedata: img});	
 	Alloy.Globals.loading.startLoading("Posting");		
 	API.callByPost({url:url,params:params},{
 	onload:function(responceText){
