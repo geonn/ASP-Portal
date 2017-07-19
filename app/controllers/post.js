@@ -30,11 +30,19 @@ function add_image(e) {
 	
 			for(var i=0; i<imgArray.length; i++){
 				if(imgArray[i]){
+					var img_view = Ti.UI.createView({ width:Ti.UI.FILL, height:Ti.UI.SIZE });
+					var delete_img = Ti.UI.createImageView({ image:"/images/Icon_Delete_Round.png", width:30, height:30, top:15, right:5, number:num });
 					var imgView = Ti.UI.createImageView({
 						top:'10dp',
 						image:"file://"+imgArray[i],
 					});
-					$.mother_post.add(imgView);
+					img_view.add(imgView);
+			    	img_view.add(delete_img);
+					$.mother_post.add(img_view);
+					img_view.addEventListener("click",function(e){
+						$.mother_post.children[e.source.number+2].removeAllChildren();
+					});  
+					num++;
 				}
 			}
 		},
@@ -46,13 +54,13 @@ function add_image(e) {
 		}
 	});
 }
-function showGMImagePicker(e) {
+function showGMImagePicker() {
 	var picker = require('ti.gmimagepicker');		 
 	picker.openPhotoGallery({
 		maxSelectablePhotos: 30,
 		// allowMultiple: false, // default is true
 	    success: function (e) {
-	        Ti.API.error('success: ' + JSON.stringify(e));
+	        Ti.API.error('successaaa: ' + JSON.stringify(e));
 	        renderPhotos(e.media);
 	    },
 	    cancel: function (e) {
@@ -67,7 +75,7 @@ function doSubmit(){
 	var description =$.description.value || "";
 	var u_id = Ti.App.Properties.getString('u_id')||"";
 	var g_id = "";
-	var image = $.mother_post.children[2];
+	var image = $.mother_post.children[2].children[0];	
 	var img = image.toImage();
 	if(description == ""){
 		alert("Please type something on field box");

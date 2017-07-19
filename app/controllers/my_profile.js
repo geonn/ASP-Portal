@@ -22,6 +22,7 @@ var vwTest = mod.createBasicBlurView({
 });
 
 $.testing.setHeight(cell_width);
+$.testing1.setHeight(cell_width);
 $.testing.add(vwTest);
 console.log(cell_width);
 $.img.setBorderRadius((cell_width / 2) - 10);
