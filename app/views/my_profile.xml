@@ -39,7 +39,7 @@
 				</View>
 			</View>
 		</View>
-		<Label top="10" left="10" text="My Posts"></Label>
+		<Label top="10" left="10" text="Recently Posts"></Label>
 		<View class="wfill hsize vert" id="mother_post">
 			
 		</View>

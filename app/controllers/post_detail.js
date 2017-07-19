@@ -5,7 +5,6 @@ var u_id1;
 function init(){
 	var model = Alloy.createCollection("post");
 	var res = model.getDataById(p_id);
-	getTimePost(res.created);
 	setData(res);
 }init();
 
@@ -14,6 +13,7 @@ function setData(params){
 	u_id1 = params.u_id;
 	$.desc.text = params.description;
 	$.count_coment.text = params.comment_count+" comment";
+	$.date_time.setText(getTimePost(params.created));
 }
 
 function postOptions(){
@@ -99,20 +99,19 @@ function getTimePost(p){
 	var nowSecond = parseToSecond(hh,mi,ss);
 	var minusSecond = postSecond-nowSecond;
 	var hourDisplay = minusSecond/60/60;
-	console.log("Today is "+today+"\nNow time is "+nowTime+"\nPost created day is "+postCreatedDate+"\nPost created time is "+postTime);
 	var dayOfDistance = daydiff(parseDate(today), parseDate(postCreatedDate));
 	if (dayOfDistance==-1) {
-		$.date_time.setText("Yesterday");
+		return ("Yesterday");
 	}else if (dayOfDistance==0) {
 		if (minusSecond<900) {
-			$.date_time.setText("Just now");	
+			return ("Just now");	
 		}else if (minusSecond<3600) {
-			$.date_time.setText("30 mins");
+			return ("30 mins");
 		}else{
-			$.date_time.setText(hourDisplay.toFixed(0)+" hr");
+			return (hourDisplay.toFixed(0)+" hr");
 		}
 	}else if (dayOfDistance<-1) {
-		$.date_time.setText(postCreatedDate+"  "+postHour+":"+postMinute);
+		return (postCreatedDate+"  "+postHour+":"+postMinute);
 	}
 }
 
