@@ -7,32 +7,33 @@
 			</View>
 			<View class="hsize" width="50%" right="0">
 				<View class="wsize hsize vert" left="0">
-					<View class="wsize hsize horz" left="0" onClick="hower_name">
+					<View class="wfill hsize" left="0" onClick="hower_name">
 						<View class="img_padding" height="30" width="30" left="0">
 							<ImageView image="/images/icon_female.png"></ImageView>
 						</View>	
-						<Label class="wsize hsize" color="#fff" id="user_name" text=""></Label>
+						<Label height="20" color="#fff" left="35" id="user_name" text="601777888996017778889960177788899" platform="ios"></Label>
+						<Label height="20" color="#fff" left="35" id="user_name" text="" ellipsize="true" wordWrap="false" platform="android"></Label>
 					</View>
-					<View class="wsize hsize horz" left="0" onClick="hower_email">
+					<View class="wfill hsize" left="0" onClick="hower_email">
 						<View class="img_padding" height="30" width="30" left="0">
 							<ImageView image="/images/icon_email.png"></ImageView>
 						</View>
-						<Label class="wsize" height="20" color="#fff" id="user_email" text="" platform="ios"></Label>
-						<Label class="wsize" height="20" color="#fff" id="user_email" text="" ellipsize="true" wordWrap="false" platform="android"></Label>
+						<Label height="20" color="#fff" left="35" id="user_email" text="601777888996017778889960177788899" platform="ios"></Label>
+						<Label height="20" color="#fff" left="35" id="user_email" text="" ellipsize="true" wordWrap="false" platform="android"></Label>
 					</View>
-					<View class="wsize hsize horz" left="0" onClick="hower_mobile">
+					<View class="wfill hsize" left="0" onClick="hower_mobile">
 						<View class="img_padding" height="30" width="30" left="0">
 							<ImageView image="/images/icon_contact.png"></ImageView>
 						</View>
-						<Label class="wsize" height="20" color="#fff" id="user_contact" text="60177788899" platform="ios"></Label>
-						<Label class="wsize" height="20" color="#fff" id="user_contact" text="60177788899" ellipsize="true" wordWrap="false" platform="android"></Label>
+						<Label height="20" color="#fff" left="35" id="user_contact" text="601777888996017778889960177788899" platform="ios"></Label>
+						<Label height="20" color="#fff" left="35" id="user_contact" text="60177788899" ellipsize="true" wordWrap="false" platform="android"></Label>
 					</View>	
-					<View class="wsize hsize horz" left="0" onClick="hower_position">
+					<View class="wfill hsize" left="0" onClick="hower_position">
 						<View class="img_padding" height="30" width="30" left="0">
 							<ImageView image="/images/icon_position.png"></ImageView>
 						</View>
-						<Label class="wsize" height="20"  color="#fff" id="user_position" text="" platform="ios"></Label>
-						<Label class="wsize" height="20"  color="#fff" id="user_position" text="" ellipsize="true" wordWrap="false" platform="android"></Label>
+						<Label height="20"  color="#fff" left="35" id="user_position" text="601777888996017778889960177788899" platform="ios"></Label>
+						<Label height="20"  color="#fff" left="35" id="user_position" text="" ellipsize="true" wordWrap="false" platform="android"></Label>
 					</View>	
 				</View>
 			</View>

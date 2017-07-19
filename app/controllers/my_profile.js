@@ -23,11 +23,14 @@ var vwTest = mod.createBasicBlurView({
 
 $.testing.setHeight(cell_width);
 $.testing.add(vwTest);
-
 console.log(cell_width);
-$.img.setBorderRadius(((cell_width / 2) - 10));
-$.img.setWidth((cell_width - 20));
-$.img.setHeight((cell_width - 20));
+$.img.setBorderRadius((cell_width / 2) - 10);
+$.img.setWidth(cell_width - 20);
+$.img.setHeight(cell_width - 20);
+$.user_name.setWidth(cell_width - 40);
+$.user_email.setWidth(cell_width - 40);
+$.user_contact.setWidth(cell_width - 40);
+$.user_position.setWidth(cell_width - 40);
 
 function pixelToDp(px) {
     return ( parseInt(px) / (Titanium.Platform.displayCaps.dpi / 160));
