@@ -99,10 +99,13 @@ function render_calendar(e) {
 	});
 	
 	var t = true;
+	var first_day;
 	for(var i = 1; i <= lastDay.getDate(); i++) {
+		var day = new Date(date.getFullYear() + "-" + cr[0].num + "-" + i);
+		
 		if(t) {
-			var day = new Date(date.getFullYear() + "-" + cr[0].num + "-" + i);
-			i -= day.getDay();
+			first_day = day.getDay();
+			i -= first_day;
 			t = false;
 		}
 		
@@ -110,16 +113,18 @@ function render_calendar(e) {
 			width: cell_width,
 			height: cell_width,
 			borderRadius: cell_width / 2,
-			color: (i == date.getDate()) ? "#fff" : "#000",
+			color: (i == date.getDate()) ? "#fff" : (day.getDay() == 0 || day.getDay() == 6) ? "gray" : "#000",
 			backgroundColor: (i == date.getDate()) ? $.title.getBackgroundColor() : "#fff",
 			left: 1,
 			top: 1,
 			textAlign: "center",
-			text: (i <= 0) ? "" : i
+			text: (i <= 0) ? "" : i,
+			date: date.getFullYear() + "-" + cr[0].num + "-" + i,
+			day: day.getDay()
 		});
 		
 		if(i == date.getDate()) {
-			change_color = i + day.getDay();
+			change_color = i + first_day;
 		}
 		
 		if(i >= 1) {
@@ -138,11 +143,14 @@ function selected_date(e) {
 	var cr_view = $.add_days.getChildren();
 	var cr_lb = cr_view[0].getChildren();
 	cr_lb[change_color - 1].setBackgroundColor("#fff");
-	cr_lb[change_color - 1].setColor("#000");
+	var cl = (cr_lb[change_color - 1].day == 0 || cr_lb[change_color - 1].day == 6) ? "gray" : "#000";
+	cr_lb[change_color - 1].setColor(cl);
 	e.setBackgroundColor($.title.getBackgroundColor());
 	e.setColor("#fff");
 	var day = new Date(date.getFullYear() + "-" + $.title.getChildren()[0].num + "-1");
 	change_color = e.text + day.getDay();
+	
+	alert(e.date);
 }
 
 init();
