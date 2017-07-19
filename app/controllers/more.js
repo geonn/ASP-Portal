@@ -1,5 +1,5 @@
-var list_title = ["My Profile", "Groups", "Apply Leave", "Calender", "Favourite Post", "Feed Back", "Log Out"];
-var list_controller = ['my_profile','group_view','','calender','','group_post',''];
+var list_title = ["My Profile", "Groups", "Apply Leave", "Calendar", "Favourite Post", "Feed Back", "Log Out"];
+var list_controller = ['my_profile','group_view','','calendar','','group_post',''];
 var u_id = Ti.App.Properties.getString("u_id")||"";
 console.log("User's ID = "+u_id);
 
@@ -37,7 +37,7 @@ function init() {
 		$.list_more.add(list_view);
 		list_view.addEventListener("click",function(e){
 			//if(e.source.pageIndex == 1){
-				addPage(e.source.pageIndex,e.source.pageTitle,{u_id:u_id},true);			
+				addPage(e.source.pageIndex,e.source.pageTitle,{u_id:u_id},false);			
 			//}
 		//	addPage(e.source.pageIndex,e.source.titileIndex);
 		});

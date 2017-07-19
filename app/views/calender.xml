@@ -1,7 +1,0 @@
-<Alloy>
-	<View class="wfill hfill">
-		<ScrollView id="scrollview" class="hfill wfill contwfill conthsize" backgroundColor="#fff">
-			<View class="vert wfill hfill" id="calender_list"></View>
-		</ScrollView>
-	</View>
-</Alloy>
