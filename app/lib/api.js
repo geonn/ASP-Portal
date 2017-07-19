@@ -220,7 +220,7 @@ exports.loadAPIBySequence = function (e){ //counter,
 				var arr = res.data; 
 		       	var model = Alloy.createCollection(api['model']);
 		        model.saveArray(arr);
-		        checker.updateModule(APILoadingList[counter]['checkId'],APILoadingList[counter]['model'],currentDateTime());
+		        checker.updateModule(APILoadingList[counter]['checkId'],APILoadingList[counter]['model'],currentDateTime1());
 			}
 			//Ti.App.fireEvent('app:update_loading_text', {text: ((counter+1)/total_item*100).toFixed()+"% loading..."});
 			counter++;
@@ -234,7 +234,32 @@ exports.loadAPIBySequence = function (e){ //counter,
 	});
 };
 
-
+function currentDateTime1(){
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; 
+	var yyyy = today.getFullYear();
+	
+	var hours = today.getHours();
+	var minutes = today.getMinutes();
+	var sec = today.getSeconds();
+	if (minutes < 10){
+		minutes = "0" + minutes;
+	} 
+	if (sec < 10){
+		sec = "0" + sec;
+	} 
+	if(dd<10) {
+	    dd='0'+dd;
+	} 
+	
+	if(mm<10) {
+	    mm='0'+mm;
+	} 
+	
+	datetime = yyyy+'-'+mm+'-'+dd + " "+ hours+":"+minutes+":"+sec;
+	return datetime ;
+}
 
 /*********************
  * Private function***

@@ -165,3 +165,11 @@ function clickButtons(){
 	$.buttonsView.resize(size,size);
 }
 Ti.App.addEventListener("discussion:refresh",refresh);
+function doLogout(){
+	Alloy.Globals.loading.startLoading("Logout...");	
+	Ti.App.Properties.removeAllProperties();
+	setTimeout(function(e){
+		Ti.App.fireEvent('index:login');
+		Alloy.Globals.loading.stopLoading();		
+	},2000);
+}

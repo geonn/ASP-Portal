@@ -224,11 +224,11 @@ function currentDateTime(){
 function pixelToDp(px) {
     return ( parseInt(px) / (Titanium.Platform.displayCaps.dpi / 160));
 }
-function doLogout(){
-	Alloy.Globals.loading.startLoading("Logout...");	
-	Ti.App.Properties.removeAllProperties();
-	setTimeout(function(e){
-		Ti.App.fireEvent('index:login');
-		Alloy.Globals.loading.stopLoading();		
-	},2000);
-}
+// function doLogout(){
+	// Alloy.Globals.loading.startLoading("Logout...");	
+	// Ti.App.Properties.removeAllProperties();
+	// setTimeout(function(e){
+		// Ti.App.fireEvent('index:login');
+		// Alloy.Globals.loading.stopLoading();		
+	// },2000);
+// }

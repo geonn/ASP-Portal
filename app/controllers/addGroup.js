@@ -5,6 +5,11 @@ var animate_bottom = Ti.UI.createAnimation({duration:200,bottom:0});
 var offcount = 0;
 var unchecker = "/images/checkbox_unchecked.png";
 var checker = "/images/checkbox_checked.png";
+if (OS_IOS) {
+	$.selectedList.bottom = 50;
+	$.mother_view.bottom = 100;
+};
+
 function doSubmit(e){
 	console.log("doSubmit");
 	Alloy.Globals.pageFlow.startLoading("Loading...");
@@ -53,28 +58,49 @@ function showBar(param,position){
 		if(param.id == $.selectedList.getChildren()[i].staffId){
 			$.selectedList.remove($.selectedList.getChildren()[i]);
 			if($.selectedList.getChildren().length==0){
-				setTimeout(function(){
-		            $.mother_view.animate(animate_bottom);  
-		            $.selectedList.animate(animate_height);              
-				},500);
+				if (OS_IOS) {
+					$.selectedList.setHeight(0);
+				}else {
+					setTimeout(function(){
+			            $.mother_view.animate(animate_bottom);  
+			            $.selectedList.animate(animate_height);              
+					},500);
+				}
 			}			
 			return;
 		}
 	}
-	$.selectedList.animate(animate_height1);
-	$.mother_view.animate(animate_bottom1);
+	if (OS_IOS) {
+		$.selectedList.setHeight(50);
+	}else{
+		$.selectedList.animate(animate_height1);
+		$.mother_view.animate(animate_bottom1);	
+	};
 	var container = $.UI.create("View",{classes:['small-padding'],height:40,width:40,borderRadius:20,backgroundImage:"/images/default_profile.png",staffId:param.id});
 	$.selectedList.add(container);
 	container.addEventListener("click",function(e){
 		$.selectedList.remove(e.source);
 		$.mother_view.children[position+1].children[1].image = unchecker;
+		console.log($.mother_view.children[position+1].children[1].image+"11");
 		if($.selectedList.getChildren().length==0){
-			setTimeout(function(){
-	            $.mother_view.animate(animate_bottom);  
-	            $.selectedList.animate(animate_height);              
-			},500);
+			if (OS_IOS) {
+				$.selectedList.setHeight(0);
+			}else {
+				setTimeout(function(){
+			    	$.mother_view.animate(animate_bottom);  
+			        $.selectedList.animate(animate_height);              
+				},500);
+			}
 		}
 	});		
+}
+function doLogout(){
+	Alloy.Globals.loading.startLoading("Logout...");	
+	Ti.App.Properties.removeAllProperties();
+	setTimeout(function(e){
+		Ti.App.fireEvent('index:login');
+		Alloy.Globals.loading.stopLoading();		
+	},2000);
 }
 function init(){
 	$.myInstance.show('',false);
