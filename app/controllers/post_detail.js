@@ -1,17 +1,21 @@
 var args = arguments[0] || {};
 var p_id = args.p_id || "";
 var u_id1;
+
 function init(){
 	var model = Alloy.createCollection("post");
 	var res = model.getDataById(p_id);
+	getTimePost(res.created);
 	setData(res);
 }init();
+
 function setData(params){
 	$.user_name.text = params.u_name;
 	u_id1 = params.u_id;
 	$.desc.text = params.description;
 	$.count_coment.text = params.comment_count+" comment";
 }
+
 function postOptions(){
 	var u_id = Ti.App.Properties.getString("u_id")||"";
 	var options = (u_id == u_id1)?['Edit','Delete','Cancel']:['Favourite','Report','Cancel'];
@@ -28,6 +32,90 @@ function postOptions(){
 	});	
 	dialog.show();
 }
+
+function parseDate(str) {
+    var mdy = str.split('-');
+    return new Date(mdy[0], mdy[1]-1, mdy[2]);
+}
+
+function daydiff(first, second) {
+    return Math.round((second-first)/(1000*60*60*24));
+}
+
+function parseToSecond(hh,mm,ss) {
+	return (Math.floor(hh)*60+Math.floor(mm))*60+Math.floor(ss);
+}
+
+function getTimePost(p){
+	var toTime = new Date();
+	var dd = toTime.getDate();
+	var mm = toTime.getMonth()+1; //January is 0!
+	var yyyy = toTime.getFullYear();
+	if(dd<10) {
+	    dd='0'+dd;
+	} 
+	if(mm<10) {
+	    mm='0'+mm;
+	} 
+	var today = yyyy+'-'+mm+'-'+dd;
+	var hh = toTime.getHours();
+	var mi = +toTime.getMinutes();
+	var ss = toTime.getSeconds();
+	if(hh<10) {
+	    hh='0'+hh;
+	} 
+	if(mi<10) {
+	    mi='0'+mi;
+	}
+	if(ss<10) {
+		ss='0'+ss;
+	}
+	var nowTime = hh+":"+mi+":"+ss;
+	var postYear = Math.floor(p.substring(0,4));
+	var postMonth = Math.floor(p.substring(5,7));
+	var postDate = Math.floor(p.substring(8,10));
+	if(postDate<10) {
+	    postDate='0'+postDate;
+	} 
+	if(postMonth<10) {
+	    postMonth='0'+postMonth;
+	}
+	var postCreatedDate = postYear+"-"+postMonth+"-"+postDate;
+	console.log(p);
+	var postHour = Math.floor(p.substring(11,13));
+	var postMinute = Math.floor(p.substring(14,16));
+	var postSecond = Math.floor(p.substring(17,19));
+	if (postHour<10) {
+		postHour='0'+postHour;
+	}
+	if (postMinute<10) {
+		postMinute='0'+postMinute;
+	}
+	if (postSecond<10) {
+		postSecond='0'+postSecond;	
+	}
+	var postTime = +postHour+":"+postMinute+":"+postSecond;
+	var postSecond = parseToSecond(postHour,postMinute,postSecond);
+	var nowSecond = parseToSecond(hh,mi,ss);
+	var minusSecond = postSecond-nowSecond;
+	var hourDisplay = minusSecond/60/60;
+	console.log("Today is "+today+"\nNow time is "+nowTime+"\nPost created day is "+postCreatedDate+"\nPost created time is "+postTime);
+	var dayOfDistance = daydiff(parseDate(today), parseDate(postCreatedDate));
+	if (dayOfDistance==-1) {
+		$.date_time.setText("Yesterday");
+	}else if (dayOfDistance==0) {
+		if (minusSecond<900) {
+			$.date_time.setText("Just now");	
+		}else if (minusSecond<3600) {
+			$.date_time.setText("30 mins");
+		}else{
+			$.date_time.setText(hourDisplay.toFixed(0)+" hr");
+		}
+	}else if (dayOfDistance<-1) {
+		$.date_time.setText(postCreatedDate+"  "+postHour+":"+postMinute);
+	}
+}
+
 function deletePost(){
 	COMMON.createAlert("Warning","Are you sure want to delete this post?",function(e){
 		Alloy.Globals.loading.startLoading("Delete...");		
@@ -48,4 +136,5 @@ function deletePost(){
 		});
 	});
 }
+
 Ti.App.addEventListener("post_detail:init",init);
