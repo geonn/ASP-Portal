@@ -1,13 +1,14 @@
 <Alloy>
 	<View class="wfill hfill" id="win_calender">
-		<!-- <ScrollView id="scrollview" class="hfill wfill contwfill conthsize" backgroundColor="#"> -->
-			<View class="vert wfill hfill" backgroundColor="#eff3f6">
+		<ScrollView id="scrollview" class="hfill wfill contwfill conthsize" backgroundColor="#fff">
+			<View class="vert wfill hfill">
 				<View class="wfill" height="40" id="title"></View>
 				<View class="horz wfill hsize" id="days"></View>
 				<View class="hr"></View>
 				<View class="wfill hsize" id="add_days"></View>
 				<View class="hr"></View>
+				<View class="wfill hsize" backgroundColor="#eff3f6"></View>
 			</View>
-		<!-- </ScrollView> -->
+		</ScrollView>
 	</View>
 </Alloy>

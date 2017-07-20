@@ -78,7 +78,8 @@ exports.definition = {
                 db.close();
                 collection.trigger('sync');
                 return arr;
-			},			getData: function(unlimit,offset){
+			},
+			getData: function(unlimit,offset){
 				offset = offset || 0;
 				var sql_limit = (unlimit)?"":" limit "+offset+",10";
 				var collection = this;
@@ -140,7 +141,8 @@ exports.definition = {
                 db.close();
                 collection.trigger('sync');
                 return arr;
-			},saveArray:function(arr){
+			},
+			saveArray:function(arr){
 				var collection = this;
 				var columns = collection.config.columns;
 				var names = [];
