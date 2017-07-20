@@ -265,14 +265,15 @@ function getTimePost(p){
 	var hourDisplay = minusSecond/60/60;
 	var dayOfDistance = daydiff(parseDate(today), parseDate(postCreatedDate));
 	if (dayOfDistance==-1) {
-		return ("Yesterday");
+		return ("Yesterday"+"  "+postHour+":"+postMinute);
 	}else if (dayOfDistance==0) {
 		if (minusSecond<900) {
 			return ("Just now");	
 		}else if (minusSecond<3600) {
-			return ("30 mins");
+			return (minutesDisplay.toFixed(0)+" mins");
 		}else{
-			return (hourDisplay.toFixed(0)+" hr");
+			var hr = (minusSecond<7200)?" hr":" hrs";
+			return (hourDisplay.toFixed(0)+hr);
 		}
 	}else if (dayOfDistance<-1) {
 		return (postCreatedDate+"  "+postHour+":"+postMinute);
