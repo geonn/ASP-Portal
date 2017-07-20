@@ -1,5 +1,5 @@
-var list_title = ["My Profile", "Groups", "Apply Leave", "Calendar", "Favourite Post", "Feed Back", "Log Out"];
-var list_controller = ['my_profile','group_view','','calendar','','group_post',''];
+var list_title = ["My Profile","Edit Profile" , "Groups", "Apply Leave", "Calendar", "Favourite Post", "Feed Back", "Log Out"];
+var list_controller = ['my_profile','edit_profile','group_view','','calendar','','group_post',''];
 var u_id = Ti.App.Properties.getString("u_id")||"";
 console.log("User's ID = "+u_id);
 

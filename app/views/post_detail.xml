@@ -1,6 +1,6 @@
 <Alloy>
 	<View class="wfill hfill" backgroundColor="#fff">
-		<View class="wfill hfill vert" bottom="50" backgroundColor="#fff">
+		<ScrollView id="mother_view" class="hfill wfill contwfill conthsize vert" bottom="50" backgroundColor="#fff">
 			<View class="wfill horz" height="75" top="0">
 				<View class="wsize hsize padding">
 					<ImageView height="55" width="55" image="/images/user.png"></ImageView>
@@ -14,12 +14,12 @@
 				</View>
 			</View>
 			<View class="wfill hfill vert padding" top="0">
-				<ImageView class="wfill" left="2" right="2" image="/images/image_example.png" id="p_img"></ImageView>
 				<View class="wfill hsize padding" top="0" left="2" right="2">
-					<Label class="wsize hsize h4 padding" text="Perpecstive FM:#15 How to create a winning propasal with Dylan Baskind from Qwilr." id="desc"></Label>
+					<Label class="wsize hsize h4 padding" text="" id="desc"></Label>
 				</View>
+				<ImageView class="wfill" left="2" right="2" image="/images/image_example.png" id="p_img"></ImageView>
 			</View>
-		</View>
+		</ScrollView>
 		<View class="wfill vert" height="50" bottom="0" zIndex="99" backgroundColor="#fff">
 			<View class="hr"></View>
 			<View class="wfill hfill">

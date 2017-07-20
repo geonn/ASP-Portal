@@ -3,7 +3,6 @@ var edit = args.edit || false;
 var p_id = args.p_id || "";
 var refreshName = args.refreshName || null;
 var num = 0;
-
 if(edit){
 	setData();
 }else{
@@ -33,10 +32,11 @@ function add_image(e) {
 					var imgView = Ti.UI.createImageView({
 						top:'10dp',
 						image:"file://"+imgArray[i],
-						nativePath:"file://"+imgArray[i]
 					});
-					$.mother_post.add(imgView);
-					doBlob();
+					imgView.addEventListener("longclick",function(e1){
+						$.imageMother.remove(e1.source);
+					});
+					$.imageMother.add(imgView);
 				}
 			}
 		},
@@ -48,13 +48,13 @@ function add_image(e) {
 		}
 	});
 }
-function showGMImagePicker(e) {
+function showGMImagePicker() {
 	var picker = require('ti.gmimagepicker');		 
 	picker.openPhotoGallery({
 		maxSelectablePhotos: 30,
 		// allowMultiple: false, // default is true
 	    success: function (e) {
-	        Ti.API.error('success: ' + JSON.stringify(e));
+	        Ti.API.error('successaaa: ' + JSON.stringify(e));
 	        renderPhotos(e.media);
 	    },
 	    cancel: function (e) {
@@ -65,14 +65,13 @@ function showGMImagePicker(e) {
 	    }
 	});
 }
-function doBlob(){
-	var before =Ti.Filesystem.getFile($.mother_post.children[2].nativePath);
-	console.log("asdf:"+JSON.stringify(before));
-}
 function doSubmit(){
 	var description =$.description.value || "";
 	var u_id = Ti.App.Properties.getString('u_id')||"";
 	var g_id = "";
+	var image = $.mother_post.children[2];
+	console.log("asdf:"+JSON.stringify(image));	
+	var img = image.toImage();
 	if(description == ""){
 		alert("Please type something on field box");
 		return;
@@ -83,7 +82,8 @@ function doSubmit(){
 		return;
 	}
 	var url = (edit)?"editPost":"doPost";
-	var params = (edit)?{id:p_id,title:"Public Post",u_id:u_id,description:description,status:1}:{u_id:u_id,g_id:"",title:"Public Post",description:description,status:1};	
+	var params = (edit)?{id:p_id,title:"Public Post",u_id:u_id,description:description,status:1}:{u_id:u_id,g_id:"",title:"Public Post",description:description,status:1};
+	_.extend(params, {Filedata: img});	
 	Alloy.Globals.loading.startLoading("Posting");		
 	API.callByPost({url:url,params:params},{
 	onload:function(responceText){
@@ -106,21 +106,13 @@ function doSubmit(){
 	},onerror:function(err){}});
 }
 function renderPhotos(media) {
-  	
     for (var i=0; i < media.length; i++) {
- 
-    	var img_view = Ti.UI.createView({ width:Ti.UI.FILL, height:Ti.UI.SIZE });
-    	var delete_img = Ti.UI.createImageView({ image:"/images/Icon_Delete_Round.png", width:30, height:30, top:15, right:5, number:num });
-    	var img = Ti.UI.createImageView({ image:media[i],top:10, width:Ti.UI.FILL, height:Ti.UI.SIZE });
-    	img_view.add(img);
-    	img_view.add(delete_img);
-		$.mother_post.add(img_view);
-		img_view.addEventListener("click",function(e){
-			$.mother_post.children[e.source.number+2].removeAllChildren();
-		});  
-		num++;	
+    	var imgView =Ti.UI.createImageView({ image: media[i],top:10, width:Ti.UI.FILL, height: Ti.UI.SIZE });
+		imgView.addEventListener("longclick",function(e1){
+			$.imageMother.remove(e1.source);
+		});    	
+		$.imageMother.add(imgView);    	
 	};
-	
 }
 function doLogout(){
 	Alloy.Globals.loading.startLoading("Logout...");	
