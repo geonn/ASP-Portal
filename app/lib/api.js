@@ -210,12 +210,9 @@ exports.loadAPIBySequence = function (e){ //counter,
 			}else if(api['type'] == "api_model"){
 				var res = JSON.parse(responseText);
 				if(res.images != undefined){
-					console.log(typeof res.images+" 	"+api['model']);					
 					var img_model = Alloy.createCollection("images_table");
-					console.log("image_data:"+JSON.stringify(res.images));
 					img_model.saveArray(res.images);
 					var img_data = img_model.getData(true);
-					console.log("image_table :"+JSON.stringify(img_data));
 				}
 				var arr = res.data; 
 		       	var model = Alloy.createCollection(api['model']);

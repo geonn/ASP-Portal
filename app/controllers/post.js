@@ -3,7 +3,6 @@ var edit = args.edit || false;
 var p_id = args.p_id || "";
 var refreshName = args.refreshName || null;
 var num = 0;
-
 if(edit){
 	setData();
 }else{
@@ -30,19 +29,14 @@ function add_image(e) {
 	
 			for(var i=0; i<imgArray.length; i++){
 				if(imgArray[i]){
-					var img_view = Ti.UI.createView({ width:Ti.UI.FILL, height:Ti.UI.SIZE });
-					var delete_img = Ti.UI.createImageView({ image:"/images/Icon_Delete_Round.png", width:30, height:30, top:15, right:5, number:num });
 					var imgView = Ti.UI.createImageView({
 						top:'10dp',
 						image:"file://"+imgArray[i],
 					});
-					img_view.add(imgView);
-			    	img_view.add(delete_img);
-					$.imageMother.add(img_view);
-					delete_img.addEventListener("click",function(e){
-						$.imageMother.removeAllChildren();
-					});  
-					num++;
+					imgView.addEventListener("longclick",function(e1){
+						$.imageMother.remove(e1.source);
+					});
+					$.imageMother.add(imgView);
 				}
 			}
 		},
@@ -75,7 +69,7 @@ function doSubmit(){
 	var description =$.description.value || "";
 	var u_id = Ti.App.Properties.getString('u_id')||"";
 	var g_id = "";
-	var image = $.mother_post.children[2].children[0];
+	var image = $.mother_post.children[2];
 	console.log("asdf:"+JSON.stringify(image));	
 	var img = image.toImage();
 	if(description == ""){
@@ -112,21 +106,13 @@ function doSubmit(){
 	},onerror:function(err){}});
 }
 function renderPhotos(media) {
-  	
     for (var i=0; i < media.length; i++) {
- 
-    	var img_view = Ti.UI.createView({ width:Ti.UI.FILL, height:Ti.UI.SIZE });
-    	var delete_img = Ti.UI.createImageView({ image:"/images/Icon_Delete_Round.png", width:30, height:30, top:15, right:5, number:num });
-    	var img = Ti.UI.createImageView({ image:media[i],top:10, width:Ti.UI.FILL, height:Ti.UI.SIZE });
-    	img_view.add(img);
-    	img_view.add(delete_img);
-		$.imageMother.add(img_view);
-		delete_img.addEventListener("click",function(e){
-			$.imageMother.removeAllChildren();
-		});  
-		num++;	
+    	var imgView =Ti.UI.createImageView({ image: media[i],top:10, width:Ti.UI.FILL, height: Ti.UI.SIZE });
+		imgView.addEventListener("longclick",function(e1){
+			$.imageMother.remove(e1.source);
+		});    	
+		$.imageMother.add(imgView);    	
 	};
-	
 }
 function doLogout(){
 	Alloy.Globals.loading.startLoading("Logout...");	

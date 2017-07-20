@@ -48,32 +48,31 @@ exports.definition = {
 				}
 				db.close();
 			},
-			getDataByU_id: function(unlimit,offset,u_id){
+			getImageByCateandPriId: function(unlimit,offset,cate,priId){
+				var collection = this;
+				var columns = collection.config.columns;
+				
+				var names = [];
+				for (var k in columns) {
+	                names.push(k);
+	            }
 				offset = offset || 0;
 				var sql_limit = (unlimit)?"":" limit "+offset+",10";
-				var collection = this;
-				var sql = "select staff.name as u_name,post.* from post left outer join staff on post.u_id=staff.id where post.status = 1 and post.u_id="+u_id+" order by post.updated desc"+sql_limit;
+				var sql = "select * from "+collection.config.adapter.collection_name+" where img_photoCate="+cate+" and img_photoCateID="+priId;
 				db = Ti.Database.open(collection.config.adapter.db_name);
 				if(Ti.Platform.osname != "android"){
 					db.file.setRemoteBackup(false);
 				}
                 var res = db.execute(sql);
-                var arr = [];
-				var count = 0;   
+                var arr = []; 
+                var count = 0;
+                
+                var eval_column = "";
+            	for (var i=0; i < names.length; i++) {
+					eval_column = eval_column+names[i]+": res.fieldByName('"+names[i]+"'),";
+				};
                 while (res.isValidRow()){
-                	var row_count = res.fieldCount;
-                	arr[count] = {
-                		id: res.fieldByName('id'),
-						u_id:res.fieldByName("u_id"),
-						u_name:res.fieldByName('u_name'),
-						title:res.fieldByName('title'),
-						g_id:res.fieldByName('g_id'),
-						description:res.fieldByName('description'),
-						comment_count:res.fieldByName('comment_count'),
-					    status: res.fieldByName('status'),
-					    created: res.fieldByName('created'),
-					    updated: res.fieldByName('updated')
-					};
+                	eval("arr[count] = {"+eval_column+"}");
                 	res.next();
 					count++;
                 }
