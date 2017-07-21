@@ -13,10 +13,12 @@ var addGroup = "http://"+API_DOMAIN+"/api/addGroup?user="+USER+"&key="+KEY;
 var doPost = "http://"+API_DOMAIN+"/api/doPost?user="+USER+"&key="+KEY;
 var deletePost = "http://"+API_DOMAIN+"/api/deletePost?user="+USER+"&key="+KEY;
 var editPost = "http://"+API_DOMAIN+"/api/editPost?user="+USER+"&key="+KEY;
-//API that call in sequence 
+var getMyGroupList = "http://"+API_DOMAIN+"/api/getMyGroupList?user="+USER+"&key="+KEY;
+//API that call in sequence
 var APILoadingList = [
  {url: "getStaffList", type: "api_model", model: "staff", checkId: "1"},
- {url: "getPostList", type: "api_model", model: "post", checkId: "2"}
+ {url: "getPostList", type: "api_model", model: "post", checkId: "2"},
+ {url: "getMyGroupList", type: "api_model", model: "group", checkId: "3"}
 ];
 
 /*********************

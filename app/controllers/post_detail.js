@@ -97,10 +97,11 @@ function getTimePost(p){
 	var postTime = +postHour+":"+postMinute+":"+postSecond;
 	var postSecond = parseToSecond(postHour,postMinute,postSecond);
 	var nowSecond = parseToSecond(hh,mi,ss);
-	var minusSecond = postSecond-nowSecond;
+	var minusSecond = nowSecond-postSecond;
 	var hourDisplay = minusSecond/60/60;
-	var minutesDisply = minusSecond/60;
+	var minutesDisplay = minusSecond/60;
 	var dayOfDistance = daydiff(parseDate(today), parseDate(postCreatedDate));
+	console.log("dayOfDistance="+dayOfDistance+"minusSecond="+minusSecond);
 	if (dayOfDistance==-1) {
 		return ("Yesterday"+"  "+postHour+":"+postMinute);
 	}else if (dayOfDistance==0) {
