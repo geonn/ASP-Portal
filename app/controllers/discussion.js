@@ -50,7 +50,10 @@ function render_post(params){
 				var small_image_container = $.UI.create("View",{classes:['wfill','hsize']});
 				var image = $.UI.create("ImageView",{classes:['wfill','hsize'],image:entry1.img_path});		
 				small_image_container.add(image);		
-				image_container.addView(small_image_container);							
+				image_container.addView(small_image_container);		
+				image.addEventListener("click",function(e){
+					COMMON.openWindow(Alloy.createController("zoomView",{img_path:e.source.image}).getView());
+				});					
 			});	
 			container.add(image_container);
 		}

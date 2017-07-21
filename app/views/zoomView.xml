@@ -1,5 +1,11 @@
 <Alloy>
-    <View id="view">
-        <Button id="navBarMenubutton" title="Next" backgroundColor="#23c282" color="#fff" class="com.jolicode.pageflow.burgerButton" />
-    </View>
+	<Window id="win" backgroundColor="#000">
+		<View class="wfill hfill" backgroundColor="#000" id="imageMother">
+			<View class="wfill horz" height="70" id="topbar" zIndex="10" top="0">
+				<View class="wsize hsize" borderColor="#fff" borderRadius="10" top="10" left="10" onClick="closeWindow">
+					<Label class="wsize hsize padding" top="5" bottom="5" text="Back" color="#fff" />
+				</View>					
+			</View>
+		</View>
+	</Window>
 </Alloy>
