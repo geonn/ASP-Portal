@@ -31,7 +31,6 @@ function add_image(e) {
 						height:Ti.UI.FILL,
 						form_type:"image"
 					});
-					console.log(JSON.stringify(imgView.image.nativePath));		
 					$.imageGroup.removeAllChildren();
 					$.imageGroup.add(imgView);
 				}
@@ -74,7 +73,6 @@ function showBar(param,position){
 	container.addEventListener("click",function(e){
 		$.selectedList.remove(e.source);
 		$.mother_view.children[position+1].children[1].image = unchecker;
-		console.log($.mother_view.children[position+1].children[1].image+"11");
 		if($.selectedList.getChildren().length==0){
 			if (OS_IOS) {
 				$.selectedList.setHeight(0);
@@ -145,9 +143,6 @@ function doSubmit(){
 	var u_id = Ti.App.Properties.getString("u_id") || "";
 	var before =Ti.Filesystem.getFile($.imageGroup.children[0].nativePath);
 	var encode = Titanium.Utils.base64encode($.imageGroup.toImage());
-	console.log(JSON.stringify(encode));	
-	console.log(JSON.stringify(Titanium.Utils.base64decode(String(encode))));
-	console.log(JSON.stringify(before));	
 	if(name == ""){
 		alert("Group name Cannot be null!!!");
 		return;
@@ -163,11 +158,9 @@ function doSubmit(){
 	}
 	var params={name:name,u_id:u_id,member:member};
 	_.extend(params,{Filedata:encode});
-	console.log(JSON.stringify(member));
 	API.callByPost({url:"addGroup",params:params },{
 		onload:function(responceText){
 			var res = JSON.parse(responceText);
-			console.log(JSON.stringify(res));
 		},onerror:function(err){}
 	});
 }
@@ -175,7 +168,6 @@ Ti.App.addEventListener("addGroup:doSubmit",doSubmit);
 function addImage2(){
 Titanium.Media.openPhotoGallery({
 	success:function(event) {
-		console.log(JSON.stringify(event));
 		alert("asdf");
 	},
 	cancel:function() {

@@ -28,11 +28,9 @@ var APILoadingList = [
 // call API by post method
 exports.callByPost = function(e, handler){	 
 	var url = (typeof e.new != "undefined")?"http://"+API_DOMAIN+"/api/"+e.url+"?user="+USER+"&key="+KEY:eval(e.url);
-	console.log(url);
-	var _result = contactServerByPost(url, e.params || {});   
+	var _result = contactServerByPost(url, e.params || {});
 	_result.onload = function(ex) {  
 		try{
-			console.log(this.responseText);
 			JSON.parse(this.responseText);
 		}
 		catch(e){
@@ -50,7 +48,7 @@ exports.callByPost = function(e, handler){
 			e.retry_times --;
 			if(e.retry_times > 0){
 				API.callByPost(e, handler);
-			}	
+			}
 		}else{
 			e.retry_times = 2;
 			API.callByPost(e, handler);
@@ -60,22 +58,19 @@ exports.callByPost = function(e, handler){
 
 exports.callByGet  = function(e, onload, onerror){
 	var url =  eval(e.url) + "?"+e.params;
-	console.log(url);
-	var _result = contactServerByGet(encodeURI(url));   
-	_result.onload = function(e) {   
-		onload && onload(this.responseText); 
+	var _result = contactServerByGet(encodeURI(url));
+	_result.onload = function(e) {
+		onload && onload(this.responseText);
 	};
-		
-	_result.onerror = function(e) { 
-		onerror && onerror(); 
-	};	
+	
+	_result.onerror = function(e) {
+		onerror && onerror();
+	};
 };
-
 
 exports.checkAppVersion = function(callback_download){
 	var appVersion = Ti.App.Properties.getString("appVersion");
 	var url = checkAppVersionUrl + "&appVersion="+appVersion+"&appPlatform="+Titanium.Platform.osname;
-	console.log(url);
 	var client = Ti.Network.createHTTPClient({
 		// function called when the response data is available
 		onload : function(e) {
@@ -101,16 +96,12 @@ exports.callByPostWithJson = function(e, onload, onerror){
 	var deviceToken = Ti.App.Properties.getString('deviceToken');
 	if(deviceToken != ""){  
 		var url = eval(e.url);
-		console.log(url);
 		var _result = contactServerByPostWithJson(url, e.params || {});   
-		_result.onload = function(ex) { 
-			console.log('success callByPost');
-			console.log(this.responseText);
+		_result.onload = function(ex) {
 			onload && onload(this.responseText); 
 		};
 		
 		_result.onerror = function(ex) {
-			console.log('failure callByPost');
 			console.log(ex);
 			//API.callByPost(e, onload, onerror); 
 		};
@@ -132,13 +123,11 @@ exports.callByPostImage = function(e, onload, onerror) {
 	}
 	// console.log(url+"&u_id="+e.params.u_id+itemStr);return false;
 	var _result = contactServerByPostImage(url+"&u_id="+e.params.u_id+itemStr,e.img);
-	_result.onload = function(e) { 
-		console.log('success');
+	_result.onload = function(e) {
 		onload && onload(this.responseText); 
 	};
 	
-	_result.onerror = function(ex) { 
-		console.log("onerror");
+	_result.onerror = function(ex) {
 		API.callByPostImage(e, onload);
 		//onerror && onerror();
 	};
@@ -198,10 +187,8 @@ exports.loadAPIBySequence = function (e){ //counter,
 	if(isUpdate != "" && last_update_on){
 		params = {last_updated: isUpdate.updated};
 	}
-	
 	var url = api['url'];
-	console.log(url);
-	console.log(params.last_updated);
+	
 	API.callByPost({
 		url: url,
 		params: params
@@ -211,15 +198,11 @@ exports.loadAPIBySequence = function (e){ //counter,
 				eval("_.isFunction("+api['method']+") && "+api['method']+"(responseText)");
 			}else if(api['type'] == "api_model"){
 				if(api['model'] == "groups"){
-					var res = JSON.parse(responseText);console.log("res "+JSON.stringify(res));
-					
+					var res = JSON.parse(responseText);
 					var model = Alloy.createCollection(api['model']);
-					var arr = res.group;console.log("arr "+JSON.stringify(arr));
 					model.saveArray(res.group);
-					
 					var m_model = Alloy.createCollection("my_group");
-					m_model.saveArray(res.data);console.log("res "+JSON.stringify(res.data));
-			        
+					m_model.saveArray(res.data);
 			        checker.updateModule(APILoadingList[counter]['checkId'],APILoadingList[counter]['model'],currentDateTime1());
 				}else{
 					var res = JSON.parse(responseText);
@@ -292,7 +275,6 @@ function contactServerByPost(url,records) {
 	if(OS_ANDROID){
 	 	client.setRequestHeader('ContentType', 'application/x-www-form-urlencoded'); 
 	 }
-	console.log(records);
 	client.open("POST", url);
 	client.send(records);
 	return client;
@@ -305,7 +287,6 @@ function contactServerByPostWithJson(url,records) {
 	
 	client.setRequestHeader('ContentType', 'application/json');
 	//client.setRequestHeader('processData', false);
-	console.log(records);
 	client.open("POST", url);
 	client.send(records);
 	return client;

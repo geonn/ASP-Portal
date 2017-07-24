@@ -21,10 +21,8 @@ function openWindow(win){
 
 //function closeWindow(win){
 exports.closeWindow = function(win){
-	if(Ti.Platform.osname == "android"){ 
-		console.log('a');
+	if(Ti.Platform.osname == "android"){
 	  	win.close(); 
-	  	console.log('b');
 	}else{ 
 		var nav = Alloy.Globals.navMenu;
 		nav.closeWindow(win,{animated:true});  
@@ -41,7 +39,6 @@ function removeAllChildren (viewObject){
 };
 
 function createAlert (tt,msg, callback, yes){
-	console.log('a');
 	var y = (typeof yes != "undefined")?yes:"ok";
 	var box = Titanium.UI.createAlertDialog({
 		title: tt,
@@ -50,10 +47,8 @@ function createAlert (tt,msg, callback, yes){
 		buttonNames: ['Ok','Cancel'],
 		message: msg
 	});
-	console.log('b');
 	box.show();
 	_.isFunction(callback) && box.addEventListener('click', function(e){
-		console.log(e.index+" "+e.source.cancel);
 		if(e.index == e.source.cancel){
 			
 		}else{
@@ -106,8 +101,6 @@ exports.sync_time = function(time){
 
 exports.todayDateTime = function(time){
 	var today = (typeof time != "undefined")?time:new Date(Date.now()+time_offset);
-	console.log(time);
-	console.log(today);
 	var dd = today.getDate();
 	var mm = today.getMonth()+1; 
 	var yyyy = today.getFullYear();

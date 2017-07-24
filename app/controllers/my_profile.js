@@ -6,7 +6,8 @@ var post_index = 0;
 var pwidth = Titanium.Platform.displayCaps.platformWidth;
 var mod = require('bencoding.blur');
 var u_model = Alloy.createCollection("staff");
-var u_res = u_model.getDataById(u_id); 
+var u_res = u_model.getDataById(u_id);
+var i_model = Alloy.createCollection("images_table");
 
 if(OS_ANDROID){
 	cell_width = Math.floor((pixelToDp(pwidth) / 2)) - 2;
@@ -24,7 +25,6 @@ var img_blur = mod.createBasicBlurView({
 $.testing.setHeight(cell_width);
 $.testing1.setHeight(cell_width);
 $.testing.add(img_blur);
-console.log(cell_width);
 $.img.setBorderRadius((cell_width / 2) - 10);
 $.img.setWidth(cell_width - 20);
 $.img.setHeight(cell_width - 20);
@@ -43,7 +43,7 @@ function init(){
 	var p_res = p_model.getDataByU_id(false,offset,u_id);
 	u_model = null;
 	p_model = null;
-	render_post(p_res,[]);
+	render_post(p_res);
 	Alloy.Globals.loading.startLoading("Loading...");	
 }
 function setData(u_res){
@@ -98,14 +98,15 @@ function refresh(e){
 		}
 	});	
 }
-function render_post(params,params_img){
+function render_post(params){
 	params.forEach(function(entry){
+		var imgArr = i_model.getImageByCateandPriId(true,undefined,2,entry.id);
 		var container = $.UI.create("View",{classes:['view_class','vert','padding'],left:"0",right:"0",backgroundColor:"#fff",post_index:post_index});
 		var title_container = $.UI.create('View',{classes:['wfill','horz'],height:68});
 		var user_img = $.UI.create("ImageView",{classes:['padding'],width:45,height:45,image:"/images/user.png",u_id:entry.u_id});
 		var title_child_container = $.UI.create("View",{classes:['wfill','hfill','padding'],left:0});
 		var username = $.UI.create("Label",{classes:['wsize','hsize','h4','bold'],text:entry.u_name,left:"0",top:"0"});
-		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:"0",bottom:0,color:"#1186FF",text:getTimePost(entry.created)});
+		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:"0",bottom:0,color:"#7CC6FF",text:getTimePost(entry.created)});
 		var more_container = $.UI.create("View",{classes:['hfill'],width:"30",right:"0",u_id:entry.u_id,p_id:entry.id,post_index:post_index});
 		var more = $.UI.create("ImageView",{right:"0",top:"0",image:'/images/btn-down.png',touchEnabled:false});
 		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],top:"0",text:entry.description,p_id:entry.id});
@@ -117,14 +118,17 @@ function render_post(params,params_img){
 		var comment_button = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:"Comment"});
 		container.add(title_container);
 		container.add(description);
-		if(params_img.length != 0){
+		if(imgArr.length != 0){
 			var image_container = $.UI.create("ScrollableView",{classes:['wfill','padding'],height:250,backgroundColor:"#000",top:"0",scrollingEnabled:true});
-			params_img.forEach(function(entry1){
+			imgArr.forEach(function(entry1){
 				var small_image_container = $.UI.create("View",{classes:['wfill','hsize']});
-				var image = $.UI.create("ImageView",{classes:['wfill','hsize'],image:"/images/image_example.png"});		
-				small_image_container.add(image);		
-				image_container.addView(small_image_container);							
-			});	
+				var image = $.UI.create("ImageView",{classes:['wfill','hsize'],image:entry1.img_path});
+				small_image_container.add(image);
+				image_container.addView(small_image_container);
+				image.addEventListener("click",function(e){
+					COMMON.openWindow(Alloy.createController("zoomView",{img_path:e.source.image}).getView());
+				});
+			});
 			container.add(image_container);
 		}
 		container.add(hr);
@@ -240,7 +244,6 @@ function getTimePost(p){
 	    postMonth='0'+postMonth;
 	}
 	var postCreatedDate = postYear+"-"+postMonth+"-"+postDate;
-	console.log(p);
 	var postHour = Math.floor(p.substring(11,13));
 	var postMinute = Math.floor(p.substring(14,16));
 	var postSecond = Math.floor(p.substring(17,19));

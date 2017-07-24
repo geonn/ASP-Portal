@@ -151,7 +151,6 @@ exports.definition = {
 	                	if (entry.hasOwnProperty(k)){
 	                		_.find(names, function(name){
 	                			if(name == k){
-	                				console.log(name+" "+k);
 	                				keys.push(k);
 			                		questionmark.push("?");
 			                		eval_values.push("entry."+k);

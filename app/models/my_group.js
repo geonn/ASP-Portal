@@ -96,7 +96,7 @@ exports.definition = {
                 var res = db.execute(sql);
                 var arr = [];
 				var count = 0;
-				console.log(res);
+				
                 while (res.isValidRow()){
                 	arr[count] = {
                 		id: res.fieldByName('id'),

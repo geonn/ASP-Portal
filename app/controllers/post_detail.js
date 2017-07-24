@@ -81,7 +81,6 @@ function getTimePost(p){
 	    postMonth='0'+postMonth;
 	}
 	var postCreatedDate = postYear+"-"+postMonth+"-"+postDate;
-	console.log(p);
 	var postHour = Math.floor(p.substring(11,13));
 	var postMinute = Math.floor(p.substring(14,16));
 	var postSecond = Math.floor(p.substring(17,19));
@@ -101,7 +100,6 @@ function getTimePost(p){
 	var hourDisplay = minusSecond/60/60;
 	var minutesDisplay = minusSecond/60;
 	var dayOfDistance = daydiff(parseDate(today), parseDate(postCreatedDate));
-	console.log("dayOfDistance="+dayOfDistance+"minusSecond="+minusSecond);
 	if (dayOfDistance==-1) {
 		return ("Yesterday"+"  "+postHour+":"+postMinute);
 	}else if (dayOfDistance==0) {

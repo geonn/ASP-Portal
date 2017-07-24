@@ -31,7 +31,7 @@ function render_post(params){
 		var user_img = $.UI.create("ImageView",{classes:['padding'],width:45,height:45,image:"/images/user.png",u_id:entry.u_id});
 		var title_child_container = $.UI.create("View",{classes:['wfill','hfill','padding'],left:0});
 		var username = $.UI.create("Label",{classes:['wsize','hsize','h4','bold'],text:entry.u_name,left:"0",top:"0"});
-		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:"0",bottom:0,color:"#1186FF",text:getTimePost(entry.created)});
+		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:"0",bottom:0,color:"#7CC6FF",text:getTimePost(entry.created)});
 		var more_container = $.UI.create("View",{classes:['hfill'],width:"30",right:"0",u_id:entry.u_id,p_id:entry.id,post_index:post_index});
 		var more = $.UI.create("ImageView",{right:"0",top:"0",image:'/images/btn-down.png',touchEnabled:false});
 		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],top:"0",text:entry.description,p_id:entry.id});
@@ -46,15 +46,14 @@ function render_post(params){
 		if(imgArr.length != 0){
 			var image_container = $.UI.create("ScrollableView",{classes:['wfill','padding'],height:250,backgroundColor:"#000",top:"0",scrollingEnabled:true});
 			imgArr.forEach(function(entry1){
-				console.log(entry.img_path);
 				var small_image_container = $.UI.create("View",{classes:['wfill','hsize']});
-				var image = $.UI.create("ImageView",{classes:['wfill','hsize'],image:entry1.img_path});		
-				small_image_container.add(image);		
-				image_container.addView(small_image_container);		
+				var image = $.UI.create("ImageView",{classes:['wfill','hsize'],image:entry1.img_path});
+				small_image_container.add(image);
+				image_container.addView(small_image_container);
 				image.addEventListener("click",function(e){
 					COMMON.openWindow(Alloy.createController("zoomView",{img_path:e.source.image}).getView());
-				});					
-			});	
+				});
+			});
 			container.add(image_container);
 		}
 		container.add(hr);
@@ -230,7 +229,6 @@ function getTimePost(p){
 	    postMonth='0'+postMonth;
 	}
 	var postCreatedDate = postYear+"-"+postMonth+"-"+postDate;
-	console.log(p);
 	var postHour = Math.floor(p.substring(11,13));
 	var postMinute = Math.floor(p.substring(14,16));
 	var postSecond = Math.floor(p.substring(17,19));

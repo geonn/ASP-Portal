@@ -12,7 +12,6 @@ if(edit){
 function setData(){
 	var model = Alloy.createCollection("post");
 	var res = model.getDataById(p_id);
-	console.log(JSON.stringify(res));
 	$.description.value = res.description;
 	$.u_name.text = res.u_name;
 }
@@ -99,7 +98,6 @@ function doSubmit(){
 	var u_id = Ti.App.Properties.getString('u_id')||"";
 	var g_id = "";
 	var image = $.mother_post.children[2];
-	console.log("asdf:"+JSON.stringify(image));	
 	var img = image.toImage();
 	if(description == ""){
 		alert("Please type something on field box");
@@ -121,7 +119,6 @@ function doSubmit(){
 			Alloy.Globals.loading.stopLoading();		
 			if(res.status == "success"){
 				if(refreshName != null){
-					console.log("asdf:"+refreshName);
 					Ti.App.fireEvent("discussion:refresh",{refreshName:refreshName});														
 				}else{
 					Ti.App.fireEvent("discussion:refresh");					
@@ -187,5 +184,15 @@ function doLogout(){
 }
 
 function chioce_group(e) {
+	var options = ["Public"];
+	var opts = {options: options, destructive: 0, title: 'Month'};
+	var dialog = Ti.UI.createOptionDialog(opts);
 	
+	dialog.addEventListener("click", function(e) {
+		if(e.index >= 0) {
+			$.lb_group.setText(options[e.index]);
+		}
+	});
+	
+	dialog.show();
 }

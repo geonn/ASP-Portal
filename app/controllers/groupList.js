@@ -50,7 +50,6 @@ function render_list(e) {
 	view_group.add(view_img);
 	view_group.add(group_title);
 	view_img.addEventListener("click",function(e){
-		console.log("go to group post page!!!");
 		addPage("group_post","Group Posts");
 	});
 	$.group_list.add(view_group);
