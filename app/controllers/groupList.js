@@ -1,6 +1,9 @@
 var cell_width;
 var pwidth = Titanium.Platform.displayCaps.platformWidth;
-
+var u_id = Ti.App.Properties.getString("u_id")||"";
+var model = Alloy.createCollection("my_group");
+var arr = model.getData(u_id);
+console.log("array " + JSON.stringify(arr));
 if(OS_ANDROID){
 	cell_width = Math.floor((pixelToDp(pwidth) / 2));
 }else{

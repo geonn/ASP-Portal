@@ -18,7 +18,7 @@ var getMyGroupList = "http://"+API_DOMAIN+"/api/getMyGroupList?user="+USER+"&key
 var APILoadingList = [
  {url: "getStaffList", type: "api_model", model: "staff", checkId: "1"},
  {url: "getPostList", type: "api_model", model: "post", checkId: "2"},
- {url: "getMyGroupList", type: "api_model", model: "group", checkId: "3"}
+ {url: "getMyGroupList", type: "api_model", model: "groups", checkId: "3"}
 ];
 
 /*********************
@@ -210,16 +210,29 @@ exports.loadAPIBySequence = function (e){ //counter,
 			if(api['type'] == "api_function"){
 				eval("_.isFunction("+api['method']+") && "+api['method']+"(responseText)");
 			}else if(api['type'] == "api_model"){
-				var res = JSON.parse(responseText);
-				if(res.images != undefined){
-					var img_model = Alloy.createCollection("images_table");
-					img_model.saveArray(res.images);
-					var img_data = img_model.getData(true);
+				if(api['model'] == "groups"){
+					var res = JSON.parse(responseText);console.log("res "+JSON.stringify(res));
+					
+					var model = Alloy.createCollection(api['model']);
+					var arr = res.group;console.log("arr "+JSON.stringify(arr));
+					model.saveArray(res.group);
+					
+					var m_model = Alloy.createCollection("my_group");
+					m_model.saveArray(res.data);console.log("res "+JSON.stringify(res.data));
+			        
+			        checker.updateModule(APILoadingList[counter]['checkId'],APILoadingList[counter]['model'],currentDateTime1());
+				}else{
+					var res = JSON.parse(responseText);
+					if(res.images != undefined){
+						var img_model = Alloy.createCollection("images_table");
+						img_model.saveArray(res.images);
+						var img_data = img_model.getData(true);
+					}
+					var arr = res.data; 
+			       	var model = Alloy.createCollection(api['model']);
+			        model.saveArray(arr);
+			        checker.updateModule(APILoadingList[counter]['checkId'],APILoadingList[counter]['model'],currentDateTime1());
 				}
-				var arr = res.data; 
-		       	var model = Alloy.createCollection(api['model']);
-		        model.saveArray(arr);
-		        checker.updateModule(APILoadingList[counter]['checkId'],APILoadingList[counter]['model'],currentDateTime1());
 			}
 			//Ti.App.fireEvent('app:update_loading_text', {text: ((counter+1)/total_item*100).toFixed()+"% loading..."});
 			counter++;

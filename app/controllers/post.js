@@ -3,6 +3,7 @@ var edit = args.edit || false;
 var p_id = args.p_id || "";
 var refreshName = args.refreshName || null;
 var num = 0;
+
 if(edit){
 	setData();
 }else{
@@ -121,4 +122,8 @@ function doLogout(){
 		Ti.App.fireEvent('index:login');
 		Alloy.Globals.loading.stopLoading();		
 	},2000);
+}
+
+function chioce_group(e) {
+	
 }

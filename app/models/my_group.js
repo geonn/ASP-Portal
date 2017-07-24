@@ -2,16 +2,15 @@ exports.definition = {
 	config: {
 		columns: {
 			id: "INTEGER PRIMARY KEY",
-			name: "TEXT",
+			g_id: "INTEGER",
 			u_id: "INTEGER",
 			status: "INTEGER",
 			created: "DATE",
-			updated: "DATE",
-			image: "TEXT"
+			updated: "DATE"
 		},
 		adapter: {
 			type: "sql",
-			collection_name: "group"
+			collection_name: "my_group"
 		}
 	},
 	extendModel: function(Model) {
@@ -83,7 +82,35 @@ exports.definition = {
 	            db.close();
 	            collection.trigger('sync');			
 			},
-			
+			getData: function(u_id, unlimit,offset){
+				offset = offset || 0;
+				var sql_limit = (unlimit)?"":" limit "+offset+",10";
+				var collection = this;
+				var sql = "select * from " + collection.config.adapter.collection_name;
+				db = Ti.Database.open(collection.config.adapter.db_name);
+				
+				if(Ti.Platform.osname != "android"){
+					db.file.setRemoteBackup(false);
+				}
+                
+                var res = db.execute(sql);
+                var arr = [];
+				var count = 0;
+				console.log(res);
+                while (res.isValidRow()){
+                	arr[count] = {
+                		id: res.fieldByName('id'),
+                		g_id: res.fieldByName('g_id'),
+                		u_id: res.fieldByName('u_id')
+					};
+                	res.next();
+					count++;
+                }
+                res.close();
+                db.close();
+                collection.trigger('sync');
+                return arr;
+			},
 		});
 
 		return Collection;

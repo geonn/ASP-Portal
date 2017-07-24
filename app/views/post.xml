@@ -9,18 +9,11 @@
 						</View>
 						<View class="vert hsize" width="60%">
 							<View class="wfill hsize">
-								<Label class="wsize hsize padding h4" id="u_name"></Label>
+								<Label class="wsize hsize padding h4" id="u_name" color="#000"></Label>
 							</View>
-							<View class="wfill hsize">
-								<Picker class="group_picker wsize hsize" left="10">
-									<PickerColumn>
-										<PickerRow title="Group"></PickerRow>
-										<PickerRow title="Group"></PickerRow>
-										<PickerRow title="Group"></PickerRow>
-										<PickerRow title="Group"></PickerRow>
-										<PickerRow title="Group"></PickerRow>
-									</PickerColumn>
-								</Picker>
+							<View class="horz wsize hsize" onClick="chioce_group" left="10" borderRadius="5" borderColor="gray" borderWidth="1">
+								<Label class="wsize hsize h4" text="Group" color="gray" bottom="2" left="5" right="2"></Label>
+								<ImageView width="25" height="15" image="/images/btn-down.png"></ImageView>
 				 			</View>
 						</View>
 					</View>
