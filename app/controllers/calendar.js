@@ -150,8 +150,8 @@ function render_calendar(e) {
 	var cr = $.title.getChildren();
 	
 	for(var i = 1; i <= lastDay.getDate(); i++) {
-		var day = new Date(cr[1].text + "-" + cr[0].num + "-" + i);
-		
+		var day = new Date(cr[1].text + "/" + cr[0].num + "/" + i);
+		console.log(day.getDay());
 		if(t) {
 			first_day = day.getDay();
 			i -= first_day;
