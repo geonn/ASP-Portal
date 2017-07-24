@@ -31,5 +31,6 @@
 			<TextField class="wfill hsize h4" top="10	" right="10" textAlign="right" id="position" color="#90949C"/>
 		</View>
 		<View class="hr" top="10"></View>
+		<Button title="SAVE" onClick="editProfile"></Button>
 	</View>
 </Alloy>

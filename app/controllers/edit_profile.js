@@ -36,8 +36,16 @@ function userProfileImage(){
 	var img_blurr = $.UI.create("View",{
 		classes: ['wfill'],
 		height: cell_width*1.2,
-		backgroundColor: "#66787878",
+		backgroundColor: "#B3787878",
 		zIndex: "2"
+	});
+	
+	var img_mother = $.UI.create("ScrollView",{
+		height: cell_width,
+		width: cell_width,
+		borderRadius: cell_width/2,
+		zIndex: '3',
+		backgroundColor: "#000"
 	});
 	
 	var img_view = $.UI.create("View",{
@@ -56,17 +64,51 @@ function userProfileImage(){
 	});	
 	
 	var user_img = $.UI.create("ImageView",{
-		height: cell_width,
+		//height: cell_width,
 		width: cell_width,
-		borderRadius: cell_width/2,
+		//borderRadius: cell_width/2,
 		image: "/images/profile_example.jpg",
 		zIndex: '3'
 	});
 	
 	img_view.add(img_blur);
 	img_view.add(img_blurr);
-	img_view.add(user_img);
+	img_mother.add(user_img);
+	img_view.add(img_mother);
 	img_view.add(chg_icon);
+	chg_icon.addEventListener("click",function(e){
+		console.log("Go to Gallery");
+		//img_view.remove(img_blur);
+		var picker = require('ti.gmimagepicker');		
+		picker.openPhotoGallery({
+		maxSelectablePhotos: 1,
+		// allowMultiple: false, // default is true
+	    success: function (e) {
+	        Ti.API.error('success: ' + JSON.stringify(e));
+			for (var i=0; i < e.media.length; i++) {
+				img_view.children[0].image = e.media[i];
+				img_view.children[2].children[0].image = e.media[i];
+				//console.log(img_view.children[0]+"11");
+				// var img_blur = mod.createBasicBlurView({
+					// width:Ti.UI.FILL,
+					// height:"200%",
+					// blurRadius:10,
+					// image: e.media,
+					// zIndex: '1'
+				// });   
+				// img_view.add(img_blur);	
+			};
+			console.log(img_view.children[0]);
+			console.log(img_view.children[0].blurRadius);
+	    },
+	    cancel: function (e) {
+	    	Ti.API.error('cancel: ' + JSON.stringify(e));
+	    },
+	    error: function (e) {
+	        Ti.API.error('error: ' + JSON.stringify(e));
+	    }
+	});
+	});
 	$.user_img.add(img_view);
 	Alloy.Globals.loading.stopLoading();	
 }
@@ -92,4 +134,12 @@ function male_chkbox(){
 function female_chkbox(){
 	$.female.image = "/images/checkbox_checked.png";
 	$.male.image = "/images/checkbox_unchecked.png";
+}
+
+function editProfile(){
+	
+}
+
+function renderPhotos(media) {
+    
 }
