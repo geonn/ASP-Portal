@@ -16,7 +16,35 @@ function setData(){
 	$.description.value = res.description;
 	$.u_name.text = res.u_name;
 }
-function add_image(e) {
+function mediaOptions(){
+	var options = ['Camera','Gallery','Cancel'];
+	var opts = {cancel: 2,options:options,destructive: 0,title: 'Options'};	
+	var dialog = Ti.UI.createOptionDialog(opts);	
+	dialog.addEventListener("click",function(e){
+		if(e.index == 0){
+			if (Ti.Media.hasCameraPermissions()) {			
+				openCamera();
+			}else{
+				Ti.Media.requestCameraPermissions(function(e) {
+		            if(e.success){
+		                openCamera();
+		            }else{
+		                alert('You denied permission');
+		            }	
+		        });    			
+			}	
+		}		
+		if(e.index == 1){
+			if(OS_ANDROID){
+				add_image();			
+			}else{
+				showGMImagePicker();
+			}
+		}
+	});	
+	dialog.show();
+}
+function add_image() {
 	var gallerypicker = require('titutorial.gallerypicker');
 	gallerypicker.openGallery({
 		cancelButtonTitle : "Cancel",
@@ -114,6 +142,40 @@ function renderPhotos(media) {
 		});    	
 		$.imageMother.add(imgView);    	
 	};
+}
+function openCamera(){
+	Titanium.Media.showCamera({
+		success:function(event) {
+			// called when media returned from the camera
+			Ti.API.debug('Our type was: '+event.mediaType);
+			if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
+				var imageView = Ti.UI.createImageView({
+					classes:['wfill','hsize'],
+					top:10,
+					image: event.media
+				});
+				$.imageMother.add(imageView);
+			} else {
+				alert("got the wrong type back ="+event.mediaType);
+			}
+		},
+		cancel:function() {
+			// called when user cancels taking a picture
+		},
+		error:function(error) {
+			// called when there's an error
+			var a = Titanium.UI.createAlertDialog({title:'Camera'});
+			if (error.code == Titanium.Media.NO_CAMERA) {
+				a.setMessage('Please run this test on device');
+			} else {
+				a.setMessage('Unexpected error: ' + error.code);
+			}
+			a.show();
+		},
+        allowImageEditing:true,
+        mediaTypes : [Ti.Media.MEDIA_TYPE_PHOTO],
+        saveToPhotoGallery:true
+	});	
 }
 function doLogout(){
 	Alloy.Globals.loading.startLoading("Logout...");	

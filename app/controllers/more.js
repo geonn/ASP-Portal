@@ -20,7 +20,7 @@ function init() {
 			height: 38
 		});
 		var img = $.UI.create("ImageView", {
-			image: "/images/more_page/" + i + ".png",
+			image: "/images/more_page/more" + i + ".png",
 			classes: ['wfill', 'hfill'],
 			touchEnabled:false
 		});
@@ -37,7 +37,7 @@ function init() {
 		$.list_more.add(list_view);
 		list_view.addEventListener("click",function(e){
 			//if(e.source.pageIndex == 1){
-				addPage(e.source.pageIndex,e.source.pageTitle,{u_id:u_id},false);			
+				addPage(e.source.pageIndex,e.source.pageTitle,{u_id:u_id});			
 			//}
 		//	addPage(e.source.pageIndex,e.source.titileIndex);
 		});

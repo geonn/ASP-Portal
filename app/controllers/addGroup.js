@@ -10,13 +10,6 @@ if (OS_IOS) {
 	$.mother_view.bottom = 100;
 };
 
-function doSubmit(e){
-	console.log("doSubmit");
-	Alloy.Globals.pageFlow.startLoading("Loading...");
-	setTimeout(function(){
-		Alloy.Globals.pageFlow.stopLoading();	
-	},2000);
-}
 function add_image(e) {
 	var gallerypicker = require('titutorial.gallerypicker');
 	gallerypicker.openGallery({

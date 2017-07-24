@@ -2,7 +2,7 @@
 	<ScrollView id="mother_view" class="hfill wfill contwfill conthsize vert" backgroundColor="#EEF3F6">	
 		<View class="wfill hsize" backgroundColor="#fff">
 			<View id="testing" class="wfill hsize" zIndex="1"></View>
-			<View id="testing1" class="wfill hsize" backgroundColor="66787878" zIndex="2"></View>
+			<View id="testing1" class="wfill hsize" backgroundColor="#66787878" zIndex="2"></View>
 			<View class="hsize" width="50%" left="0" zIndex="3">
 				<ImageView height="auto" top="10" bottom="10" id="img" image="/images/profile_example.jpg"></ImageView>
 			</View>

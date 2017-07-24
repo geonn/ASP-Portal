@@ -1,0 +1,35 @@
+<Alloy>
+	<View class="wfill hfill vert" backgroundColor="#fff" id="mother_view">
+		<View class="wfill hsize" id="user_img"></View>
+		<View class="hr"></View>
+		<View class="wfill hsize">
+			<Label class="h4 bold" top="10" text="" id="email" color="#000" textAlign="center" onClick="showEmail"></Label>
+		</View>
+		<View class="hr" top="10"></View>
+		<View class="wfill hsize horz">
+			<Label class="h4" left="10" top="10" text="Name:" color="#000"></Label>
+			<TextField class="wfill hsize h4" right="10" top="10" textAlign="right" id="name" color="#90949C"/>
+		</View>
+		<View class="hr" top="10"></View>
+		<View class="wfill hsize">
+			<Label class="h4" left="10" top="10" text="Gender:" color="#000"></Label>
+			<View class="wsize hsize horz" right="10" top="10">
+				<ImageView height="20" width="20" left="10" image="/images/checkbox_checked.png" id="male" onClick="male_chkbox"></ImageView>
+				<Label class="h4" left="10" text="Male" color="#90949C"></Label>
+				<ImageView height="20" width="20" left="10" image="/images/checkbox_unchecked.png" id="female" onClick="female_chkbox"></ImageView>
+				<Label class="h4" left="10" text="Female" color="#90949C"></Label>
+			</View>
+		</View>
+		<View class="hr" top="10"></View>
+		<View class="wfill hsize horz">
+			<Label class="h4" left="10" top="10" text="Mobile:" color="#000"></Label>
+			<TextField class="wfill hsize h4" top="10" right="10" textAlign="right" id="mobile" color="#90949C"/>
+		</View>
+		<View class="hr" top="10"></View>
+		<View class="wfill hsize horz">
+			<Label class="h4" left="10" top="10" text="Position:" color="#000"></Label>
+			<TextField class="wfill hsize h4" top="10	" right="10" textAlign="right" id="position" color="#90949C"/>
+		</View>
+		<View class="hr" top="10"></View>
+	</View>
+</Alloy>
