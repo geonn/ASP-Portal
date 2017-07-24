@@ -14,7 +14,7 @@ if(OS_ANDROID){
 	cell_width = Math.floor(pwidth / 2) - 2;
 }
 
-var vwTest = mod.createBasicBlurView({
+var img_blur = mod.createBasicBlurView({
 	width:Ti.UI.FILL,
 	height:"200%",
 	blurRadius:10,
@@ -23,7 +23,7 @@ var vwTest = mod.createBasicBlurView({
 
 $.testing.setHeight(cell_width);
 $.testing1.setHeight(cell_width);
-$.testing.add(vwTest);
+$.testing.add(img_blur);
 console.log(cell_width);
 $.img.setBorderRadius((cell_width / 2) - 10);
 $.img.setWidth(cell_width - 20);
@@ -54,19 +54,23 @@ function setData(u_res){
 }
 
 function hower_name(){
-	alert(u_res.name);
+	//alert(u_res.name);
+	createMessage("Name",u_res.name);
 }
 
 function hower_email(){
-	alert(u_res.email);
+	//alert(u_res.email);
+	createMessage("Email",u_res.email);
 }
 
 function hower_mobile(){
-	alert(u_res.mobile);
+	//alert(u_res.mobile);
+	createMessage("Mobile",u_res.mobile);
 }
 
 function hower_position(){
-	alert(u_res.position);
+	//alert(u_res.position);
+	createMessage("Position",u_res.position);
 }
 
 refresh();
@@ -101,7 +105,7 @@ function render_post(params,params_img){
 		var user_img = $.UI.create("ImageView",{classes:['padding'],width:45,height:45,image:"/images/user.png",u_id:entry.u_id});
 		var title_child_container = $.UI.create("View",{classes:['wfill','hfill','padding'],left:0});
 		var username = $.UI.create("Label",{classes:['wsize','hsize','h4','bold'],text:entry.u_name,left:"0",top:"0"});
-		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:"0",bottom:0,text:getTimePost(entry.created)});
+		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:"0",bottom:0,color:"#1186FF",text:getTimePost(entry.created)});
 		var more_container = $.UI.create("View",{classes:['hfill'],width:"30",right:"0",u_id:entry.u_id,p_id:entry.id,post_index:post_index});
 		var more = $.UI.create("ImageView",{right:"0",top:"0",image:'/images/btn-down.png',touchEnabled:false});
 		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],top:"0",text:entry.description,p_id:entry.id});
@@ -271,5 +275,14 @@ function getTimePost(p){
 		return (postCreatedDate+"  "+postHour+":"+postMinute);
 	}
 }
+
+function createMessage(t,e){
+	var box = Titanium.UI.createAlertDialog({
+		title: t,
+		message: e
+	});
+	box.show();
+};
+
 
 Ti.App.addEventListener("my_profile:refresh",refresh);
