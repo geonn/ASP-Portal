@@ -1,6 +1,7 @@
 var args = arguments[0] || {};
 var p_id = args.p_id || "";
 var u_id1;
+var i_model = Alloy.createCollection("images_table");
 
 function init(){
 	var model = Alloy.createCollection("post");
@@ -14,6 +15,20 @@ function setData(params){
 	$.desc.text = params.description;
 	$.count_coment.text = params.comment_count+" comment";
 	$.date_time.setText(getTimePost(params.created));
+	var imgArr = i_model.getImageByCateandPriId(true,undefined,2,p_id);
+	if(imgArr.length != 0){
+		var image_container = $.UI.create("ScrollableView",{classes:['wfill','padding'],height:250,backgroundColor:"#000",top:"0",scrollingEnabled:true});
+		imgArr.forEach(function(entry1){
+			var small_image_container = $.UI.create("View",{classes:['wfill','hsize']});
+			var image = $.UI.create("ImageView",{classes:['wfill','hsize'],image:entry1.img_path});
+			small_image_container.add(image);
+			image_container.addView(small_image_container);
+			image.addEventListener("click",function(e){
+			COMMON.openWindow(Alloy.createController("zoomView",{img_path:e.source.image}).getView());
+			});
+		});
+		$.p_img.add(image_container);
+	}
 }
 
 function postOptions(){

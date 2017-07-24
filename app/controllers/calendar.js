@@ -5,6 +5,8 @@ var month_num = 0;
 var year_text = "";
 var title_color = ["#B91E79", "#6B62A1", "#82A062", "#C1D58E", "#62A228", "#9FC22A", "#B7BB1E", "#DCA918", "#D28A28", "#812A16", "#3B4791", "#455056"];
 var change_color = "";
+var u_id = Ti.App.Properties.getString("u_id")||"";
+
 var cell_width;
 var pwidth = Titanium.Platform.displayCaps.platformWidth;
 
@@ -201,7 +203,7 @@ function selected_date(e) {
 	var day = new Date(t[1].text + "-" + $.title.getChildren()[0].num + "-1");
 	change_color = e.text + day.getDay();
 	
-	alert(e.date);
+	addPage("123",e.date,{u_id:u_id});
 }
 
 init();
