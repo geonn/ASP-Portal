@@ -9,9 +9,9 @@ var cell_width;
 var pwidth = Titanium.Platform.displayCaps.platformWidth;
 
 if(OS_ANDROID){
-	cell_width = Math.floor((pixelToDp(pwidth) - 8) / 7);
+	cell_width = Math.floor((pixelToDp(pwidth) - 16) / 7);
 }else{
-	cell_width = Math.floor(pwidth - 8) / 7;
+	cell_width = Math.floor(pwidth - 16) / 7;
 }
 
 function pixelToDp(px) {
@@ -163,8 +163,8 @@ function render_calendar(e) {
 			borderRadius: cell_width / 2,
 			color: (i == date.getDate() && cr[0].getText() == num_to_name[date.getMonth() + 1] && cr[1].getText() == date.getFullYear()) ? "#fff" : (day.getDay() == 0 || day.getDay() == 6) ? "gray" : "#000",
 			backgroundColor: (i == date.getDate() && cr[0].getText() == num_to_name[date.getMonth() + 1] && cr[1].getText() == date.getFullYear()) ? $.title.getBackgroundColor() : "#fff",
-			left: 1,
-			top: 1,
+			left: 2,
+			top: 2,
 			textAlign: "center",
 			text: (i <= 0) ? "" : i,
 			date: day.getFullYear() + "-" + cr[0].num + "-" + i,
@@ -195,12 +195,11 @@ function selected_date(e) {
 	var cl = (cr_lb[change_color - 1].day == 0 || cr_lb[change_color - 1].day == 6) ? "gray" : "#000";
 	cr_lb[change_color - 1].setColor(cl);
 	
-	var t = $.title.getChildren() ;
+	var t = $.title.getChildren() ;	
 	e.setBackgroundColor($.title.getBackgroundColor());
 	e.setColor("#fff");
-	var day = new Date(t[1].text + "-" + $.title.getChildren()[0].num + "-1");
+	var day = new Date(t[1].text + "/" + $.title.getChildren()[0].num + "/1");
 	change_color = e.text + day.getDay();
-	
 	alert(e.date);
 }
 
