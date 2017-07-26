@@ -111,7 +111,7 @@ exports.definition = {
                 return arr;
 			},getDataByP_id: function(p_id){
 				var collection = this;
-				var sql = "select staff.name,post_comment.* from post_comment left outer join staff on staff.id=post_comment.u_id where post_comment.p_id="+p_id;
+				var sql = "select staff.name,post_comment.* from post_comment left outer join staff on staff.id=post_comment.u_id where post_comment.status = 1 and post_comment.p_id="+p_id;
 				db = Ti.Database.open(collection.config.adapter.db_name);
 				if(Ti.Platform.osname != "android"){
 					db.file.setRemoteBackup(false);
@@ -125,7 +125,9 @@ exports.definition = {
 						id:res.fieldByName("id"),
 						u_id:res.fieldByName("u_id"),
 						comment:res.fieldByName("comment"),
-						updated:res.fieldByName("updated")
+						status:res.fieldByName("status"),
+						created:res.fieldByName("created"),
+						updated:res.fieldByName("updated"),
 					};
                 	res.next();
 					count++;

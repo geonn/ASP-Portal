@@ -2,8 +2,8 @@
 	<View class="wfill hfill padding">
 		<View class="wfill hsize vert" backgroundColor="#fff">
 			<ImageView class="wfill hsize" image="/images/login_page_logo_title.png" backgroundColor="#eff3f6"></ImageView>
-			<Widget src="input-materialdesign" titleHint="Email" id="email" value="ZIMING@ASPMEDIC.COM"/>    			
-			<Widget src="input-materialdesign" titleHint="Password" id="password" password="true" value="123456"/>   
+			<Widget src="input-materialdesign" titleHint="Email" id="email"/>    			
+			<Widget src="input-materialdesign" titleHint="Password" id="password" password="true"/>   
 			<Widget src="nl.fokkezb.button" class="wfill" onClick="doLogin" paramCenter="true" height="40" left="40" right="40" title="Login" bottom="10" style="bs-success"/>	
 			<View class="wfill hsize padding20" top="0">
 				<View class="grey_line" width="25%" left="0" zIndex="1"></View>

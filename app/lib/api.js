@@ -16,6 +16,7 @@ var deletePost = "http://"+API_DOMAIN+"/api/deletePost?user="+USER+"&key="+KEY;
 var editPost = "http://"+API_DOMAIN+"/api/editPost?user="+USER+"&key="+KEY;
 var doPostComment = "http://"+API_DOMAIN+"/api/doPostComment?user="+USER+"&key="+KEY;
 var getPostCommentList = "http://"+API_DOMAIN+"/api/getPostCommentList?user="+USER+"&key="+KEY;
+var removePostComment = "http://"+API_DOMAIN+"/api/removePostComment?user="+USER+"&key="+KEY;
 var getMyGroupList = "http://"+API_DOMAIN+"/api/getMyGroupList?user="+USER+"&key="+KEY;
 //API that call in sequence
 var APILoadingList = [

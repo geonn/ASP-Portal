@@ -55,6 +55,7 @@ exports.definition = {
                 	db.file.setRemoteBackup(false);
                 }
                 db.execute("BEGIN");
+                console.log("group:"+JSON.stringify(arr));
                 arr.forEach(function(entry) {
                 	var keys = [];
                 	var questionmark = [];

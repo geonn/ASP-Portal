@@ -1,19 +1,21 @@
 var args = arguments[0] || {};
 var p_id = args.p_id || null;
-console.log("pid"+p_id);
-function add_image(e) {
-	
-}
-
+var u_id = Ti.App.Properties.getString('u_id')||null;
+function add_image(){}
 function init() {
 	if(p_id == null){
 		Alloy.Globals.pageFlow.back();	
 		Alloy.Globals.loading.stopLoading();			
 		return;	
 	}
+	if(u_id == null){
+		alert("User Id is null\nPlease Login Again");
+		doLogout();
+		return;
+	}	
 	var checker = Alloy.createCollection('updateChecker'); 
 	var isUpdate = checker.getCheckerById("4");		
-	var params = {p_id:p_id,last_updated:isUpdate.updated};
+	var params = {p_id:p_id};
 	API.callByPost({url:"getPostCommentList",params:params},{
 		onload:function(responseText){
 			var res = JSON.parse(responseText);
@@ -30,20 +32,26 @@ function init() {
 	});	
 }
 function render_comment(params){
+	$.list_comment.removeAllChildren();
 	console.log("comment:"+JSON.stringify(params));
 	params.forEach(function(entry){
-		var container = $.UI.create("View",{classes:['wfill','hsize','horz'],bottom:10,borderRadius:"5",backgroundColor:"#fff"});
+		var container = $.UI.create("View",{classes:['wfill','hsize','horz'],u_id:entry.u_id,c_id:entry.id,bottom:10,borderRadius:"5",backgroundColor:"#fff"});
 		var profileImg = $.UI.create("ImageView",{classes:['padding'],width:55,height:55,backgroundColor:"#000"});
-		var small_container = $.UI.create("View",{classes:['wfill','hsize','vert'],top:5});
+		var small_container = $.UI.create("View",{classes:['wfill','hsize','vert'],touchEnabled:false,top:5});
 		var name = $.UI.create("Label",{classes:['wsize','hsize','h4','bold'],left:0,top:0,text:entry.name});
-		var comment = $.UI.create("Label",{classes:['wsize','hsize','h4'],left:0,text:entry.comment});
-		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:0,text:"10 mins"});	
+		var comment = $.UI.create("Label",{classes:['wsize','hsize','h4'],left:0,touchEnabled:false,text:entry.comment});
+		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:0,touchEnabled:false,text:"10 mins"});	
 		small_container.add(name);
 		small_container.add(comment);
 		small_container.add(time);
 		container.add(profileImg);
 		container.add(small_container);
 		$.list_comment.add(container);		
+		container.addEventListener("longclick",function(e){
+			if(u_id == e.source.u_id){
+				deleteOptions(true,e.source.c_id);
+			}
+		});
 	});
 	Alloy.Globals.loading.stopLoading();	
 }
@@ -65,6 +73,35 @@ function doSubmit(){
 			var res = JSON.parse(responseText);
 			console.log("comment:"+JSON.stringify(res));
 		},onerror:function(err){}
+	});
+}
+function deleteOptions(params,c_id){
+	var options = (params)?['Delete','Cancel']:['Report','Cancel'];
+	var opts = {cancel: 1,options:options,destructive: 0,title: 'More options'};	
+	var dialog = Ti.UI.createOptionDialog(opts);	
+	dialog.addEventListener("click",function(e){
+		if(params&&e.index == 0){
+			deleteComment(c_id);
+		}
+	});	
+	dialog.show();
+}
+function deleteComment(c_id){
+	var params = {id:c_id};
+	API.callByPost({url:"removePostComment",params:params},{
+		onload:function(responseText){
+			var res = JSON.parse(responseText);
+			console.log("return data"+responseText);
+			if(res.status == "success"){
+				init();
+			}
+			else{
+				alert("Something wrong!!!");
+			}
+		},
+		error:function(err){
+			
+		}		
 	});
 }
 init();
