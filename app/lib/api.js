@@ -11,14 +11,17 @@ var getStaffList = "http://"+API_DOMAIN+"/api/getStaffList?user="+USER+"&key="+K
 var getPostList = "http://"+API_DOMAIN+"/api/getPostList?user="+USER+"&key="+KEY;
 var addGroup = "http://"+API_DOMAIN+"/api/addGroup?user="+USER+"&key="+KEY;
 var doPost = "http://"+API_DOMAIN+"/api/doPost?user="+USER+"&key="+KEY;
+var doPostImage = "http://"+API_DOMAIN+"/api/doPostImage?user="+USER+"&key="+KEY;
 var deletePost = "http://"+API_DOMAIN+"/api/deletePost?user="+USER+"&key="+KEY;
 var editPost = "http://"+API_DOMAIN+"/api/editPost?user="+USER+"&key="+KEY;
+var doPostComment = "http://"+API_DOMAIN+"/api/doPostComment?user="+USER+"&key="+KEY;
+var getPostCommentList = "http://"+API_DOMAIN+"/api/getPostCommentList?user="+USER+"&key="+KEY;
 var getMyGroupList = "http://"+API_DOMAIN+"/api/getMyGroupList?user="+USER+"&key="+KEY;
 //API that call in sequence
 var APILoadingList = [
  {url: "getStaffList", type: "api_model", model: "staff", checkId: "1"},
  {url: "getPostList", type: "api_model", model: "post", checkId: "2"},
- {url: "getMyGroupList", type: "api_model", model: "groups", checkId: "3"}
+ {url: "getMyGroupList", type: "api_model", model: "my_group", checkId: "3"}
 ];
 
 /*********************
@@ -28,9 +31,11 @@ var APILoadingList = [
 // call API by post method
 exports.callByPost = function(e, handler){	 
 	var url = (typeof e.new != "undefined")?"http://"+API_DOMAIN+"/api/"+e.url+"?user="+USER+"&key="+KEY:eval(e.url);
-	var _result = contactServerByPost(url, e.params || {});
+	console.log(url);
+	var _result = contactServerByPost(url, e.params || {});   
 	_result.onload = function(ex) {  
 		try{
+			console.log(this.responseText);
 			JSON.parse(this.responseText);
 		}
 		catch(e){
@@ -48,7 +53,7 @@ exports.callByPost = function(e, handler){
 			e.retry_times --;
 			if(e.retry_times > 0){
 				API.callByPost(e, handler);
-			}
+			}	
 		}else{
 			e.retry_times = 2;
 			API.callByPost(e, handler);
@@ -58,19 +63,22 @@ exports.callByPost = function(e, handler){
 
 exports.callByGet  = function(e, onload, onerror){
 	var url =  eval(e.url) + "?"+e.params;
-	var _result = contactServerByGet(encodeURI(url));
-	_result.onload = function(e) {
-		onload && onload(this.responseText);
+	console.log(url);
+	var _result = contactServerByGet(encodeURI(url));   
+	_result.onload = function(e) {   
+		onload && onload(this.responseText); 
 	};
-	
-	_result.onerror = function(e) {
-		onerror && onerror();
-	};
+		
+	_result.onerror = function(e) { 
+		onerror && onerror(); 
+	};	
 };
+
 
 exports.checkAppVersion = function(callback_download){
 	var appVersion = Ti.App.Properties.getString("appVersion");
 	var url = checkAppVersionUrl + "&appVersion="+appVersion+"&appPlatform="+Titanium.Platform.osname;
+	console.log(url);
 	var client = Ti.Network.createHTTPClient({
 		// function called when the response data is available
 		onload : function(e) {
@@ -96,12 +104,16 @@ exports.callByPostWithJson = function(e, onload, onerror){
 	var deviceToken = Ti.App.Properties.getString('deviceToken');
 	if(deviceToken != ""){  
 		var url = eval(e.url);
+		console.log(url);
 		var _result = contactServerByPostWithJson(url, e.params || {});   
-		_result.onload = function(ex) {
+		_result.onload = function(ex) { 
+			console.log('success callByPost');
+			console.log(this.responseText);
 			onload && onload(this.responseText); 
 		};
 		
 		_result.onerror = function(ex) {
+			console.log('failure callByPost');
 			console.log(ex);
 			//API.callByPost(e, onload, onerror); 
 		};
@@ -123,11 +135,13 @@ exports.callByPostImage = function(e, onload, onerror) {
 	}
 	// console.log(url+"&u_id="+e.params.u_id+itemStr);return false;
 	var _result = contactServerByPostImage(url+"&u_id="+e.params.u_id+itemStr,e.img);
-	_result.onload = function(e) {
+	_result.onload = function(e) { 
+		console.log('success');
 		onload && onload(this.responseText); 
 	};
 	
-	_result.onerror = function(ex) {
+	_result.onerror = function(ex) { 
+		console.log("onerror");
 		API.callByPostImage(e, onload);
 		//onerror && onerror();
 	};
@@ -187,8 +201,18 @@ exports.loadAPIBySequence = function (e){ //counter,
 	if(isUpdate != "" && last_update_on){
 		params = {last_updated: isUpdate.updated};
 	}
-	var url = api['url'];
 	
+	var url = api['url'];
+	if(api['url'] == "getMyGroupList"){
+		var u_id = Ti.App.Properties.getString("u_id")||null;
+		if(u_id == null){
+			alert("User Id is null\nPlease Login Again");
+			doLogout();
+			return;
+		}		
+		params={u_id:u_id};
+	}
+	console.log(url);
 	API.callByPost({
 		url: url,
 		params: params
@@ -197,24 +221,19 @@ exports.loadAPIBySequence = function (e){ //counter,
 			if(api['type'] == "api_function"){
 				eval("_.isFunction("+api['method']+") && "+api['method']+"(responseText)");
 			}else if(api['type'] == "api_model"){
-				if(api['model'] == "groups"){
-					var res = JSON.parse(responseText);
-					var model = Alloy.createCollection(api['model']);
-					model.saveArray(res.group);
-					var m_model = Alloy.createCollection("my_group");
-					m_model.saveArray(res.data);
-			        checker.updateModule(APILoadingList[counter]['checkId'],APILoadingList[counter]['model'],currentDateTime1());
+				var res = JSON.parse(responseText);
+				if(res.images != undefined){
+					var img_model = Alloy.createCollection("images_table");
+					img_model.saveArray(res.images);
+				}
+				if(res.group != undefined){
+					var g_model =Alloy.createCollection("groups");
+					g_model.saveArray(res.group);
 				}else{
-					var res = JSON.parse(responseText);
-					if(res.images != undefined){
-						var img_model = Alloy.createCollection("images_table");
-						img_model.saveArray(res.images);
-						var img_data = img_model.getData(true);
-					}
 					var arr = res.data; 
 			       	var model = Alloy.createCollection(api['model']);
 			        model.saveArray(arr);
-			        checker.updateModule(APILoadingList[counter]['checkId'],APILoadingList[counter]['model'],currentDateTime1());
+			        checker.updateModule(APILoadingList[counter]['checkId'],APILoadingList[counter]['model'],currentDateTime1());					
 				}
 			}
 			//Ti.App.fireEvent('app:update_loading_text', {text: ((counter+1)/total_item*100).toFixed()+"% loading..."});
@@ -275,6 +294,7 @@ function contactServerByPost(url,records) {
 	if(OS_ANDROID){
 	 	client.setRequestHeader('ContentType', 'application/x-www-form-urlencoded'); 
 	 }
+	console.log(records);
 	client.open("POST", url);
 	client.send(records);
 	return client;
@@ -287,6 +307,7 @@ function contactServerByPostWithJson(url,records) {
 	
 	client.setRequestHeader('ContentType', 'application/json');
 	//client.setRequestHeader('processData', false);
+	console.log(records);
 	client.open("POST", url);
 	client.send(records);
 	return client;

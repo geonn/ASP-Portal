@@ -31,30 +31,41 @@ function render_post(params){
 		var user_img = $.UI.create("ImageView",{classes:['padding'],width:45,height:45,image:"/images/user.png",u_id:entry.u_id});
 		var title_child_container = $.UI.create("View",{classes:['wfill','hfill','padding'],left:0});
 		var username = $.UI.create("Label",{classes:['wsize','hsize','h4','bold'],text:entry.u_name,left:"0",top:"0"});
-		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:"0",bottom:0,color:"#7CC6FF",text:getTimePost(entry.created)});
+		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:"0",bottom:0,text:getTimePost(entry.created)});
 		var more_container = $.UI.create("View",{classes:['hfill'],width:"30",right:"0",u_id:entry.u_id,p_id:entry.id,post_index:post_index});
 		var more = $.UI.create("ImageView",{right:"0",top:"0",image:'/images/btn-down.png',touchEnabled:false});
 		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],top:"0",text:entry.description,p_id:entry.id});
 		var hr = $.UI.create("View",{classes:['hr']});
 		var comment_container = $.UI.create("View",{classes:['wfill','hsize','padding']});
 		var comment_count = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:entry.comment_count+" comments",left:"0"});
-		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],right:0});
-		var comment_img = $.UI.create("ImageView",{image:"/images/comment.png"});
-		var comment_button = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:"Comment"});
+		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],right:0,p_id:entry.id});
+		var comment_img = $.UI.create("ImageView",{image:"/images/comment.png",touchEnabled:false});
+		var comment_button = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:"Comment",touchEnabled:false});
+		var img_container = $.UI.create("View",{classes:['wfill','hsize','padding'],backgroundColor:"#000"});
 		container.add(title_container);
 		container.add(description);
+		container.add(img_container);
 		if(imgArr.length != 0){
-			var image_container = $.UI.create("ScrollableView",{classes:['wfill','padding'],height:250,backgroundColor:"#000",top:"0",scrollingEnabled:true});
+			var imglength = imgArr.length;
+			var image_container = $.UI.create("ScrollableView",{classes:['wfill'],height:250,top:"0",scrollingEnabled:true});
+			var imgcount_container = $.UI.create("View",{classes:['wsize','hsize'],backgroundColor:"#99000000",zIndex:10,right:10,top:10,borderRadius:"5"});
+			var imgcount = $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,color:"#fff",text:"1/"+imglength});
+			imgcount_container.add(imgcount);
 			imgArr.forEach(function(entry1){
+				console.log(entry.img_path);
 				var small_image_container = $.UI.create("View",{classes:['wfill','hsize']});
-				var image = $.UI.create("ImageView",{classes:['wfill','hsize'],image:entry1.img_path});
-				small_image_container.add(image);
-				image_container.addView(small_image_container);
+				var image = $.UI.create("ImageView",{classes:['wfill','hsize'],image:entry1.img_path});		
+				small_image_container.add(image);		
+				image_container.addView(small_image_container);		
 				image.addEventListener("click",function(e){
 					COMMON.openWindow(Alloy.createController("zoomView",{img_path:e.source.image}).getView());
-				});
+				});					
+			});	
+			image_container.addEventListener("scrollend",function(e){
+				
 			});
-			container.add(image_container);
+			img_container.add(image_container);
+			img_container.add(imgcount_container);
 		}
 		container.add(hr);
 		container.add(comment_container);
@@ -79,7 +90,9 @@ function render_post(params){
 			addPage("my_profile","My Profile",{u_id:e.source.u_id});
 		});
 		comment_button_container.addEventListener("click",function(e){
-			addPage("post_comment","Post Comment");
+			Alloy.Globals.loading.startLoading("Loading...");			
+			addPage("post_comment","Post Comment",{p_id:e.source.p_id});
+			console.log("p_id"+JSON.stringify(e.source));
 		});	
 		post_index++;	
 	});
@@ -229,6 +242,7 @@ function getTimePost(p){
 	    postMonth='0'+postMonth;
 	}
 	var postCreatedDate = postYear+"-"+postMonth+"-"+postDate;
+	console.log(p);
 	var postHour = Math.floor(p.substring(11,13));
 	var postMinute = Math.floor(p.substring(14,16));
 	var postSecond = Math.floor(p.substring(17,19));
