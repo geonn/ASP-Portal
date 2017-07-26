@@ -144,7 +144,6 @@ var api = {
 };
 
 api.initialize(args);
-
 exports.clearNavRight = api.clearNavRight;
 exports.getContent = api.getContent;
 exports.getNavBar = api.getNavBar;

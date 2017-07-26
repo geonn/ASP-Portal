@@ -48,7 +48,8 @@ function addPage(pageName,title,args,rightNav){
 		    controller: pageName,
 		    navBar: {
 		        title: title,
-		        right: "menuButton"
+		        right: "menuButton",
+		        rightOptions:rightNav
 		    }
 		});			
 	}
