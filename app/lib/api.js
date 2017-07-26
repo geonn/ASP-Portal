@@ -230,12 +230,13 @@ exports.loadAPIBySequence = function (e){ //counter,
 				if(res.group != undefined){
 					var g_model =Alloy.createCollection("groups");
 					g_model.saveArray(res.group);
-				}else{
-					var arr = res.data; 
-			       	var model = Alloy.createCollection(api['model']);
-			        model.saveArray(arr);
-			        checker.updateModule(APILoadingList[counter]['checkId'],APILoadingList[counter]['model'],currentDateTime1());					
 				}
+				var arr = res.data; 
+		       	var model = Alloy.createCollection(api['model']);
+		        model.saveArray(arr);
+	        	var data = model.getData(true);
+				console.log("data:"+JSON.stringify(data));			        	
+		        checker.updateModule(APILoadingList[counter]['checkId'],APILoadingList[counter]['model'],currentDateTime1());					
 			}
 			//Ti.App.fireEvent('app:update_loading_text', {text: ((counter+1)/total_item*100).toFixed()+"% loading..."});
 			counter++;

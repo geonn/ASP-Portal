@@ -84,11 +84,18 @@ exports.definition = {
 	            db.close();
 	            collection.trigger('sync');			
 			},
-			getData: function(u_id, unlimit,offset){
+			getData: function(unlimit,offset){
+				var collection = this;
+				var columns = collection.config.columns;
+				
+				var names = [];
+				for (var k in columns) {
+	                names.push(k);
+	            }				
 				offset = offset || 0;
 				var sql_limit = (unlimit)?"":" limit "+offset+",10";
 				var collection = this;
-				var sql = "select * from group inner join staff on group.u_id = staff.u_id AND group.id = staff.g_id where group.status = 1 order by group.updated desc"+sql_limit;
+				var sql = "select * from groups";
 				db = Ti.Database.open(collection.config.adapter.db_name);
 				
 				if(Ti.Platform.osname != "android"){
@@ -96,15 +103,14 @@ exports.definition = {
 				}
                 
                 var res = db.execute(sql);
-                var arr = [];
-				var count = 0;
-				 
+                var arr = []; 
+                var count = 0;
+                var eval_column = "";
+            	for (var i=0; i < names.length; i++) {
+					eval_column = eval_column+names[i]+": res.fieldByName('"+names[i]+"'),";
+				};
                 while (res.isValidRow()){
-                	var row_count = res.fieldCount;
-                	
-                	arr[count] = {
-                		
-					};
+                	eval("arr[count] = {"+eval_column+"}");
                 	res.next();
 					count++;
                 }

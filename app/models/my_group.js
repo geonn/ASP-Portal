@@ -83,6 +83,13 @@ exports.definition = {
 	            collection.trigger('sync');			
 			},
 			getData: function(u_id, unlimit,offset){
+				var collection = this;
+				var columns = collection.config.columns;
+				
+				var names = [];
+				for (var k in columns) {
+	                names.push(k);
+	            }				
 				offset = offset || 0;
 				var sql_limit = (unlimit)?"":" limit "+offset+",10";
 				var collection = this;
@@ -92,17 +99,16 @@ exports.definition = {
 				if(Ti.Platform.osname != "android"){
 					db.file.setRemoteBackup(false);
 				}
+               	var res = db.execute(sql);
+                var arr = []; 
+                var count = 0;
                 
-                var res = db.execute(sql);
-                var arr = [];
-				var count = 0;
-				
+                var eval_column = "";
+            	for (var i=0; i < names.length; i++) {
+					eval_column = eval_column+names[i]+": res.fieldByName('"+names[i]+"'),";
+				};
                 while (res.isValidRow()){
-                	arr[count] = {
-                		id: res.fieldByName('id'),
-                		g_id: res.fieldByName('g_id'),
-                		u_id: res.fieldByName('u_id')
-					};
+                	eval("arr[count] = {"+eval_column+"}");
                 	res.next();
 					count++;
                 }
