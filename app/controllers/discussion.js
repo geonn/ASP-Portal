@@ -4,6 +4,7 @@ var buttonsExpanded = false;
 var post_index = 1;
 var refreshName = args.refreshName||null;
 var i_model = Alloy.createCollection("images_table");
+var countdown = require("countdown_between_2date.js");
 function init(){
 	offset = 0;
 	Alloy.Globals.loading.startLoading("Loading...");
@@ -31,7 +32,7 @@ function render_post(params){
 		var user_img = $.UI.create("ImageView",{classes:['padding'],width:45,height:45,image:"/images/user.png",u_id:entry.u_id});
 		var title_child_container = $.UI.create("View",{classes:['wfill','hfill','padding'],left:0});
 		var username = $.UI.create("Label",{classes:['wsize','hsize','h4','bold'],text:entry.u_name,left:"0",top:"0"});
-		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:"0",bottom:0,text:getTimePost(entry.created)});
+		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:"0",bottom:0,color:"#7CC6FF",text:countdown.getTimePost(entry.created)});
 		var more_container = $.UI.create("View",{classes:['hfill'],width:"30",right:"0",u_id:entry.u_id,p_id:entry.id,post_index:post_index});
 		var more = $.UI.create("ImageView",{right:"0",top:"0",image:'/images/btn-down.png',touchEnabled:false});
 		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],top:"0",text:entry.description,p_id:entry.id});
@@ -58,11 +59,12 @@ function render_post(params){
 				small_image_container.add(image);		
 				image_container.addView(small_image_container);		
 				image.addEventListener("click",function(e){
-					COMMON.openWindow(Alloy.createController("zoomView",{img_path:e.source.image}).getView());
-				});					
+					addPage("zoomView","Image Preview",{img_path:e.source.image});
+				});		
 			});	
 			image_container.addEventListener("scrollend",function(e){
 				
+
 			});
 			img_container.add(image_container);
 			img_container.add(imgcount_container);
@@ -77,7 +79,7 @@ function render_post(params){
 		title_child_container.add(username);
 		title_child_container.add(time);
 		more_container.add(more);
-		title_child_container.add(more_container);
+		title_child_container.add(more_container); 
 		title_container.add(title_child_container);
 		$.mother_view.add(container);
 		description.addEventListener("click",function(e){
@@ -194,6 +196,7 @@ function doLogout(){
 		Alloy.Globals.loading.stopLoading();		
 	},2000);
 }
+
 function parseDate(str) {
     var mdy = str.split('-');
     return new Date(mdy[0], mdy[1]-1, mdy[2]);
