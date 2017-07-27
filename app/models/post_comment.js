@@ -2,15 +2,16 @@ exports.definition = {
 	config: {
 		columns: {
 			id: "INTEGER PRIMARY KEY",
-			g_id: "INTEGER",
 			u_id: "INTEGER",
+			p_id: "INTEGER",
+			comment: "TEXT",
 			status: "INTEGER",
 			created: "DATE",
 			updated: "DATE"
 		},
 		adapter: {
 			type: "sql",
-			collection_name: "my_group"
+			collection_name: "post_comment"
 		}
 	},
 	extendModel: function(Model) {
@@ -83,23 +84,15 @@ exports.definition = {
 	            collection.trigger('sync');			
 			},
 			getData: function(u_id, unlimit,offset){
-				var collection = this;
-				var columns = collection.config.columns;
-				
-				var names = [];
-				for (var k in columns) {
-	                names.push(k);
-	            }				
 				offset = offset || 0;
 				var sql_limit = (unlimit)?"":" limit "+offset+",10";
 				var collection = this;
-				var sql = "select * from " + collection.config.adapter.collection_name;
+				var sql = "select * from post_comment where status = 1 order by updated";
 				db = Ti.Database.open(collection.config.adapter.db_name);
-				
 				if(Ti.Platform.osname != "android"){
 					db.file.setRemoteBackup(false);
 				}
-               	var res = db.execute(sql);
+                var res = db.execute(sql);
                 var arr = []; 
                 var count = 0;
                 
@@ -116,7 +109,34 @@ exports.definition = {
                 db.close();
                 collection.trigger('sync');
                 return arr;
-			},
+			},getDataByP_id: function(p_id){
+				var collection = this;
+				var sql = "select staff.name,post_comment.* from post_comment left outer join staff on staff.id=post_comment.u_id where post_comment.status = 1 and post_comment.p_id="+p_id;
+				db = Ti.Database.open(collection.config.adapter.db_name);
+				if(Ti.Platform.osname != "android"){
+					db.file.setRemoteBackup(false);
+				}
+                var res = db.execute(sql);
+                var arr = [];
+				var count = 0;   
+                while (res.isValidRow()){
+                	arr[count] = {
+						name:res.fieldByName("name"),
+						id:res.fieldByName("id"),
+						u_id:res.fieldByName("u_id"),
+						comment:res.fieldByName("comment"),
+						status:res.fieldByName("status"),
+						created:res.fieldByName("created"),
+						updated:res.fieldByName("updated"),
+					};
+                	res.next();
+					count++;
+                }                
+                res.close();
+                db.close();
+                collection.trigger('sync');
+                return arr;
+			}
 		});
 
 		return Collection;

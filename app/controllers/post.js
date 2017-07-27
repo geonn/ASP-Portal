@@ -3,7 +3,6 @@ var edit = args.edit || false;
 var p_id = args.p_id || "";
 var refreshName = args.refreshName || null;
 var num = 0;
-
 if(edit){
 	setData();
 }else{
@@ -12,6 +11,7 @@ if(edit){
 function setData(){
 	var model = Alloy.createCollection("post");
 	var res = model.getDataById(p_id);
+	console.log(JSON.stringify(res));
 	$.description.value = res.description;
 	$.u_name.text = res.u_name;
 }
@@ -50,7 +50,7 @@ function add_image() {
 		doneButtonTitle : "Okay",
 		title : "Gallery",
 		errorMessage: "Limit reached",
-		limit : 1,
+		limit : 3,
 		success : function(e) {
 			Ti.API.info("response is => " + JSON.stringify(e));
 			var imgArray = e.filePath.split(",");
@@ -97,8 +97,6 @@ function doSubmit(){
 	var description =$.description.value || "";
 	var u_id = Ti.App.Properties.getString('u_id')||"";
 	var g_id = "";
-	var image = $.mother_post.children[2];
-	var img = image.toImage();
 	if(description == ""){
 		alert("Please type something on field box");
 		return;
@@ -110,15 +108,27 @@ function doSubmit(){
 	}
 	var url = (edit)?"editPost":"doPost";
 	var params = (edit)?{id:p_id,title:"Public Post",u_id:u_id,description:description,status:1}:{u_id:u_id,g_id:"",title:"Public Post",description:description,status:1};
-	_.extend(params, {Filedata: img});	
 	Alloy.Globals.loading.startLoading("Posting");		
 	API.callByPost({url:url,params:params},{
 	onload:function(responceText){
 		var res = JSON.parse(responceText);
+		console.log("result:"+JSON.stringify(res));
+		var p_id = res.data[0].id;
+		for(var i = 0;i<$.imageMother.children.length;i++){
+			var image = $.imageMother.children[i].toImage();	
+			var params1 = {p_id:p_id,u_id:u_id};	
+			_.extend(params1, {Filedata: image});					
+			API.callByPost({url:"doPostImage",params:params1},{
+				onload:function(responceText){
+					console.log("success");
+				},onerror:function(err){}
+			});			
+		}
 		setTimeout(function(){
 			Alloy.Globals.loading.stopLoading();		
 			if(res.status == "success"){
 				if(refreshName != null){
+					console.log("asdf:"+refreshName);
 					Ti.App.fireEvent("discussion:refresh",{refreshName:refreshName});														
 				}else{
 					Ti.App.fireEvent("discussion:refresh");					
@@ -181,18 +191,4 @@ function doLogout(){
 		Ti.App.fireEvent('index:login');
 		Alloy.Globals.loading.stopLoading();		
 	},2000);
-}
-
-function chioce_group(e) {
-	var options = ["Public"];
-	var opts = {options: options, destructive: 0, title: 'Month'};
-	var dialog = Ti.UI.createOptionDialog(opts);
-	
-	dialog.addEventListener("click", function(e) {
-		if(e.index >= 0) {
-			$.lb_group.setText(options[e.index]);
-		}
-	});
-	
-	dialog.show();
 }

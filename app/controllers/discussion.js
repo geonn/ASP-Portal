@@ -39,23 +39,35 @@ function render_post(params){
 		var hr = $.UI.create("View",{classes:['hr']});
 		var comment_container = $.UI.create("View",{classes:['wfill','hsize','padding']});
 		var comment_count = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:entry.comment_count+" comments",left:"0"});
-		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],right:0});
-		var comment_img = $.UI.create("ImageView",{image:"/images/comment.png"});
-		var comment_button = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:"Comment"});
+		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],right:0,p_id:entry.id});
+		var comment_img = $.UI.create("ImageView",{image:"/images/comment.png",touchEnabled:false});
+		var comment_button = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:"Comment",touchEnabled:false});
+		var img_container = $.UI.create("View",{classes:['wfill','hsize','padding'],backgroundColor:"#000"});
 		container.add(title_container);
 		container.add(description);
+		container.add(img_container);
 		if(imgArr.length != 0){
-			var image_container = $.UI.create("ScrollableView",{classes:['wfill','padding'],height:250,backgroundColor:"#000",top:"0",scrollingEnabled:true});
+			var imglength = imgArr.length;
+			var image_container = $.UI.create("ScrollableView",{classes:['wfill'],height:250,top:"0",scrollingEnabled:true});
+			var imgcount_container = $.UI.create("View",{classes:['wsize','hsize'],backgroundColor:"#99000000",zIndex:10,right:10,top:10,borderRadius:"5"});
+			var imgcount = $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,color:"#fff",text:"1/"+imglength});
+			imgcount_container.add(imgcount);
 			imgArr.forEach(function(entry1){
+				console.log(entry.img_path);
 				var small_image_container = $.UI.create("View",{classes:['wfill','hsize']});
-				var image = $.UI.create("ImageView",{classes:['wfill','hsize'],image:entry1.img_path});
-				small_image_container.add(image);
-				image_container.addView(small_image_container);
+				var image = $.UI.create("ImageView",{classes:['wfill','hsize'],image:entry1.img_path});		
+				small_image_container.add(image);		
+				image_container.addView(small_image_container);		
 				image.addEventListener("click",function(e){
 					addPage("zoomView","Image Preview",{img_path:e.source.image});
-				});
+				});		
+			});	
+			image_container.addEventListener("scrollend",function(e){
+				
+
 			});
-			container.add(image_container);
+			img_container.add(image_container);
+			img_container.add(imgcount_container);
 		}
 		container.add(hr);
 		container.add(comment_container);
@@ -80,7 +92,9 @@ function render_post(params){
 			addPage("my_profile","My Profile",{u_id:e.source.u_id});
 		});
 		comment_button_container.addEventListener("click",function(e){
-			addPage("post_comment","Post Comment");
+			Alloy.Globals.loading.startLoading("Loading...");			
+			addPage("post_comment","Post Comment",{p_id:e.source.p_id});
+			console.log("p_id"+JSON.stringify(e.source));
 		});	
 		post_index++;	
 	});
@@ -181,4 +195,88 @@ function doLogout(){
 		Ti.App.fireEvent('index:login');
 		Alloy.Globals.loading.stopLoading();		
 	},2000);
+}
+
+function parseDate(str) {
+    var mdy = str.split('-');
+    return new Date(mdy[0], mdy[1]-1, mdy[2]);
+}
+
+function daydiff(first, second) {
+    return Math.round((second-first)/(1000*60*60*24));
+}
+
+function parseToSecond(hh,mm,ss) {
+	return (Math.floor(hh)*60+Math.floor(mm))*60+Math.floor(ss);
+}
+
+function getTimePost(p){
+	var toTime = new Date();
+	var dd = toTime.getDate();
+	var mm = toTime.getMonth()+1; //January is 0!
+	var yyyy = toTime.getFullYear();
+	if(dd<10) {
+	    dd='0'+dd;
+	} 
+	if(mm<10) {
+	    mm='0'+mm;
+	} 
+	var today = yyyy+'-'+mm+'-'+dd;
+	var hh = toTime.getHours();
+	var mi = +toTime.getMinutes();
+	var ss = toTime.getSeconds();
+	if(hh<10) {
+	    hh='0'+hh;
+	} 
+	if(mi<10) {
+	    mi='0'+mi;
+	}
+	if(ss<10) {
+		ss='0'+ss;
+	}
+	var nowTime = hh+":"+mi+":"+ss;
+	var postYear = Math.floor(p.substring(0,4));
+	var postMonth = Math.floor(p.substring(5,7));
+	var postDate = Math.floor(p.substring(8,10));
+	if(postDate<10) {
+	    postDate='0'+postDate;
+	} 
+	if(postMonth<10) {
+	    postMonth='0'+postMonth;
+	}
+	var postCreatedDate = postYear+"-"+postMonth+"-"+postDate;
+	console.log(p);
+	var postHour = Math.floor(p.substring(11,13));
+	var postMinute = Math.floor(p.substring(14,16));
+	var postSecond = Math.floor(p.substring(17,19));
+	if (postHour<10) {
+		postHour='0'+postHour;
+	}
+	if (postMinute<10) {
+		postMinute='0'+postMinute;
+	}
+	if (postSecond<10) {
+		postSecond='0'+postSecond;	
+	}
+	var postTime = +postHour+":"+postMinute+":"+postSecond;
+	var postSecond = parseToSecond(postHour,postMinute,postSecond);
+	var nowSecond = parseToSecond(hh,mi,ss);
+	var minusSecond = nowSecond-postSecond;
+	var hourDisplay = minusSecond/60/60;
+	var minutesDisplay = minusSecond/60;
+	var dayOfDistance = daydiff(parseDate(today), parseDate(postCreatedDate));
+	if (dayOfDistance==-1) {
+		return ("Yesterday"+"  "+postHour+":"+postMinute);
+	}else if (dayOfDistance==0) {
+		if (minusSecond<900) {
+			return ("Just now");	
+		}else if (minusSecond<3600) {
+			return (minutesDisplay.toFixed(0)+" mins");
+		}else{
+			var hr = (minusSecond<7200)?" hr":" hrs";
+			return (hourDisplay.toFixed(0)+hr);
+		}
+	}else if (dayOfDistance<-1) {
+		return (postCreatedDate+"  "+postHour+":"+postMinute);
+	}
 }

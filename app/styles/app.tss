@@ -17,9 +17,9 @@
         Ti.UI.PORTRAIT
     ]
 },
-"Window[platform=android]":{
-	//windowSoftInputMode: Ti.UI.Android.SOFT_INPUT_STATE_HIDDEN
-},
+"Window[platform=android]": {
+    windowSoftInputMode: Titanium.UI.Android.SOFT_INPUT_ADJUST_PAN
+}
 ".line":{
 	height: '1',
 	backgroundColor: '#404041',
