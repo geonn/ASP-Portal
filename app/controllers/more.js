@@ -36,7 +36,7 @@ function init() {
 		$.list_more.add(list_view);
 		list_view.addEventListener("click",function(e){
 			//if(e.source.pageIndex == 1){
-				addPage(e.source.pageIndex,e.source.pageTitle,{u_id:u_id});
+				addPage(e.source.pageIndex,e.source.pageTitle,{u_id:u_id},true);
 			//}
 		//	addPage(e.source.pageIndex,e.source.titileIndex);
 		});
