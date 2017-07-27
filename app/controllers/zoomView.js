@@ -1,5 +1,6 @@
 var args = arguments[0] || {};
 var blob = (OS_ANDROID)?require('To.ImageCache').remoteImage(args.img_path):args.img_path;
+//console.log(blob);
 function init(){
 	if(OS_ANDROID){
 		var TiTouchImageView = require('org.iotashan.TiTouchImageView');

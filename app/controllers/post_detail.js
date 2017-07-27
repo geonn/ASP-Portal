@@ -25,12 +25,12 @@ function setData(params){
 			small_image_container.add(image);
 			image_container.addView(small_image_container);
 			image.addEventListener("click",function(e){
-			COMMON.openWindow(Alloy.createController("zoomView",{img_path:e.source.image}).getView());
-			});
+				addPage("zoomView","Image Preview",{img_path:e.source.image});
+			});	
 		});
 		$.p_img.add(image_container);
 	}
-}
+}	
 
 function postOptions(){
 	var u_id = Ti.App.Properties.getString("u_id")||"";

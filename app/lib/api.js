@@ -332,3 +332,12 @@ function onErrorCallback(e) {
 	// Handle your errors in here
 	COMMON.createAlert("Error", e);
 };
+
+function doLogout(){
+	Alloy.Globals.loading.startLoading("Logout...");	
+	Ti.App.Properties.removeAllProperties();
+	setTimeout(function(e){
+		Ti.App.fireEvent('index:login');
+		Alloy.Globals.loading.stopLoading();		
+	},2000);
+}

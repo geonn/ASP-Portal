@@ -9,6 +9,7 @@ var u_model = Alloy.createCollection("staff");
 var u_res = u_model.getDataById(u_id);
 var i_model = Alloy.createCollection("images_table");
 var countdown = require("countdown_between_2date.js");
+console.log(u_res.mobile+" mobilenum");
 
 if(OS_ANDROID){
 	cell_width = Math.floor((pixelToDp(pwidth) / 2)) - 2;

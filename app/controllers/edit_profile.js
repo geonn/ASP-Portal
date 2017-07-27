@@ -4,7 +4,10 @@ var cell_width;
 var mod = require('bencoding.blur');
 var u_id = args.u_id || null;
 var u_model = Alloy.createCollection("staff");
-var u_res = u_model.getDataById(u_id); 
+var u_res = u_model.getDataById(u_id);
+var gender = "m";
+console.log("beng");
+console.log(JSON.stringify(u_res));
 
 if(OS_ANDROID){
 	cell_width = Math.floor((pixelToDp(pwidth) / 2)) - 2;
@@ -23,6 +26,50 @@ function init(){
 }
 
 init();
+
+function editProfile(){
+	var name = $.name.getValue();
+	var mobile = $.mobile.getValue();
+	var position = $.position.getValue();
+	if(name == ""){
+		alert("Name cannot be blank!");
+	}else if(mobile == ""){
+		alert("Mobile cannot be blank!");
+	}else if(position == ""){
+		alert("Position cannot be blank!");
+	}else{
+		console.log(name+" "+mobile+" "+position+" "+gender);
+		var params = {u_id:u_id, name:name, mobile:mobile, gender:gender, position:position};
+		API.callByPost({
+			url: "getEditProfile",
+			new: true,
+			params: params
+		},{
+		onload: function(res){
+			var res = JSON.parse(res);
+			var arr = res.data || null;
+			console.log("Edit Profile "+JSON.stringify(arr));
+			var checker = Alloy.createCollection('updateChecker'); 
+			var isUpdate = checker.getCheckerById("1");
+			API.callByPost({url:"getStaffList",params:{last_updated: isUpdate.updated}},{
+				onload:function(responseText){
+					var res = JSON.parse(responseText);
+					var arr = res.data || null;
+					var model = Alloy.createCollection("staff");
+					model.saveArray(arr);
+					model = null;
+					arr = null;
+					res =null;	
+					Alloy.Globals.loading.stopLoading();			
+				}
+			});
+		},
+		onerror: function(e){
+			console.log("Edit Profile fail!");
+		}});	
+	}
+}
+Ti.App.addEventListener("edit_profile:editProfile",editProfile);
 
 function userProfileImage(){
 	var img_blur = mod.createBasicBlurView({
@@ -129,15 +176,17 @@ function showEmail(){
 function male_chkbox(){
 	$.male.image = "/images/checkbox_checked.png";
 	$.female.image = "/images/checkbox_unchecked.png";
+	gender = "m";
 }
 
 function female_chkbox(){
 	$.female.image = "/images/checkbox_checked.png";
 	$.male.image = "/images/checkbox_unchecked.png";
+	gender = "f";
 }
 
-function editProfile(){
-	
+function chgPw(){
+	addPage("change_password","Change Password",{u_id:u_id},"change_password:savePw");
 }
 
 function renderPhotos(media) {

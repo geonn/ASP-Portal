@@ -86,6 +86,14 @@ function deleteOptions(params,c_id){
 	});	
 	dialog.show();
 }
+function doLogout(){
+	Alloy.Globals.loading.startLoading("Logout...");	
+	Ti.App.Properties.removeAllProperties();
+	setTimeout(function(e){
+		Ti.App.fireEvent('index:login');
+		Alloy.Globals.loading.stopLoading();		
+	},2000);
+}
 function deleteComment(c_id){
 	var params = {id:c_id};
 	API.callByPost({url:"removePostComment",params:params},{

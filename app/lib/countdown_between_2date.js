@@ -73,9 +73,9 @@ exports.getTimePost = function (p){
 		if (minusSecond<900) {
 			return ("Just now");	
 		}else if (minusSecond<3600) {
-			return (minutesDisplay.toFixed(0)+" mins");
+			return (minutesDisplay.toFixed(0)+" minutes ago");
 		}else{
-			var hr = (minusSecond<=3600)?" hr":" hrs";
+			var hr = (minusSecond<=3600)?" hour ago":" hours ago";
 			return (hourDisplay.toFixed(0)+hr);
 		}
 	}else if (dayOfDistance<-1) {
