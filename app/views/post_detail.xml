@@ -2,11 +2,11 @@
 	<View class="wfill hfill" backgroundColor="#fff">
 		<ScrollView id="mother_view" class="hfill wfill contwfill conthsize vert" bottom="50" backgroundColor="#fff">
 			<View class="wfill horz" height="75" top="0">
-				<View class="wsize hsize padding">
+				<View class="wsize hsize padding" onClick="goProfile">
 					<ImageView height="55" width="55" image="/images/user.png"></ImageView>
 				</View>
 				<View class="wsize vert" height="55">
-					<Label class="wsize hsize h4 bold" text="Name" left="0" id="user_name"></Label>
+					<Label class="wsize hsize h4 bold" text="Name" left="0" id="user_name" onClick="goProfile"></Label>
 					<Label class="wsize hsize h5 grey" text="23 minutes ago" color="#7CC6FF" left="0" top="10" id="date_time"></Label>
 				</View>
 				<View class="wfill hsize padding" right="0" onClick="postOptions">
@@ -22,7 +22,7 @@
 		</ScrollView>
 		<View class="wfill vert" height="50" bottom="0" zIndex="99" backgroundColor="#fff">
 			<View class="hr"></View>
-			<View class="wfill hfill">
+			<View class="wfill hfill" onClick="goComment">
 				<View class="wsize hsize" left="10">
 					<Label class="wsize hsize h5" color="#90949C" text="? comments" id="count_coment"></Label>
 				</View>

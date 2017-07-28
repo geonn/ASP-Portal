@@ -6,6 +6,7 @@ var u_id = args.u_id || null;
 var u_model = Alloy.createCollection("staff");
 var u_res = u_model.getDataById(u_id);
 var gender = "m";
+var blob = "";
 console.log("beng");
 console.log(JSON.stringify(u_res));
 
@@ -23,6 +24,11 @@ function init(){
 	$.position.setValue(u_res.position);
 	$.mobile.setHintText("Not yet Assign");
 	$.mobile.setValue(u_res.mobile);
+	if(u_res.gender == "m" || u_res.gender == null){
+		male_chkbox();
+	}else{
+		female_chkbox();
+	}
 }
 
 init();
@@ -38,8 +44,8 @@ function editProfile(){
 	}else if(position == ""){
 		alert("Position cannot be blank!");
 	}else{
-		console.log(name+" "+mobile+" "+position+" "+gender);
 		var params = {u_id:u_id, name:name, mobile:mobile, gender:gender, position:position};
+		_.extend(params, {Filedata: blob});	
 		API.callByPost({
 			url: "getEditProfile",
 			new: true,
@@ -63,6 +69,7 @@ function editProfile(){
 					Alloy.Globals.loading.stopLoading();			
 				}
 			});
+			alert("Edit Success!");
 		},
 		onerror: function(e){
 			console.log("Edit Profile fail!");
@@ -143,10 +150,11 @@ function userProfileImage(){
 					// image: e.media,
 					// zIndex: '1'
 				// });   
-				// img_view.add(img_blur);	
+				// img_view.add(img_blur);
 			};
-			console.log(img_view.children[0]);
-			console.log(img_view.children[0].blurRadius);
+			blob = img_view.children[2].children[0].toImage();
+			console.log(JSON.stringify(blob));
+			console.log(JSON.stringify(img_view.children[2].children[0]));
 	    },
 	    cancel: function (e) {
 	    	Ti.API.error('cancel: ' + JSON.stringify(e));
