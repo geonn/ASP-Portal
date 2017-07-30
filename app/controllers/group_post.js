@@ -1,3 +1,5 @@
+var args = arguments[0] || {};//args.g_id
+var model = Alloy.createCollection("groups");
 var cell_width;
 var pwidth = Titanium.Platform.displayCaps.platformWidth;
 
@@ -10,8 +12,12 @@ if(OS_ANDROID){
 $.img_view.setHeight(cell_width);
 
 function init(){
+	var arr = model.getData(args.g_id);
+	$.group_img.setImage(arr[0].image);
+	$.group_name.setText(arr[0].name);
+	
 	for(var i = 0;i<10;i++){
-		render_post();		
+		render_post();
 	}
 }
 

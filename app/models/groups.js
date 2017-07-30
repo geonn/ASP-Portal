@@ -84,7 +84,7 @@ exports.definition = {
 	            db.close();
 	            collection.trigger('sync');			
 			},
-			getData: function(unlimit,offset){
+			getData: function(g_id,unlimit,offset){
 				var collection = this;
 				var columns = collection.config.columns;
 				
@@ -95,7 +95,7 @@ exports.definition = {
 				offset = offset || 0;
 				var sql_limit = (unlimit)?"":" limit "+offset+",10";
 				var collection = this;
-				var sql = "select * from groups";
+				var sql = "select * from " + collection.config.adapter.collection_name + " WHERE id=" + g_id;
 				db = Ti.Database.open(collection.config.adapter.db_name);
 				
 				if(Ti.Platform.osname != "android"){

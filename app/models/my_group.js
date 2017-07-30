@@ -93,22 +93,23 @@ exports.definition = {
 				offset = offset || 0;
 				var sql_limit = (unlimit)?"":" limit "+offset+",10";
 				var collection = this;
-				var sql = "select * from " + collection.config.adapter.collection_name;
+				var sql = "select my_group.g_id, groups.name, groups.image from " + collection.config.adapter.collection_name + " INNER JOIN  groups on my_group.g_id = groups.id WHERE my_group.status = 1";
 				db = Ti.Database.open(collection.config.adapter.db_name);
 				
 				if(Ti.Platform.osname != "android"){
 					db.file.setRemoteBackup(false);
 				}
-               	var res = db.execute(sql);
-                var arr = []; 
-                var count = 0;
-                
-                var eval_column = "";
-            	for (var i=0; i < names.length; i++) {
-					eval_column = eval_column+names[i]+": res.fieldByName('"+names[i]+"'),";
-				};
+                var res = db.execute(sql);
+                var arr = [];
+				var count = 0;
+				
                 while (res.isValidRow()){
-                	eval("arr[count] = {"+eval_column+"}");
+                	var row_count = res.fieldCount;
+                	arr[count] = {
+                		g_id: res.fieldByName('g_id'),
+						g_name: res.fieldByName("name"),
+						g_image: res.fieldByName('image')
+					};
                 	res.next();
 					count++;
                 }

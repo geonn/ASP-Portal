@@ -129,6 +129,30 @@ exports.definition = {
                 db.close();
                 collection.trigger('sync');
                 return arr;
+			},searchStaff: function(name,unlimit,offset) {
+				offset = offset || 0;
+				var sql_limit = (unlimit)?"":" limit "+offset+",30";
+				var collection =this;
+				var sql = "select * from "+collection.config.adapter.collection_name+" where name like '" + name + "%' AND status = 1 order by name" + sql_limit;
+				db = Ti.Database.open(collection.config.adapter.db_name);
+				if(Ti.Platform.osname != "android"){
+					db.file.setRemoteBackup(false);
+				}
+                var res = db.execute(sql);
+                var arr = [];
+				var count = 0;   
+                while (res.isValidRow()){
+                	arr[count] = {
+                		id: res.fieldByName('id'),
+					    name: res.fieldByName('name'),
+					};
+                	res.next();
+					count++;
+                }
+                res.close();
+                db.close();
+                collection.trigger('sync');
+                return arr;
 			},saveArray:function(arr){
 				var collection = this;
 				var columns = collection.config.columns;

@@ -31,8 +31,16 @@ function add_image(e) {
 						height:Ti.UI.FILL,
 						form_type:"image"
 					});
+					var imgView2 = Ti.UI.createImageView({						
+						image: gallerypicker.decodeBitmapResource(imgArray[i], 640, 640),
+						nativePath:"file:/"+e.filePath,
+						width:Ti.UI.FILL,
+						height:Ti.UI.FILL,
+						form_type:"image"
+					});
 					$.imageGroup.removeAllChildren();
 					$.imageGroup.add(imgView);
+					$.imageGroup_big.add(imgView2);
 				}
 			}
 		},
@@ -99,8 +107,13 @@ function init(){
 	setTimeout(render,2000);
 }init();
 function render(){
+	if(offcount == 0) {
+		$.mother_view.removeAllChildren();
+	}
+	
 	var model = Alloy.createCollection("staff");
 	var arr = model.getDataForRenderStaffList(false,offcount);
+	
 	for(var i=0;i<arr.length||show_MotherView();i++){
 		var container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:0,staff:arr[i],check:false,position:i});
 		var small_container = $.UI.create("View",{classes:['hsize','horz'],width:"84%",left:"0",touchEnabled:false});
@@ -141,8 +154,8 @@ function scrollChecker(e){
 function doSubmit(){
 	var name = $.groupname.getValue() || "";
 	var u_id = Ti.App.Properties.getString("u_id") || "";
-	var before =Ti.Filesystem.getFile($.imageGroup.children[0].nativePath);
-	var encode = Titanium.Utils.base64encode($.imageGroup.toImage());
+	var before =Ti.Filesystem.getFile($.imageGroup_big.children[0].nativePath);
+	var encode = Titanium.Utils.base64encode($.imageGroup_big.toImage());
 	if(name == ""){
 		alert("Group name Cannot be null!!!");
 		return;
@@ -206,11 +219,44 @@ function showGMImagePicker(e) {
 	    }
 	});
 }
-
 function renderPhotos(media) {
     $.imageGroup.removeAllChildren();
+    $.imageGroup_big.removeAllChildren();
     for (var i=0; i < media.length; i++) {
     	var imgView =Ti.UI.createImageView({ image: media[i],top:0, width:Ti.UI.FILL, height: Ti.UI.FILL });
-		$.imageGroup.add(imgView);    	
+		$.imageGroup.add(imgView);
+		var imgView2 =Ti.UI.createImageView({ image: media[i],top:0, width:Ti.UI.FILL, height: Ti.UI.FILL });
+		$.imageGroup_big.add(imgView2);  	
 	};
 }
+$.staffName.listener('change', function(e){
+	if(e.source.value != "") {
+		$.mother_view.removeAllChildren();
+		offcount = 0;
+		
+		var model = Alloy.createCollection("staff");
+		var arr = model.searchStaff(e.source.value, false, 0);
+		
+		for(var i=0;i<arr.length||show_MotherView();i++){
+			var container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:0,staff:arr[i],check:false,position:i});
+			var small_container = $.UI.create("View",{classes:['hsize','horz'],width:"84%",left:"0",touchEnabled:false});
+			var image = $.UI.create("ImageView",{classes:['padding'],left:5,width:45,height:45,image:"/images/default_profile.png",touchEnabled:false});
+			var title = $.UI.create("Label",{classes:['wfill','hsize'],text:arr[i].name,touchEnabled:false});
+			var checkBox = $.UI.create("ImageView",{width:20,height:20,right:10,image:unchecker,touchEnabled:false});
+			if(OS_ANDROID){
+				title.ellipsize=true;
+				title.wordWrap=false;
+			}
+			small_container.add(image);
+			small_container.add(title);
+			container.add(small_container);
+			container.add(checkBox);	
+			$.mother_view.add(container);
+			container.addEventListener("click",function(e){	
+				e.source.children[1].image =(!e.source.check)?checker:unchecker;
+				e.source.check = !e.source.check;
+				showBar(e.source.staff,e.source.position);
+			});			
+		}
+	}
+});

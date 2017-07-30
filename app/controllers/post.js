@@ -3,6 +3,11 @@ var edit = args.edit || false;
 var p_id = args.p_id || "";
 var refreshName = args.refreshName || null;
 var num = 0;
+var u_id = Ti.App.Properties.getString("u_id")||"";
+var my_group = Alloy.createCollection("my_group");
+var g_id = [];
+g_id[0] = "";
+
 if(edit){
 	setData();
 }else{
@@ -11,7 +16,7 @@ if(edit){
 function setData(){
 	var model = Alloy.createCollection("post");
 	var res = model.getDataById(p_id);
-	console.log(JSON.stringify(res));
+	
 	$.description.value = res.description;
 	$.u_name.text = res.u_name;
 }
@@ -191,4 +196,28 @@ function doLogout(){
 		Ti.App.fireEvent('index:login');
 		Alloy.Globals.loading.stopLoading();		
 	},2000);
+}
+function select_group(e) {
+	var options = [];
+	options[0] = "Public";
+	var arr = my_group.getData(u_id);
+	console.log("arr" + JSON.stringify(arr)+" "+arr[0].g_name);
+	var count = 1;
+	arr.forEach(function(data) {
+		options[count] = data.g_name;
+		g_id[count] = data.g_id;
+		count++;
+	});
+	
+	var opts = {options: options, destructive: 0, title: 'Year'};
+	var dialog = Ti.UI.createOptionDialog(opts);
+	
+	dialog.addEventListener("click", function(e) {
+		if(e.index >= 0) {
+			$.lb_group.setText(options[e.index]);
+			console.log($.lb_goup.text);
+		}
+	});
+	
+	dialog.show();
 }

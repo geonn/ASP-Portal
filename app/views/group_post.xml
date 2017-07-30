@@ -1,10 +1,10 @@
 <Alloy>
 	<ScrollView id="mother_view" class="hfill wfill contwfill conthsize vert" backgroundColor="#EEF3F6">
 		<View class="wfill" id="img_view" backgroundColor="#000">
-			<ImageView class="wfill hsize" image="/images/image_example1.png" id="group_img"></ImageView>
+			<ImageView class="wfill hsize" image="/images/group_picture_square.png" id="group_img"></ImageView>
 			<View class="wsize hsize vert" left="10" bottom="5" backgroundColor="66787878">
-				<Label class="wsize hsize h3" left="0" id="group_name" text="IT Department" color="#e5e5e5"></Label>
-				<Label class="wsize hsize h4" left="0" id="group_member" text="24 Members" color="#e5e5e5"></Label>
+				<Label class="wsize hsize h3" left="0" id="group_name" text="Group Name" color="#e5e5e5"></Label>
+				<Label class="wsize hsize h4" left="0" id="group_member" text="Members" color="#e5e5e5"></Label>
 			</View>
 		</View>
 		<View class="wfill hsize" backgroundColor="#fff">

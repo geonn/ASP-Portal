@@ -49,20 +49,22 @@ function render_post(params){
 			var imglength = imgArr.length;
 			var image_container = $.UI.create("ScrollableView",{classes:['wfill'],height:250,top:"0",scrollingEnabled:true});
 			var imgcount_container = $.UI.create("View",{classes:['wsize','hsize'],backgroundColor:"#99000000",zIndex:10,right:10,top:10,borderRadius:"5"});
-			var imgcount = $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,color:"#fff",text:"1/"+imglength});
+			var imgcount = (imglength > 1) ? $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,color:"#fff",text:"1/"+imglength,imglength:imglength}) : $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,imglength:imglength});
 			imgcount_container.add(imgcount);
 			imgArr.forEach(function(entry1){
-				console.log(entry.img_path);
 				var small_image_container = $.UI.create("View",{classes:['wfill','hsize']});
-				var image = $.UI.create("ImageView",{classes:['wfill','hsize'],image:entry1.img_path});		
-				small_image_container.add(image);		
+				var image = $.UI.create("ImageView",{classes:['wfill','hsize'], defaultImage: "/images/loading.png",image:entry1.img_path});		
+				small_image_container.add(image);
 				image_container.addView(small_image_container);		
 				image.addEventListener("click",function(e){
 					COMMON.openWindow(Alloy.createController("zoomView",{img_path:e.source.image}).getView());
-				});					
-			});	
+				});
+			});
 			image_container.addEventListener("scrollend",function(e){
-				
+				if(e.currentPage != undefined && imgcount.imglength > 1) {
+					var count = (e.currentPage + 1) + "/" + imgcount.imglength;
+					imgcount.setText(count);
+				}
 			});
 			img_container.add(image_container);
 			img_container.add(imgcount_container);
