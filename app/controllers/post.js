@@ -88,6 +88,7 @@ function showGMImagePicker() {
 		// allowMultiple: false, // default is true
 	    success: function (e) {
 	        Ti.API.error('successaaa: ' + JSON.stringify(e));
+	        console.log("native path:"+JSON.stringify(e));
 	        renderPhotos(e.media);
 	    },
 	    cancel: function (e) {
@@ -122,7 +123,9 @@ function doSubmit(){
 		for(var i = 0;i<$.imageMother.children.length;i++){
 			var image = $.imageMother.children[i].toImage();	
 			var params1 = {p_id:p_id,u_id:u_id};	
-			_.extend(params1, {Filedata: image});					
+			console.log("image:"+JSON.stringify(image));
+			_.extend(params1, {Filedata: image});	
+			console.log("image:"+JSON.stringify(params1));				
 			API.callByPost({url:"doPostImage",params:params1},{
 				onload:function(responceText){
 					console.log("success");

@@ -1,5 +1,6 @@
-var list_title = ["My Profile","Edit Profile" , "Groups", "Apply Leave", "Calendar", "Favourite Post", "Feed Back", "Log Out"];
+var list_title = ["My Profile","Edit Profile","Groups","Apply Leave","Calendar","Favourite Post","Feed Back","Log Out"];
 var list_controller = ['my_profile','edit_profile','group_view','','calendar','','group_post',''];
+var list_button = [,"edit_profile:editProfile","addGroup:doSubmit",,,,,];
 var u_id = Ti.App.Properties.getString("u_id")||"";
 
 function init() {
@@ -7,6 +8,7 @@ function init() {
 		var list_view = $.UI.create("View", {
 			classes: ['wfill', 'padding'],
 			pageIndex:list_controller[i],
+			pageButton:list_button[i],
 			pageTitle:list_title[i],
 			titileIndex:list_title[i],
 			bottom: 0,
@@ -35,10 +37,11 @@ function init() {
 		list_view.add(list_label);
 		$.list_more.add(list_view);
 		list_view.addEventListener("click",function(e){
-			//if(e.source.pageIndex == 1){
+			if (e.source.pageButton != undefined) {
+				addPage(e.source.pageIndex,e.source.pageTitle,{u_id:u_id},e.source.pageButton);
+			}else{
 				addPage(e.source.pageIndex,e.source.pageTitle,{u_id:u_id});
-			//}
-		//	addPage(e.source.pageIndex,e.source.titileIndex);
+			};
 		});
 	}
 }

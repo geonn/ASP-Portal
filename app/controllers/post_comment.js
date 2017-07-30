@@ -1,6 +1,8 @@
 var args = arguments[0] || {};
 var p_id = args.p_id || null;
 var u_id = Ti.App.Properties.getString('u_id')||null;
+var countdown = require("countdown_between_2date.js");
+
 function add_image(){}
 function init() {
 	if(p_id == null){
@@ -39,8 +41,8 @@ function render_comment(params){
 		var profileImg = $.UI.create("ImageView",{classes:['padding'],width:55,height:55,backgroundColor:"#000"});
 		var small_container = $.UI.create("View",{classes:['wfill','hsize','vert'],touchEnabled:false,top:5});
 		var name = $.UI.create("Label",{classes:['wsize','hsize','h4','bold'],left:0,top:0,text:entry.name});
-		var comment = $.UI.create("Label",{classes:['wsize','hsize','h4'],left:0,touchEnabled:false,text:entry.comment});
-		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:0,touchEnabled:false,text:"10 mins"});	
+		var comment = $.UI.create("Label",{classes:['wsize','hsize','h4'],left:0,right:10,touchEnabled:false,text:entry.comment});
+		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:0,touchEnabled:false,color:"#7CC6FF",text:countdown.getTimePost(entry.created)});	
 		small_container.add(name);
 		small_container.add(comment);
 		small_container.add(time);
@@ -72,6 +74,8 @@ function doSubmit(){
 		onload:function(responseText){
 			var res = JSON.parse(responseText);
 			console.log("comment:"+JSON.stringify(res));
+			init();
+			$.comment.setValue("");
 		},onerror:function(err){}
 	});
 }
@@ -85,6 +89,14 @@ function deleteOptions(params,c_id){
 		}
 	});	
 	dialog.show();
+}
+function doLogout(){
+	Alloy.Globals.loading.startLoading("Logout...");	
+	Ti.App.Properties.removeAllProperties();
+	setTimeout(function(e){
+		Ti.App.fireEvent('index:login');
+		Alloy.Globals.loading.stopLoading();		
+	},2000);
 }
 function deleteComment(c_id){
 	var params = {id:c_id};

@@ -10,7 +10,7 @@
 				<View class="wsize hsize vert" left="0">
 					<View class="wfill hsize" left="0" onClick="hower_name">
 						<View class="img_padding" height="30" width="30" left="0">
-							<ImageView image="/images/icon_female.png"></ImageView>
+							<ImageView id="gender" image="/images/icon_female.png"></ImageView>
 						</View>	
 						<Label height="20" color="#fff" left="35" id="user_name" text="" platform="ios"></Label>
 						<Label height="20" color="#fff" left="35" id="user_name" text="" ellipsize="true" wordWrap="false" platform="android"></Label>

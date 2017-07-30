@@ -1,17 +1,6 @@
 var args = arguments[0] || {};
-var blob = require('To.ImageCache').remoteImage(args.img_path);
-var animation_height0=Ti.UI.createAnimation({duration:200,height:0});
-var animation_height70=Ti.UI.createAnimation({duration:200,height:70});
-var barextend = true;
-
-function topbarShow(){
-	if(barextend){
-		$.topbar.animate(animation_height0);
-	}else{
-		$.topbar.animate(animation_height70);
-	}
-	barextend=!barextend;
-}
+var blob = (OS_ANDROID)?require('To.ImageCache').remoteImage(args.img_path):args.img_path;
+//console.log(blob);
 function init(){
 	if(OS_ANDROID){
 		var TiTouchImageView = require('org.iotashan.TiTouchImageView');

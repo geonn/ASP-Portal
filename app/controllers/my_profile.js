@@ -8,6 +8,8 @@ var mod = require('bencoding.blur');
 var u_model = Alloy.createCollection("staff");
 var u_res = u_model.getDataById(u_id);
 var i_model = Alloy.createCollection("images_table");
+var countdown = require("countdown_between_2date.js");
+console.log(u_res.mobile+" mobilenum");
 
 if(OS_ANDROID){
 	cell_width = Math.floor((pixelToDp(pwidth) / 2)) - 2;
@@ -45,6 +47,11 @@ function init(){
 	p_model = null;
 	render_post(p_res);
 	Alloy.Globals.loading.startLoading("Loading...");	
+	if (u_res.gender == "m") {
+		$.gender.image = "/images/icon_male.png";
+	}else{
+		$.gender.image = "/images/icon_female.png";
+	};
 }
 function setData(u_res){
 	$.user_name.setText(u_res.name);
@@ -106,16 +113,16 @@ function render_post(params){
 		var user_img = $.UI.create("ImageView",{classes:['padding'],width:45,height:45,image:"/images/user.png",u_id:entry.u_id});
 		var title_child_container = $.UI.create("View",{classes:['wfill','hfill','padding'],left:0});
 		var username = $.UI.create("Label",{classes:['wsize','hsize','h4','bold'],text:entry.u_name,left:"0",top:"0"});
-		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:"0",bottom:0,color:"#7CC6FF",text:getTimePost(entry.created)});
+		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:"0",bottom:0,color:"#7CC6FF",text:countdown.getTimePost(entry.created),p_id:entry.id});
 		var more_container = $.UI.create("View",{classes:['hfill'],width:"30",right:"0",u_id:entry.u_id,p_id:entry.id,post_index:post_index});
 		var more = $.UI.create("ImageView",{right:"0",top:"0",image:'/images/btn-down.png',touchEnabled:false});
 		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],top:"0",text:entry.description,p_id:entry.id});
 		var hr = $.UI.create("View",{classes:['hr']});
 		var comment_container = $.UI.create("View",{classes:['wfill','hsize','padding']});
-		var comment_count = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:entry.comment_count+" comments",left:"0"});
-		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],right:0});
-		var comment_img = $.UI.create("ImageView",{image:"/images/comment.png"});
-		var comment_button = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:"Comment"});
+		var comment_count = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:entry.comment_count+" comments",left:"0",p_id:entry.id});
+		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],right:0,p_id:entry.id});
+		var comment_img = $.UI.create("ImageView",{image:"/images/comment.png",p_id:entry.id});
+		var comment_button = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:"Comment",p_id:entry.id});
 		container.add(title_container);
 		container.add(description);
 		if(imgArr.length != 0){
@@ -147,6 +154,9 @@ function render_post(params){
 		description.addEventListener("click",function(e){
 			addPage("post_detail","Post Detail",{p_id:e.source.p_id});
 		});
+		time.addEventListener("click",function(e){
+			addPage("post_detail","Post Detail",{p_id:e.source.p_id});
+		});
 		more_container.addEventListener("click",function(e){
  			postOptions({u_id:e.source.u_id,p_id:e.source.p_id,post_index:e.source.post_index});
 		});
@@ -154,8 +164,13 @@ function render_post(params){
 			// Alloy.Globals.loading.startLoading("Loading...");
 			// addPage("my_profile","My Profile",{u_id:e.source.u_id});
 		// });
+		comment_count.addEventListener("click",function(e){
+			Alloy.Globals.loading.startLoading("Loading...");			
+			addPage("post_comment","Post Comment",{p_id:e.source.p_id});
+		});	
 		comment_button_container.addEventListener("click",function(e){
-			addPage("post_comment","Post Comment");
+			Alloy.Globals.loading.startLoading("Loading...");			
+			addPage("post_comment","Post Comment",{p_id:e.source.p_id});
 		});	
 		post_index++;	
 	});
@@ -194,89 +209,6 @@ function deletePost(p_id,p_index){
 			}
 		});
 	});
-}
-
-function parseDate(str) {
-    var mdy = str.split('-');
-    return new Date(mdy[0], mdy[1]-1, mdy[2]);
-}
-
-function daydiff(first, second) {
-    return Math.round((second-first)/(1000*60*60*24));
-}
-
-function parseToSecond(hh,mm,ss) {
-	return (Math.floor(hh)*60+Math.floor(mm))*60+Math.floor(ss);
-}
-
-function getTimePost(p){
-	var toTime = new Date();
-	var dd = toTime.getDate();
-	var mm = toTime.getMonth()+1; //January is 0!
-	var yyyy = toTime.getFullYear();
-	if(dd<10) {
-	    dd='0'+dd;
-	} 
-	if(mm<10) {
-	    mm='0'+mm;
-	} 
-	var today = yyyy+'-'+mm+'-'+dd;
-	var hh = toTime.getHours();
-	var mi = +toTime.getMinutes();
-	var ss = toTime.getSeconds();
-	if(hh<10) {
-	    hh='0'+hh;
-	} 
-	if(mi<10) {
-	    mi='0'+mi;
-	}
-	if(ss<10) {
-		ss='0'+ss;
-	}
-	var nowTime = hh+":"+mi+":"+ss;
-	var postYear = Math.floor(p.substring(0,4));
-	var postMonth = Math.floor(p.substring(5,7));
-	var postDate = Math.floor(p.substring(8,10));
-	if(postDate<10) {
-	    postDate='0'+postDate;
-	} 
-	if(postMonth<10) {
-	    postMonth='0'+postMonth;
-	}
-	var postCreatedDate = postYear+"-"+postMonth+"-"+postDate;
-	var postHour = Math.floor(p.substring(11,13));
-	var postMinute = Math.floor(p.substring(14,16));
-	var postSecond = Math.floor(p.substring(17,19));
-	if (postHour<10) {
-		postHour='0'+postHour;
-	}
-	if (postMinute<10) {
-		postMinute='0'+postMinute;
-	}
-	if (postSecond<10) {
-		postSecond='0'+postSecond;	
-	}
-	var postTime = +postHour+":"+postMinute+":"+postSecond;
-	var postSecond = parseToSecond(postHour,postMinute,postSecond);
-	var nowSecond = parseToSecond(hh,mi,ss);
-	var minusSecond = nowSecond-postSecond;
-	var hourDisplay = minusSecond/60/60;
-	var minutesDisplay = minusSecond/60;
-	var dayOfDistance = daydiff(parseDate(today), parseDate(postCreatedDate));
-	if (dayOfDistance==-1) {
-		return ("Yesterday"+"  "+postHour+":"+postMinute);
-	}else if (dayOfDistance==0) {
-		if (minusSecond<900) {
-			return ("Just now");	
-		}else if (minusSecond<3600) {
-			return (minutesDisplay.toFixed(0)+" mins");
-		}else{
-			var hr = (minusSecond<7200)?" hr":" hrs";
-			return (hourDisplay.toFixed(0)+hr);
-		}
-	}else if (dayOfDistance<-1) {
-		return (postCreatedDate+"  "+postHour+":"+postMinute);
-	}
 }
 
 function createMessage(t,e){

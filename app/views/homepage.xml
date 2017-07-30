@@ -1,14 +1,14 @@
 <Alloy>
     <View id="homepage">
   		<View class="wfill hfill vert">
-		    <ScrollableView id="scrollableView" onScrollend="doScroll" bottom="50" scrollingEnabled="true">    	
-		    	<View class="wfill hfill" id="discussion" backgroundColor='#eff3f6'>		    		
+		    <ScrollableView id="scrollableView" onScrollend="doScroll" top="50" scrollingEnabled="true">    	
+		    	<View class="wfill hfill" id="discussion" bottom="50" backgroundColor='#eff3f6'>		    		
 		    	</View>
 		    	<View class="wfill hfill" id="notification"></View>
 		    	<View id="more" backgroundColor="#fff"></View>
 	    	</ScrollableView>
     	</View>
-    	<View class="wfill" height="50" backgroundColor="#fff" bottom="0" zIndex="1" id="bottomNavigation" platform="android">
+    	<View class="wfill" height="50" backgroundColor="#fff" top="0" zIndex="1" id="bottomNavigation" platform="android">
     		<View class="hsize" width="33%" onClick="scrollto" page="0" left="0" zIndex="2">
     			<ImageView class="wsize hsize" touchEnabled="false" image="/images/navigationButton/0_green.png"></ImageView>
     		</View>
@@ -19,7 +19,7 @@
     			<ImageView class="wsize hsize" touchEnabled="false" image='/images/navigationButton/2_grey.png'></ImageView>
     		</View>    		    		
     	</View>
-    	<View class="wfill" height="50" backgroundColor="#fff" bottom="0" zIndex="1" id="bottomNavigation" platform="ios">
+    	<View class="wfill" height="50" backgroundColor="#fff" top="0" zIndex="1" id="bottomNavigation" platform="ios">
     		<View class="hsize" width="33%" onClick="scrollto" page="0" left="0" zIndex="2">
     			<ImageView height="30" width="30" touchEnabled="false" image="/images/navigationButton/0_green.png"></ImageView>
     		</View>
@@ -29,6 +29,7 @@
     		<View class="hsize" width="33%" onClick="scrollto" page="2" right="0">
     			<ImageView height="30" width="30" touchEnabled="false" image='/images/navigationButton/2_grey.png'></ImageView>
     		</View>    		    		
-    	</View> 
+    	</View>
+    	<View class="hr" backgroundColor="#EEF3F6" top="50"></View>
     </View>
 </Alloy>

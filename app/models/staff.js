@@ -10,7 +10,7 @@ exports.definition = {
 			"gender": "TEXT",
 			"dob": "INTEGER",
 			"email": "TEXT",
-			"mobile": "INTEGER",
+			"mobile": "TEXT",
 			"password": "TEXT",
 			"position": "TEXT",
 			"last_login": "TEXT",

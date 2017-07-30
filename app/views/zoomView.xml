@@ -1,11 +1,3 @@
 <Alloy>
-	<Window id="win" backgroundColor="#000">
-		<View class="wfill hfill" backgroundColor="#000" id="imageMother">
-			<View class="wfill horz" height="70" id="topbar" zIndex="10" top="0">
-				<View class="wsize hsize" borderColor="#fff" borderRadius="10" top="10" left="10" onClick="closeWindow">
-					<Label class="wsize hsize padding" top="5" bottom="5" text="Back" color="#fff" />
-				</View>					
-			</View>
-		</View>
-	</Window>
+	<View class="wfill hfill" backgroundColor="#000" id="imageMother"></View>
 </Alloy>
