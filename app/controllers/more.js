@@ -2,6 +2,8 @@ var list_title = ["My Profile","Edit Profile","Groups","Apply Leave","Calendar",
 var list_controller = ['my_profile','edit_profile','group_view','','calendar','','group_post',''];
 var list_button = [,"edit_profile:editProfile","addGroup:doSubmit",,,,,];
 var u_id = Ti.App.Properties.getString("u_id")||"";
+var u_model = Alloy.createCollection("staff");
+var u_res = u_model.getDataById(u_id);
 
 function init() {
 	for(var i = 0; i < list_title.length; i++) {
@@ -20,8 +22,13 @@ function init() {
 			width: 38,
 			height: 38
 		});
+		if(i == 0){
+			var user_img = (u_res.img_path != "")?u_res.img_path:"/images/more_page/more" + i + ".png";
+		}else{
+			var user_img = "/images/more_page/more" + i + ".png";
+		}
 		var img = $.UI.create("ImageView", {
-			image: "/images/more_page/more" + i + ".png",
+			image: user_img,
 			classes: ['wfill', 'hfill'],
 			touchEnabled:false
 		});
@@ -31,11 +38,20 @@ function init() {
 			touchEnabled:false,
 			text: list_title[i]
 		});
+		var hr = $.UI.create("View",{
+			classes: ['hr'],
+			top: '10',
+			right: '10',
+			left: '10',
+			backgroundColor: '#EDF3F6'
+		});
 		
 		view_img.add(img);
 		list_view.add(view_img);
 		list_view.add(list_label);
 		$.list_more.add(list_view);
+		(i == 0)?$.list_more.add(hr):"";
+		
 		list_view.addEventListener("click",function(e){
 			if (e.source.pageButton != undefined) {
 				addPage(e.source.pageIndex,e.source.pageTitle,{u_id:u_id},e.source.pageButton);

@@ -19,9 +19,7 @@ function scrollChecker(e){
 	var theEnd = $.mother_view.rect.height;
 	var total = (OS_ANDROID)?pixelToDp(e.y)+e.source.rect.height: e.y+e.source.rect.height;
 	var nearEnd = theEnd - 200;
-	console.log(theEnd+"	"+total);
 	if (total >= nearEnd){
-		console.log("go");
 		getData();
 	}
 }
@@ -59,15 +57,12 @@ function render_post(params){
 				small_image_container.add(image);
 				image_container.addView(small_image_container);		
 				image.addEventListener("click",function(e){
-<<<<<<< HEAD
 					addPage("zoomView","Image Preview",{img_path:e.source.imageBig});
-=======
 					try {
 						addPage("zoomView","Image Preview",{img_path:e.source.image});
 					}catch(e) {
 						//
 					}
->>>>>>> b17fdd7a01b54079cdcd8ba545df42117116b79c
 				});
 				small_image_container = undefined;
 				image = undefined;
