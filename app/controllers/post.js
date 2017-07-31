@@ -21,6 +21,10 @@ function setData(){
 	$.u_name.text = res.u_name;
 }
 function mediaOptions(){
+	if($.imageMother.children.length > 2){
+		alert("Limit reached!\nPlease remove image of bottom to add new image.");
+		return;
+	}	
 	var options = ['Camera','Gallery','Cancel'];
 	var opts = {cancel: 2,options:options,destructive: 0,title: 'Options'};	
 	var dialog = Ti.UI.createOptionDialog(opts);	
@@ -64,6 +68,7 @@ function add_image() {
 				if(imgArray[i]){
 					var imgView = Ti.UI.createImageView({
 						top:'10dp',
+						classes:['wfill','hsize'],
 						image:"file://"+imgArray[i],
 					});
 					imgView.addEventListener("longclick",function(e1){
@@ -146,7 +151,7 @@ function doSubmit(){
 				alert("Something wrong!");
 				Alloy.Globals.pageFlow.back();
 			}			
-		},2000);
+		},3000);
 	},onerror:function(err){}});
 }
 function renderPhotos(media) {
