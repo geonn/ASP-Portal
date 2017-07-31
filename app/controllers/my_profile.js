@@ -9,7 +9,6 @@ var u_model = Alloy.createCollection("staff");
 var u_res = u_model.getDataById(u_id);
 var i_model = Alloy.createCollection("images_table");
 var countdown = require("countdown_between_2date.js");
-console.log(u_res.mobile+" mobilenum");
 
 if(OS_ANDROID){
 	cell_width = Math.floor((pixelToDp(pwidth) / 2)) - 2;
@@ -21,7 +20,7 @@ var img_blur = mod.createBasicBlurView({
 	width:Ti.UI.FILL,
 	height:"200%",
 	blurRadius:10,
-	image: '/images/profile_example.jpg'
+	image: u_res.img_path
 });
 
 $.testing.setHeight(cell_width);
@@ -58,6 +57,7 @@ function setData(u_res){
 	$.user_email.setText(u_res.email);
 	$.user_position.setText(u_res.position||"Not yet Assign");
 	$.user_contact.setText(u_res.mobile||"Not yet Assign");	
+	$.img.image = u_res.img_path;
 }
 
 function hower_name(){
@@ -134,7 +134,7 @@ function render_post(params){
 				image_container.addView(small_image_container);
 				image.addEventListener("click",function(e){
 					try {
-						COMMON.openWindow(Alloy.createController("zoomView",{img_path:e.source.image}).getView());
+						addPage("zoomView","Image Preview",{img_path:e.source.image});
 					}catch(e) {
 						//
 					}
