@@ -9,7 +9,7 @@ function init(){
 			maxZoom:5,
 			minZoom:1,
 			zIndex:9,
-		});			
+		});
 		$.imageMother.add(imageView);
 	}else{
 		var Ziv = Ti.UI.createScrollView({

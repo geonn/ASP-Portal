@@ -1,16 +1,41 @@
 var args = arguments[0] || {};
 var u_id = args.u_id || null;
-var u_model = Alloy.createCollection("staff");
-var u_res = u_model.getDataById(u_id);
-var currentPW = u_res.password;
-console.log(currentPW);
 
 function savePw(){
-	pw1 = $.password1.getValue;
-	pw2 = $.password1.getValue;
-	pw3 = $.password1.getValue;
-	if (pw1 == currentPW) {
-		console.log(pw1+" "+pw2+" "+pw3);	
-	};
+	pw1 = $.password1.getValue();
+	pw2 = $.password2.getValue();
+	pw3 = $.password3.getValue();
+	console.log(u_id+": "+pw1+" "+pw2+" "+pw3);
+	
+	if(pw1 == "" || pw2 == "" || pw3 ==""){
+		alert("Please fill in all text field!!!");
+	}else{
+		var params = {u_id:u_id, current_password:pw1, password:pw2, password2:pw3};
+		API.callByPost({
+			url: "changePassword",
+			new: true,
+			params: params
+		},{
+		onload: function(res){
+			var res = JSON.parse(res);
+			var arr = res.status || null;
+			console.log("Change Password "+JSON.stringify(arr));
+			if (arr == "error") {
+				alert("Current password wrong or New password are not match");
+			}else{
+				alert("Password edit success");
+				Alloy.Globals.pageFlow.back();	
+			};
+		},
+		onerror: function(e){
+			var res = JSON.parse(res);
+			var arr = res.data || null;
+			console.log("Edit Profile fail!");
+			alert(arr);
+			res = null;
+			arr = null;
+		}});	
+	}
+	
 }
 Ti.App.addEventListener("change_password:savePw",savePw);
