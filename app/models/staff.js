@@ -18,7 +18,8 @@ exports.definition = {
 			"deviceToken": "TEXT",
 			"status": "INTEGER",
 			"created": "TEXT",
-			"updated": "TEXT"
+			"updated": "TEXT",
+			"img_path": "TEXT"
 		},
 		adapter: {
 			type: "sql",
@@ -85,7 +86,8 @@ exports.definition = {
 					    deviceToken: res.fieldByName('deviceToken'),
 					    status: res.fieldByName('status'),
 					    created: res.fieldByName('created'),
-					    updated: res.fieldByName('updated')
+					    updated: res.fieldByName('updated'),
+					    img_path: res.fieldByName('img_path')
 					};
                 	res.next();
 					count++;
@@ -122,7 +124,8 @@ exports.definition = {
 					    deviceToken: res.fieldByName('deviceToken'),
 					    status: res.fieldByName('status'),
 					    created: res.fieldByName('created'),
-					    updated: res.fieldByName('updated')
+					    updated: res.fieldByName('updated'),
+					    img_path: res.fieldByName('img_path')
 					};
                 }
                 res.close();

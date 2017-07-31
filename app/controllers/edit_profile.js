@@ -83,7 +83,7 @@ function userProfileImage(){
 		width:Ti.UI.FILL,
 		height:"200%",
 		blurRadius:10,
-		image: '/images/profile_example.jpg',
+		image: u_res.img_path,
 		zIndex: '1'
 	});
 
@@ -113,6 +113,8 @@ function userProfileImage(){
 		right: cell_width/2,
 		bottom: cell_width*1.2/2/2/2,
 		borderRadius: cell_width*0.3/2,
+		borderWidth: 3,
+		borderColor: "#fff",
 		image: "/images/camera_icon.png",
 		zIndex: '4'
 	});	
@@ -121,7 +123,7 @@ function userProfileImage(){
 		//height: cell_width,
 		width: cell_width,
 		//borderRadius: cell_width/2,
-		image: "/images/profile_example.jpg",
+		image: u_res.img_path,
 		zIndex: '3'
 	});
 	

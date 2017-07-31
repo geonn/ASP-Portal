@@ -9,8 +9,8 @@
 					<Label class="wsize hsize h4 bold" text="Name" left="0" id="user_name" onClick="goProfile"></Label>
 					<Label class="wsize hsize h5 grey" text="23 minutes ago" color="#7CC6FF" left="0" top="10" id="date_time"></Label>
 				</View>
-				<View class="wfill hsize padding" right="0" onClick="postOptions">
-					<ImageView top="0" right="0" image="/images/btn-down.png"></ImageView>
+				<View class="wfill hsize padding" right="0">
+					<ImageView top="0" right="0" image="/images/btn-down.png" onClick="postOptions"></ImageView>
 				</View>
 			</View>
 			<View class="wfill hfill vert padding" top="0">
