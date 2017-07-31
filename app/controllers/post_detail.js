@@ -13,9 +13,12 @@ function init(){
 function setData(params){
 	$.user_name.text = params.u_name;
 	u_id1 = params.u_id;
+	var u_model = Alloy.createCollection("staff");
+	var u_res = u_model.getDataById(u_id1);
 	$.desc.text = params.description;
 	$.count_coment.text = params.comment_count+" comment";
 	$.date_time.setText(countdown.getTimePost(params.created));
+	$.img.image = (u_res.img_path!="")?u_res.img_path:"/images/my_profile_square.png";
 	var imgArr = i_model.getImageByCateandPriId(true,undefined,2,p_id);
 	var count_img = 1;
 	if(imgArr.length != 0){

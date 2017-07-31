@@ -83,7 +83,7 @@ function userProfileImage(){
 		width:Ti.UI.FILL,
 		height:"200%",
 		blurRadius:10,
-		image: u_res.img_path,
+		image: (u_res.img_path!="")?u_res.img_path:"/images/my_profile_square.png",
 		zIndex: '1'
 	});
 
@@ -123,7 +123,7 @@ function userProfileImage(){
 		//height: cell_width,
 		width: cell_width,
 		//borderRadius: cell_width/2,
-		image: u_res.img_path,
+		image: (u_res.img_path!="")?u_res.img_path:"/images/my_profile_square.png",
 		zIndex: '3'
 	});
 	

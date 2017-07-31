@@ -3,7 +3,7 @@
 		<ScrollView id="mother_view" class="hfill wfill contwfill conthsize vert" bottom="50" backgroundColor="#fff">
 			<View class="wfill horz" height="75" top="0">
 				<View class="wsize hsize padding" onClick="goProfile">
-					<ImageView height="55" width="55" image="/images/user.png"></ImageView>
+					<ImageView height="55" width="55" image="" id="img" backgroundColor="#000"></ImageView>
 				</View>
 				<View class="wsize vert" height="55">
 					<Label class="wsize hsize h4 bold" text="Name" left="0" id="user_name" onClick="goProfile"></Label>
