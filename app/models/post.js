@@ -96,8 +96,9 @@ exports.definition = {
                 	var row_count = res.fieldCount;
                 	arr[count] = {
                 		id: res.fieldByName('id'),
-						u_id:res.fieldByName("u_id"),
+						u_id:res.fieldByName('u_id'),
 						u_name:res.fieldByName('u_name'),
+						u_img:res.fieldByName('u_img'),
 						title:res.fieldByName('title'),
 						g_id:res.fieldByName('g_id'),
 						description:res.fieldByName('description'),

@@ -1,17 +1,17 @@
 <Alloy>
-	<View class="wfill hfill vert" backgroundColor="#fff" id="mother_view">
+	<ScrollView id="mother_view" class="hfill wfill contwfill conthsize vert" backgroundColor="#fff">
 		<View class="wfill hsize" id="user_img"></View>
 		<View class="hr"></View>
-		<View class="wfill hsize">
+		<View class="wfill" height="33">
 			<Label class="h4 bold" top="10" text="" id="email" color="#000" textAlign="center" onClick="showEmail"></Label>
 		</View>
-		<View class="hr" top="10"></View>
-		<View class="wfill hsize horz">
+		<View class="hr" top="10" right="10" left="10"></View>
+		<View class="wfill horz" height="33">
 			<Label class="h4" left="10" top="10" text="Name:" color="#000"></Label>
 			<TextField class="wfill hsize h4" right="10" top="10" textAlign="right" id="name" color="#696e76"/>
 		</View>
-		<View class="hr" top="10"></View>
-		<View class="wfill hsize">
+		<View class="hr" top="10" right="10" left="10"></View>
+		<View class="wfill" height="33">
 			<Label class="h4" left="10" top="10" text="Gender:" color="#000"></Label>
 			<View class="wsize hsize horz" right="10" top="10">
 				<ImageView height="20" width="20" left="10" image="/images/checkbox_checked.png" id="male" onClick="male_chkbox"></ImageView>
@@ -20,25 +20,25 @@
 				<Label class="h4" left="10" text="Female" color="#696e76"></Label>
 			</View>
 		</View>
-		<View class="hr" top="10"></View>
-		<View class="wfill hsize horz">
+		<View class="hr" top="10" right="10" left="10"></View>
+		<View class="wfill horz" height="33">
 			<Label class="h4" left="10" top="10" text="Mobile:" color="#000"></Label>
 			<TextField class="wfill hsize h4" top="10" right="10" textAlign="right" id="mobile" color="#696e76"/>
 		</View>
-		<View class="hr" top="10"></View>
-		<View class="wfill hsize horz">
+		<View class="hr" top="10" right="10" left="10"></View>
+		<View class="wfill horz" height="33">
 			<Label class="h4" left="10" top="10" text="Position:" color="#000"></Label>
 			<TextField class="wfill hsize h4" top="10	" right="10" textAlign="right" id="position" color="#696e76"/>
 		</View>
-		<View class="hr" top="10"></View>
-		<View class="wfill hsize">
+		<View class="hr" top="10" right="10" left="10"></View>
+		<View class="wfill" height="33">
 			<Label class="h4 bold" right="10" top="10" text=" " color="#000"></Label>
 		</View>
-		<View class="hr" top="10"></View>
-		<View class="wfill hsize" onClick="chgPw">
+		<View class="hr" top="10" right="10" left="10"></View>
+		<View class="wfill" height="33" onClick="chgPw">
 			<Label class="h4 bold" right="40" top="10" text="Change Password" color="#000"></Label>
 			<ImageView right="10" top="10" height="20" width="20" tintColor="#00CB85" image="/images/btn-right.png"></ImageView>
 		</View>
-		<View class="hr" top="10"></View>
-	</View>
+		<View class="hr" top="10" right="10" left="10"></View>
+	</ScrollView>
 </Alloy>

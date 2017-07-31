@@ -1,5 +1,5 @@
 <Alloy>
-	<View class="wfill hfill">
+	<View class="wfill hfill" bubbleParent="false">
 		<View class="wfill hfill vert" backgroundColor="#eff3f6">
 			<ScrollView class="hfill wfill contwfill conthsize vert" backgroundColor="#fff" bottom="50">
 				<View class="vert wfill hsize" top="0" id="mother_post">
