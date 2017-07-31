@@ -203,7 +203,7 @@ function selected_date(e) {
 	var day = new Date(t[1].text + "/" + $.title.getChildren()[0].num + "/1");
 	change_color = e.text + day.getDay();
 	
-	addPage("123",e.date,{u_id:u_id});
+	addPage("appoiotments",e.date,{u_id:u_id});
 }
 
 init();

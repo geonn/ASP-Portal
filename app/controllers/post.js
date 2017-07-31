@@ -9,6 +9,7 @@ var group_id = [];
 group_id[0] = "";
 var num = 0;
 var group_name = [];
+group_name[0] = "Public Post";
 
 if(edit){
 	setData();
@@ -203,7 +204,6 @@ function doLogout(){
 	},2000);
 }
 function select_group(e) {
-	group_name[0] = "Public Post";
 	var arr = my_group.getData(u_id);
 	var count = 1;
 	arr.forEach(function(data) {

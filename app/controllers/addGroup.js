@@ -24,7 +24,7 @@ function add_image(e) {
 	
 			for(var i=0; i<imgArray.length; i++){
 				if(imgArray[i]){
-					var imgView = Ti.UI.createImageView({						
+					var imgView = Ti.UI.createImageView({
 						image: gallerypicker.decodeBitmapResource(imgArray[i], 640, 640),
 						nativePath:"file:/"+e.filePath,
 						width:Ti.UI.FILL,
