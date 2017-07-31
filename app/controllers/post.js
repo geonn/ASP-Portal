@@ -5,8 +5,10 @@ var refreshName = args.refreshName || null;
 var num = 0;
 var u_id = Ti.App.Properties.getString("u_id")||"";
 var my_group = Alloy.createCollection("my_group");
-var g_id = [];
-g_id[0] = "";
+var group_id = [];
+group_id[0] = "";
+var num = 0;
+var group_name = [];
 
 if(edit){
 	setData();
@@ -113,8 +115,8 @@ function doSubmit(){
 		return;
 	}
 	var url = (edit)?"editPost":"doPost";
-	var params = (edit)?{id:p_id,title:"Public Post",u_id:u_id,description:description,status:1}:{u_id:u_id,g_id:"",title:"Public Post",description:description,status:1};
-	Alloy.Globals.loading.startLoading("Posting");		
+	var params = (edit)?{id:p_id,title:"Public Post",u_id:u_id,description:description,status:1}:{u_id:u_id,g_id:group_id[num],title:group_name[num],description:description,status:1};
+	Alloy.Globals.loading.startLoading("Posting");
 	API.callByPost({url:url,params:params},{
 	onload:function(responceText){
 		var res = JSON.parse(responceText);
@@ -201,24 +203,22 @@ function doLogout(){
 	},2000);
 }
 function select_group(e) {
-	var options = [];
-	options[0] = "Public";
+	group_name[0] = "Public Post";
 	var arr = my_group.getData(u_id);
-	console.log("arr" + JSON.stringify(arr)+" "+arr[0].g_name);
 	var count = 1;
 	arr.forEach(function(data) {
-		options[count] = data.g_name;
-		g_id[count] = data.g_id;
+		group_name[count] = data.g_name;
+		group_id[count] = data.g_id;
 		count++;
 	});
 	
-	var opts = {options: options, destructive: 0, title: 'Year'};
+	var opts = {options: group_name, destructive: 0, title: 'Group'};
 	var dialog = Ti.UI.createOptionDialog(opts);
 	
 	dialog.addEventListener("click", function(e) {
 		if(e.index >= 0) {
-			$.lb_group.setText(options[e.index]);
-			console.log($.lb_goup.text);
+			$.lb_group.setText(group_name[e.index]);
+			num = e.index;
 		}
 	});
 	

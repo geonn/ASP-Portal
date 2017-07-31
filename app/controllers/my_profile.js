@@ -133,7 +133,11 @@ function render_post(params){
 				small_image_container.add(image);
 				image_container.addView(small_image_container);
 				image.addEventListener("click",function(e){
-					COMMON.openWindow(Alloy.createController("zoomView",{img_path:e.source.image}).getView());
+					try {
+						COMMON.openWindow(Alloy.createController("zoomView",{img_path:e.source.image}).getView());
+					}catch(e) {
+						//
+					}
 				});
 			});
 			container.add(image_container);

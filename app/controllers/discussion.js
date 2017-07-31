@@ -12,7 +12,7 @@ function init(){
 }init();
 function getData(){
 	var model = Alloy.createCollection("post");
-	res = model.getData(false,offset);	
+	var res = model.getData(false,offset);	
 	model = null;
 	render_post(res);		
 }
@@ -58,7 +58,11 @@ function render_post(params){
 				small_image_container.add(image);
 				image_container.addView(small_image_container);		
 				image.addEventListener("click",function(e){
-					addPage("zoomView","Image Preview",{img_path:e.source.image});
+					try {
+						addPage("zoomView","Image Preview",{img_path:e.source.image});
+					}catch(e) {
+						//
+					}
 				});
 			});
 			image_container.addEventListener("scrollend",function(e){
@@ -205,17 +209,4 @@ function doLogout(){
 		Ti.App.fireEvent('index:login');
 		Alloy.Globals.loading.stopLoading();		
 	},2000);
-}
-
-function parseDate(str) {
-    var mdy = str.split('-');
-    return new Date(mdy[0], mdy[1]-1, mdy[2]);
-}
-
-function daydiff(first, second) {
-    return Math.round((second-first)/(1000*60*60*24));
-}
-
-function parseToSecond(hh,mm,ss) {
-	return (Math.floor(hh)*60+Math.floor(mm))*60+Math.floor(ss);
 }

@@ -12,7 +12,7 @@
 								<Label class="wsize hsize padding h4" id="u_name" color="#000"></Label>
 							</View>
 							<View class="horz wsize hsize" left="10" onClick="select_group" borderRadius="5" borderColor="gray" borderWidth="1">
-								<Label class="wsize hsize h4" id="lb_group" text="Public" gid="a" color="gray" bottom="2" left="5" right="2"></Label>
+								<Label class="wsize hsize h4" id="lb_group" text="Public Post" color="gray" bottom="2" left="5" right="2"></Label>
 								<ImageView width="25" height="15" image="/images/btn-down.png"></ImageView>
 				 			</View>
 						</View>
