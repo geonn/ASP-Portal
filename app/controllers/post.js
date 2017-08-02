@@ -129,9 +129,8 @@ function doSubmit(){
 		console.log("result:"+JSON.stringify(res));
 		var p_id = res.data[0].id;
 		for(var i = 0;i<$.imageMother.children.length;i++){
-			var image = $.imageMother.children[i].toImage();	
-			var params1 = {p_id:p_id,u_id:u_id};	
-			console.log("image:"+JSON.stringify(image));
+			var image = $.imageMother.children[i].toImage();
+			var params1 = {p_id:p_id,u_id:u_id};
 			_.extend(params1, {Filedata: image});	
 			console.log("image:"+JSON.stringify(params1));				
 			API.callByPost({url:"doPostImage",params:params1},{

@@ -148,11 +148,27 @@ function userProfileImage(){
 						
 						for(var i=0; i<imgArray.length; i++){
 							if(imgArray[i]){
+								var imgView = Ti.UI.createImageView({
+									image: gallerypicker.decodeBitmapResource(imgArray[i], 640, 640),
+									nativePath:"file:/"+e.filePath,
+									width:Ti.UI.FILL,
+									height:Ti.UI.FILL,
+									form_type:"image"
+								});
+								var imgView2 = Ti.UI.createImageView({
+									image: gallerypicker.decodeBitmapResource(imgArray[i], 640, 640),
+									nativePath:"file:/"+e.filePath,
+									width:Ti.UI.FILL,
+									height:Ti.UI.FILL,
+									form_type:"image"
+								});
+								
 								img_view.children[0].image = "file://"+imgArray[i];
-								img_view.children[2].children[0].image = "file://"+imgArray[i];
+								img_mother.add(imgView);
+								$.imageGroup_big.add(imgView2);
 							}
 						}
-						blob = img_view.children[2].children[0].toImage();
+						blob = $.imageGroup_big.children[0].toImage();
 					},
 					error : function(e) {
 						alert("error " + JSON.stringify(e));
@@ -173,19 +189,26 @@ function userProfileImage(){
 			    success: function (e) {
 			        Ti.API.error('success: ' + JSON.stringify(e));
 					for (var i=0; i < e.media.length; i++) {
+						var imgView = Ti.UI.createImageView({
+							image: e.media[i],
+							nativePath:e.media[i],
+							width:Ti.UI.FILL,
+							height:Ti.UI.FILL,
+							form_type:"image"
+						});
+						var imgView2 = Ti.UI.createImageView({
+							image: e.media[i],
+							nativePath:e.media[i],
+							width:Ti.UI.FILL,
+							height:Ti.UI.FILL,
+							form_type:"image"
+						});
+						
 						img_view.children[0].image = e.media[i];
-						img_view.children[2].children[0].image = e.media[i];
-						//console.log(img_view.children[0]+"11");
-						// var img_blur = mod.createBasicBlurView({
-							// width:Ti.UI.FILL,
-							// height:"200%",
-							// blurRadius:10,
-							// image: e.media,
-							// zIndex: '1'
-						// });   
-						// img_view.add(img_blur);
+						img_mother.add(imgView);
+						$.imageGroup_big.add(imgView2);
 					};
-					blob = img_view.children[2].children[0].toImage();
+					blob = $.imageGroup_big.children[0].toImage();
 			    },
 			    cancel: function (e) {
 			    	Ti.API.error('cancel: ' + JSON.stringify(e));

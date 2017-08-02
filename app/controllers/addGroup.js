@@ -154,8 +154,7 @@ function scrollChecker(e){
 function doSubmit(){
 	var name = $.groupname.getValue() || "";
 	var u_id = Ti.App.Properties.getString("u_id") || "";
-	var before =Ti.Filesystem.getFile($.imageGroup_big.children[0].nativePath);
-	var encode = Titanium.Utils.base64encode($.imageGroup_big.toImage());
+	var encode = $.imageGroup_big.children[0].toImage();
 	if(name == ""){
 		alert("Group name Cannot be null!!!");
 		return;
@@ -174,6 +173,7 @@ function doSubmit(){
 	API.callByPost({url:"addGroup",params:params },{
 		onload:function(responceText){
 			var res = JSON.parse(responceText);
+			alert("Add Group Success!!!");
 		},onerror:function(err){}
 	});
 }
