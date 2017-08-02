@@ -3,6 +3,10 @@ var animate_bottom1 = Ti.UI.createAnimation({duration:200,bottom:50});
 var animate_height = Ti.UI.createAnimation({duration:200,height:0});
 var animate_bottom = Ti.UI.createAnimation({duration:200,bottom:0});
 var offcount = 0;
+var member = [];
+var name = "";
+var chk = true;
+var u_id = Ti.App.Properties.getString("u_id") || "";
 var unchecker = "/images/checkbox_unchecked.png";
 var checker = "/images/checkbox_checked.png";
 if (OS_IOS) {
@@ -152,10 +156,10 @@ function scrollChecker(e){
 	}
 }
 function doSubmit(){
-	if($.selectedList.getChildren().length > 0){
+	name = $.groupname.getValue();
+	var length = $.selectedList.getChildren().length;
+	if(length > 0){
 	Alloy.Globals.loading.startLoading("Loading...");
-	var name = $.groupname.getValue() || "";
-	var u_id = Ti.App.Properties.getString("u_id") || "";
 	if ($.imageGroup_big.children.length > 0) {
 		var encode = $.imageGroup_big.children[0].toImage();
 	}else{
@@ -173,11 +177,10 @@ function doSubmit(){
 		doLogout();
 		return;
 	}
-	var member = [];
 	for(var i=0;i<$.selectedList.getChildren().length;i++){
 		member.push($.selectedList.getChildren()[i].staffId);
 	}
-	var params={name:name,u_id:u_id,member:member};
+	var params={name:name,u_id:u_id,member:member.join()};
 	_.extend(params,{Filedata:encode});
 	API.callByPost({url:"addGroup",params:params },{
 		onload:function(responceText){
@@ -186,6 +189,7 @@ function doSubmit(){
 			Alloy.Globals.pageFlow.back();
 			Ti.App.fireEvent("groupList:init");		
 			alert("Add Group Success!!!");
+			
 		},onerror:function(err){}
 	});
 	}
