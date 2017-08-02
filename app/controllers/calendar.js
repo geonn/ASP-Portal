@@ -202,8 +202,8 @@ function selected_date(e) {
 	e.setColor("#fff");
 	var day = new Date(t[1].text + "/" + $.title.getChildren()[0].num + "/1");
 	change_color = e.text + day.getDay();
-	
-	//addPage("appoiotments", e.date, {u_id:u_id, date:e.date});
+	 
+	//addPage("appoiotments", e.date, {u_id:u_id, date:e.date}); 
 }
 
 init();

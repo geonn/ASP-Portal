@@ -78,25 +78,24 @@ function receivePush(e) {
 }
 
 function deviceTokenSuccess(ev) {
-    deviceToken = ev.deviceToken; 
+    deviceToken = ev.deviceToken;  
     Cloud.Users.login({
-	    login: 'geomilano',
-	    password: 'geonn2015'
+	    login: 'aspportal',
+	    password: '123456'
 	}, function (ex) {
-		if (ex.success) {
-			
+		if (ex.success) { 
 			Cloud.PushNotifications.unsubscribe({
-			    channel: 'survey',
+			    channel: 'post',
 			    device_token: deviceToken
 			}, function (ey) {
 			    if (ey.success) {
 			       Cloud.PushNotifications.subscribe({
-					    channel: 'survey',
+					    channel: 'post',
 					    type:Ti.Platform.name == 'android' ? 'android' : 'ios', 
 					    device_token: deviceToken
 					}, function (e) { 
 					    if (e.success  ) { 
-					     
+					     console.log("deviceToken : "+deviceToken);
 					    	/** User device token**/
 			         		Ti.App.Properties.setString('deviceToken', deviceToken); 
 							//API.updateNotificationToken();
@@ -107,7 +106,7 @@ function deviceTokenSuccess(ev) {
 					});
 			    } else {
 			    	Cloud.PushNotifications.subscribe({
-					    channel: 'survey',
+					    channel: 'post',
 					    type:Ti.Platform.name == 'android' ? 'android' : 'ios', 
 					    device_token: deviceToken
 					}, function (e) { 
@@ -165,6 +164,7 @@ function registerPush(){
 	        ]
 	    });
 	}else if(Ti.Platform.osname == "android"){
+		console.log("GEO ANDROID PUSH");
 		CloudPush.retrieveDeviceToken({
 		    success: deviceTokenSuccess,
 		    error: deviceTokenError

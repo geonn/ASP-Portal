@@ -18,7 +18,7 @@ function update(_message, _cancelable) {
     cancelable = _cancelable;
 
     $.progressIndicator.applyProperties({
-        message: _message || L('loadingMessage',''),
+        message: _message || L('loadingMessage', 'Loading...'),
         cancelable: _.isFunction(cancelable)
     });
 }

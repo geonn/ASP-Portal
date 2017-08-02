@@ -33,7 +33,7 @@ Object.defineProperty($, 'visible', {
 })(arguments[0] || {});
 
 function update(_message, _cancelable) {
-    $.loadingMessage.text = _message || L('loadingMessage', '');
+    $.loadingMessage.text = _message || L('loadingMessage', 'Loading...');
     cancelable = _cancelable;
 }
 

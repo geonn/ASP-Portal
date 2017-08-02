@@ -9,7 +9,8 @@ function init(){
 			maxZoom:5,
 			minZoom:1,
 			zIndex:9,
-		});
+		});			
+		imageView.addEventListener("click",topbarShow);
 		$.imageMother.add(imageView);
 	}else{
 		var Ziv = Ti.UI.createScrollView({

@@ -58,21 +58,21 @@ exports.definition = {
 	            }
 				offset = offset || 0;
 				var sql_limit = (unlimit)?"":" limit "+offset+",10";
-				var sql = "select img_id,img_path,img_300thumb from "+collection.config.adapter.collection_name+" where img_photoCate="+cate+" and img_photoCateID="+priId;
+				var sql = "select * from "+collection.config.adapter.collection_name+" where img_photoCate="+cate+" and img_photoCateID="+priId;
 				db = Ti.Database.open(collection.config.adapter.db_name);
 				if(Ti.Platform.osname != "android"){
 					db.file.setRemoteBackup(false);
 				}
                 var res = db.execute(sql);
-                var arr = [];
-				var count = 0;   
+                var arr = []; 
+                var count = 0;
+                
+                var eval_column = "";
+            	for (var i=0; i < names.length; i++) {
+					eval_column = eval_column+names[i]+": res.fieldByName('"+names[i]+"'),";
+				};
                 while (res.isValidRow()){
-                	var row_count = res.fieldCount;
-                	arr[count] = {
-                		img_id: res.fieldByName('img_id'),
-                		img_path:res.fieldByName('img_path'),
-                		img_300thumb:res.fieldByName('img_300thumb')
-					};
+                	eval("arr[count] = {"+eval_column+"}");
                 	res.next();
 					count++;
                 }

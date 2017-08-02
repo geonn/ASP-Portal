@@ -1,5 +1,9 @@
 <Alloy>
-	<ScrollView class="hfill wfill contwfill conthsize vert">
-		<View class="vert wfill hsize" top="0" id="list_more"></View>
-	</ScrollView>
+	<View backgroundColor="#fff">
+		<View class="wfill hfill vert">
+			<ScrollView class="wfill hfill">
+				<View class="vert wfill hsize" top="0" id="list_more"></View>
+			</ScrollView>
+		</View>
+	</View>
 </Alloy>
