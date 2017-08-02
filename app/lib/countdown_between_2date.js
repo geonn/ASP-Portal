@@ -70,7 +70,7 @@ exports.getTimePost = function (p){
 	if (dayOfDistance==-1) {
 		return ("Yesterday"+"  "+postHour+":"+postMinute);
 	}else if (dayOfDistance==0) {
-		if (minusSecond<900) {
+		if (minusSecond<300) {
 			return ("Just now");	
 		}else if (minusSecond<3600) {
 			return (minutesDisplay.toFixed(0)+" minutes ago");
