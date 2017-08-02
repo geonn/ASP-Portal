@@ -21,6 +21,6 @@
 				</View>	
 			</ScrollView>
 		</View>		
-		<View class="wfill horz" borderColor='#eff3f6' id="selectedList" zIndex="10" bottom="0" height="0" backgroundColor="#fff"></View>
+		<View class="wfill horz" borderColor='#eff3f6' id="selectedList" zIndex="10" bottom="0" height="0" backgroundColor="#000"></View>
 	</View>
 </Alloy>

@@ -1,8 +1,7 @@
 <Alloy>
 	<View class="wfill hfill">
-		<ScrollView id="scrollview" class="vert hfill wfill contwfill conthsize" backgroundColor="#fff">
+		<ScrollView id="scrollview" class="hfill wfill contwfill conthsize" backgroundColor="#fff">
 			<View class="horz wfill hfill" id="group_list"></View>
-			<View class="wfill" height="50" platform="ios"></View>
 		</ScrollView>
 	</View>
 </Alloy>

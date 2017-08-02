@@ -7,6 +7,7 @@ var u_model = Alloy.createCollection("staff");
 var u_res = u_model.getDataById(u_id);
 var gender = "m";
 var blob = "";
+console.log("beng");
 console.log(JSON.stringify(u_res));
 
 if(OS_ANDROID){
@@ -33,7 +34,6 @@ function init(){
 init();
 
 function editProfile(){
-	Alloy.Globals.loading.startLoading("Loading...");
 	var name = $.name.getValue();
 	var mobile = $.mobile.getValue();
 	var position = $.position.getValue();
@@ -65,15 +65,11 @@ function editProfile(){
 					model.saveArray(arr);
 					model = null;
 					arr = null;
-					res =null;				
+					res =null;	
+					Alloy.Globals.loading.stopLoading();			
 				}
 			});
-			setTimeout(function(){
-				Alloy.Globals.loading.stopLoading();
-				alert("Edit Success!");
-				Alloy.Globals.pageFlow.back();	
-				Ti.App.fireEvent("more:init");            
-			},500);
+			alert("Edit Success!");
 		},
 		onerror: function(e){
 			console.log("Edit Profile fail!");
@@ -87,7 +83,7 @@ function userProfileImage(){
 		width:Ti.UI.FILL,
 		height:"200%",
 		blurRadius:10,
-		image: (u_res.img_path!="")?u_res.img_path:"/images/my_profile_square.png",
+		image: '/images/profile_example.jpg',
 		zIndex: '1'
 	});
 
@@ -117,8 +113,6 @@ function userProfileImage(){
 		right: cell_width/2,
 		bottom: cell_width*1.2/2/2/2,
 		borderRadius: cell_width*0.3/2,
-		borderWidth: 3,
-		borderColor: "#fff",
 		image: "/images/camera_icon.png",
 		zIndex: '4'
 	});	
@@ -127,7 +121,7 @@ function userProfileImage(){
 		//height: cell_width,
 		width: cell_width,
 		//borderRadius: cell_width/2,
-		image: (u_res.img_path!="")?u_res.img_path:"/images/my_profile_square.png",
+		image: "/images/profile_example.jpg",
 		zIndex: '3'
 	});
 	
@@ -137,68 +131,38 @@ function userProfileImage(){
 	img_view.add(img_mother);
 	img_view.add(chg_icon);
 	chg_icon.addEventListener("click",function(e){
-		if(OS_ANDROID) {
-			try {
-				var gallerypicker = require('titutorial.gallerypicker');
-				gallerypicker.openGallery({
-					cancelButtonTitle : "Cancel",
-					doneButtonTitle : "Okay",
-					title : "Gallery",
-					errorMessage: "Limit reached",
-					limit : 1,
-					success : function(e) {
-						Ti.API.info("response is => " + JSON.stringify(e));
-						var imgArray = e.filePath.split(",");
-						
-						for(var i=0; i<imgArray.length; i++){
-							if(imgArray[i]){
-								img_view.children[0].image = "file://"+imgArray[i];
-								img_view.children[2].children[0].image = "file://"+imgArray[i];
-							}
-						}
-						blob = img_view.children[2].children[0].toImage();
-					},
-					error : function(e) {
-						alert("error " + JSON.stringify(e));
-					},
-					cancel : function(e) {
-						//alert("cancel " + JSON.stringify(e));
-					}
-				});
-			}catch(e) {
-				
-			}
-		}else {
-			//img_view.remove(img_blur);
-			var picker = require('ti.gmimagepicker');		
-			picker.openPhotoGallery({
-				maxSelectablePhotos: 1,
-				// allowMultiple: false, // default is true
-			    success: function (e) {
-			        Ti.API.error('success: ' + JSON.stringify(e));
-					for (var i=0; i < e.media.length; i++) {
-						img_view.children[0].image = e.media[i];
-						img_view.children[2].children[0].image = e.media[i];
-						//console.log(img_view.children[0]+"11");
-						// var img_blur = mod.createBasicBlurView({
-							// width:Ti.UI.FILL,
-							// height:"200%",
-							// blurRadius:10,
-							// image: e.media,
-							// zIndex: '1'
-						// });   
-						// img_view.add(img_blur);
-					};
-					blob = img_view.children[2].children[0].toImage();
-			    },
-			    cancel: function (e) {
-			    	Ti.API.error('cancel: ' + JSON.stringify(e));
-			    },
-			    error: function (e) {
-			        Ti.API.error('error: ' + JSON.stringify(e));
-			    }
-			});
-		}
+		console.log("Go to Gallery");
+		//img_view.remove(img_blur);
+		var picker = require('ti.gmimagepicker');		
+		picker.openPhotoGallery({
+		maxSelectablePhotos: 1,
+		// allowMultiple: false, // default is true
+	    success: function (e) {
+	        Ti.API.error('success: ' + JSON.stringify(e));
+			for (var i=0; i < e.media.length; i++) {
+				img_view.children[0].image = e.media[i];
+				img_view.children[2].children[0].image = e.media[i];
+				//console.log(img_view.children[0]+"11");
+				// var img_blur = mod.createBasicBlurView({
+					// width:Ti.UI.FILL,
+					// height:"200%",
+					// blurRadius:10,
+					// image: e.media,
+					// zIndex: '1'
+				// });   
+				// img_view.add(img_blur);
+			};
+			blob = img_view.children[2].children[0].toImage();
+			console.log(JSON.stringify(blob));
+			console.log(JSON.stringify(img_view.children[2].children[0]));
+	    },
+	    cancel: function (e) {
+	    	Ti.API.error('cancel: ' + JSON.stringify(e));
+	    },
+	    error: function (e) {
+	        Ti.API.error('error: ' + JSON.stringify(e));
+	    }
+	});
 	});
 	$.user_img.add(img_view);
 	Alloy.Globals.loading.stopLoading();	

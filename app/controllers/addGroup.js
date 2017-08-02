@@ -24,7 +24,7 @@ function add_image(e) {
 	
 			for(var i=0; i<imgArray.length; i++){
 				if(imgArray[i]){
-					var imgView = Ti.UI.createImageView({
+					var imgView = Ti.UI.createImageView({						
 						image: gallerypicker.decodeBitmapResource(imgArray[i], 640, 640),
 						nativePath:"file:/"+e.filePath,
 						width:Ti.UI.FILL,
@@ -154,7 +154,7 @@ function scrollChecker(e){
 function doSubmit(){
 	var name = $.groupname.getValue() || "";
 	var u_id = Ti.App.Properties.getString("u_id") || "";
-	var before = (OS_ANDROID)?Ti.Filesystem.getFile($.imageGroup_big.children[0].nativePath):Ti.Filesystem.getFile($.imageGroup_big.children[0].image);
+	var before =Ti.Filesystem.getFile($.imageGroup_big.children[0].nativePath);
 	var encode = Titanium.Utils.base64encode($.imageGroup_big.toImage());
 	if(name == ""){
 		alert("Group name Cannot be null!!!");

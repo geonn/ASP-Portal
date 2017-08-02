@@ -7,30 +7,29 @@ var i_model = Alloy.createCollection("images_table");
 var countdown = require("countdown_between_2date.js");
 function init(){
 	offset = 0;
+	Alloy.Globals.loading.startLoading("Loading...");
 	addPostView();
 }init();
 function getData(){
 	var model = Alloy.createCollection("post");
-	var res = model.getData(false,offset);
+	res = model.getData(false,offset);	
 	model = null;
-	render_post(res);
+	render_post(res);		
 }
 function scrollChecker(e){
 	var theEnd = $.mother_view.rect.height;
 	var total = (OS_ANDROID)?pixelToDp(e.y)+e.source.rect.height: e.y+e.source.rect.height;
 	var nearEnd = theEnd - 200;
-	if (OS_ANDROID && nearEnd >= total){
-		getData();
-	}else if(OS_IOS && total >= nearEnd){
-		getData();
+	if (total >= nearEnd){
+		render();
 	}
 }
-function render_post(params){	
+function render_post(params){
 	params.forEach(function(entry){
 		var imgArr = i_model.getImageByCateandPriId(true,undefined,2,entry.id);
 		var container = $.UI.create("View",{classes:['view_class','vert','padding'],left:"0",right:"0",backgroundColor:"#fff",post_index:post_index});
 		var title_container = $.UI.create('View',{classes:['wfill','horz'],height:68});
-		var user_img = $.UI.create("ImageView",{classes:['padding'],width:45,height:45,image:(entry.u_img!="")?entry.u_img:"/images/my_profile_square.png",u_id:entry.u_id});
+		var user_img = $.UI.create("ImageView",{classes:['padding'],width:45,height:45,image:"/images/user.png",u_id:entry.u_id});
 		var title_child_container = $.UI.create("View",{classes:['wfill','hfill','padding'],left:0});
 		var username = $.UI.create("Label",{classes:['wsize','hsize','h4','bold'],text:entry.u_name,left:"0",top:"0",u_id:entry.u_id});
 		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:"0",bottom:0,color:"#7CC6FF",text:countdown.getTimePost(entry.created),p_id:entry.id});
@@ -50,37 +49,26 @@ function render_post(params){
 		if(imgArr.length != 0){
 			var imglength = imgArr.length;
 			var image_container = $.UI.create("ScrollableView",{classes:['wfill'],height:250,top:"0",scrollingEnabled:true});
-			var imgcount_container = $.UI.create("View",{classes:['wsize','hsize'],backgroundColor:"#99000000",imglength:imglength,zIndex:10,right:10,top:10,borderRadius:"5"});
+			var imgcount_container = $.UI.create("View",{classes:['wsize','hsize'],backgroundColor:"#99000000",zIndex:10,right:10,top:10,borderRadius:"5"});
 			var imgcount = (imglength > 1) ? $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,color:"#fff",text:"1/"+imglength,imglength:imglength}) : $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,imglength:imglength});
 			imgcount_container.add(imgcount);
 			imgArr.forEach(function(entry1){
 				var small_image_container = $.UI.create("View",{classes:['wfill','hsize']});
-				var image = $.UI.create("ImageView",{classes:['wfill','hsize'], defaultImage: "/images/loading.png",image:entry1.img_300thumb,imageBig:entry1.img_path});		
+				var image = $.UI.create("ImageView",{classes:['wfill','hsize'], defaultImage: "/images/loading.png",image:entry1.img_path});		
 				small_image_container.add(image);
 				image_container.addView(small_image_container);		
 				image.addEventListener("click",function(e){
-					try {
-						addPage("zoomView","Image Preview",{img_path:e.source.image});
-					}catch(e) {
-						//
-					}
+					addPage("zoomView","Image Preview",{img_path:e.source.image});
 				});
-				small_image_container = undefined;
-				image = undefined;
 			});
 			image_container.addEventListener("scrollend",function(e){
-				if(e.currentPage != undefined && e.source.imglength > 1) {
-					var count = (e.currentPage + 1) + "/" + e.source.imglength;
-					e.source.children[0].text = count;
-					count = undefined;
+				if(e.currentPage != undefined && imgcount.imglength > 1) {
+					var count = (e.currentPage + 1) + "/" + imgcount.imglength;
+					imgcount.setText(count);
 				}
 			});
 			img_container.add(image_container);
 			img_container.add(imgcount_container);
-			imglength=undefined;
-			image_container=undefined;
-			imgcount_container=undefined;
-			imgcount=undefined;
 		}
 		container.add(hr);
 		container.add(comment_container);
@@ -118,36 +106,16 @@ function render_post(params){
 			Alloy.Globals.loading.startLoading("Loading...");			
 			addPage("post_comment","Post Comment",{p_id:e.source.p_id});
 		});	
-		imgArr=undefined;
-		container=undefined;
-		title_container=undefined;
-		user_img=undefined;
-		title_child_container=undefined;
-		username=undefined;
-		time=undefined;
-		more_container=undefined;
-		more=undefined;
-		description=undefined;
-		hr=undefined;
-		comment_container=undefined;
-		comment_count=undefined;
-		comment_button_container=undefined;
-		comment_img=undefined;
-		comment_button=undefined;
-		img_container=undefined;
 		post_index++;	
 	});
-	show_MotherView();	
+	Alloy.Globals.loading.stopLoading();
 }
 function refresh(e){
-	$.scrollview.scrollTo(0,0,[animation=false]);
 	if(buttonsExpanded){
 		clickButtons();
 	}
-	$.mother_view.opacity = 0;	
-	$.myInstance.show('',false);			
 	var firename = e.refreshName || null;
-	//Alloy.Globals.loading.startLoading("Refreshing...");	
+	Alloy.Globals.loading.startLoading("Refreshing...");	
 	$.mother_view.removeAllChildren();	
 	var checker = Alloy.createCollection('updateChecker'); 
 	var isUpdate = checker.getCheckerById("2");
@@ -167,7 +135,7 @@ function refresh(e){
 				Ti.App.fireEvent(firename);
 			}
 			init();				
-//			Alloy.Globals.loading.stopLoading();			
+			Alloy.Globals.loading.stopLoading();			
 		}
 	});	
 }
@@ -205,13 +173,6 @@ function deletePost(p_id,p_index){
 		});
 	});
 }
-function show_MotherView(){
-	offset+=10;
-	$.mother_view.opacity = 1;		
-	$.myInstance.hide();
-	$.scrollview.scrollingEnabled = true;	
-	return false;	
-}
 function addPostView(){
 	var container = $.UI.create("View",{classes:['horz','wfill','hsize','padding'],top:1,left:"0",right:"0",backgroundColor:"#fff"});
 	var	image = $.UI.create("ImageView",{classes:['padding'],width:"45",height:"45",image:"/images/asp_square_logo.png"});
@@ -220,10 +181,8 @@ function addPostView(){
 	container.add(title);
 	$.mother_view.add(container);
 	container.addEventListener("click",function(){
-		addPage("post", "Post");
-		refresh({});				
+		addPage("post", "Post");		
 	});
-	$.scrollview.scrollingEnabled = false;
 	getData();	
 }
 function clickButtons(){
@@ -246,4 +205,17 @@ function doLogout(){
 		Ti.App.fireEvent('index:login');
 		Alloy.Globals.loading.stopLoading();		
 	},2000);
+}
+
+function parseDate(str) {
+    var mdy = str.split('-');
+    return new Date(mdy[0], mdy[1]-1, mdy[2]);
+}
+
+function daydiff(first, second) {
+    return Math.round((second-first)/(1000*60*60*24));
+}
+
+function parseToSecond(hh,mm,ss) {
+	return (Math.floor(hh)*60+Math.floor(mm))*60+Math.floor(ss);
 }

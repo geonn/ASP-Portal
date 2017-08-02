@@ -1,4 +1,4 @@
 ".progressIndicator": {
-  message: L('loadingMessage', ''),
+  message: L('loadingMessage', 'Loading..'),
   cancelable: false
 }

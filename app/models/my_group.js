@@ -93,42 +93,7 @@ exports.definition = {
 				offset = offset || 0;
 				var sql_limit = (unlimit)?"":" limit "+offset+",10";
 				var collection = this;
-				var sql = "select * from " + collection.config.adapter.collection_name + " mg JOIN groups g on mg.g_id = g.id WHERE mg.status = 1";
-				db = Ti.Database.open(collection.config.adapter.db_name);
-				
-				if(Ti.Platform.osname != "android"){
-					db.file.setRemoteBackup(false);
-				}
-                var res = db.execute(sql);
-                var arr = [];
-				var count = 0;
-				
-                while (res.isValidRow()){
-                	var row_count = res.fieldCount;
-                	arr[count] = {
-                		g_id: res.fieldByName('g_id'),
-						g_name: res.fieldByName("name"),
-						g_image: res.fieldByName('image')
-					};
-                	res.next();
-					count++;
-                }
-                res.close();
-                db.close();
-                collection.trigger('sync');
-                return arr;
-			},getDataById: function(u_id, unlimit,offset){
-				var collection = this;
-				var columns = collection.config.columns;
-				
-				var names = [];
-				for (var k in columns) {
-	                names.push(k);
-	            }				
-				offset = offset || 0;
-				var sql_limit = (unlimit)?"":" limit "+offset+",10";
-				var collection = this;
-				var sql = "select * from " + collection.config.adapter.collection_name + " mg JOIN groups g on mg.g_id = g.id WHERE mg.status = 1 AND mg.u_id = "+u_id;
+				var sql = "select my_group.g_id, groups.name, groups.image from " + collection.config.adapter.collection_name + " INNER JOIN  groups on my_group.g_id = groups.id WHERE my_group.status = 1";
 				db = Ti.Database.open(collection.config.adapter.db_name);
 				
 				if(Ti.Platform.osname != "android"){
