@@ -78,8 +78,7 @@ function receivePush(e) {
 }
 
 function deviceTokenSuccess(ev) {
-    deviceToken = ev.deviceToken; 
-    console.log("GEO DEVICETOKEN :"+deviceToken);
+    deviceToken = ev.deviceToken;  
     Cloud.Users.login({
 	    login: 'aspportal',
 	    password: '123456'
