@@ -25,8 +25,10 @@ function setData(params){
 		var imglength = imgArr.length;
 		var image_container = $.UI.create("ScrollableView",{classes:['wfill'],height:250,backgroundColor:"#000",top:"0",scrollingEnabled:true});
 		var imgcount_container = (imglength > 1) ? $.UI.create("View",{classes:['wsize','hsize','horz'],backgroundColor:"#99000000",imglength:imglength,zIndex:10,right:10,top:10,borderRadius:"5"}) : $.UI.create("View",{classes:['wsize','hsize'],imglength:imglength,zIndex:10,right:10,top:10,borderRadius:"5"});
-		var imgcount = (imglength > 1) ? $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,right:5,color:"#fff",text:"1/"+imglength,imglength:imglength}) : $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,right:5,imglength:imglength});
+		var imgcount = (imglength > 1) ? $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,right:5,color:"#fff",text:imglength,imglength:imglength}) : $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,right:5,imglength:imglength});
+		var imgicon = (imglength > 1) ? $.UI.create("ImageView", {width: 20, height: 17, right: 10, image: "/images/img_icon.png"}) : $.UI.create("ImageView", {width: 0, height: 0, right: 10}) ;
 		imgcount_container.add(imgcount);
+		imgcount_container.add(imgicon);
 		imgArr.forEach(function(entry1){
 			var small_image_container = $.UI.create("View",{classes:['wfill','hsize']});
 			var image = $.UI.create("ImageView",{classes:['wfill','hsize'],image:entry1.img_path, defaultImage: "/images/loading.png"});
@@ -41,12 +43,11 @@ function setData(params){
 			});	
 		});
 		image_container.addEventListener("scrollend",function(e){
-            if(e.currentPage != undefined && e.source.parent.children[1].children[0].imglength > 1) {
-                var count = (e.currentPage + 1) + "/" + e.source.parent.children[1].children[0].imglength;
-                e.source.parent.children[1].children[0].text = count;
-                count = undefined;
-            }
-        });
+			if(e.currentPage != undefined && imgcount.imglength > 1) {
+				var count = (e.currentPage + 1) + "/" + imgcount.imglength;
+				imgcount.setText(count);
+			}
+		});
 		$.p_img.add(image_container);
 		$.p_img.add(imgcount_container);
 	}

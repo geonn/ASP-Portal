@@ -4,7 +4,7 @@
 			<View id="testing" class="wfill hsize" zIndex="1"></View>
 			<View id="testing1" class="wfill hsize" backgroundColor="#66787878" zIndex="2"></View>
 			<View class="hsize" width="50%" left="0" zIndex="3">
-				<ImageView height="auto" top="10" bottom="10" id="img" image="/images/profile_example.jpg"></ImageView>
+				<ImageView height="auto" top="10" bottom="10" id="img" image="" backgroundColor="#000"></ImageView>
 			</View>
 			<View class="hsize" width="50%" right="0" zIndex="3">
 				<View class="wsize hsize vert" left="0">

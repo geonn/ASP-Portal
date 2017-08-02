@@ -5,8 +5,6 @@ var COMMON = require('common');
 var DBVersionControl = require('DBVersionControl');
 var last_update_on = true;
 DBVersionControl.checkAndUpdate();
-console.log("GEO PUSH");
-PUSH.registerPush();
 Alloy.Globals.jolicode = {};
 Alloy.Globals.jolicode.pageflow = {};
 Alloy.Globals.jolicode.pageflow.height = Ti.Platform.displayCaps.platformHeight;

@@ -1,5 +1,4 @@
 ".loadingMask": {
-  backgroundColor: "#66FFFFFF",
   visible: false
 }
 
@@ -7,8 +6,7 @@
   width: Ti.UI.SIZE,
   height: Ti.UI.SIZE,
   
-  borderRadius: 10,
-  backgroundColor: "#66FFFFFF"
+  borderRadius: 10
 }
 
 ".loadingInner": {
@@ -45,7 +43,7 @@
   width: Ti.UI.SIZE,
   height: Ti.UI.SIZE,
 
-  text: L('loadingMessage', 'Loading..'),
+  text: L('loadingMessage', ''),
   
   color: '#fff',
   textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,

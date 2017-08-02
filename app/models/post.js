@@ -49,7 +49,7 @@ exports.definition = {
 				offset = offset || 0;
 				var sql_limit = (unlimit)?"":" limit "+offset+",10";
 				var collection = this;
-				var sql = "select staff.name as u_name,post.* from post left outer join staff on post.u_id=staff.id where post.status = 1 and post.u_id="+u_id+" order by post.updated desc"+sql_limit;
+                var sql = "select staff.name as u_name,post.* from post left outer join staff on post.u_id=staff.id where post.status = 1 and post.u_id="+u_id+" order by post.updated desc"+sql_limit;
 				db = Ti.Database.open(collection.config.adapter.db_name);
 				if(Ti.Platform.osname != "android"){
 					db.file.setRemoteBackup(false);
@@ -79,11 +79,12 @@ exports.definition = {
                 collection.trigger('sync');
                 return arr;
 			},
-			getData: function(unlimit,offset){
+			getData: function(unlimit,offset,g_id){
 				offset = offset || 0;
 				var sql_limit = (unlimit)?"":" limit "+offset+",10";
+				var group_id = (g_id != undefined) ? "g_id = "+g_id+" AND" : "";
 				var collection = this;
-				var sql = "select staff.name as u_name,post.* from post left outer join staff on post.u_id=staff.id where post.status = 1 order by post.updated desc"+sql_limit;
+				var sql = "select staff.name as u_name,staff.img_path as u_img,post.* from post left outer join staff on post.u_id=staff.id where "+group_id+" post.status = 1 order by post.updated desc"+sql_limit;
 				db = Ti.Database.open(collection.config.adapter.db_name);
 				if(Ti.Platform.osname != "android"){
 					db.file.setRemoteBackup(false);
@@ -95,8 +96,9 @@ exports.definition = {
                 	var row_count = res.fieldCount;
                 	arr[count] = {
                 		id: res.fieldByName('id'),
-						u_id:res.fieldByName("u_id"),
+						u_id:res.fieldByName('u_id'),
 						u_name:res.fieldByName('u_name'),
+						u_img:res.fieldByName('u_img'),
 						title:res.fieldByName('title'),
 						g_id:res.fieldByName('g_id'),
 						description:res.fieldByName('description'),

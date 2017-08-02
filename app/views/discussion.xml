@@ -6,10 +6,10 @@
 		    <View width="60" height="60" backgroundImage="/images/friend.png" backgroundColor="#fff" borderColor="#fff" borderRadius="30" right="0" top="0" zIndex="3" />
 		    <View width="60" height="60" backgroundImage="/images/refresh_logo.png" backgroundColor="#fff" onClick="refresh" borderColor="#fff" borderRadius="30" left="0" top="0" zIndex="3" />
 		    <View width="60" height="60" backgroundImage="/images/logout_green_logo.png" backgroundColor="#fff" onClick="doLogout" borderColor="#fff" borderRadius="30" left="0" bottom="0" zIndex="3" />
-		</Widget>
+		</Widget>			
 		<ScrollView id="scrollview" onScroll="scrollChecker" scrollingEnabled="true" bubbleParent="false" class="hfill wfill contwfill conthsize">
 			<Widget src="nl.fokkezb.loading" name="view" id="myInstance" />
-			<View id="mother_view" bottom="0" opacity="0" class="wfill hsize vert"></View>
+			<View id="mother_view" bottom="0" opacity="0" class="wfill hsize vert"></View>	
 		</ScrollView>
 	</View>
 </Alloy>
