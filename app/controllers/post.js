@@ -10,6 +10,9 @@ group_id[0] = "";
 var num = 0;
 var group_name = [];
 group_name[0] = "Public Post";
+var u_model = Alloy.createCollection("staff");
+var u_res = u_model.getDataById(u_id);
+$.u_img.image = (u_res.img_path!="") ? u_res.img_path : "/images/asp_square_logo.png";
 
 if(edit){
 	setData();
