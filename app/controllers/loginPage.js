@@ -27,6 +27,6 @@ function doLogin(e){
 			alert(arr[0]);
 		}		
 	},onerror:function(err){
-		
+	
 	}});
 }

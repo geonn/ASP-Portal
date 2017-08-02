@@ -5,7 +5,7 @@
 				<View class="vert wfill hsize" top="0" id="mother_post">
 					<View class="horz wfill hsize">
 						<View class="wsize hsize padding">
-							<ImageView width="55" height="55" image="/images/asp_square_logo.png"></ImageView>
+							<ImageView id="u_img" width="55" height="55" image="/images/asp_square_logo.png"></ImageView>
 						</View>
 						<View class="vert hsize" width="60%">
 							<View class="wfill hsize">

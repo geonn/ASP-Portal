@@ -17,7 +17,7 @@
 				<View class="wfill hsize padding" top="0" left="2" right="2">
 					<Label class="wsize hsize h4 padding" text="" id="desc"></Label>
 				</View>
-				<View class="wfill" left="2" right="2" id="p_img"></View>
+				<View class="wfill" id="p_img"></View>
 			</View>
 		</ScrollView>
 		<View class="wfill vert" height="50" bottom="0" zIndex="99" backgroundColor="#fff">

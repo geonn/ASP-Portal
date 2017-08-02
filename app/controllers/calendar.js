@@ -169,7 +169,7 @@ function render_calendar(e) {
 			top: 2,
 			textAlign: "center",
 			text: (i <= 0) ? "" : i,
-			date: day.getFullYear() + "-" + cr[0].num + "-" + i,
+			date: day.getFullYear() + "/" + cr[0].num + "/" + i,
 			day: day.getDay()
 		});
 		
@@ -202,8 +202,8 @@ function selected_date(e) {
 	e.setColor("#fff");
 	var day = new Date(t[1].text + "/" + $.title.getChildren()[0].num + "/1");
 	change_color = e.text + day.getDay();
-	
-	addPage("123",e.date,{u_id:u_id});
+	 
+	//addPage("appoiotments", e.date, {u_id:u_id, date:e.date}); 
 }
 
 init();

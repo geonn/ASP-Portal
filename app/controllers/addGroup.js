@@ -76,7 +76,7 @@ function showBar(param,position){
 		$.selectedList.animate(animate_height1);
 		$.mother_view.animate(animate_bottom1);	
 	};
-	var container = $.UI.create("View",{classes:['small-padding'],height:40,width:40,borderRadius:20,backgroundImage:"/images/default_profile.png",staffId:param.id});
+	var container = $.UI.create("View",{classes:['small-padding'],height:40,width:40,borderRadius:20,backgroundImage:(param.img_path != "")?param.img_path:"/images/default_profile.png",staffId:param.id});
 	$.selectedList.add(container);
 	container.addEventListener("click",function(e){
 		$.selectedList.remove(e.source);
@@ -152,12 +152,21 @@ function scrollChecker(e){
 	}
 }
 function doSubmit(){
+	if($.selectedList.getChildren().length > 0){
+	Alloy.Globals.loading.startLoading("Loading...");
 	var name = $.groupname.getValue() || "";
-	var u_id = Ti.App.Properties.getString("u_id") || "";
-	var before =Ti.Filesystem.getFile($.imageGroup_big.children[0].nativePath);
-	var encode = Titanium.Utils.base64encode($.imageGroup_big.toImage());
+	var u_id = Ti.App.Properties.getString("u_id") || ""; 
+	if ($.imageGroup_big.children.length > 0) {
+		var encode = $.imageGroup_big.children[0].toImage();
+	}else{
+		Alloy.Globals.loading.stopLoading();
+		alert("Please choose group image!!!");
+		return;
+	};
+ 
 	if(name == ""){
-		alert("Group name Cannot be null!!!");
+		alert("Group name Cannot be empty!!!");
+		Alloy.Globals.loading.stopLoading();
 		return;
 	}
 	if(u_id == ""){
@@ -174,8 +183,13 @@ function doSubmit(){
 	API.callByPost({url:"addGroup",params:params },{
 		onload:function(responceText){
 			var res = JSON.parse(responceText);
+			Alloy.Globals.loading.stopLoading();
+			Alloy.Globals.pageFlow.back();
+			Ti.App.fireEvent("groupList:init");		
+			alert("Add Group Success!!!");
 		},onerror:function(err){}
 	});
+	}
 }
 Ti.App.addEventListener("addGroup:doSubmit",doSubmit);
 function addImage2(){
@@ -240,7 +254,8 @@ $.staffName.listener('change', function(e){
 		for(var i=0;i<arr.length||show_MotherView();i++){
 			var container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:0,staff:arr[i],check:false,position:i});
 			var small_container = $.UI.create("View",{classes:['hsize','horz'],width:"84%",left:"0",touchEnabled:false});
-			var image = $.UI.create("ImageView",{classes:['padding'],left:5,width:45,height:45,image:"/images/default_profile.png",touchEnabled:false});
+			var userImg = (arr[i].img_path != "")?arr[i].img_path:"/images/default_profile.png";
+			var image = $.UI.create("ImageView",{classes:['padding'],left:5,width:45,height:45,image:userImg,touchEnabled:false});
 			var title = $.UI.create("Label",{classes:['wfill','hsize'],text:arr[i].name,touchEnabled:false});
 			var checkBox = $.UI.create("ImageView",{width:20,height:20,right:10,image:unchecker,touchEnabled:false});
 			if(OS_ANDROID){

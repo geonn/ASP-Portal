@@ -1,0 +1,22 @@
+<Alloy>
+	<View class="wfill hfill" id="win_calender">
+		<ScrollView id="scrollview" class="vert hfill wfill contwfill conthsize" backgroundColor="#eff3f6">
+			<View class="vert wfill hsize" bottom="1" backgroundColor="#fff">
+				<Widget src="input-materialdesign" titleHint="Title" id="title"/>
+				<View class="horz wfill hsize" left="20" right="20">
+					<Label class="wsize hsize" top="26">Start Time: </Label>
+					<!-- <ScrollableView></ScrollableView> --><View id="view"></View>
+					<Label class="wsize hsize" top="26">:</Label>
+					<Widget width="30" bottom="-10" left="5" right="5" src="input-materialdesign" titleHint="MM" id="s_time"/>
+				</View>
+				<View class="horz wfill hsize" left="20" right="20">
+					<Label class="wsize hsize" top="26">End Time: </Label>
+					<Widget width="30" bottom="-10" left="5" right="5" src="input-materialdesign" titleHint="HH" id="s_time"/>
+					<Label class="wsize hsize" top="26">:</Label>
+					<Widget width="30" bottom="-10" left="5" right="5" src="input-materialdesign" titleHint="MM" id="s_time"/>
+				</View>
+			</View>
+			<View class="vert wfill hsize" backgroundColor="#fff"></View>
+		</ScrollView>
+	</View>
+</Alloy>
