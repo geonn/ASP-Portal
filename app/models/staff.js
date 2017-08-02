@@ -136,7 +136,7 @@ exports.definition = {
 				offset = offset || 0;
 				var sql_limit = (unlimit)?"":" limit "+offset+",30";
 				var collection =this;
-				var sql = "select * from "+collection.config.adapter.collection_name+" where name like '" + name + "%' AND status = 1 order by name" + sql_limit;
+				var sql = "select * from "+collection.config.adapter.collection_name+" where name like '%" + name + "%' AND status = 1 order by name" + sql_limit;
 				db = Ti.Database.open(collection.config.adapter.db_name);
 				if(Ti.Platform.osname != "android"){
 					db.file.setRemoteBackup(false);
@@ -148,6 +148,7 @@ exports.definition = {
                 	arr[count] = {
                 		id: res.fieldByName('id'),
 					    name: res.fieldByName('name'),
+					    img_path: res.fieldByName('img_path'),
 					};
                 	res.next();
 					count++;

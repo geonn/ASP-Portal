@@ -50,7 +50,7 @@ function render_post(params){
 		var imgArr = i_model.getImageByCateandPriId(true,undefined,2,entry.id);
 		var container = $.UI.create("View",{classes:['view_class','vert','padding'],left:"0",right:"0",backgroundColor:"#fff",post_index:post_index});
 		var title_container = $.UI.create('View',{classes:['wfill','horz'],height:68});
-		var user_img = $.UI.create("ImageView",{classes:['padding'],width:45,height:45,image:"/images/user.png",u_id:entry.u_id});
+		var user_img = $.UI.create("ImageView",{classes:['padding'],width:45,height:45,image:entry.u_img,u_id:entry.u_id});
 		var title_child_container = $.UI.create("View",{classes:['wfill','hfill','padding'],left:0});
 		var username = $.UI.create("Label",{classes:['wsize','hsize','h4','bold'],text:entry.u_name,left:"0",top:"0",u_id:entry.u_id});
 		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:"0",bottom:0,color:"#7CC6FF",text:countdown.getTimePost(entry.created),p_id:entry.id});

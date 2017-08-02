@@ -1,7 +1,6 @@
 var cell_width;
 var pwidth = Titanium.Platform.displayCaps.platformWidth;
 var u_id = Ti.App.Properties.getString("u_id")||"";
-var model = Alloy.createCollection("my_group");
 
 if(OS_ANDROID){
 	cell_width = Math.floor((pixelToDp(pwidth) / 2));
@@ -10,6 +9,23 @@ if(OS_ANDROID){
 }
 
 function init() {
+	var checker = Alloy.createCollection('updateChecker'); 
+	var isUpdate = checker.getCheckerById("3");
+	API.callByPost({url:"getMyGroupList",params:{last_updated:isUpdate.updated, u_id:u_id}},{
+		onload:function(responseText){
+			var res = JSON.parse(responseText);
+			var arr = res.data || null;
+			var model = Alloy.createCollection("my_group");
+			var arrr = res.group;
+			var modell = Alloy.createCollection("groups");
+			model.saveArray(arr);
+			modell.saveArray(arrr);
+			model = null;
+			arr = null;
+			res =null;				
+		}
+	});
+	var model = Alloy.createCollection("my_group");
 	var arr = model.getDataById(u_id);
 	render_list(arr);
 }
@@ -58,6 +74,7 @@ function render_list(e) {
 		$.group_list.add(view_group);
 	});
 }
+Ti.App.addEventListener("groupList:init",init);
 
 function pixelToDp(px) {
 	return ( parseInt(px) / (Titanium.Platform.displayCaps.dpi / 160));
