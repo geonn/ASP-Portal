@@ -9,7 +9,7 @@
 		</Widget>			
 		<ScrollView id="scrollview" onScroll="scrollChecker" bubbleParent="false" class="hfill wfill contwfill conthsize">
 			<Widget src="nl.fokkezb.loading" name="view" id="myInstance" />
-			<View id="mother_view" bottom="0" opacity="0" class="wfill hfill vert"></View>	
+			<View id="mother_view" bottom="0" opacity="0" class="wfill hsize vert"></View>	
 		</ScrollView>
 	</View>
 </Alloy>

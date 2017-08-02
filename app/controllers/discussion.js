@@ -11,7 +11,7 @@ function init(){
 }init();
 function getData(){
 	var model = Alloy.createCollection("post");
-	var res = model.getData(false,offset);	
+	var res = model.getData(false,offset);
 	model = null;
 	render_post(res);
 }
@@ -19,7 +19,9 @@ function scrollChecker(e){
 	var theEnd = $.mother_view.rect.height;
 	var total = (OS_ANDROID)?pixelToDp(e.y)+e.source.rect.height: e.y+e.source.rect.height;
 	var nearEnd = theEnd - 200;
-	if (total >= nearEnd){
+	if (OS_ANDROID && nearEnd >= total){
+		getData();
+	}else if(OS_IOS && total >= nearEnd){
 		getData();
 	}
 }
