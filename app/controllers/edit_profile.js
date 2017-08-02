@@ -33,6 +33,7 @@ function init(){
 init();
 
 function editProfile(){
+	Alloy.Globals.loading.startLoading("Loading...");
 	var name = $.name.getValue();
 	var mobile = $.mobile.getValue();
 	var position = $.position.getValue();
@@ -64,11 +65,15 @@ function editProfile(){
 					model.saveArray(arr);
 					model = null;
 					arr = null;
-					res =null;	
-					Alloy.Globals.loading.stopLoading();			
+					res =null;				
 				}
 			});
-			alert("Edit Success!");
+			setTimeout(function(){
+				Alloy.Globals.loading.stopLoading();
+				alert("Edit Success!");
+				Alloy.Globals.pageFlow.back();	
+				Ti.App.fireEvent("more:init");            
+			},500);
 		},
 		onerror: function(e){
 			console.log("Edit Profile fail!");

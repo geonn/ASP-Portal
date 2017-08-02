@@ -2,10 +2,11 @@ var list_title = ["My Profile","Edit Profile","Groups","Apply Leave","Calendar",
 var list_controller = ['my_profile','edit_profile','group_view','','calendar','','group_post',''];
 var list_button = [,"edit_profile:editProfile","addGroup:doSubmit",,,,,];
 var u_id = Ti.App.Properties.getString("u_id")||"";
-var u_model = Alloy.createCollection("staff");
-var u_res = u_model.getDataById(u_id);
 
 function init() {
+	$.list_more.removeAllChildren();
+	var u_model = Alloy.createCollection("staff");
+	var u_res = u_model.getDataById(u_id);
 	for(var i = 0; i < list_title.length; i++) {
 		var list_view = $.UI.create("View", {
 			classes: ['wfill', 'padding'],
@@ -24,6 +25,7 @@ function init() {
 		});
 		if(i == 0){
 			var user_img = (u_res.img_path != "")?u_res.img_path:"/images/more_page/more" + i + ".png";
+			console.log(u_res.img_path+"userimg");
 		}else{
 			var user_img = "/images/more_page/more" + i + ".png";
 		}
@@ -73,6 +75,8 @@ function init() {
 			});
 		};
 	}
+	u_model = null;
+	u_res - null;
 }
-
+Ti.App.addEventListener("more:init",init);
 init();
