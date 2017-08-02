@@ -7,7 +7,6 @@ var u_model = Alloy.createCollection("staff");
 var u_res = u_model.getDataById(u_id);
 var gender = "m";
 var blob = "";
-console.log("beng");
 console.log(JSON.stringify(u_res));
 
 if(OS_ANDROID){
@@ -34,6 +33,7 @@ function init(){
 init();
 
 function editProfile(){
+	Alloy.Globals.loading.startLoading("Loading...");
 	var name = $.name.getValue();
 	var mobile = $.mobile.getValue();
 	var position = $.position.getValue();
@@ -65,11 +65,15 @@ function editProfile(){
 					model.saveArray(arr);
 					model = null;
 					arr = null;
-					res =null;	
-					Alloy.Globals.loading.stopLoading();			
+					res =null;				
 				}
 			});
-			alert("Edit Success!");
+			setTimeout(function(){
+				Alloy.Globals.loading.stopLoading();
+				alert("Edit Success!");
+				Alloy.Globals.pageFlow.back();	
+				Ti.App.fireEvent("more:init");            
+			},500);
 		},
 		onerror: function(e){
 			console.log("Edit Profile fail!");

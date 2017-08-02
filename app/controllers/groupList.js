@@ -10,7 +10,7 @@ if(OS_ANDROID){
 }
 
 function init() {
-	var arr = model.getData(u_id);
+	var arr = model.getDataById(u_id);
 	render_list(arr);
 }
 
