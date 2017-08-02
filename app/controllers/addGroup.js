@@ -154,7 +154,7 @@ function scrollChecker(e){
 function doSubmit(){
 	var name = $.groupname.getValue() || "";
 	var u_id = Ti.App.Properties.getString("u_id") || "";
-	var before =Ti.Filesystem.getFile($.imageGroup_big.children[0].nativePath);
+	var before = (OS_ANDROID)?Ti.Filesystem.getFile($.imageGroup_big.children[0].nativePath):Ti.Filesystem.getFile($.imageGroup_big.children[0].image);
 	var encode = Titanium.Utils.base64encode($.imageGroup_big.toImage());
 	if(name == ""){
 		alert("Group name Cannot be null!!!");

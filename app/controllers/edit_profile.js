@@ -7,7 +7,6 @@ var u_model = Alloy.createCollection("staff");
 var u_res = u_model.getDataById(u_id);
 var gender = "m";
 var blob = "";
-console.log("beng");
 console.log(JSON.stringify(u_res));
 
 if(OS_ANDROID){

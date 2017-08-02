@@ -49,16 +49,29 @@ function init() {
 		view_img.add(img);
 		list_view.add(view_img);
 		list_view.add(list_label);
-		$.list_more.add(list_view);
+		if (i != 3 && i != 5 && i != 6) {
+			$.list_more.add(list_view);
+		};
 		(i == 0)?$.list_more.add(hr):"";
 		
-		list_view.addEventListener("click",function(e){
-			if (e.source.pageButton != undefined) {
-				addPage(e.source.pageIndex,e.source.pageTitle,{u_id:u_id},e.source.pageButton);
-			}else{
-				addPage(e.source.pageIndex,e.source.pageTitle,{u_id:u_id});
-			};
-		});
+		if (i != 7) {
+			list_view.addEventListener("click",function(e){
+				if (e.source.pageButton != undefined) {
+					addPage(e.source.pageIndex,e.source.pageTitle,{u_id:u_id},e.source.pageButton);
+				}else{
+					addPage(e.source.pageIndex,e.source.pageTitle,{u_id:u_id});
+				};
+			});	
+		}else{
+			list_view.addEventListener("click",function(e){
+				Alloy.Globals.loading.startLoading("Logout...");	
+				Ti.App.Properties.removeAllProperties();
+				setTimeout(function(e){
+					Ti.App.fireEvent('index:login');
+					Alloy.Globals.loading.stopLoading();		
+				},2000);
+			});
+		};
 	}
 }
 
