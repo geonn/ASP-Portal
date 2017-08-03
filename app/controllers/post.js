@@ -213,7 +213,7 @@ function doLogout(){
 	},2000);
 }
 function select_group(e) {
-	var arr = my_group.getData(u_id);
+	var arr = my_group.getDataById(u_id);
 	var count = 1;
 	arr.forEach(function(data) {
 		group_name[count] = data.g_name;
