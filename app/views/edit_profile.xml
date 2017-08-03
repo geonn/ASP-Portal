@@ -45,6 +45,7 @@
 				<ImageView right="10" top="10" height="20" width="20" tintColor="#00CB85" image="/images/btn-right.png"></ImageView>
 			</View>
 			<View class="hr" top="10" right="10" left="10"></View>
+			<Widget src="nl.fokkezb.button" class="wfill" onClick="editProfile" paramCenter="true" height="40" left="40" right="40" title="Save" top="10" style="bs-success"/>
 		</View>
 	</ScrollView>
 </Alloy>

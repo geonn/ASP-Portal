@@ -198,9 +198,12 @@ function group_info(){
 	info_view.add(title);
 	scrollView.add(g_name);
 	scrollView.add(member);
-	for (var i=0;i<20;i++) {
-		scrollView.add(member);
-	};
+	scrollView.add(member);
+	scrollView.add(member);
+	scrollView.add(member);
+	scrollView.add(member);
+	scrollView.add(member);
+	scrollView.add(member);
 	info_view.add(scrollView);
 	info_view.add(hr);
 	info_view.add(ok_button);

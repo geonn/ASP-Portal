@@ -95,7 +95,7 @@ function add_image() {
 function showGMImagePicker() {
 	var picker = require('ti.gmimagepicker');		 
 	picker.openPhotoGallery({
-		maxSelectablePhotos: 30,
+		maxSelectablePhotos: 3,
 		// allowMultiple: false, // default is true
 	    success: function (e) {
 	        Ti.API.error('successaaa: ' + JSON.stringify(e));

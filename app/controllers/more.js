@@ -58,11 +58,7 @@ function init() {
 		
 		if (i != 7) {
 			list_view.addEventListener("click",function(e){
-				if (e.source.pageButton != undefined) {
-					addPage(e.source.pageIndex,e.source.pageTitle,{u_id:u_id},e.source.pageButton);
-				}else{
-					addPage(e.source.pageIndex,e.source.pageTitle,{u_id:u_id});
-				};
+				addPage(e.source.pageIndex,e.source.pageTitle,{u_id:u_id});
 			});	
 		}else{
 			list_view.addEventListener("click",function(e){

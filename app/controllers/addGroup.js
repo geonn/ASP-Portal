@@ -159,7 +159,6 @@ function doSubmit(){
 	if(length > 0){
 		console.log("startLoading");
 		Alloy.Globals.loading.startLoading("Loading...");
-		Ti.App.removeEventListener("addGroup:doSubmit",doSubmit);
 		console.log("starting");
 		if ($.imageGroup_big.children.length > 0) {
 			var encode = $.imageGroup_big.children[0].toImage();
@@ -203,7 +202,6 @@ function doSubmit(){
 		alert("Please pick more than one member.");
 	}
 }
-Ti.App.addEventListener("addGroup:doSubmit",doSubmit);
 function addImage2(){
 Titanium.Media.openPhotoGallery({
 	success:function(event) {

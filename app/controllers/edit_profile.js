@@ -34,7 +34,7 @@ init();
 
 function editProfile(){
 	Alloy.Globals.loading.startLoading("Loading...");
-	Ti.App.removeEventListener("edit_profile:editProfile",editProfile);
+	//Ti.App.removeEventListener("edit_profile:editProfile",editProfile);
 	var name = $.name.getValue();
 	var mobile = $.mobile.getValue();
 	var position = $.position.getValue();
@@ -81,7 +81,7 @@ function editProfile(){
 		}});	
 	}
 }
-Ti.App.addEventListener("edit_profile:editProfile",editProfile);
+//Ti.App.addEventListener("edit_profile:editProfile",editProfile);
 
 function userProfileImage(){
 	var img_blur = mod.createBasicBlurView({
