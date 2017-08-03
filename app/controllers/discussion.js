@@ -19,9 +19,7 @@ function scrollChecker(e){
 	var theEnd = $.mother_view.rect.height;
 	var total = (OS_ANDROID)?pixelToDp(e.y)+e.source.rect.height: e.y+e.source.rect.height;
 	var nearEnd = theEnd - 200;
-	if (OS_ANDROID && nearEnd >= total){
-		getData();
-	}else if(OS_IOS && total >= nearEnd){
+	if(total >= nearEnd){
 		getData();
 	}
 }
@@ -67,13 +65,6 @@ function render_post(params){
 						//
 					}
 				});
-	            image_container.addEventListener("scrollend",function(e){
-	                if(e.currentPage != undefined && e.source.parent.children[1].children[0].imglength > 1) {
-	                    var count = (e.currentPage + 1) + "/" + e.source.parent.children[1].children[0].imglength;
-	                    e.source.parent.children[1].children[0].text = count;
-	                    count = undefined;
-	                }
-	            });
 				small_image_container = undefined;
 				image = undefined;
 			});

@@ -147,13 +147,6 @@ function render_post(params){
 					}
 				});	
 			});
-			image_container.addEventListener("scrollend",function(e){
-                if(e.currentPage != undefined && e.source.parent.children[1].children[0].imglength > 1) {
-                    var count = (e.currentPage + 1) + "/" + e.source.parent.children[1].children[0].imglength;
-                    e.source.parent.children[1].children[0].text = count;
-                    count = undefined;
-                }
-            });
 			img_count.add(image_container);
 			img_count.add(imgcount_container);
 			container.add(img_count);

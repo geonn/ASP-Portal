@@ -34,7 +34,9 @@ function render_list(e) {
 	e.forEach(function(data) {
 		var view_group = $.UI.create("View", {
 			classes: ['vert',"hsize"],
-			width: cell_width
+			width: cell_width-10,
+			left: '5',
+			right: '5'
 		});
 		var view_img = $.UI.create("View",{
 			classes: ['vert'],
@@ -54,15 +56,19 @@ function render_list(e) {
 			g_id: data.g_id
 		});
 		var group_title = (OS_ANDROID) ? $.UI.create("Label",{
-			classes: ["hsize","wsize","h4"],
+			classes: ["wsize","h4"],
 			text: data.g_name,
 			top: '5',
+			height: '22',
+			textAlign: 'center',
 			ellipsize: true,
 			wordWrap: false,
 		}) : $.UI.create("Label",{
-			classes: ["hsize","wsize","h4"],
+			classes: ["wsize","h4"],
+			height: '22',
 			text: data.g_name,
-			top: '5'
+			top: '5',
+			textAlign: 'center'
 		});
 		
 		view_img.add(img);

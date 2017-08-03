@@ -3,6 +3,10 @@ var animate_bottom1 = Ti.UI.createAnimation({duration:200,bottom:50});
 var animate_height = Ti.UI.createAnimation({duration:200,height:0});
 var animate_bottom = Ti.UI.createAnimation({duration:200,bottom:0});
 var offcount = 0;
+var member = [];
+var name = "";
+var chk = true;
+var u_id = Ti.App.Properties.getString("u_id") || "";
 var unchecker = "/images/checkbox_unchecked.png";
 var checker = "/images/checkbox_checked.png";
 if (OS_IOS) {
@@ -152,45 +156,55 @@ function scrollChecker(e){
 	}
 }
 function doSubmit(){
-	if($.selectedList.getChildren().length > 0){
-	Alloy.Globals.loading.startLoading("Loading...");
-	var name = $.groupname.getValue() || "";
-	var u_id = Ti.App.Properties.getString("u_id") || "";
-	if ($.imageGroup_big.children.length > 0) {
-		var encode = $.imageGroup_big.children[0].toImage();
-	}else{
-		Alloy.Globals.loading.stopLoading();
-		alert("Please choose group image!!!");
-		return;
-	};
-	if(name == ""){
-		alert("Group name Cannot be empty!!!");
-		Alloy.Globals.loading.stopLoading();
-		return;
-	}
-	if(u_id == ""){
-		alert("User Id is null\nPlease Login Again");
-		doLogout();
-		return;
-	}
-	var member = [];
-	for(var i=0;i<$.selectedList.getChildren().length;i++){
-		member.push($.selectedList.getChildren()[i].staffId);
-	}
-	var params={name:name,u_id:u_id,member:member};
-	_.extend(params,{Filedata:encode});
-	API.callByPost({url:"addGroup",params:params },{
-		onload:function(responceText){
-			var res = JSON.parse(responceText);
+	name = $.groupname.getValue();
+	var length = $.selectedList.getChildren().length;
+	if(length > 0){
+		console.log("startLoading");
+		Alloy.Globals.loading.startLoading("Loading...");
+		console.log("starting");
+		if ($.imageGroup_big.children.length > 0) {
+			var encode = $.imageGroup_big.children[0].toImage();
+		}else{
+			console.log("stopLoading");
 			Alloy.Globals.loading.stopLoading();
-			Alloy.Globals.pageFlow.back();
-			Ti.App.fireEvent("groupList:init");		
-			alert("Add Group Success!!!");
-		},onerror:function(err){}
-	});
+			alert("Please choose group image!!!");
+			return;
+		};
+		console.log(name+" name");
+		if(name == ""){
+			alert("Group name Cannot be empty!!!");
+			Alloy.Globals.loading.stopLoading();
+			return;
+		}
+		if(u_id == ""){
+			alert("User Id is null\nPlease Login Again");
+			doLogout();
+			return;
+		}
+		for(var i=0;i<$.selectedList.getChildren().length;i++){
+			member.push($.selectedList.getChildren()[i].staffId);
+		}
+		var params={name:name,u_id:u_id,member:member.join()};
+		_.extend(params,{Filedata:encode});
+		API.callByPost({url:"addGroup",params:params },{
+			onload:function(responceText){
+				var res = JSON.parse(responceText);
+				Alloy.Globals.loading.stopLoading();
+				Alloy.Globals.pageFlow.back();
+				Ti.App.fireEvent("groupList:init");		
+				alert("Add Group Success!!!");
+				
+			},onerror:function(err){
+				console.log(err);
+				Alloy.Globals.loading.stopLoading();
+				Alloy.Globals.pageFlow.back();
+			}
+		});
+	}else{
+		alert("Please pick more than one member.");
 	}
 }
-Ti.App.addEventListener("addGroup:doSubmit",doSubmit);
+//Ti.App.addEventListener("addGroup:doSubmit",doSubmit);
 function addImage2(){
 Titanium.Media.openPhotoGallery({
 	success:function(event) {
