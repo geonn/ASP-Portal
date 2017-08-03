@@ -15,7 +15,12 @@ var controllers = {
 exports.getContent = function(position) {
     return controllers[position];
 };
-
+exports.rightHide = function(){
+	$.right.height = 0;
+};
+exports.rightShow = function(){
+	$.right.height = Ti.UI.SIZE;
+};
 exports.getCenterContent = function() {
     return exports.getContent('center');
 };
