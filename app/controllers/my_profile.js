@@ -26,9 +26,10 @@ var img_blur = mod.createBasicBlurView({
 $.testing.setHeight(cell_width);
 $.testing1.setHeight(cell_width);
 $.testing.add(img_blur);
-$.img.setBorderRadius((cell_width / 2) - 10);
-$.img.setWidth(cell_width - 20);
-$.img.setHeight(cell_width - 20);
+$.img.setWidth(cell_width);
+$.imgv.setBorderRadius((cell_width / 2) - 10);
+$.imgv.setWidth(cell_width - 20);
+$.imgv.setHeight(cell_width - 20);
 $.user_name.setWidth(cell_width - 40);
 $.user_email.setWidth(cell_width - 40);
 $.user_contact.setWidth(cell_width - 40);
@@ -130,10 +131,10 @@ function render_post(params){
 			var imglength = imgArr.length;
 			var image_container = $.UI.create("ScrollableView",{classes:['wfill'],height:250,backgroundColor:"#000",top:"0",scrollingEnabled:true});
 			var imgcount_container = (imglength > 1) ? $.UI.create("View",{classes:['wsize','hsize','horz'],backgroundColor:"#99000000",imglength:imglength,zIndex:10,right:10,top:10,borderRadius:"5"}) : $.UI.create("View",{classes:['wsize','hsize'],imglength:imglength,zIndex:10,right:10,top:10,borderRadius:"5"});
-			var imgcount = (imglength > 1) ? $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,right:5,color:"#fff",text:imglength,imglength:imglength}) : $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,right:5,imglength:imglength});
-			var imgicon = (imglength > 1) ? $.UI.create("ImageView", {width: 20, height: 17, right: 10, image: "/images/img_icon.png"}) : $.UI.create("ImageView", {width: 0, height: 0, right: 10}) ;
+			var imgcount = (imglength > 1) ? $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,right:5,color:"#fff",text:"1/"+imglength,imglength:imglength}) : $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,right:5,imglength:imglength});
+			var img_icon = (imglength > 1) ? $.UI.create("ImageView", {image: "/images/img_icon.png", width:20, height: 17, right: 10}) :  $.UI.create("ImageView", {width:0, height:0});
 			imgcount_container.add(imgcount);
-			imgcount_container.add(imgicon);
+			imgcount_container.add(img_icon);
 			imgArr.forEach(function(entry1){
 				var small_image_container = $.UI.create("View",{classes:['wfill','hsize']});
 				var image = $.UI.create("ImageView",{classes:['wfill','hsize'],image:entry1.img_path, defaultImage: "/images/loading.png"});
@@ -147,6 +148,13 @@ function render_post(params){
 					}
 				});	
 			});
+			image_container.addEventListener("scrollend",function(e){
+                if(e.currentPage != undefined && e.source.parent.children[1].children[0].imglength > 1) {
+                    var count = (e.currentPage + 1) + "/" + e.source.parent.children[1].children[0].imglength;
+                    e.source.parent.children[1].children[0].text = count;
+                    count = undefined;
+                }
+            });
 			img_count.add(image_container);
 			img_count.add(imgcount_container);
 			container.add(img_count);

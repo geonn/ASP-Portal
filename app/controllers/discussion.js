@@ -49,13 +49,13 @@ function render_post(params){
 			var imglength = imgArr.length;
 			var image_container = $.UI.create("ScrollableView",{classes:['wfill'],height:250,top:"0",scrollingEnabled:true});
 			var imgcount_container = (imglength > 1) ? $.UI.create("View",{classes:['wsize','hsize','horz'],backgroundColor:"#99000000",imglength:imglength,zIndex:10,right:10,top:10,borderRadius:"5"}) : $.UI.create("View",{classes:['wsize','hsize'],imglength:imglength,zIndex:10,right:10,top:10,borderRadius:"5"});
-			var imgcount = (imglength > 1) ? $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,right:5,color:"#fff",text:imglength,imglength:imglength}) : $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,right:5,imglength:imglength});
-			var imgicon = (imglength > 1) ? $.UI.create("ImageView", {width: 20, height: 17, right: 10, image: "/images/img_icon.png"}) : $.UI.create("ImageView", {width: 0, height: 0, right: 10}) ;
+			var imgcount = (imglength > 1) ? $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,right:5,color:"#fff",text:"1/"+imglength,imglength:imglength}) : $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,right:5,imglength:imglength});
+			var img_icon = (imglength > 1) ? $.UI.create("ImageView", {image: "/images/img_icon.png", width:20, height: 17, right: 10}) :  $.UI.create("ImageView", {width:0, height:0});
 			imgcount_container.add(imgcount);
-			imgcount_container.add(imgicon);
+			imgcount_container.add(img_icon);
 			imgArr.forEach(function(entry1){
 				var small_image_container = $.UI.create("View",{classes:['wfill','hsize']});
-				var image = $.UI.create("ImageView",{classes:['wfill','hsize'], defaultImage: "/images/loading.png",image:entry1.img_300thumb,imageBig:entry1.img_path});		
+				var image = $.UI.create("ImageView",{classes:['wfill','hsize'], defaultImage: "/images/loading.png",image:entry1.img_300thumb,imageBig:entry1.img_path});
 				small_image_container.add(image);
 				image_container.addView(small_image_container);		
 				image.addEventListener("click",function(e){
@@ -65,6 +65,13 @@ function render_post(params){
 						//
 					}
 				});
+                image_container.addEventListener("scrollend",function(e){
+                    if(e.currentPage != undefined && e.source.parent.children[1].children[0].imglength > 1) {
+                        var count = (e.currentPage + 1) + "/" + e.source.parent.children[1].children[0].imglength;
+                        e.source.parent.children[1].children[0].text = count;
+                        count = undefined;
+                    }
+                });
 				small_image_container = undefined;
 				image = undefined;
 			});
@@ -162,7 +169,7 @@ function refresh(e){
 			init();				
 //			Alloy.Globals.loading.stopLoading();			
 		}
-	});	
+	});
 }
 function postOptions(params){
 	var u_id = Ti.App.Properties.getString("u_id")||"";
@@ -240,3 +247,24 @@ function doLogout(){
 		Alloy.Globals.loading.stopLoading();		
 	},2000);
 }
+function Rgroup_post(e) {
+	Ti.App.removeEventListener("discussion:Rgroup_post", Rgroup_post);
+	var checker = Alloy.createCollection('updateChecker');
+	var isUpdate = checker.getCheckerById("2");
+	API.callByPost({url:"getPostList",params:{g_id: e.g_id, last_updated: isUpdate.updated}},{
+		onload:function(responseText){
+			var res = JSON.parse(responseText);
+			var arr = res.data || null;
+			var model = Alloy.createCollection("post");
+			model.saveArray(arr);
+			if(res.images != undefined){
+				i_model.saveArray(res.images);
+			}
+			model = null;
+			arr = null;
+			res =null;
+		}
+	});
+	
+}
+Ti.App.addEventListener("discussion:Rgroup_post", Rgroup_post);

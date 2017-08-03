@@ -38,7 +38,7 @@ function render_comment(params){
 	console.log("comment:"+JSON.stringify(params));
 	params.forEach(function(entry){
 		var container = $.UI.create("View",{classes:['wfill','hsize','horz'],u_id:entry.u_id,c_id:entry.id,bottom:10,borderRadius:"5",backgroundColor:"#fff"});
-		var profileImg = $.UI.create("ImageView",{classes:['padding'],width:55,height:55,image:entry.img_path});
+		var profileImg = $.UI.create("ImageView",{classes:['padding'],width:55,height:55,image:(entry.img_path != "")?entry.img_path:"/images/default_profile.png"});
 		var small_container = $.UI.create("View",{classes:['wfill','hsize','vert'],touchEnabled:false,top:5});
 		var name = $.UI.create("Label",{classes:['wsize','hsize','h4','bold'],left:0,top:0,text:entry.name});
 		var comment = $.UI.create("Label",{classes:['wsize','hsize','h4'],left:0,right:10,touchEnabled:false,text:entry.comment});

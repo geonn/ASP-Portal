@@ -78,20 +78,18 @@ function add_image(e) {
 			for(var i=0; i<imgArray.length; i++){
 				if(imgArray[i]){
 					var imgView = Ti.UI.createImageView({
-						image: gallerypicker.decodeBitmapResource(imgArray[i], 640, 640),
-						nativePath:"file:/"+e.filePath,
+						image: "file://"+imgArray[i],
 						width:Ti.UI.FILL,
-						height:Ti.UI.FILL,
-						form_type:"image"
+						height:Ti.UI.SIZE
 					});
-					var imgView2 = Ti.UI.createImageView({						
-						image: gallerypicker.decodeBitmapResource(imgArray[i], 640, 640),
-						nativePath:"file:/"+e.filePath,
+					var imgView2 = Ti.UI.createImageView({
+						image: "file://"+imgArray[i],
 						width:Ti.UI.FILL,
-						height:Ti.UI.FILL,
-						form_type:"image"
+						height:Ti.UI.SIZE
 					});
+					
 					$.imageGroup.removeAllChildren();
+					$.imageGroup_big.removeAllChildren();
 					$.imageGroup.add(imgView);
 					$.imageGroup_big.add(imgView2);
 				}
@@ -129,7 +127,7 @@ function showBar(param,position){
 		$.selectedList.animate(animate_height1);
 		$.mother_view.animate(animate_bottom1);	
 	};
-	var container = $.UI.create("View",{classes:['small-padding'],height:40,width:40,borderRadius:20,backgroundImage:(param.img_path != "")?param.img_path:"/images/default_profile.png",staffId:param.id});
+	var container = $.UI.create("View",{classes:['small-padding'],height:40,width:40,borderRadius:20,backgroundImage:(param.img_path != undefined)?param.img_path:"/images/default_profile.png",staffId:param.id});
 	$.selectedList.add(container);
 	container.addEventListener("click",function(e){
 		$.selectedList.remove(e.source);
@@ -204,6 +202,84 @@ function scrollChecker(e){
 		render();
 	}
 }
+<<<<<<< HEAD
+=======
+function doSubmit(){
+	name = $.groupname.getValue();
+	var length = $.selectedList.getChildren().length;
+	if(length > 0){
+		console.log("startLoading");
+		Alloy.Globals.loading.startLoading("Loading...");
+		Ti.App.removeEventListener("addGroup:doSubmit",doSubmit);
+		console.log("starting");
+		if ($.imageGroup_big.children.length > 0) {
+			var encode = $.imageGroup_big.children[0].toImage();
+		}else{
+			console.log("stopLoading");
+			Alloy.Globals.loading.stopLoading();
+			alert("Please choose group image!!!");
+			return;
+		};
+		console.log(name+" name");
+		if(name == ""){
+			alert("Group name Cannot be empty!!!");
+			Alloy.Globals.loading.stopLoading();
+			return;
+		}
+		if(u_id == ""){
+			alert("User Id is null\nPlease Login Again");
+			doLogout();
+			return;
+		}
+		for(var i=0;i<$.selectedList.getChildren().length;i++){
+			member.push($.selectedList.getChildren()[i].staffId);
+		}
+		var params={name:name,u_id:u_id,member:member.join()};
+		_.extend(params,{Filedata:encode});
+		API.callByPost({url:"addGroup",params:params },{
+			onload:function(responceText){
+				var res = JSON.parse(responceText);
+				Alloy.Globals.loading.stopLoading();
+				Alloy.Globals.pageFlow.back();
+				Ti.App.fireEvent("groupList:init");		
+				alert("Add Group Success!!!");
+				
+			},onerror:function(err){
+				console.log(err);
+				Alloy.Globals.loading.stopLoading();
+				Alloy.Globals.pageFlow.back();
+			}
+		});
+	}else{
+		alert("Please pick more than one member.");
+	}
+}
+Ti.App.addEventListener("addGroup:doSubmit",doSubmit);
+function addImage2(){
+Titanium.Media.openPhotoGallery({
+	success:function(event) {
+		alert("asdf");
+	},
+	cancel:function() {
+		// called when user cancels taking a picture
+	},
+	error:function(error) {
+		// called when there's an error
+		var a = Titanium.UI.createAlertDialog({title:'Camera'});
+		if (error.code == Titanium.Media.NO_CAMERA) {
+			a.setMessage('Please run this test on device');
+		} else {
+			a.setMessage('Unexpected error: ' + error.code);
+		}
+		a.show();
+	},
+    // allowEditing and mediaTypes are iOS-only settings
+	allowEditing: true,
+    mediaTypes : [Ti.Media.MEDIA_TYPE_PHOTO]
+	      
+});
+}
+>>>>>>> 4a0a99a7c43ad4957a6c1ab1a3c8f46eaa54ad80
 function showGMImagePicker(e) { 
 	var picker = require('ti.gmimagepicker');		
 	picker.openPhotoGallery({
@@ -227,7 +303,7 @@ function renderPhotos(media) {
     for (var i=0; i < media.length; i++) {
     	var imgView =Ti.UI.createImageView({ image: media[i],top:0, width:Ti.UI.FILL, height: Ti.UI.FILL });
 		$.imageGroup.add(imgView);
-		var imgView2 =Ti.UI.createImageView({ image: media[i],top:0, width:Ti.UI.FILL, height: Ti.UI.FILL });
+		var imgView2 =Ti.UI.createImageView({ image: media[i],top:0, width:Ti.UI.FILL, height: Ti.UI.SIZE });
 		$.imageGroup_big.add(imgView2);  	
 	};
 }

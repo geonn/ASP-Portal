@@ -34,6 +34,7 @@ init();
 
 function doSubmit(){
 	Alloy.Globals.loading.startLoading("Loading...");
+	Ti.App.removeEventListener("edit_profile:editProfile",editProfile);
 	var name = $.name.getValue();
 	var mobile = $.mobile.getValue();
 	var position = $.position.getValue();
@@ -97,7 +98,7 @@ function userProfileImage(){
 		zIndex: "2"
 	});
 	
-	var img_mother = $.UI.create("ScrollView",{
+	var img_mother = $.UI.create("View",{
 		height: cell_width,
 		width: cell_width,
 		borderRadius: cell_width/2,
@@ -149,21 +150,20 @@ function userProfileImage(){
 						Ti.API.info("response is => " + JSON.stringify(e));
 						var imgArray = e.filePath.split(",");
 						
+						img_mother.removeAllChildren();
+						$.imageGroup_big.removeAllChildren();
+						
 						for(var i=0; i<imgArray.length; i++){
 							if(imgArray[i]){
 								var imgView = Ti.UI.createImageView({
 									image: gallerypicker.decodeBitmapResource(imgArray[i], 640, 640),
-									nativePath:"file:/"+e.filePath,
 									width:Ti.UI.FILL,
-									height:Ti.UI.FILL,
-									form_type:"image"
+									height:Ti.UI.SIZE
 								});
 								var imgView2 = Ti.UI.createImageView({
 									image: gallerypicker.decodeBitmapResource(imgArray[i], 640, 640),
-									nativePath:"file:/"+e.filePath,
 									width:Ti.UI.FILL,
-									height:Ti.UI.FILL,
-									form_type:"image"
+									height:Ti.UI.SIZE
 								});
 								
 								img_view.children[0].image = "file://"+imgArray[i];
@@ -171,7 +171,7 @@ function userProfileImage(){
 								$.imageGroup_big.add(imgView2);
 							}
 						}
-						blob = $.imageGroup_big.children[0].toImage();
+						blob = $.imageGroup_big.children[0].getImage();
 					},
 					error : function(e) {
 						alert("error " + JSON.stringify(e));
@@ -191,20 +191,19 @@ function userProfileImage(){
 				// allowMultiple: false, // default is true
 			    success: function (e) {
 			        Ti.API.error('success: ' + JSON.stringify(e));
+			        img_mother.removeAllChildren();
+					$.imageGroup_big.removeAllChildren();
+			        
 					for (var i=0; i < e.media.length; i++) {
 						var imgView = Ti.UI.createImageView({
 							image: e.media[i],
-							nativePath:e.media[i],
 							width:Ti.UI.FILL,
-							height:Ti.UI.FILL,
-							form_type:"image"
+							height:Ti.UI.SIZE
 						});
 						var imgView2 = Ti.UI.createImageView({
 							image: e.media[i],
-							nativePath:e.media[i],
 							width:Ti.UI.FILL,
-							height:Ti.UI.FILL,
-							form_type:"image"
+							height:Ti.UI.SIZE
 						});
 						
 						img_view.children[0].image = e.media[i];
