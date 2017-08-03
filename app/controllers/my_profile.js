@@ -26,9 +26,10 @@ var img_blur = mod.createBasicBlurView({
 $.testing.setHeight(cell_width);
 $.testing1.setHeight(cell_width);
 $.testing.add(img_blur);
-$.img.setBorderRadius((cell_width / 2) - 10);
-$.img.setWidth(cell_width - 20);
-$.img.setHeight(cell_width - 20);
+$.img.setWidth(cell_width);
+$.imgv.setBorderRadius((cell_width / 2) - 10);
+$.imgv.setWidth(cell_width - 20);
+$.imgv.setHeight(cell_width - 20);
 $.user_name.setWidth(cell_width - 40);
 $.user_email.setWidth(cell_width - 40);
 $.user_contact.setWidth(cell_width - 40);

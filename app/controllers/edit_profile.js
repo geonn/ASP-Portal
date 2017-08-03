@@ -34,6 +34,7 @@ init();
 
 function editProfile(){
 	Alloy.Globals.loading.startLoading("Loading...");
+	Ti.App.removeEventListener("edit_profile:editProfile",editProfile);
 	var name = $.name.getValue();
 	var mobile = $.mobile.getValue();
 	var position = $.position.getValue();
@@ -98,7 +99,7 @@ function userProfileImage(){
 		zIndex: "2"
 	});
 	
-	var img_mother = $.UI.create("ScrollView",{
+	var img_mother = $.UI.create("View",{
 		height: cell_width,
 		width: cell_width,
 		borderRadius: cell_width/2,
