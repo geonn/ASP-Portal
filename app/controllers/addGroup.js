@@ -13,7 +13,56 @@ if (OS_IOS) {
 	$.selectedList.bottom = 50;
 	$.mother_view.bottom = 100;
 };
-
+function doSubmit(){
+	name = $.groupname.getValue();
+	var length = $.selectedList.getChildren().length;
+	if(length > 0){
+		console.log("startLoading");
+		Alloy.Globals.loading.startLoading("Loading...");
+		console.log("starting");
+		if ($.imageGroup_big.children.length > 0) {
+			var encode = $.imageGroup_big.children[0].toImage();
+		}else{
+			console.log("stopLoading");
+			Alloy.Globals.loading.stopLoading();
+			alert("Please choose group image!!!");
+			return;
+		};
+		console.log(name+" name");
+		if(name == ""){
+			alert("Group name Cannot be empty!!!");
+			Alloy.Globals.loading.stopLoading();
+			return;
+		}
+		if(u_id == ""){
+			alert("User Id is null\nPlease Login Again");
+			doLogout();
+			return;
+		}
+		for(var i=0;i<$.selectedList.getChildren().length;i++){
+			member.push($.selectedList.getChildren()[i].staffId);
+		}
+		var params={name:name,u_id:u_id,member:member.join()};
+		_.extend(params,{Filedata:encode});
+		API.callByPost({url:"addGroup",params:params },{
+			onload:function(responceText){
+				var res = JSON.parse(responceText);
+				Alloy.Globals.loading.stopLoading();
+				Alloy.Globals.pageFlow.back();
+				Ti.App.fireEvent("groupList:init");		
+				alert("Add Group Success!!!");
+				
+			},onerror:function(err){
+				console.log(err);
+				Alloy.Globals.loading.stopLoading();
+				Alloy.Globals.pageFlow.back();
+			}
+		});
+	}else{
+		alert("Please pick more than one member.");
+	}
+}
+exports.doSubmit = doSubmit;
 function add_image(e) {
 	var gallerypicker = require('titutorial.gallerypicker');
 	gallerypicker.openGallery({
@@ -154,80 +203,6 @@ function scrollChecker(e){
 	if (total >= nearEnd){
 		render();
 	}
-}
-function doSubmit(){
-	name = $.groupname.getValue();
-	var length = $.selectedList.getChildren().length;
-	if(length > 0){
-		console.log("startLoading");
-		Alloy.Globals.loading.startLoading("Loading...");
-		console.log("starting");
-		if ($.imageGroup_big.children.length > 0) {
-			var encode = $.imageGroup_big.children[0].toImage();
-		}else{
-			console.log("stopLoading");
-			Alloy.Globals.loading.stopLoading();
-			alert("Please choose group image!!!");
-			return;
-		};
-		console.log(name+" name");
-		if(name == ""){
-			alert("Group name Cannot be empty!!!");
-			Alloy.Globals.loading.stopLoading();
-			return;
-		}
-		if(u_id == ""){
-			alert("User Id is null\nPlease Login Again");
-			doLogout();
-			return;
-		}
-		for(var i=0;i<$.selectedList.getChildren().length;i++){
-			member.push($.selectedList.getChildren()[i].staffId);
-		}
-		var params={name:name,u_id:u_id,member:member.join()};
-		_.extend(params,{Filedata:encode});
-		API.callByPost({url:"addGroup",params:params },{
-			onload:function(responceText){
-				var res = JSON.parse(responceText);
-				Alloy.Globals.loading.stopLoading();
-				Alloy.Globals.pageFlow.back();
-				Ti.App.fireEvent("groupList:init");		
-				alert("Add Group Success!!!");
-				
-			},onerror:function(err){
-				console.log(err);
-				Alloy.Globals.loading.stopLoading();
-				Alloy.Globals.pageFlow.back();
-			}
-		});
-	}else{
-		alert("Please pick more than one member.");
-	}
-}
-//Ti.App.addEventListener("addGroup:doSubmit",doSubmit);
-function addImage2(){
-Titanium.Media.openPhotoGallery({
-	success:function(event) {
-		alert("asdf");
-	},
-	cancel:function() {
-		// called when user cancels taking a picture
-	},
-	error:function(error) {
-		// called when there's an error
-		var a = Titanium.UI.createAlertDialog({title:'Camera'});
-		if (error.code == Titanium.Media.NO_CAMERA) {
-			a.setMessage('Please run this test on device');
-		} else {
-			a.setMessage('Unexpected error: ' + error.code);
-		}
-		a.show();
-	},
-    // allowEditing and mediaTypes are iOS-only settings
-	allowEditing: true,
-    mediaTypes : [Ti.Media.MEDIA_TYPE_PHOTO]
-	      
-});
 }
 function showGMImagePicker(e) { 
 	var picker = require('ti.gmimagepicker');		
