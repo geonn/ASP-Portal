@@ -26,51 +26,25 @@ if(Ti.Platform.osname == "android"){
 // Process incoming push notifications
 function receivePush(e) {   
 	var target;
-	var url;
-	var id;
-	var doctor_panel_id;
+	var post_id;
 	if(OS_IOS){ 
 		Titanium.UI.iPhone.setAppBadge("0"); 
 		target = e.data.target;
-		url = e.data.extra;
-		id = e.data.id;
-		created = e.data.created;
-		doctor_panel_id = e.data.doctor_panel_id;
+		post_id = e.data.extra;	
 	}else{ 
 		target = e.target;
-		url = e.extra;
-		id = e.id;
-		created = e.created;
-		doctor_panel_id = e.doctor_panel_id;
+		post_id = e.extra;
 	}  
 	
-	if(target =="appointment"){
-		Ti.App.Properties.setString('doctor_panel_id', doctor_panel_id);
-		
-		var theWindow = Ti.App.Properties.getString('currentAppointmentWindow') || "";
+	if(target =="post"){
+		var current_post_id = Ti.App.Properties.getString('current_post_id') || 0;
 	 
-		if(theWindow == ""){  
-			var dialog = Ti.UI.createAlertDialog({
-				cancel: 1,
-				buttonNames: ['Cancel','OK'],
-				message: '[Appointment] New message available. Do you want to read now?',
-				title: 'Confirmation'
-			});
-			dialog.addEventListener('click', function(ex){
-				if (ex.index === 0){
-					//Do nothing
-				}
-				if (ex.index === 1){ 
-					setTimeout(function(){
-						Alloy.Globals.Navigator.open('appointment', {id: id, created: created,displayHomeAsUp: true});
-					},2000);
-				}
-			});	
-			dialog.show();  	
+		if(current_post_id != post_id){  
+			addPage("post_detail","Post Detail",{p_id: post_id});
 		}else { 
-		 Ti.App.fireEvent("appointment:refresh");
+		 	Ti.App.fireEvent("post_detail:init");
 		}
-		
+		Ti.App.fireEvent("discussion:refresh");
  
 	} 
 	 

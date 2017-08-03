@@ -3,6 +3,7 @@ var p_id = args.p_id || "";
 var u_id1;
 var i_model = Alloy.createCollection("images_table");
 var countdown = require("countdown_between_2date.js");
+Ti.App.Properties.setString('current_post_id', p_id);
 
 function init(){
 	var model = Alloy.createCollection("post");

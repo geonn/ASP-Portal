@@ -1,4 +1,6 @@
 Alloy.Globals.pageFlow = $.pageflow;
+var my_group = Alloy.createCollection("my_group");
+var group = Alloy.createCollection("groups");
 var isExistPage = false;
 function homePage(){
 	Alloy.Globals.pageFlow.clear();		
