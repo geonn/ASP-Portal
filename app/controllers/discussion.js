@@ -27,11 +27,21 @@ function render_post(params){
 	params.forEach(function(entry){
 		var imgArr = i_model.getImageByCateandPriId(true,undefined,2,entry.id);
 		var container = $.UI.create("View",{classes:['view_class','vert','padding'],left:"0",right:"0",backgroundColor:"#fff",post_index:post_index});
-		var title_container = $.UI.create('View',{classes:['wfill','horz'],height:68});
-		var user_img = $.UI.create("ImageView",{classes:['padding'],width:45,height:45,image:(entry.u_img!="")?entry.u_img:"/images/my_profile_square.png",u_id:entry.u_id});
+		var title_container = $.UI.create('View',{classes:['wfill','horz'],height:80});
+		var user_img = $.UI.create("ImageView",{classes:['padding'],width:55,height:55,image:(entry.u_img!="")?entry.u_img:"/images/my_profile_square.png",u_id:entry.u_id});
 		var title_child_container = $.UI.create("View",{classes:['wfill','hfill','padding'],left:0});
 		var username = $.UI.create("Label",{classes:['wsize','hsize','h4','bold'],text:entry.u_name,left:"0",top:"0",u_id:entry.u_id});
-		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:"0",bottom:0,color:"#7CC6FF",text:countdown.getTimePost(entry.created),p_id:entry.id});
+		//var time_group = $.UI.create("View",{classes:['wsize','hsize','horz'],left:"0",bottom:"0"});
+		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:'0',bottom:'0',color:"#7CC6FF",text:countdown.getTimePost(entry.created),p_id:entry.id});
+		if (entry.id != 0) {
+			var model = Alloy.createCollection("post");
+			var rres = model.getGroupData(entry.g_id);
+			var group = $.UI.create("Label",{classes:['h6'],width:'180',height:'20',color:"#23c281",left:'0',top:'22',text:"Post in "+rres.g_name,g_id:entry.g_id});
+			if(OS_ANDROID){
+				group.ellipsize=true;
+				group.wordWrap=false;
+			}
+		};
 		var more_container = $.UI.create("View",{classes:['hfill'],width:"30",right:"0",u_id:entry.u_id,p_id:entry.id,post_index:post_index});
 		var more = $.UI.create("ImageView",{right:"0",top:"0",image:'/images/btn-down.png',touchEnabled:false});
 		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],top:"0",text:entry.description,p_id:entry.id});
@@ -89,6 +99,13 @@ function render_post(params){
 		comment_button_container.add(comment_img);
 		comment_button_container.add(comment_button);
 		title_container.add(user_img);
+		//time_group.add(time);
+		if(entry.g_id != 0){
+			title_child_container.add(group);
+			group.addEventListener("click",function(e){
+ 				addPage("group_post", "Group Posts", {g_id: e.source.g_id});
+			});
+		};
 		title_child_container.add(username);
 		title_child_container.add(time);
 		more_container.add(more);
@@ -151,25 +168,27 @@ function refresh(e){
 	$.mother_view.removeAllChildren();	
 	var checker = Alloy.createCollection('updateChecker'); 
 	var isUpdate = checker.getCheckerById("2");
-	API.callByPost({url:"getPostList",params:{last_updated: isUpdate.updated}},{
-		onload:function(responseText){
-			var res = JSON.parse(responseText);
-			var arr = res.data || null;
-			var model = Alloy.createCollection("post");
-			model.saveArray(arr);
-			if(res.images != undefined){
-				i_model.saveArray(res.images);	
-			}			
-			model = null;
-			arr = null;
-			res =null;	
-			if(firename != null){
-				Ti.App.fireEvent(firename);
+	setTimeout(function(){
+		API.callByPost({url:"getPostList",params:{last_updated: ""}},{
+			onload:function(responseText){
+				var res = JSON.parse(responseText);
+				var arr = res.data || null;
+				var model = Alloy.createCollection("post");
+				model.saveArray(arr);
+				if(res.images != undefined){
+					i_model.saveArray(res.images);	
+				}			
+				model = null;
+				arr = null;
+				res =null;	
+				if(firename != null){
+					Ti.App.fireEvent(firename);
+				}
+				init();				
+	//			Alloy.Globals.loading.stopLoading();			
 			}
-			init();				
-//			Alloy.Globals.loading.stopLoading();			
-		}
-	});
+		});		                         
+	},5000);
 }
 function postOptions(params){
 	var u_id = Ti.App.Properties.getString("u_id")||"";

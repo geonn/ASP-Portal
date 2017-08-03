@@ -20,7 +20,11 @@
 					<Label class="wfill hsize h5 padding" color="#999" text="Staffs"/>
 				</View>	
 			</ScrollView>
-		</View>		
-		<View class="wfill horz" borderColor='#eff3f6' id="selectedList" zIndex="10" bottom="0" height="0" backgroundColor="#fff"></View>
+		</View>
+		<!-- <ScrollView class="wfill hsize conthfill horz" showHorizontalScrollIndicator="true" contentWidth="auto" scrollType="horizontal" borderColor='#eff3f6' zIndex="10" bottom="0" right="40" backgroundColor="#fff">
+			
+		</ScrollView> -->
+		<View class="wfill horz" height="0" id="selectedList"borderColor='#eff3f6' zIndex="10" bottom="0" right="40" backgroundColor="#fff"></View>
+		<Button width="40" height="50" id="addgroup" onClick="doSubmit" zIndex="10" bottom="0" right="0" textAlign="center" backgroundColor="#23C282" color="#fff" title="Add"></Button>
 	</View>
 </Alloy>

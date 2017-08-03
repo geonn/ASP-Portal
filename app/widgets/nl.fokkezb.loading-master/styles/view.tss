@@ -45,7 +45,7 @@
 
   text: L('loadingMessage', ''),
   
-  color: '#fff',
+  color: "#fff",
   textAlign: Ti.UI.TEXT_ALIGNMENT_CENTER,
   font: {
     fontSize: '16dp'

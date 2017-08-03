@@ -34,7 +34,7 @@ init();
 
 function doSubmit(){
 	Alloy.Globals.loading.startLoading("Loading...");
-	Ti.App.removeEventListener("edit_profile:editProfile",editProfile);
+	//Ti.App.removeEventListener("edit_profile:editProfile",editProfile);
 	var name = $.name.getValue();
 	var mobile = $.mobile.getValue();
 	var position = $.position.getValue();
@@ -80,8 +80,10 @@ function doSubmit(){
 			console.log("Edit Profile fail!");
 		}});	
 	}
-};
-exports.doSubmit = doSubmit;
+
+}
+//Ti.App.addEventListener("edit_profile:editProfile",editProfile);
+
 function userProfileImage(){
 	var img_blur = mod.createBasicBlurView({
 		width:Ti.UI.FILL,

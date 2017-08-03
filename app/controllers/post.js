@@ -95,7 +95,7 @@ function add_image() {
 function showGMImagePicker() {
 	var picker = require('ti.gmimagepicker');		 
 	picker.openPhotoGallery({
-		maxSelectablePhotos: 30,
+		maxSelectablePhotos: 3,
 		// allowMultiple: false, // default is true
 	    success: function (e) {
 	        Ti.API.error('successaaa: ' + JSON.stringify(e));
@@ -213,7 +213,7 @@ function doLogout(){
 	},2000);
 }
 function select_group(e) {
-	var arr = my_group.getData(u_id);
+	var arr = my_group.getDataById(u_id);
 	var count = 1;
 	arr.forEach(function(data) {
 		group_name[count] = data.g_name;

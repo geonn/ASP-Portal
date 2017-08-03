@@ -58,11 +58,7 @@ function init() {
 		
 		if (i != 7) {
 			list_view.addEventListener("click",function(e){
-				if (e.source.pageButton != undefined) {
-					addPage(e.source.pageIndex,e.source.pageTitle,{u_id:u_id},Alloy.createController(e.source.pageButton).doSubmit);
-				}else{
-					addPage(e.source.pageIndex,e.source.pageTitle,{u_id:u_id});
-				};
+				addPage(e.source.pageIndex,e.source.pageTitle,{u_id:u_id});
 			});	
 		}else{
 			list_view.addEventListener("click",function(e){

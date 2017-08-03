@@ -49,7 +49,7 @@ exports.definition = {
 				offset = offset || 0;
 				var sql_limit = (unlimit)?"":" limit "+offset+",10";
 				var collection = this;
-                var sql = "select staff.name as u_name,post.* from post left outer join staff on post.u_id=staff.id where post.status = 1 and post.u_id="+u_id+" order by post.updated desc"+sql_limit;
+                var sql = "select staff.name as u_name,post.* from post left outer join staff on post.u_id=staff.id where post.g_id = 0 and post.status = 1 and post.u_id="+u_id+" order by post.updated desc"+sql_limit;
 				db = Ti.Database.open(collection.config.adapter.db_name);
 				if(Ti.Platform.osname != "android"){
 					db.file.setRemoteBackup(false);
@@ -109,6 +109,35 @@ exports.definition = {
 					};
                 	res.next();
 					count++;
+                }
+                res.close();
+                db.close();
+                collection.trigger('sync');
+                return arr;
+			},
+			getGroupData: function(g_id){
+				var collection = this;
+				var sql = "select groups.name as g_name,post.* from post left outer join groups on post.g_id = groups.id where post.g_id = "+g_id;
+				db = Ti.Database.open(collection.config.adapter.db_name);
+				if(Ti.Platform.osname != "android"){
+					db.file.setRemoteBackup(false);
+				}
+                var res = db.execute(sql);
+                var arr;
+				var count = 0;   
+                if(res.isValidRow()){
+                	arr = {
+                		id: res.fieldByName('id'),
+						u_id:res.fieldByName("u_id"),
+						g_name:res.fieldByName('g_name'),
+						title:res.fieldByName('title'),
+						g_id:res.fieldByName('g_id'),
+						description:res.fieldByName('description'),
+						comment_count:res.fieldByName('comment_count'),
+					    status: res.fieldByName('status'),
+					    created: res.fieldByName('created'),
+					    updated: res.fieldByName('updated')
+					};
                 }
                 res.close();
                 db.close();
