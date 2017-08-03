@@ -106,6 +106,7 @@ function showBar(param,position){
 			if($.selectedList.getChildren().length==0){
 				if (OS_IOS) {
 					$.selectedList.setHeight(0);
+					$.addgroup.bottom = 0;
 				}else {
 					setTimeout(function(){
 			            $.mother_view.setBottom(0);
@@ -118,6 +119,7 @@ function showBar(param,position){
 	}
 	if (OS_IOS) {
 		$.selectedList.setHeight(50);
+		$.addgroup.bottom = 50;
 	}else{
 		$.mother_view.setBottom(40);
 		$.selectedList.setHeight(50);
@@ -244,6 +246,7 @@ $.staffName.listener('change', function(e){
 		var cdtion = false;
 		
 		for(var i=0;i<arr.length;i++){
+			if ($.selectedList.getChildren().length >= 1) {
 			for(var ii = 0; ii < $.selectedList.getChildren().length; ii++) {
 				if(arr[i].id == $.selectedList.children[ii].position) {
 					boll = !boll;
@@ -278,6 +281,28 @@ $.staffName.listener('change', function(e){
 					cdtion = false;
 					break;
 				}
+			}
+			}else{
+				var container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:0,staff:arr[i],check:boll,position:arr[i].id});
+				var small_container = $.UI.create("View",{classes:['hsize','horz'],width:"84%",left:"0",touchEnabled:false});
+				var userImg = (arr[i].img_path != "")?arr[i].img_path:"/images/default_profile.png";
+				var image = $.UI.create("ImageView",{classes:['padding'],left:5,width:45,height:45,image:userImg,touchEnabled:false});
+				var title = $.UI.create("Label",{classes:['wfill','hsize'],text:arr[i].name,touchEnabled:false});
+				var checkBox = $.UI.create("ImageView",{width:20,height:20,right:10,image:img,touchEnabled:false});
+				if(OS_ANDROID){
+					title.ellipsize=true;
+					title.wordWrap=false;
+				}
+				small_container.add(image);
+				small_container.add(title);
+				container.add(small_container);
+				container.add(checkBox);	
+				$.mother_view.add(container);
+				container.addEventListener("click",function(e){	
+					e.source.children[1].image =(!e.source.check)?checker:unchecker;
+					e.source.check = !e.source.check;
+					showBar(e.source.staff,e.source.position);
+				});
 			}
 		}
 	}

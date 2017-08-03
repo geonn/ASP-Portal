@@ -185,8 +185,8 @@ function deletePost(p_id,p_index){
 
 function group_info(){
 	console.log("Group info");
-	var father = $.UI.create("View",{classes:['wfill','hfill'],backgroundColor:'#66999999',zIndex:'4'});
-	var info_view = $.UI.create("View",{height:cell_width*2,width:cell_width*1.8,backgroundColor:'#fff',zIndex:'5'});
+	var father = $.UI.create("View",{classes:['wfill','hfill'],backgroundColor:'#B3999999',zIndex:'4'});
+	var info_view = $.UI.create("View",{height:cell_width*2.5,width:cell_width*1.8,backgroundColor:'#fff',zIndex:'5'});
 	var title = $.UI.create("Label",{classes:['h4'],textAlign:'center',color:"#fff",height:'50',width:cell_width*1.8,backgroundColor:'#00CB85',top:'0',text:'Group Info'});
 	var scrollView = $.UI.create("ScrollView",{classes:['wfill','vert','contwfill','conthsize'],height:cell_width*2-100,top:'50'});
 	var g_name = (OS_IOS)?$.UI.create("Label",{classes:['wfill','h4'],height:'22',text:"Group name: "+arr[0].name,textAlign:'left',top:'5',left:'10',right:'10'}):$.UI.create("Label",{classes:['wfill','h3','bold'],height:'22',text:arr[0].name,textAlign:'left',top:'5',left:'10',right:'10',ellipsize:true,
@@ -194,15 +194,8 @@ function group_info(){
 	var member = $.UI.create("Label",{classes:['wfill','h4'],height:'22',text:"Member:",textAlign:'left',top:'10',left:'10'});
 	var ok_button = $.UI.create("Label",{classes:['h3'],textAlign:'center',height:'50',width:cell_width*1.8,backgroundColor:'#fff',bottom:'0',text:'ok'});
 	var hr = $.UI.create("View",{classes: ['hr'],backgroundColor: '#EDF3F6',bottom:'50'});
-	
 	info_view.add(title);
 	scrollView.add(g_name);
-	scrollView.add(member);
-	scrollView.add(member);
-	scrollView.add(member);
-	scrollView.add(member);
-	scrollView.add(member);
-	scrollView.add(member);
 	scrollView.add(member);
 	info_view.add(scrollView);
 	info_view.add(hr);
