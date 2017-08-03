@@ -5,7 +5,11 @@
 				<Widget src="input-materialdesign" titleHint="Title" id="title"/>
 				<View class="horz wfill hsize" left="20" right="20">
 					<Label class="wsize hsize" top="26">Start Time: </Label>
-					<!-- <ScrollableView></ScrollableView> --><View id="view"></View>
+					<!-- <ScrollableView>
+						<View class="wfill hsize padding" backgroundColor="yellow"></View>
+						<View class="wfill hsize padding" backgroundColor="blue"></View>
+						<View class="wfill hsize padding" backgroundColor="red"></View>
+					</ScrollableView> --><View id="view"></View>
 					<Label class="wsize hsize" top="26">:</Label>
 					<Widget width="30" bottom="-10" left="5" right="5" src="input-materialdesign" titleHint="MM" id="s_time"/>
 				</View>

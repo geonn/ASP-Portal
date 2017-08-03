@@ -150,20 +150,23 @@ function userProfileImage(){
 						Ti.API.info("response is => " + JSON.stringify(e));
 						var imgArray = e.filePath.split(",");
 						
+						img_mother.removeAllChildren();
+						$.imageGroup_big.removeAllChildren();
+						
 						for(var i=0; i<imgArray.length; i++){
 							if(imgArray[i]){
 								var imgView = Ti.UI.createImageView({
 									image: gallerypicker.decodeBitmapResource(imgArray[i], 640, 640),
 									nativePath:"file:/"+e.filePath,
 									width:Ti.UI.FILL,
-									height:Ti.UI.FILL,
+									height:Ti.UI.SIZE,
 									form_type:"image"
 								});
 								var imgView2 = Ti.UI.createImageView({
 									image: gallerypicker.decodeBitmapResource(imgArray[i], 640, 640),
 									nativePath:"file:/"+e.filePath,
 									width:Ti.UI.FILL,
-									height:Ti.UI.FILL,
+									height:Ti.UI.SIZE,
 									form_type:"image"
 								});
 								
@@ -192,19 +195,22 @@ function userProfileImage(){
 				// allowMultiple: false, // default is true
 			    success: function (e) {
 			        Ti.API.error('success: ' + JSON.stringify(e));
+			        img_mother.removeAllChildren();
+					$.imageGroup_big.removeAllChildren();
+			        
 					for (var i=0; i < e.media.length; i++) {
 						var imgView = Ti.UI.createImageView({
 							image: e.media[i],
 							nativePath:e.media[i],
 							width:Ti.UI.FILL,
-							height:Ti.UI.FILL,
+							height:Ti.UI.SIZE,
 							form_type:"image"
 						});
 						var imgView2 = Ti.UI.createImageView({
 							image: e.media[i],
 							nativePath:e.media[i],
 							width:Ti.UI.FILL,
-							height:Ti.UI.FILL,
+							height:Ti.UI.SIZE,
 							form_type:"image"
 						});
 						
