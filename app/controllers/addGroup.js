@@ -29,20 +29,18 @@ function add_image(e) {
 			for(var i=0; i<imgArray.length; i++){
 				if(imgArray[i]){
 					var imgView = Ti.UI.createImageView({
-						image: gallerypicker.decodeBitmapResource(imgArray[i], 640, 640),
-						nativePath:"file:/"+e.filePath,
+						image: "file://"+imgArray[i],
 						width:Ti.UI.FILL,
-						height:Ti.UI.FILL,
-						form_type:"image"
+						height:Ti.UI.SIZE
 					});
-					var imgView2 = Ti.UI.createImageView({						
-						image: gallerypicker.decodeBitmapResource(imgArray[i], 640, 640),
-						nativePath:"file:/"+e.filePath,
+					var imgView2 = Ti.UI.createImageView({
+						image: "file://"+imgArray[i],
 						width:Ti.UI.FILL,
-						height:Ti.UI.FILL,
-						form_type:"image"
+						height:Ti.UI.SIZE
 					});
+					
 					$.imageGroup.removeAllChildren();
+					$.imageGroup_big.removeAllChildren();
 					$.imageGroup.add(imgView);
 					$.imageGroup_big.add(imgView2);
 				}

@@ -113,7 +113,7 @@ function showGMImagePicker() {
 function doSubmit(){
 	var description =$.description.value || "";
 	var u_id = Ti.App.Properties.getString('u_id')||"";
-	var g_id = "";
+	var g_id = group_id[num];
 	if(description == ""){
 		alert("Please type something on field box");
 		return;
@@ -123,9 +123,10 @@ function doSubmit(){
 		doLogout();
 		return;
 	}
-	var url = (edit)?"editPost":"doPost";
-	var params = (edit)?{id:p_id,title:"Public Post",u_id:u_id,description:description,status:1}:{u_id:u_id,g_id:group_id[num],title:group_name[num],description:description,status:1};
 	Alloy.Globals.loading.startLoading("Posting");
+	var url = (edit)?"editPost":"doPost";
+	var params = (edit)?{id:p_id,title:"Public Post",u_id:u_id,description:description,status:1}:{u_id:u_id,g_id:g_id,title:group_name[num],description:description,status:1};
+	
 	API.callByPost({url:url,params:params},{
 	onload:function(responceText){
 		var res = JSON.parse(responceText);
@@ -143,15 +144,16 @@ function doSubmit(){
 			});			
 		}
 		setTimeout(function(){
-			Alloy.Globals.loading.stopLoading();		
 			if(res.status == "success"){
 				if(refreshName != null){
-					console.log("asdf:"+refreshName);
-					Ti.App.fireEvent("discussion:refresh",{refreshName:refreshName});														
+					Ti.App.fireEvent("discussion:refresh",{refreshName:refreshName});
 				}else{
 					Ti.App.fireEvent("discussion:refresh");					
 				}
-				Alloy.Globals.pageFlow.back();			
+				Ti.App.fireEvent("discussion:Rgroup_post", {g_id:g_id});
+				Alloy.Globals.loading.stopLoading();
+				
+				Alloy.Globals.pageFlow.back();
 			}else{
 				alert("Something wrong!");
 				Alloy.Globals.pageFlow.back();

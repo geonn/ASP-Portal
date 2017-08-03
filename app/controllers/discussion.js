@@ -169,7 +169,7 @@ function refresh(e){
 			init();				
 //			Alloy.Globals.loading.stopLoading();			
 		}
-	});	
+	});
 }
 function postOptions(params){
 	var u_id = Ti.App.Properties.getString("u_id")||"";
@@ -247,3 +247,24 @@ function doLogout(){
 		Alloy.Globals.loading.stopLoading();		
 	},2000);
 }
+function Rgroup_post(e) {
+	Ti.App.removeEventListener("discussion:Rgroup_post", Rgroup_post);
+	var checker = Alloy.createCollection('updateChecker');
+	var isUpdate = checker.getCheckerById("2");
+	API.callByPost({url:"getPostList",params:{g_id: e.g_id, last_updated: isUpdate.updated}},{
+		onload:function(responseText){
+			var res = JSON.parse(responseText);
+			var arr = res.data || null;
+			var model = Alloy.createCollection("post");
+			model.saveArray(arr);
+			if(res.images != undefined){
+				i_model.saveArray(res.images);
+			}
+			model = null;
+			arr = null;
+			res =null;
+		}
+	});
+	
+}
+Ti.App.addEventListener("discussion:Rgroup_post", Rgroup_post);

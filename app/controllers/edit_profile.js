@@ -158,17 +158,13 @@ function userProfileImage(){
 							if(imgArray[i]){
 								var imgView = Ti.UI.createImageView({
 									image: gallerypicker.decodeBitmapResource(imgArray[i], 640, 640),
-									nativePath:"file:/"+e.filePath,
 									width:Ti.UI.FILL,
-									height:Ti.UI.SIZE,
-									form_type:"image"
+									height:Ti.UI.SIZE
 								});
 								var imgView2 = Ti.UI.createImageView({
 									image: gallerypicker.decodeBitmapResource(imgArray[i], 640, 640),
-									nativePath:"file:/"+e.filePath,
 									width:Ti.UI.FILL,
-									height:Ti.UI.SIZE,
-									form_type:"image"
+									height:Ti.UI.SIZE
 								});
 								
 								img_view.children[0].image = "file://"+imgArray[i];
@@ -176,7 +172,7 @@ function userProfileImage(){
 								$.imageGroup_big.add(imgView2);
 							}
 						}
-						blob = $.imageGroup_big.children[0].toImage();
+						blob = $.imageGroup_big.children[0].getImage();
 					},
 					error : function(e) {
 						alert("error " + JSON.stringify(e));
@@ -202,17 +198,13 @@ function userProfileImage(){
 					for (var i=0; i < e.media.length; i++) {
 						var imgView = Ti.UI.createImageView({
 							image: e.media[i],
-							nativePath:e.media[i],
 							width:Ti.UI.FILL,
-							height:Ti.UI.SIZE,
-							form_type:"image"
+							height:Ti.UI.SIZE
 						});
 						var imgView2 = Ti.UI.createImageView({
 							image: e.media[i],
-							nativePath:e.media[i],
 							width:Ti.UI.FILL,
-							height:Ti.UI.SIZE,
-							form_type:"image"
+							height:Ti.UI.SIZE
 						});
 						
 						img_view.children[0].image = e.media[i];
