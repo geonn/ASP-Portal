@@ -65,6 +65,13 @@ function render_post(params){
 						//
 					}
 				});
+                image_container.addEventListener("scrollend",function(e){
+                    if(e.currentPage != undefined && e.source.parent.children[1].children[0].imglength > 1) {
+                        var count = (e.currentPage + 1) + "/" + e.source.parent.children[1].children[0].imglength;
+                        e.source.parent.children[1].children[0].text = count;
+                        count = undefined;
+                    }
+                });
 				small_image_container = undefined;
 				image = undefined;
 			});
