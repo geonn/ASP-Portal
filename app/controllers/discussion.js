@@ -189,6 +189,7 @@ function postOptions(params){
 }
 function deletePost(p_id,p_index){
 	COMMON.createAlert("Warning","Are you sure want to delete this post?",function(e){
+		$.scrollview.scrollTo(0,0,[animation=false]);
 		Alloy.Globals.loading.startLoading("Posting");		
 		API.callByPost({url:"deletePost",params:{id:p_id,status:2}},{
 			onload:function(responceText){
@@ -213,6 +214,7 @@ function show_MotherView(){
 	return false;	
 }
 function addPostView(){
+	console.log("add Post");
 	var container = $.UI.create("View",{classes:['horz','wfill','hsize','padding'],top:1,left:"0",right:"0",backgroundColor:"#fff"});
 	var	image = $.UI.create("ImageView",{classes:['padding'],width:"45",height:"45",image:"/images/asp_square_logo.png"});
 	var title = $.UI.create("Label",{classes:['hsize','h4'], width:"auto",text:"Posting something..."});
