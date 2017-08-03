@@ -32,7 +32,7 @@ function init(){
 
 init();
 
-function editProfile(){
+function doSubmit(){
 	Alloy.Globals.loading.startLoading("Loading...");
 	//Ti.App.removeEventListener("edit_profile:editProfile",editProfile);
 	var name = $.name.getValue();
@@ -80,9 +80,14 @@ function editProfile(){
 			console.log("Edit Profile fail!");
 		}});	
 	}
+<<<<<<< HEAD
 }
 //Ti.App.addEventListener("edit_profile:editProfile",editProfile);
 
+=======
+};
+exports.doSubmit = doSubmit;
+>>>>>>> origin/master
 function userProfileImage(){
 	var img_blur = mod.createBasicBlurView({
 		width:Ti.UI.FILL,

@@ -134,7 +134,7 @@ exports.definition = {
                 return arr;
 			},searchStaff: function(name,unlimit,offset) {
 				offset = offset || 0;
-				var sql_limit = (unlimit)?"":" limit "+offset+",30";
+				var sql_limit = (unlimit)?"":" limit "+offset+",50";
 				var collection =this;
 				var sql = "select * from "+collection.config.adapter.collection_name+" where name like '%" + name + "%' AND status = 1 order by name" + sql_limit;
 				db = Ti.Database.open(collection.config.adapter.db_name);

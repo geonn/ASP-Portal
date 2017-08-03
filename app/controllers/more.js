@@ -1,6 +1,6 @@
 var list_title = ["My Profile","Edit Profile","Groups","Apply Leave","Calendar","Favourite Post","Feed Back","Log Out"];
 var list_controller = ['my_profile','edit_profile','group_view','','calendar','','group_post',''];
-var list_button = [,"edit_profile:editProfile","addGroup:doSubmit",,,,,];
+var list_button = [,"edit_profile","addGroup",,,,,];
 var u_id = Ti.App.Properties.getString("u_id")||"";
 
 function init() {

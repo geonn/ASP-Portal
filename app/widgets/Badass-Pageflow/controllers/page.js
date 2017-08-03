@@ -55,7 +55,13 @@ var api = {
     getNavRight: function() {
         return api.navBar.getRightContent();
     },
-
+	showNavRight:function(){
+		api.navBar.rightShow();
+	},
+	hideNavRight:function(){
+		api.navBar.rightHide();
+	}
+	,
     hideNavBar: function() {
         api.pageView.setTop(0);
     },
@@ -162,3 +168,6 @@ exports.setNavLeft = api.setNavLeft;
 exports.setNavRight = api.setNavRight;
 exports.setNavTitle = api.setNavTitle;
 exports.showNavBar = api.showNavBar;
+exports.showNavRight = api.showNavRight;
+exports.hideNavRight = api.hideNavRight;
+
