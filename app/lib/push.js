@@ -80,18 +80,18 @@ function receivePush(e) {
 function deviceTokenSuccess(ev) {
     deviceToken = ev.deviceToken; 
     Cloud.Users.login({
-	    login: 'geomilano',
-	    password: 'geonn2015'
+	    login: 'aspportal',
+	    password: '123456'
 	}, function (ex) {
 		if (ex.success) {
 			
 			Cloud.PushNotifications.unsubscribe({
-			    channel: 'survey',
+			    channel: 'post',
 			    device_token: deviceToken
 			}, function (ey) {
 			    if (ey.success) {
 			       Cloud.PushNotifications.subscribe({
-					    channel: 'survey',
+					    channel: 'post',
 					    type:Ti.Platform.name == 'android' ? 'android' : 'ios', 
 					    device_token: deviceToken
 					}, function (e) { 
@@ -107,7 +107,7 @@ function deviceTokenSuccess(ev) {
 					});
 			    } else {
 			    	Cloud.PushNotifications.subscribe({
-					    channel: 'survey',
+					    channel: 'post',
 					    type:Ti.Platform.name == 'android' ? 'android' : 'ios', 
 					    device_token: deviceToken
 					}, function (e) { 
