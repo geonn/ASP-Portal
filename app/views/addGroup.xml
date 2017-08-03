@@ -2,6 +2,7 @@
 	<View class="wfill hfill">
 		<View class="wfill hsize" id="imageGroup_big"></View>
 		<View class="wfill hfill vert" backgroundColor="#eff3f6">
+			<Button width="300" class="hsize" onClick="doSubmit">CREATE</Button>
 			<View class="wfill hsize horz" bottom="20" backgroundColor="#fff">
 				<View left="10" borderColor="#fff" backgroundImage="/images/camera_icon.png" width="50" id="imageGroup" height="50" platform="android" borderRadius="25" onClick="add_image"></View>		
 				<View left="10" borderColor="#fff" backgroundImage="/images/camera_icon.png" width="50" id="imageGroup" height="50" platform="ios" borderRadius="25" onClick="showGMImagePicker"></View>
