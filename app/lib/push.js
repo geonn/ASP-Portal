@@ -29,7 +29,7 @@ function receivePush(e) {
 	var post_id;
 	if(OS_IOS){ 
 		Titanium.UI.iPhone.setAppBadge("0"); 
-		target = e.data.target;
+		target = e.data.target; 
 		post_id = e.data.extra;	
 	}else{ 
 		target = e.target;
@@ -45,7 +45,7 @@ function receivePush(e) {
 		 	Ti.App.fireEvent("post_detail:init");
 		}
 		Ti.App.fireEvent("discussion:refresh");
- 
+   
 	} 
 	 
 	return false;
