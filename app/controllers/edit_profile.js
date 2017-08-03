@@ -80,14 +80,10 @@ function doSubmit(){
 			console.log("Edit Profile fail!");
 		}});	
 	}
-<<<<<<< HEAD
+
 }
 //Ti.App.addEventListener("edit_profile:editProfile",editProfile);
 
-=======
-};
-exports.doSubmit = doSubmit;
->>>>>>> origin/master
 function userProfileImage(){
 	var img_blur = mod.createBasicBlurView({
 		width:Ti.UI.FILL,
