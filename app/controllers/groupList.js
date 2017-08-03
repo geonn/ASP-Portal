@@ -39,13 +39,14 @@ function render_list(e) {
 			right: '5'
 		});
 		var view_img = $.UI.create("View",{
-			classes: ['vert'],
 			height: cell_width - 30,
 			width: cell_width - 30,
 			top: '15',
 			left: '15',
 			right: '15',
 			borderRadius: (cell_width - 30) / 2,
+			borderWidth: '5',
+			borderColor: '#eff3f6',
 			backgroundColor: "#eff3f6",
 			g_id: data.g_id
 		});

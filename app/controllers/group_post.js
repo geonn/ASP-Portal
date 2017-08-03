@@ -1,5 +1,6 @@
 var args = arguments[0] || {};//args.g_id
 var model = Alloy.createCollection("groups");
+var arr = model.getData(args.g_id);
 var cell_width;
 var pwidth = Titanium.Platform.displayCaps.platformWidth;
 var i_model = Alloy.createCollection("images_table");
@@ -16,8 +17,6 @@ $.img_view.setHeight(cell_width);
 
 function init(){
 	Alloy.Globals.loading.startLoading("Loading...");
-	
-	var arr = model.getData(args.g_id);
 	$.group_img.setImage(arr[0].image);
 	$.group_name.setText(arr[0].name);
 	
@@ -175,4 +174,32 @@ function deletePost(p_id,p_index){
 			}
 		});
 	});
+}
+
+function group_info(){
+	console.log("Group info");
+	var father = $.UI.create("View",{classes:['wfill','hfill'],backgroundColor:'#66999999',zIndex:'4'});
+	var info_view = $.UI.create("View",{height:cell_width*2,width:cell_width*1.8,backgroundColor:'#fff',zIndex:'5'});
+	var title = $.UI.create("Label",{classes:['h4'],textAlign:'center',color:"#fff",height:'50',width:cell_width*1.8,backgroundColor:'#00CB85',top:'0',text:'Group Info'});
+	var scrollView = $.UI.create("ScrollView",{classes:['wfill','vert','contwfill','conthsize'],height:cell_width*2-100,top:'50'});
+	var g_name = (OS_IOS)?$.UI.create("Label",{classes:['wfill','h4'],height:'22',text:"Group name: "+arr[0].name,textAlign:'left',top:'5',left:'10',right:'10'}):$.UI.create("Label",{classes:['wfill','h3','bold'],height:'22',text:arr[0].name,textAlign:'left',top:'5',left:'10',right:'10',ellipsize:true,
+			wordWrap: false});
+	var member = $.UI.create("Label",{classes:['wfill','h4'],height:'22',text:"Member:",textAlign:'left',top:'10',left:'10'});
+	var ok_button = $.UI.create("Label",{classes:['h3'],textAlign:'center',height:'50',width:cell_width*1.8,backgroundColor:'#fff',bottom:'0',text:'ok'});
+	var hr = $.UI.create("View",{classes: ['hr'],backgroundColor: '#EDF3F6',bottom:'50'});
+	
+	info_view.add(title);
+	scrollView.add(g_name);
+	scrollView.add(member);
+	for (var i=0;i<20;i++) {
+		scrollView.add(member);
+	};
+	info_view.add(scrollView);
+	info_view.add(hr);
+	info_view.add(ok_button);
+	father.add(info_view);
+	ok_button.addEventListener("click",function(e){
+		$.grandmother.remove(father);
+	});
+	$.grandmother.add(father);
 }
