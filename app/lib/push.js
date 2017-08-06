@@ -38,15 +38,13 @@ function receivePush(e) {
 	
 	if(target =="post"){
 		var current_post_id = Ti.App.Properties.getString('current_post_id') || 0;
-	 
+	 	Ti.App.fireEvent("discussion:refresh");
 		if(current_post_id != post_id){  
-			addPage("post_detail","Post Detail",{p_id: post_id});
+			setTimeout(function(e){addPage("post_detail","Post Detail",{p_id: post_id});}, 3000);
 		}else { 
 		 	Ti.App.fireEvent("post_detail:init");
 		}
-		Ti.App.fireEvent("discussion:refresh");
-   
-	} 
+	}
 	 
 	return false;
 }

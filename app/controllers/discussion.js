@@ -169,7 +169,8 @@ function refresh(e){
 	var checker = Alloy.createCollection('updateChecker'); 
 	var isUpdate = checker.getCheckerById("2");
 	setTimeout(function(){
-		API.callByPost({url:"getPostList",params:{last_updated: ""}},{
+		var u_id = Ti.App.Properties.getString("u_id")||""; 
+		API.callByPost({url:"getPostList",params:{last_updated: "", u_id: u_id}},{
 			onload:function(responseText){
 				var res = JSON.parse(responseText);
 				var arr = res.data || null;
