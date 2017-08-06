@@ -190,7 +190,7 @@ exports.sendNotification = function(e){
 exports.loadAPIBySequence = function (e){ //counter,
 	var counter = (typeof e.counter == "undefined")?0:e.counter;
 	if(counter >= APILoadingList.length){
-	//	Ti.App.fireEvent('app:loadingViewFinish');
+		Ti.App.fireEvent('app:loadingViewFinish');
 		return false;
 	}
 	
@@ -207,7 +207,6 @@ exports.loadAPIBySequence = function (e){ //counter,
 	if(api['url'] == "getMyGroupList"){
 		var u_id = Ti.App.Properties.getString("u_id")||null;
 		if(u_id == null){
-			alert("User Id is null\nPlease Login Again");
 			doLogout();
 			return;
 		}		
@@ -238,12 +237,12 @@ exports.loadAPIBySequence = function (e){ //counter,
 				console.log("data:"+JSON.stringify(data));			        	
 		        checker.updateModule(APILoadingList[counter]['checkId'],APILoadingList[counter]['model'],currentDateTime1());					
 			}
-			//Ti.App.fireEvent('app:update_loading_text', {text: ((counter+1)/total_item*100).toFixed()+"% loading..."});
+			Ti.App.fireEvent('app:update_loading_text', {text: ((counter+1)/total_item*100).toFixed()+"% loading..."});
 			counter++;
 			API.loadAPIBySequence({counter: counter});
 		},
 		onerror: function(err){
-		//	Ti.App.fireEvent('app:update_loading_text', {text: ((counter+1)/total_item*100).toFixed()+"% loading..."});
+			Ti.App.fireEvent('app:update_loading_text', {text: ((counter+1)/total_item*100).toFixed()+"% loading..."});
 			counter++;
 			API.loadAPIBySequence({counter: counter});
 		}

@@ -38,14 +38,25 @@ function receivePush(e) {
 	
 	if(target =="post"){
 		var current_post_id = Ti.App.Properties.getString('current_post_id') || 0;
-	 
-		if(current_post_id != post_id){  
-			addPage("post_detail","Post Detail",{p_id: post_id});
-		}else { 
-		 	Ti.App.fireEvent("post_detail:init");
-		}
-		Ti.App.fireEvent("discussion:refresh");
- 
+ 		Ti.App.fireEvent("discussion:refresh", {callback: function(e){
+ 			if(current_post_id != post_id){
+				var dialog = Ti.UI.createAlertDialog({
+					cancel: 1,
+					buttonNames: ['Cancel','OK'],
+					message: 'Got a new post. Do you want to read now?',
+					title: 'Confirmation'
+				});
+				dialog.addEventListener('click', function(ex){
+					if (ex.index === 1){
+						addPage("post_detail","Post Detail",{p_id: post_id});
+					}
+				});
+				dialog.show();
+			}else{ 
+			 	Ti.App.fireEvent("post_detail:init");
+			}
+ 		}});
+		
 	} 
 	 
 	return false;

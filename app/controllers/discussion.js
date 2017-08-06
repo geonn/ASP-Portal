@@ -33,10 +33,12 @@ function render_post(params){
 		var username = $.UI.create("Label",{classes:['wsize','hsize','h4','bold'],text:entry.u_name,left:"0",top:"0",u_id:entry.u_id});
 		//var time_group = $.UI.create("View",{classes:['wsize','hsize','horz'],left:"0",bottom:"0"});
 		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:'0',bottom:'0',color:"#7CC6FF",text:countdown.getTimePost(entry.created),p_id:entry.id});
+		console.log(entry.title+" title");
 		if (entry.id != 0) {
 			var model = Alloy.createCollection("post");
 			var rres = model.getGroupData(entry.g_id);
-			var group = $.UI.create("Label",{classes:['h6'],width:'180',height:'20',color:"#23c281",left:'0',top:'22',text:"Post in "+rres.g_name,g_id:entry.g_id});
+			var group_title = (entry.g_id > 0)?"Post in "+entry.title+" group":entry.title;
+			var group = $.UI.create("Label",{classes:['h6'],width:'180',height:'20',color:"#23c281",left:'0',top:'22',text: group_title, g_id:entry.g_id});
 			if(OS_ANDROID){
 				group.ellipsize=true;
 				group.wordWrap=false;
@@ -100,8 +102,8 @@ function render_post(params){
 		comment_button_container.add(comment_button);
 		title_container.add(user_img);
 		//time_group.add(time);
+		title_child_container.add(group);
 		if(entry.g_id != 0){
-			title_child_container.add(group);
 			group.addEventListener("click",function(e){
  				addPage("group_post", "Group Posts", {g_id: e.source.g_id});
 			});
@@ -168,27 +170,26 @@ function refresh(e){
 	$.mother_view.removeAllChildren();	
 	var checker = Alloy.createCollection('updateChecker'); 
 	var isUpdate = checker.getCheckerById("2");
-	setTimeout(function(){
-		API.callByPost({url:"getPostList",params:{last_updated: ""}},{
-			onload:function(responseText){
-				var res = JSON.parse(responseText);
-				var arr = res.data || null;
-				var model = Alloy.createCollection("post");
-				model.saveArray(arr);
-				if(res.images != undefined){
-					i_model.saveArray(res.images);	
-				}			
-				model = null;
-				arr = null;
-				res =null;	
-				if(firename != null){
-					Ti.App.fireEvent(firename);
-				}
-				init();				
-	//			Alloy.Globals.loading.stopLoading();			
+	var u_id = Ti.App.Properties.getString("u_id")||"";
+	API.callByPost({url:"getPostList",params:{last_updated: "", u_id: u_id}},{
+		onload:function(responseText){
+			var res = JSON.parse(responseText);
+			var arr = res.data || null;
+			var model = Alloy.createCollection("post");
+			model.saveArray(arr);
+			if(res.images != undefined){
+				i_model.saveArray(res.images);	
+			}			
+			model = null;
+			arr = null;
+			res =null;	
+			if(firename != null){
+				Ti.App.fireEvent(firename);
 			}
-		});		                         
-	},5000);
+			init();				
+//			Alloy.Globals.loading.stopLoading();			
+		}
+	});
 }
 function postOptions(params){
 	var u_id = Ti.App.Properties.getString("u_id")||"";
@@ -268,24 +269,3 @@ function doLogout(){
 		Alloy.Globals.loading.stopLoading();		
 	},2000);
 }
-function Rgroup_post(e) {
-	Ti.App.removeEventListener("discussion:Rgroup_post", Rgroup_post);
-	var checker = Alloy.createCollection('updateChecker');
-	var isUpdate = checker.getCheckerById("2");
-	API.callByPost({url:"getPostList",params:{g_id: e.g_id, last_updated: isUpdate.updated}},{
-		onload:function(responseText){
-			var res = JSON.parse(responseText);
-			var arr = res.data || null;
-			var model = Alloy.createCollection("post");
-			model.saveArray(arr);
-			if(res.images != undefined){
-				i_model.saveArray(res.images);
-			}
-			model = null;
-			arr = null;
-			res =null;
-		}
-	});
-	
-}
-Ti.App.addEventListener("discussion:Rgroup_post", Rgroup_post);

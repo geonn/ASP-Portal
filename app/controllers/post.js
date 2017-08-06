@@ -132,35 +132,42 @@ function doSubmit(){
 		var res = JSON.parse(responceText);
 		console.log("result:"+JSON.stringify(res));
 		var p_id = res.data[0].id;
-		for(var i = 0;i<$.imageMother.children.length;i++){
-			var image = $.imageMother.children[i].toImage();
-			var params1 = {p_id:p_id,u_id:u_id};
-			_.extend(params1, {Filedata: image});	
-			console.log("image:"+JSON.stringify(params1));				
-			API.callByPost({url:"doPostImage",params:params1},{
-				onload:function(responceText){
-					console.log("success");
-				},onerror:function(err){}
-			});			
+		var image_counter = 0;
+		if(res.status != "success"){
+			Alloy.Globals.pageFlow.back();
+			return;
 		}
-		setTimeout(function(){
-			if(res.status == "success"){
-				if(refreshName != null){
-					Ti.App.fireEvent("discussion:refresh",{refreshName:refreshName});
-				}else{
-					Ti.App.fireEvent("discussion:refresh");					
-				}
-				Ti.App.fireEvent("discussion:Rgroup_post", {g_id:g_id});
-				Alloy.Globals.loading.stopLoading();
-				
-				Alloy.Globals.pageFlow.back();
-			}else{
-				alert("Something wrong!");
-				Alloy.Globals.pageFlow.back();
-			}			
-		},3000);
+		if($.imageMother.children.length > 0){
+			for(var i = 0;i<$.imageMother.children.length;i++){
+				var image = $.imageMother.children[i].toImage();
+				var params1 = {p_id:p_id,u_id:u_id};
+				_.extend(params1, {Filedata: image});	
+				console.log("image:"+JSON.stringify(params1));				
+				API.callByPost({url:"doPostImage",params:params1},{
+					onload:function(responceText){
+						console.log("success");
+						image_counter++;
+						if(image_counter >= $.imageMother.children.length)
+							discussion_refresh();
+					},onerror:function(err){}
+				});			
+			}
+		}else{
+			discussion_refresh();
+		}
 	},onerror:function(err){}});
 }
+
+function discussion_refresh(){
+	if(refreshName != null){
+		Ti.App.fireEvent("discussion:refresh",{refreshName:refreshName});
+	}else{
+		Ti.App.fireEvent("discussion:refresh");					
+	}
+	Alloy.Globals.loading.stopLoading();
+	Alloy.Globals.pageFlow.back();
+}
+
 function renderPhotos(media) {
     for (var i=0; i < media.length; i++) {
     	var imgView =Ti.UI.createImageView({ image: media[i],top:10, width:Ti.UI.FILL, height: Ti.UI.SIZE });
