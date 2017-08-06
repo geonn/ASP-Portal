@@ -29,7 +29,7 @@ function receivePush(e) {
 	var post_id;
 	if(OS_IOS){ 
 		Titanium.UI.iPhone.setAppBadge("0"); 
-		target = e.data.target;
+		target = e.data.target; 
 		post_id = e.data.extra;	
 	}else{ 
 		target = e.target;
@@ -57,8 +57,7 @@ function receivePush(e) {
 			}
  		}});
 		
-	} 
-	 
+	}
 	return false;
 }
 
