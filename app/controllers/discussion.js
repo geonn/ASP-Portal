@@ -169,9 +169,9 @@ function refresh(e){
 	//Alloy.Globals.loading.startLoading("Refreshing...");	
 	$.mother_view.removeAllChildren();	
 	var checker = Alloy.createCollection('updateChecker'); 
-	var isUpdate = checker.getCheckerById("2");
-	var u_id = Ti.App.Properties.getString("u_id")||"";
-	API.callByPost({url:"getPostList",params:{last_updated: "", u_id: u_id}},{
+	var u_id = Ti.App.Properties.getString("u_id")||"";	
+	var isUpdate = checker.getCheckerById("2",u_id);
+	API.callByPost({url:"getPostList",params:{last_updated: isUpdate, u_id: u_id}},{
 		onload:function(responseText){
 			var res = JSON.parse(responseText);
 			var arr = res.data || null;
@@ -186,7 +186,8 @@ function refresh(e){
 			if(firename != null){
 				Ti.App.fireEvent(firename);
 			}
-			init();				
+			init();		
+			checker.updateModule(2,"post",currentDateTime(),u_id);		
 //			Alloy.Globals.loading.stopLoading();			
 		}
 	});
