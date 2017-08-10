@@ -82,7 +82,7 @@ exports.definition = {
 			updateModule : function (id,typeName, updateDate, u_id){
 				var collection = this;
 				var addon = "";
-				if(typeof u_id != "undefined"){
+				if(u_id != undefined){
 					addon = " AND u_id = "+u_id;
 				}else{
 					u_id = 0;

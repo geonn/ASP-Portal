@@ -1,5 +1,6 @@
 init();
 function init(){
+	Alloy.Globals.pageFlow.stopLoading();		
 	$.discussion.add(Alloy.createController("discussion").getView());
 	$.more.add(Alloy.createController("more").getView());
 }

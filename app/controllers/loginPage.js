@@ -12,7 +12,7 @@ function doLogin(e){
 		var res = JSON.parse(responceText);
 		var arr = res.data || null;
 		if(res.status != "error" && res.status == "success"){
-			Alloy.Globals.pageFlow.stopLoading();	
+			API.loadAPIBySequence({});		
 			Ti.App.Properties.setString("u_id",arr.id);
 			Ti.App.Properties.setString("username",arr.username);
 			Ti.App.Properties.setString("u_name",arr.name);

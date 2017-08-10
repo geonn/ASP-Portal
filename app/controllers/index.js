@@ -33,6 +33,7 @@ init();
 function init(){
 	var u_id = Ti.App.Properties.getString("u_id") || "";
 	if(u_id == ""){
+		$.index.open();		
 		loginPage();
 	}else{
 		loadingPage();		
