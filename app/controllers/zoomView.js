@@ -1,6 +1,6 @@
 var args = arguments[0] || {};
 //console.log(blob);
-var blob = require('To.ImageCache').remoteImage(args.img_path);
+var blob =(OS_ANDROID) ?require('To.ImageCache').remoteImage(args.img_path):args.img_path;
 
 function init(){
 	if(OS_ANDROID){
