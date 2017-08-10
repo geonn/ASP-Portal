@@ -38,4 +38,3 @@ function savePw(){
 	}
 	
 }
-Ti.App.addEventListener("change_password:savePw",savePw);

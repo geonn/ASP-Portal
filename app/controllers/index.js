@@ -37,6 +37,7 @@ function init(){
 		loginPage();
 	}else{
 		loadingPage();		
+		 //homePage();
 	}
 }
 function closeApp(){
@@ -50,10 +51,9 @@ function loadingPage(){
 	loadingView.getView().open();
 	loadingView.start();		
 }	
-
 function loadingViewFinish(){
 	$.index.open();		
-	homePage();	
+	homePage();	 
 	Ti.App.removeEventListener('app:loadingViewFinish', loadingViewFinish);
 	loadingView.finish();	
 }

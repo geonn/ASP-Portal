@@ -253,7 +253,7 @@ function female_chkbox(){
 }
 
 function chgPw(){
-	addPage("change_password","Change Password",{u_id:u_id},"change_password:savePw");
+	addPage("change_password","Change Password",{u_id:u_id});
 }
 
 function renderPhotos(media) {
