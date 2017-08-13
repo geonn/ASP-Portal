@@ -1,14 +1,6 @@
-var loadingView = Alloy.createController("loader");
-loadingView.getView().open();
-loadingView.start();
-
-function loadingViewFinish(){
-	Ti.App.removeEventListener('app:loadingViewFinish', loadingViewFinish);
-	loadingView.finish();
-	init();
-}
-
+init();
 function init(){
+	Alloy.Globals.pageFlow.stopLoading();		
 	$.discussion.add(Alloy.createController("discussion").getView());
 	$.more.add(Alloy.createController("more").getView());
 }
@@ -31,4 +23,3 @@ function doScroll(e){
 	scrollImage(e.currentPage);
 }	
 
-Ti.App.addEventListener('app:loadingViewFinish', loadingViewFinish);

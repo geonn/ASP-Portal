@@ -1,6 +1,6 @@
 var args = arguments[0] || {};
 var p_id = args.p_id || null;
-var u_id = Ti.App.Properties.getString('u_id')||null;
+var u_id = Ti.App.Properties.getString('u_id')||undefined;
 var countdown = require("countdown_between_2date.js");
 
 function add_image(){}
@@ -26,7 +26,7 @@ function init() {
 			model.saveArray(arr);
 			var data = model.getDataByP_id(p_id);
 			render_comment(data);
-		    checker.updateModule("4","post_comment",currentDateTime());			
+		    checker.updateModule("4","post_comment",currentDateTime(),u_id);			
 		},
 		onerror:function(err){
 			
@@ -60,7 +60,7 @@ function render_comment(params){
 function doSubmit(){
 	var u_id = Ti.App.Properties.getString('u_id')||null;
 	var comment = $.comment.value || null;
-	if(u_id == null){
+	if(u_id == undefined){
 		alert("User Id is null\nPlease Login Again");
 		doLogout();
 		return;

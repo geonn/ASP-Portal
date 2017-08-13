@@ -193,7 +193,7 @@ exports.loadAPIBySequence = function (e){ //counter,
 		Ti.App.fireEvent('app:loadingViewFinish');
 		return false;
 	}
-	
+	var u_id = Ti.App.Properties.getString("u_id")||undefined;	
 	var api = APILoadingList[counter];
 	var checker = Alloy.createCollection('updateChecker'); 
 	var isUpdate = checker.getCheckerById(api['checkId']);
@@ -205,8 +205,8 @@ exports.loadAPIBySequence = function (e){ //counter,
 	
 	var url = api['url'];
 	if(api['url'] == "getMyGroupList"){
-		var u_id = Ti.App.Properties.getString("u_id")||null;
-		if(u_id == null){
+		var u_id = Ti.App.Properties.getString("u_id")||undefined;
+		if(u_id == undefined){
 			doLogout();
 			return;
 		}		
@@ -235,7 +235,7 @@ exports.loadAPIBySequence = function (e){ //counter,
 		        model.saveArray(arr);
 	        	var data = model.getData(true);
 				console.log("data:"+JSON.stringify(data));			        	
-		        checker.updateModule(APILoadingList[counter]['checkId'],APILoadingList[counter]['model'],currentDateTime1());					
+		        checker.updateModule(APILoadingList[counter]['checkId'],APILoadingList[counter]['model'],currentDateTime1(),u_id);					
 			}
 			Ti.App.fireEvent('app:update_loading_text', {text: ((counter+1)/total_item*100).toFixed()+"% loading..."});
 			counter++;

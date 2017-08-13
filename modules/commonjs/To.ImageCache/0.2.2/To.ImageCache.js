@@ -271,8 +271,9 @@ var remoteImage = function(url){
  * @param {Integer} (Optional) Timeout in milliseconds
  * @param {Function} (Optional) callback function, blob will be returned
  */
-var cache = function(url, timeout, cb){
-	var timeout = timeout || 30000;
+var cache = function(url,cb){
+	Ti.API.info("asdfhere");	
+	var timeout = 30;
 
 	// if file is already cached, don't do so again
 	var filename = md5FileName(url);
@@ -282,7 +283,6 @@ var cache = function(url, timeout, cb){
 			
 		return false;
 	}
-		
 	var xhr = Titanium.Network.createHTTPClient({
 		onload: function() {
 			storeFile(filename, this.responseData);
