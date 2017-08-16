@@ -18,6 +18,7 @@ var doPostComment = "http://"+API_DOMAIN+"/api/doPostComment?user="+USER+"&key="
 var getPostCommentList = "http://"+API_DOMAIN+"/api/getPostCommentList?user="+USER+"&key="+KEY;
 var removePostComment = "http://"+API_DOMAIN+"/api/removePostComment?user="+USER+"&key="+KEY;
 var getMyGroupList = "http://"+API_DOMAIN+"/api/getMyGroupList?user="+USER+"&key="+KEY;
+var getGroupListMemberByGid = "http://"+API_DOMAIN+"/api/getGroupListMemberByGid?user="+USER+"&key="+KEY;
 //API that call in sequence
 var APILoadingList = [
  {url: "getStaffList", type: "api_model", model: "staff", checkId: "1"},

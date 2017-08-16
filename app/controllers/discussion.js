@@ -48,7 +48,7 @@ function render_post(params){
 		var more = $.UI.create("ImageView",{right:"0",top:"0",image:'/images/btn-down.png',touchEnabled:false});
 		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],top:"0",text:entry.description,p_id:entry.id});
 		var hr = $.UI.create("View",{classes:['hr']});
-		var comment_container = $.UI.create("View",{classes:['wfill','hsize','padding']});
+		var comment_container = $.UI.create("View",{classes:['wfill','hsize','padding'],p_id:entry.id});
 		var comment_count = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:entry.comment_count+" comments",left:"0",p_id:entry.id});
 		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],right:0,p_id:entry.id});
 		var comment_img = $.UI.create("ImageView",{image:"/images/comment.png",touchEnabled:false});
@@ -129,11 +129,7 @@ function render_post(params){
 		time.addEventListener("click",function(e){
 			addPage("post_detail","Post Detail",{p_id:e.source.p_id});
 		});
-		comment_count.addEventListener("click",function(e){
-			Alloy.Globals.loading.startLoading("Loading...");			
-			addPage("post_comment","Post Comment",{p_id:e.source.p_id});
-		});	
-		comment_button_container.addEventListener("click",function(e){
+		comment_container.addEventListener("click",function(e){
 			Alloy.Globals.loading.startLoading("Loading...");			
 			addPage("post_comment","Post Comment",{p_id:e.source.p_id});
 		});	

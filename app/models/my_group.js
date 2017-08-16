@@ -42,6 +42,42 @@ exports.definition = {
 				}
 				db.close();
 			},
+			getMemberByG_id:function(g_id){
+				var collection = this;
+				var columns = collection.config.columns;
+				
+				var names = [];
+				for (var k in columns) {
+	                names.push(k);
+	            }				
+				// offset = offset || 0;
+				// var sql_limit = (unlimit)?"":" limit "+offset+",10";
+				var collection = this;
+				var sql = "select staff.id,staff.name,staff.img_path from " + collection.config.adapter.collection_name +" join staff on my_group.u_id = staff.id where my_group.status = 1 and g_id="+g_id;
+				db = Ti.Database.open(collection.config.adapter.db_name);
+				
+				if(Ti.Platform.osname != "android"){
+					db.file.setRemoteBackup(false);
+				}
+                var res = db.execute(sql);
+                var arr = [];
+				var count = 0;
+				
+                while (res.isValidRow()){
+                	var row_count = res.fieldCount;
+                	arr[count] = {
+                		u_id: res.fieldByName('id'),
+						u_name: res.fieldByName("name"),
+						u_image: res.fieldByName('img_path'),
+					};
+                	res.next();
+					count++;
+                }
+                res.close();
+                db.close();
+                collection.trigger('sync');
+                return arr;				
+			},
 			saveArray:function(arr){
 				var collection = this;
 				var columns = collection.config.columns;

@@ -10,7 +10,7 @@ function init() {
 		Alloy.Globals.loading.stopLoading();			
 		return;	
 	}
-	if(u_id == null){
+	if(u_id == undefined){
 		alert("User Id is null\nPlease Login Again");
 		doLogout();
 		return;
