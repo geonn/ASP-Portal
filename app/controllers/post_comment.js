@@ -26,7 +26,10 @@ function init() {
 			model.saveArray(arr);
 			var data = model.getDataByP_id(p_id);
 			render_comment(data);
-		    checker.updateModule("4","post_comment",currentDateTime(),u_id);			
+		    checker.updateModule("4","post_comment",currentDateTime(),u_id);	
+		    res = undefined;
+		    arr = undefined;
+		    model = undefined;		
 		},
 		onerror:function(err){
 			
@@ -54,6 +57,12 @@ function render_comment(params){
 				deleteOptions(true,e.source.c_id);
 			}
 		});
+		container = undefined;
+		profileImg = undefined;
+		small_container = undefined;
+		name = undefined;
+		comment = undefined;
+		time = undefined;
 	});
 	Alloy.Globals.loading.stopLoading();	
 }
@@ -89,6 +98,8 @@ function deleteOptions(params,c_id){
 		}
 	});	
 	dialog.show();
+	options = undefined;
+	opts = undefined;
 }
 function doLogout(){
 	Alloy.Globals.loading.startLoading("Logout...");	

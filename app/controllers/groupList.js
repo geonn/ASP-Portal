@@ -36,7 +36,8 @@ function render_list(e) {
 			classes: ['vert',"hsize"],
 			width: cell_width-10,
 			left: '5',
-			right: '5'
+			right: '5',
+			g_id:data.g_id
 		});
 		var view_img = $.UI.create("View",{
 			height: cell_width - 30,
@@ -48,13 +49,17 @@ function render_list(e) {
 			borderWidth: '5',
 			borderColor: '#eff3f6',
 			backgroundColor: "#eff3f6",
-			g_id: data.g_id
+			g_id: data.g_id,
+			g_name:data.g_name,
+			touchEnabled:false
 		});
 		var img = $.UI.create("ImageView",{
 			classes: ["wfill", "hsize"],
 			defaultImage: "/images/group_picture_circle.png",
 			image: data.g_image,
-			g_id: data.g_id
+			g_id: data.g_id,
+			g_name:data.g_name,
+			touchEnabled:false
 		});
 		var group_title = (OS_ANDROID) ? $.UI.create("Label",{
 			classes: ["wsize","h4"],
@@ -64,19 +69,21 @@ function render_list(e) {
 			textAlign: 'center',
 			ellipsize: true,
 			wordWrap: false,
+			touchEnabled:false
 		}) : $.UI.create("Label",{
 			classes: ["wsize","h4"],
 			height: '22',
 			text: data.g_name,
 			top: '5',
-			textAlign: 'center'
+			textAlign: 'center',
+			touchEnabled:false
 		});
 		
 		view_img.add(img);
 		view_group.add(view_img);
 		view_group.add(group_title);
-		view_img.addEventListener("click", function(e){
-			addPage("group_post", "Group Posts", {g_id: e.source.g_id});
+		view_group.addEventListener("click", function(e){
+			addPage("group_post", e.source.g_name, {motherView:$.group_list,childView:e.source,g_id: e.source.g_id});
 		});
 		$.group_list.add(view_group);
 	});

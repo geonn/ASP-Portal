@@ -1,0 +1,5 @@
+<Alloy>
+	<ScrollView class="hfill wfill contwfill conthsize vert">
+		<View class="wfill hsize vert" id="motherView"></View>
+	</ScrollView>
+</Alloy>

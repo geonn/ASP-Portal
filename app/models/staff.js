@@ -132,7 +132,28 @@ exports.definition = {
                 db.close();
                 collection.trigger('sync');
                 return arr;
-			},searchStaff: function(name,unlimit,offset) {
+			},
+			getSmallDataById: function(id){
+				var collection = this;
+				var sql = "select name,id from "+collection.config.adapter.collection_name+" where id=" + id + ";";
+				db = Ti.Database.open(collection.config.adapter.db_name);
+				if(Ti.Platform.osname != "android"){
+					db.file.setRemoteBackup(false);
+				}
+                var res = db.execute(sql);
+                var arr;
+				if(res.isValidRow()){
+					arr = {
+                		id: res.fieldByName('id'),
+					    name: res.fieldByName('name'),
+					};
+                }
+                res.close();
+                db.close();
+                collection.trigger('sync');
+                return arr;
+			},			
+			searchStaff: function(name,unlimit,offset) {
 				offset = offset || 0;
 				var sql_limit = (unlimit)?"":" limit "+offset+",50";
 				var collection =this;
@@ -200,7 +221,7 @@ exports.definition = {
 				offset = offset || 0;
 				var sql_limit = (unlimit)?"":" limit "+offset+",20";
 				var collection = this;
-				var sql = "select id,name from "+collection.config.adapter.collection_name+" where status = 1 order by name"+sql_limit;
+				var sql = "select img_path,id,name from "+collection.config.adapter.collection_name+" where status = 1 order by name"+sql_limit;
 				db = Ti.Database.open(collection.config.adapter.db_name);
 				if(Ti.Platform.osname != "android"){
 					db.file.setRemoteBackup(false);
@@ -213,6 +234,7 @@ exports.definition = {
                 	arr[count] = {
                 		id: res.fieldByName('id'),
 					    name: res.fieldByName('name'),
+					    img_path:res.fieldByName('img_path')
 					};
                 	res.next();
 					count++;

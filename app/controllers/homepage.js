@@ -2,17 +2,16 @@ init();
 function init(){
 	Alloy.Globals.pageFlow.stopLoading();		
 	$.discussion.add(Alloy.createController("discussion").getView());
+	$.notification.add(Alloy.createController('notification').getView());
 	$.more.add(Alloy.createController("more").getView());
 }
 
 function scrollImage(page){
-	var arr = [0,1,2].filter(function(a){ return a!=page;});
 	if(page != undefined) {
-		$.bottomNavigation.getChildren()[page].children[0].image = "/images/navigationButton/"+page+"_green.png";
-		for(var i=0;i<$.bottomNavigation.getChildren().length-1;i++){
-			$.bottomNavigation.getChildren()[arr[i]].children[0].image = "/images/navigationButton/"+arr[i]+"_grey.png";
+		for(var i=0;i<$.bottomNavigation.getChildren().length;i++){
+			$.bottomNavigation.getChildren()[i].children[0].image = "/images/navigationButton/"+i+"_grey.png";
 		}
-		arr = null;
+		$.bottomNavigation.getChildren()[page].children[0].image = "/images/navigationButton/"+page+"_green.png";
 	}
 }
 function scrollto(e){

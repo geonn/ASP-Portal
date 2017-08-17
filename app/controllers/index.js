@@ -59,6 +59,9 @@ function loadingViewFinish(){
 }
 $.index.addEventListener("android:back",function(e){
 	Alloy.Globals.pageFlow.back();
+    if(OS_ANDROID){
+         Ti.UI.Android.hideSoftKeyboard();
+    }	
 	console.log(Alloy.Globals.pageFlow.countPages());
 	if(Alloy.Globals.pageFlow.countPages() <=1){
 		$.index.close();

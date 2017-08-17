@@ -19,6 +19,8 @@ var getPostCommentList = "http://"+API_DOMAIN+"/api/getPostCommentList?user="+US
 var removePostComment = "http://"+API_DOMAIN+"/api/removePostComment?user="+USER+"&key="+KEY;
 var getMyGroupList = "http://"+API_DOMAIN+"/api/getMyGroupList?user="+USER+"&key="+KEY;
 var getGroupListMemberByGid = "http://"+API_DOMAIN+"/api/getGroupListMemberByGid?user="+USER+"&key="+KEY;
+var addGroupMember = "http://"+API_DOMAIN+"/api/addGroupMember?user="+USER+"&key="+KEY;
+var deleteGroupMember = "http://"+API_DOMAIN+"/api/deleteGroupMember?user="+USER+"&key="+KEY;
 //API that call in sequence
 var APILoadingList = [
  {url: "getStaffList", type: "api_model", model: "staff", checkId: "1"},
@@ -147,6 +149,7 @@ exports.callByPostImage = function(e, onload, onerror) {
 		API.callByPostImage(e, onload);
 		//onerror && onerror();
 	};
+	
 };
 
 // update user device token
@@ -206,7 +209,6 @@ exports.loadAPIBySequence = function (e){ //counter,
 	
 	var url = api['url'];
 	if(api['url'] == "getMyGroupList"){
-		var u_id = Ti.App.Properties.getString("u_id")||undefined;
 		if(u_id == undefined){
 			doLogout();
 			return;
@@ -226,17 +228,20 @@ exports.loadAPIBySequence = function (e){ //counter,
 				if(res.images != undefined){
 					var img_model = Alloy.createCollection("images_table");
 					img_model.saveArray(res.images);
+					img_model = undefined;
 				}
 				if(res.group != undefined){
 					var g_model =Alloy.createCollection("groups");
 					g_model.saveArray(res.group);
+					g_model = undefined;
 				}
 				var arr = res.data; 
 		       	var model = Alloy.createCollection(api['model']);
-		        model.saveArray(arr);
-	        	var data = model.getData(true);
-				console.log("data:"+JSON.stringify(data));			        	
+		        model.saveArray(arr);			        	
 		        checker.updateModule(APILoadingList[counter]['checkId'],APILoadingList[counter]['model'],currentDateTime1(),u_id);					
+				arr = undefined;
+				model = undefined;
+				res = undefined;
 			}
 			Ti.App.fireEvent('app:update_loading_text', {text: ((counter+1)/total_item*100).toFixed()+"% loading..."});
 			counter++;
@@ -274,6 +279,13 @@ function currentDateTime1(){
 	} 
 	
 	datetime = yyyy+'-'+mm+'-'+dd + " "+ hours+":"+minutes+":"+sec;
+	today = undefined;
+	dd = undefined;
+	mm = undefined;
+	yyyy = undefined;
+	hours = undefined;
+	minutes = undefined;
+	sec = undefined;
 	return datetime ;
 }
 

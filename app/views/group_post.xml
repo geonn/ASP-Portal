@@ -9,11 +9,11 @@
 			</View>
 		</View>
 		<View class="wfill hsize" backgroundColor="#fff">
-			<View class="hsize vert" width="25%" left="0">
+			<View class="hsize vert" width="25%" left="0" onClick="leaveGroup">
 				<ImageView height="35" width="35" image="/images/g_thick.png"></ImageView>
 				<Label class="wsize hsize h5" text="Joined" color="#668CFC"></Label>
 			</View>
-			<View class="hsize vert" width="25%" left="25%">
+			<View class="hsize vert" width="25%" left="25%" onClick="addMember">
 				<ImageView height="35" width="35" image="/images/p_add.png"></ImageView>
 				<Label class="wsize hsize h5" text="Add Members" color="#90949C"></Label>
 			</View>

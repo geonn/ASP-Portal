@@ -64,7 +64,7 @@ var pageflow = {
         var currentPosition = pageflow.getGridCoordinatesForPage(currentPageId);
 
         if (pageflow.pages.length > 1) {
-            $.pageflow.animate({ left: currentPosition.left, top: currentPosition.top, duration: 100 }, function() {
+            $.pageflow.animate({ left: currentPosition.left, top: currentPosition.top, duration: 200 }, function() {
                 $.pageflow.left = currentPosition.left;
                 $.pageflow.top = currentPosition.top;
             });

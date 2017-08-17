@@ -219,6 +219,13 @@ function currentDateTime(){
 	} 
 	
 	datetime = yyyy+'-'+mm+'-'+dd + " "+ hours+":"+minutes+":"+sec;
+	today = undefined;
+	dd = undefined;
+	mm = undefined;
+	yyyy = undefined;
+	hours = undefined;
+	minutes = undefined;
+	sec = undefined;	
 	return datetime ;
 } 
 
