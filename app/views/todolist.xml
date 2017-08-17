@@ -1,0 +1,27 @@
+<Alloy>
+	<View class="wfill hfill" id="win_calender">
+		<View class="vert hfill wfill" backgroundColor="#eff3f6">
+			<View class="vert wfill hsize" bottom="1" backgroundColor="#fff">
+				<Widget src="input-materialdesign" titleHint="Write Some Thing..." id="title"/>
+				<View class="wfill hsize" bottom="10">
+					<View class="horz wsize hsize" left="10">
+						<Label class="wsize hsize">Start Time: </Label>
+						<View class="wsize hsize" left="10" backgroundColor="#000">
+							<Label class="hsize" width="50" bottom="1" backgroundColor="#fff" color="#000" id="s_time"></Label>
+						</View>
+					</View>
+					<View class="horz wsize hsize" right="15">
+						<Label class="wsize hsize">End Time: </Label>
+						<View class="wsize hsize" left="10" backgroundColor="#000">
+							<Label class="hsize" width="50" bottom="1" backgroundColor="#fff" color="#000" id="e_time"></Label>
+						</View>
+					</View>
+				</View>
+				<View class="wfill hsize">
+					<Widget src="nl.fokkezb.button" left="10" width="80" onClick="submit" paramCenter="true" height="35" title="Add" bottom="10" style="bs-success"/>
+				</View>
+			</View>
+			<ScrollView class="vert wfill hsize contwfill conthsize" scrollType="vertical" top="0" id="todolist"></ScrollView>
+		</View>
+	</View>
+</Alloy>

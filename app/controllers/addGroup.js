@@ -131,8 +131,12 @@ function showBar(param,position){
 		$.selectedList.remove(e.source);
 		
 		var getposition = children({name:"position", value:position}, $.mother_view);
-		getposition.children[1].image = unchecker;
-		getposition.check = false;
+		try {
+			getposition.children[1].image = unchecker;
+			getposition.check = false;
+		}catch(e) {
+			//
+		}
 		
 		if($.selectedList.getChildren().length==0){
 			if (OS_IOS) {
