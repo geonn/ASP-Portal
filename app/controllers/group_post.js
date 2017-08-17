@@ -1,5 +1,6 @@
 var args = arguments[0] || {};//args.g_id
 var model = Alloy.createCollection("groups");
+var g_id = args.g_id;
 var arr = model.getData(args.g_id);
 var cell_width;
 var pwidth = Titanium.Platform.displayCaps.platformWidth;
@@ -76,12 +77,12 @@ function render_post(params){
 			imgcount_container.add(img_icon);
 			imgArr.forEach(function(entry1){
 				var small_image_container = $.UI.create("View",{classes:['wfill','hsize']});
-				var image = $.UI.create("ImageView",{classes:['wfill','hsize'], defaultImage: "/images/loading.png",image:entry1.img_path});		
+				var image = $.UI.create("ImageView",{classes:['wfill','hsize'], defaultImage: "/images/loading.png",image:entry1.img_300thumb,imageBig:entry1.img_path});		
 				small_image_container.add(image);
 				image_container.addView(small_image_container);		
 				image.addEventListener("click",function(e){
 					try {
-						addPage("zoomView","Image Preview",{img_path:e.source.image});
+						addPage("zoomView","Image Preview",{img_path:e.source.imageBig});
 					}catch(e) {
 						//
 					}
@@ -184,19 +185,46 @@ function deletePost(p_id,p_index){
 }
 
 function group_info(){
-	console.log("Group info");
+	var model = Alloy.createCollection("my_group");
+	API.callByPost({url:"getGroupListMemberByGid",params:{g_id:g_id}},{
+		onload:function(responseText){
+			var res = JSON.parse(responseText);
+			var data = res.data || {};
+			model.saveArray(data);
+			renderGroupInfo(model.getMemberByG_id(g_id));
+		}
+	});
+}
+function renderGroupInfo(param){
+	console.log("group member:"+JSON.stringify(param));
 	var father = $.UI.create("View",{classes:['wfill','hfill'],backgroundColor:'#B3999999',zIndex:'4'});
-	var info_view = $.UI.create("View",{height:cell_width*2.5,width:cell_width*1.8,backgroundColor:'#fff',zIndex:'5'});
+	var info_view = $.UI.create("View",{classes:['vert'],height:cell_width*2.5,width:cell_width*1.8,backgroundColor:'#fff',zIndex:'5'});
 	var title = $.UI.create("Label",{classes:['h4'],textAlign:'center',color:"#fff",height:'50',width:cell_width*1.8,backgroundColor:'#00CB85',top:'0',text:'Group Info'});
-	var scrollView = $.UI.create("ScrollView",{classes:['wfill','vert','contwfill','conthsize'],height:cell_width*2-100,top:'50'});
-	var g_name = (OS_IOS)?$.UI.create("Label",{classes:['wfill','h4'],height:'22',text:"Group name: "+arr[0].name,textAlign:'left',top:'5',left:'10',right:'10'}):$.UI.create("Label",{classes:['wfill','h3','bold'],height:'22',text:arr[0].name,textAlign:'left',top:'5',left:'10',right:'10',ellipsize:true,
-			wordWrap: false});
+	var scrollView = $.UI.create("ScrollView",{classes:['wfill','vert','contwfill','conthsize'],height:cell_width*2-100});
+	var g_name = (OS_IOS)?$.UI.create("Label",{classes:['wfill','h4'],height:'22',text:"Group name: "+arr[0].name,textAlign:'left',top:'5',left:'10',right:'10'}):$.UI.create("Label",{classes:['wfill','h3','bold','hsize'],text:arr[0].name,textAlign:'left',top:'5',left:'10',right:'10',ellipsize:true,wordWrap: false});
 	var member = $.UI.create("Label",{classes:['wfill','h4'],height:'22',text:"Member:",textAlign:'left',top:'10',left:'10'});
-	var ok_button = $.UI.create("Label",{classes:['h3'],textAlign:'center',height:'50',width:cell_width*1.8,backgroundColor:'#fff',bottom:'0',text:'ok'});
-	var hr = $.UI.create("View",{classes: ['hr'],backgroundColor: '#EDF3F6',bottom:'50'});
+	var ok_button = $.UI.create("Label",{classes:['h3'],textAlign:'center',height:'40',width:cell_width*1.8,backgroundColor:'#fff',bottom:'0',text:'ok'});
+	var hr = $.UI.create("View",{classes: ['hr'],backgroundColor: '#EDF3F6',top:"20"});
+	param.forEach(function(entry){
+		var container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:0,u_id:entry.u_id});
+		var small_container = $.UI.create("View",{classes:['hsize','horz'],width:"84%",left:"0",touchEnabled:false});
+		var image = $.UI.create("ImageView",{classes:['padding'],left:5,width:45,height:45,image:entry.u_image,defaultImage:"/images/default_profile.png",touchEnabled:false});
+		var title = $.UI.create("Label",{classes:['wfill','hsize'],text:entry.u_name,touchEnabled:false});
+		if(OS_ANDROID){
+			title.ellipsize=true;
+			title.wordWrap=false;
+		}
+		small_container.add(image);
+		small_container.add(title);
+		container.add(small_container);		
+		scrollView.add(container);
+		container.addEventListener("click",function(e){
+			addPage("my_profile","My Profile",{u_id:e.source.u_id});			
+		});
+	});
 	info_view.add(title);
-	scrollView.add(g_name);
-	scrollView.add(member);
+	info_view.add(g_name);
+	info_view.add(member);
 	info_view.add(scrollView);
 	info_view.add(hr);
 	info_view.add(ok_button);
@@ -204,5 +232,5 @@ function group_info(){
 	ok_button.addEventListener("click",function(e){
 		$.grandmother.remove(father);
 	});
-	$.grandmother.add(father);
+	$.grandmother.add(father);	
 }

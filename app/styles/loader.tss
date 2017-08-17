@@ -34,6 +34,11 @@
 	left: 0,
 	backgroundColor: "#2d3e50",
 },
+"#rocket":{
+   orientationModes :[
+        Ti.UI.PORTRAIT
+    ]	
+},
 "#rocketSmoke": {
 	width: 110,
 	opacity: 0,
