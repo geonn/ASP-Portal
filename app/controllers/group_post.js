@@ -265,7 +265,7 @@ function renderGroupInfo(param){
 	var hr1 = $.UI.create("View",{classes: ['hr'],backgroundColor: '#ccc',top:10});
 	var imageChange = $.UI.create("Label",{classes:['wfill','h4','hsize'],text:"Change cover photo",textAlign:'left',top:'10',left:'10',right:'10',ellipsize:true,wordWrap: false});
 	var members = $.UI.create("Label",{classes:['wfill','h4','hsize'],text:"Members",textAlign:'left',top:'10',left:'10',right:'10',ellipsize:true,wordWrap: false});
-	var leaveGroup = $.UI.create("Label",{classes:['wfill','h4','hsize'],color:"red",text:"Leave Group",textAlign:'left',top:'10',left:'10',right:'10',ellipsize:true,wordWrap: false});
+	var leaveGroup1 = $.UI.create("Label",{classes:['wfill','h4','hsize'],color:"red",text:"Leave Group",textAlign:'left',top:'10',left:'10',right:'10',ellipsize:true,wordWrap: false});
 	g_name_member.add(g_name);
 	g_name_member.add(member);
 	nameContainer.add(g_image);
@@ -277,7 +277,7 @@ function renderGroupInfo(param){
 	scrollView.add(hr1);
 	scrollView.add(imageChange);
 	scrollView.add(members);
-	scrollView.add(leaveGroup);
+	scrollView.add(leaveGroup1);
 	info_view.add(title);
 	info_view.add(scrollView);
 	info_view.add(hr);
@@ -289,10 +289,10 @@ function renderGroupInfo(param){
 	members.addEventListener("click",function(){
 		addPage("showGroupMember",arr[0].name+" Members",{g_id:g_id});
 	});
-	leaveGroup.addEventListener("click",leaveGroup);
+	leaveGroup1.addEventListener("click",doleaveGroup);
 	$.grandmother.add(father);	
 }
-function leaveGroup(e){
+function doleaveGroup(e){
 	COMMON.createAlert("Warning","Are you sure want to leave this group?",function(e){
 		if(u_id == undefined){
 			alert("User Id is null\nPlease Login Again");
@@ -304,7 +304,7 @@ function leaveGroup(e){
 			Alloy.Globals.pageFlow.back();
 			return;		
 		}
-		API.callByPost({url:"deleteGroupMember",parmas:{u_id:u_id,g_id:g_id}},{
+		API.callByPost({url:"deleteGroupMember",params:{u_id:u_id,g_id:g_id}},{
 			onload:function(responseText){
 				var res = JSON.parse(responseText);
 				if(res.status == "success"){

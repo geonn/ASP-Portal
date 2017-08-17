@@ -53,7 +53,7 @@ exports.definition = {
 				// offset = offset || 0;
 				// var sql_limit = (unlimit)?"":" limit "+offset+",10";
 				var collection = this;
-				var sql = "select staff.id,staff.name,staff.img_path from " + collection.config.adapter.collection_name +" join staff on my_group.u_id = staff.id where my_group.status = 1 and my_group.g_id="+g_id;
+				var sql = "select staff.id,staff.name,staff.img_path,my_group.status from " + collection.config.adapter.collection_name +" join staff on my_group.u_id = staff.id where my_group.status = 1 and my_group.g_id="+g_id;
 				db = Ti.Database.open(collection.config.adapter.db_name);
 				
 				if(Ti.Platform.osname != "android"){
@@ -69,6 +69,7 @@ exports.definition = {
                 		u_id: res.fieldByName('id'),
 						u_name: res.fieldByName("name"),
 						u_image: res.fieldByName('img_path'),
+						status: res.fieldByName('status')
 					};
                 	res.next();
 					count++;

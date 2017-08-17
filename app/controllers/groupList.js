@@ -9,9 +9,7 @@ if(OS_ANDROID){
 }
 
 function init() {
-	var checker = Alloy.createCollection('updateChecker'); 
-	var isUpdate = checker.getCheckerById("3");
-	API.callByPost({url:"getMyGroupList",params:{last_updated:isUpdate.updated, u_id:u_id}},{
+	API.callByPost({url:"getMyGroupList",params:{u_id:u_id}},{
 		onload:function(responseText){
 			var res = JSON.parse(responseText);
 			var arr = res.data || null;
