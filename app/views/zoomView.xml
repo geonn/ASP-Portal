@@ -1,7 +1,5 @@
 <Alloy>
 	<View class="wfill hfill" backgroundColor="#000" id="imageMother">
-		<View class="wfill" height="70">
-			<Widget src="nl.fokkezb.loading" name="view" id="myInstance" />					
-		</View>
+		<WebView platform="android" id="webview" enableZoomControls="true" />
 	</View>
 </Alloy>
