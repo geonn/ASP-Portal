@@ -23,7 +23,19 @@ function pixelToDp(px) {
 function init() {
 	title();
 	days();
-	render_calendar();
+	
+	var hlday = [{title: "crismest", date: "2017/8/25"}, {title: "crismest", date: "2017/8/24"}, {title: "crismest", date: "2017/8/20"}];
+	render_calendar(hlday);
+	
+	var data = [{title: "todo", date: "2017/12/25", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/25", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/25", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/26", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/26", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/26", s_time: "12:55", e_time: "13:55"}];
+	var arr = [];
+	data.forEach(function(e) {
+		arr[e.date] = arr[e.date] || {};
+		arr[e.date].title = e.date;
+		arr[e.date].child = arr[e.date].child || [];
+		arr[e.date].child.push(e);
+	});
+	todolist(arr);
 }
 
 function title(e) {
@@ -77,7 +89,8 @@ function change_month(e) {
 				$.title.setBackgroundColor(title_color[e.index]);
 				var cr = $.add_days.getChildren();
 				$.add_days.remove(cr[0]);
-				render_calendar();
+				var hlday = [{title: "crismest", date: "2017/8/25"}, {title: "crismest", date: "2017/8/24"}, {title: "crismest", date: "2017/8/20"}];
+				render_calendar(hlday);
 			}
 		}
 	});
@@ -106,7 +119,8 @@ function change_year(e) {
 				year_text = cr[1].text;
 				var cr = $.add_days.getChildren();
 				$.add_days.remove(cr[0]);
-				render_calendar();
+				var hlday = [{title: "crismest", date: "2017/8/25"}, {title: "crismest", date: "2017/8/24"}, {title: "crismest", date: "2017/8/20"}];
+				render_calendar(hlday);
 			}
 		}
 	});
@@ -153,24 +167,35 @@ function render_calendar(e) {
 	
 	for(var i = 1; i <= lastDay.getDate(); i++) {
 		var day = new Date(cr[1].text + "/" + cr[0].num + "/" + i);
+		var chk_hlday = [];
 		if(t) {
 			first_day = day.getDay();
 			i -= first_day;
 			t = false;
 		}
 		
+		if(e != undefined) {
+			e.forEach(function(entry) {
+				var chk_date = entry.date.split("/");
+				if(chk_date[0] == day.getFullYear() && chk_date[1] == cr[0].num && chk_date[2] == i) {
+					chk_hlday.push(entry);
+				}
+			});
+		}
+		
 		var label_date = $.UI.create("Label", {
 			width: cell_width,
 			height: cell_width,
 			borderRadius: cell_width / 2,
-			color: (i == date.getDate() && cr[0].getText() == num_to_name[date.getMonth() + 1] && cr[1].getText() == date.getFullYear()) ? "#fff" : (day.getDay() == 0 || day.getDay() == 6) ? "gray" : "#000",
+			color: (i == date.getDate() && cr[0].getText() == num_to_name[date.getMonth() + 1] && cr[1].getText() == date.getFullYear()) ? "#fff" : (day.getDay() == 0 || day.getDay() == 6 || chk_hlday != "") ? "gray" : "#000",
 			backgroundColor: (i == date.getDate() && cr[0].getText() == num_to_name[date.getMonth() + 1] && cr[1].getText() == date.getFullYear()) ? $.title.getBackgroundColor() : "#fff",
 			left: 2,
 			top: 2,
 			textAlign: "center",
 			text: (i <= 0) ? "" : i,
 			date: day.getFullYear() + "/" + cr[0].num + "/" + i,
-			day: day.getDay()
+			day: day.getDay(),
+			holiday: (chk_hlday != "") ? chk_hlday : "noholiday"
 		});
 		
 		if(i == date.getDate()) {
@@ -194,7 +219,7 @@ function selected_date(e) {
 	var cr_lb = cr_view[0].getChildren();
 	cr_lb[change_color - 1].setBackgroundColor("#fff");
 	
-	var cl = (cr_lb[change_color - 1].day == 0 || cr_lb[change_color - 1].day == 6) ? "gray" : "#000";
+	var cl = (cr_lb[change_color - 1].day == 0 || cr_lb[change_color - 1].day == 6 || cr_lb[change_color - 1].holiday != "noholiday") ? "gray" : "#000";
 	cr_lb[change_color - 1].setColor(cl);
 	
 	var t = $.title.getChildren() ;	
@@ -203,7 +228,98 @@ function selected_date(e) {
 	var day = new Date(t[1].text + "/" + $.title.getChildren()[0].num + "/1");
 	change_color = e.text + day.getDay();
 	
-	//addPage("appoiotments", e.date, {u_id:u_id, date:e.date});
+	addPage("todolist", e.date, {u_id:u_id, date:e.date, holiday:e.holiday});
+}
+
+function todolist(e) {
+	for(key in e) {
+		var date = $.UI.create("Label", {
+			classes: ['wfill', 'hsize', 'small-padding'],
+			color: "#000",
+			text: e[key].title
+		});
+		
+		e[key].child.forEach(function(entry) {
+			var parent = $.UI.create("View", {
+				classes: ['wfill', 'hsize', 'vert'],
+				bottom: 1,
+				backgroundColor: "#fff",
+				time: entry.s_time + " - " + entry.e_time,
+				title: entry.title
+			});
+	
+			var title = (OS_IOS) ? $.UI.create("Label", {
+				classes: ['wfill', 'small-padding'],
+				height: 19,
+				color: "#000",
+				text: entry.title,
+				time: entry.s_time + " - " + entry.e_time,
+				title: entry.title
+			}) : $.UI.create("Label", {
+				classes: ['wfill', 'small-padding'],
+				height: 19,
+				ellipsize: true,
+				wordWrap: false,
+				color: "#000",
+				text: entry.title,
+				time: entry.s_time + " - " + entry.e_time,
+				title: entry.title
+			});
+			
+			var list_time = $.UI.create("View", {
+				classes: ['wfill', 'hsize', 'horz', 'small-padding'],
+				top: 0,
+				time: entry.s_time + " - " + entry.e_time,
+				title: entry.title
+			});
+			
+			var s_time = $.UI.create("Label", {
+				classes: ['wsize', 'hsize'],
+				color: "#000",
+				text: entry.s_time
+			});
+			
+			var to = $.UI.create("Label", {
+				classes: ['wsize', 'hsize'],
+				color: "#000",
+				text: " - "
+			});
+			
+			var e_time = $.UI.create("Label", {
+				classes: ['wsize', 'hsize'],
+				color: "#000",
+				text: entry.e_time
+			});
+			
+			parent.addEventListener("click", detail);
+			parent.add(title);
+			parent.add(list_time);
+			list_time.add(s_time);
+			list_time.add(to);
+			list_time.add(e_time);
+			$.holidays.add(date);
+			$.holidays.add(parent);
+			
+			parent = null;
+			title = null;
+			list_time = null;
+			s_time = null;
+			to = null;
+			e_time = null;
+			date = null;
+		});
+	}
+}
+
+function detail(e) {
+	if(e.source.time != undefined && e.source.title != undefined) {
+		var alert = Titanium.UI.createAlertDialog({
+			title: e.source.time,
+			message: e.source.title,
+			ok: "ok"
+		});
+		alert.show();
+	}
 }
 
 init();
