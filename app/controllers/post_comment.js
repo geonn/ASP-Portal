@@ -1,9 +1,8 @@
 var args = arguments[0] || {};
 var p_id = args.p_id || null;
 var u_id = Ti.App.Properties.getString('u_id')||undefined;
-var comment_container = args.comment;
 var countdown = require("countdown_between_2date.js");
-//console.log(JSON.stringify(comment_container));
+
 function add_image(){}
 function init() {
 	if(p_id == null){
@@ -27,7 +26,10 @@ function init() {
 			model.saveArray(arr);
 			var data = model.getDataByP_id(p_id);
 			render_comment(data);
-		    checker.updateModule("4","post_comment",currentDateTime(),u_id);			
+		    checker.updateModule("4","post_comment",currentDateTime(),u_id);	
+		    res = undefined;
+		    arr = undefined;
+		    model = undefined;		
 		},
 		onerror:function(err){
 			
@@ -36,7 +38,6 @@ function init() {
 }
 function render_comment(params){
 	$.list_comment.removeAllChildren();
-	console.log("comment:"+JSON.stringify(params));
 	params.forEach(function(entry){
 		var container = $.UI.create("View",{classes:['wfill','hsize','horz'],u_id:entry.u_id,c_id:entry.id,bottom:10,borderRadius:"5",backgroundColor:"#fff"});
 		var profileImg = $.UI.create("ImageView",{classes:['padding'],width:55,height:55,image:(entry.img_path != "")?entry.img_path:"/images/default_profile.png"});
@@ -55,12 +56,21 @@ function render_comment(params){
 				deleteOptions(true,e.source.c_id);
 			}
 		});
+		container = undefined;
+		profileImg = undefined;
+		small_container = undefined;
+		name = undefined;
+		comment = undefined;
+		time = undefined;
 	});
 	Alloy.Globals.loading.stopLoading();	
 }
 function doSubmit(){
 	var u_id = Ti.App.Properties.getString('u_id')||null;
 	var comment = $.comment.value || null;
+    if(OS_ANDROID){
+         Ti.UI.Android.hideSoftKeyboard();
+    }		
 	if(u_id == undefined){
 		alert("User Id is null\nPlease Login Again");
 		doLogout();
@@ -75,6 +85,7 @@ function doSubmit(){
 		onload:function(responseText){
 			var res = JSON.parse(responseText);
 			console.log("comment:"+JSON.stringify(res));
+			$.args.comment_count.text = res.data[0].total_comment+" comments";
 			init();
 			$.comment.setValue("");
 		},onerror:function(err){}
@@ -90,6 +101,8 @@ function deleteOptions(params,c_id){
 		}
 	});	
 	dialog.show();
+	options = undefined;
+	opts = undefined;
 }
 function doLogout(){
 	Alloy.Globals.loading.startLoading("Logout...");	
@@ -107,6 +120,7 @@ function deleteComment(c_id){
 			console.log("return data"+responseText);
 			if(res.status == "success"){
 				init();
+				console.log("commentCount:"+JSON.stringify(res));
 			}
 			else{
 				alert("Something wrong!!!");

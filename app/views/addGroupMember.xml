@@ -1,0 +1,19 @@
+<Alloy>
+	<View class="wfill hfill">
+		<View class="wfill hsize" id="imageGroup_big"></View>
+		<View class="wfill hfill vert" backgroundColor="#eff3f6">
+			<View class="wfill hsize vert" backgroundColor="#fff">
+				<View class="wfill hsize horz">
+					<Widget left="10" right="10" class="wfill hsize" src="input-materialdesign" titleHint="Staff Name" id="staffName"/>   													
+				</View>
+				<View class="hr"></View>
+			</View>
+			<ScrollView id="scrollview" onScroll="scrollChecker" class="hfill wfill contwfill conthsize" backgroundColor="#fff">
+				<Widget src="nl.fokkezb.loading" name="view" id="myInstance" />
+				<View id="mother_view" bottom="0" opacity="0" class="wfill hfill vert">
+					<Label class="wfill hsize h5 padding" color="#999" text="Staffs"/>
+				</View>	
+			</ScrollView>
+		</View>
+	</View>
+</Alloy>

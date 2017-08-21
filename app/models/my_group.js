@@ -53,7 +53,78 @@ exports.definition = {
 				// offset = offset || 0;
 				// var sql_limit = (unlimit)?"":" limit "+offset+",10";
 				var collection = this;
-				var sql = "select staff.id,staff.name,staff.img_path from " + collection.config.adapter.collection_name +" join staff on my_group.u_id = staff.id where my_group.status = 1 and g_id="+g_id;
+				var sql = "select staff.id,staff.name,staff.img_path,my_group.status from " + collection.config.adapter.collection_name +" join staff on my_group.u_id = staff.id where my_group.status = 1 and my_group.g_id="+g_id;
+				db = Ti.Database.open(collection.config.adapter.db_name);
+				
+				if(Ti.Platform.osname != "android"){
+					db.file.setRemoteBackup(false);
+				}
+                var res = db.execute(sql);
+                var arr = [];
+				var count = 0;
+				
+                while (res.isValidRow()){
+                	var row_count = res.fieldCount;
+                	arr[count] = {
+                		u_id: res.fieldByName('id'),
+						u_name: res.fieldByName("name"),
+						u_image: res.fieldByName('img_path'),
+						status: res.fieldByName('status')
+					};
+                	res.next();
+					count++;
+                }
+                res.close();
+                db.close();
+                collection.trigger('sync');
+                return arr;				
+			},
+			getMemberCountByG_id:function(g_id){
+				var collection = this;
+				var columns = collection.config.columns;
+				
+				var names = [];
+				for (var k in columns) {
+	                names.push(k);
+	            }				
+				// offset = offset || 0;
+				// var sql_limit = (unlimit)?"":" limit "+offset+",10";
+				var collection = this;
+				var sql = "select count(u_id) as memberCount from " + collection.config.adapter.collection_name +" where status = 1 and g_id="+g_id;
+				db = Ti.Database.open(collection.config.adapter.db_name);
+				
+				if(Ti.Platform.osname != "android"){
+					db.file.setRemoteBackup(false);
+				}
+                var res = db.execute(sql);
+                var arr = [];
+				var count = 0;
+				
+                if(res.isValidRow()){
+                	var row_count = res.fieldCount;
+                	arr = {
+                		memberCount: res.fieldByName('memberCount'),
+					};
+                	// res.next();
+					// count++;
+                }
+                res.close();
+                db.close();
+                collection.trigger('sync');
+                return arr;				
+			},			
+			searchStaff:function(name,g_id,unlimit,offset){
+				var collection = this;
+				var columns = collection.config.columns;
+				
+				var names = [];
+				for (var k in columns) {
+	                names.push(k);
+	            }				
+				// offset = offset || 0;
+				// var sql_limit = (unlimit)?"":" limit "+offset+",10";
+				var collection = this;
+				var sql = "select staff.id,staff.name,staff.img_path from " + collection.config.adapter.collection_name +" join staff on my_group.u_id = staff.id where my_group.status = 1 and my_group.g_id="+g_id+" and staff.name like '%"+name+"%' order by staff.name";
 				db = Ti.Database.open(collection.config.adapter.db_name);
 				
 				if(Ti.Platform.osname != "android"){
@@ -76,8 +147,39 @@ exports.definition = {
                 res.close();
                 db.close();
                 collection.trigger('sync');
-                return arr;				
+                return arr;					
 			},
+			getU_idByG_id:function(g_id){
+				var collection = this;
+				var columns = collection.config.columns;
+				
+				var names = [];
+				for (var k in columns) {
+	                names.push(k);
+	            }				
+				// offset = offset || 0;
+				// var sql_limit = (unlimit)?"":" limit "+offset+",10";
+				var collection = this;
+				var sql = "select u_id from " + collection.config.adapter.collection_name +" where status = 1 and g_id="+g_id;
+				db = Ti.Database.open(collection.config.adapter.db_name);
+				
+				if(Ti.Platform.osname != "android"){
+					db.file.setRemoteBackup(false);
+				}
+                var res = db.execute(sql);
+                var arr = [];
+				var count = 0;
+				
+                while (res.isValidRow()){
+                	var row_count = res.fieldCount;
+                	arr.push(res.fieldByName('u_id'));
+                	res.next();
+                }
+                res.close();
+                db.close();
+                collection.trigger('sync');
+                return arr;				
+			},			
 			saveArray:function(arr){
 				var collection = this;
 				var columns = collection.config.columns;

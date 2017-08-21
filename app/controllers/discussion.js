@@ -35,8 +35,6 @@ function render_post(params){
 		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:'0',bottom:'0',color:"#7CC6FF",text:countdown.getTimePost(entry.created),p_id:entry.id});
 		console.log(entry.title+" title");
 		if (entry.id != 0) {
-			var model = Alloy.createCollection("post");
-			var rres = model.getGroupData(entry.g_id);
 			var group_title = (entry.g_id > 0)?"Post in "+entry.title+" group":entry.title;
 			var group = $.UI.create("Label",{classes:['h6'],width:'180',height:'20',color:"#23c281",left:'0',top:'22',text: group_title, g_id:entry.g_id});
 			if(OS_ANDROID){
@@ -131,7 +129,7 @@ function render_post(params){
 		});
 		comment_container.addEventListener("click",function(e){
 			Alloy.Globals.loading.startLoading("Loading...");			
-			addPage("post_comment","Post Comment",{p_id:e.source.p_id});
+			addPage("post_comment","Post Comment",{p_id:e.source.p_id,comment_count:e.source.children[0]});
 		});	
 		imgArr=undefined;
 		container=undefined;
@@ -152,6 +150,7 @@ function render_post(params){
 		img_container=undefined;
 		post_index++;	
 	});
+	params = undefined;
 	show_MotherView();	
 }
 function refresh(e){
@@ -257,6 +256,14 @@ function clickButtons(){
 	buttonsExpanded = !buttonsExpanded;
 	$.buttonsView.resize(size,size);
 }
+exports.removeEventListeners = function() {
+	Ti.App.removeEventListener("discussion:refresh",refresh);
+};
+// $.swipeRefresh.addEventListener('refreshing',function(e){
+	// refresh();
+	// e.source.setRefreshing(false);		
+// });
+
 Ti.App.addEventListener("discussion:refresh",refresh);
 function doLogout(){
 	Alloy.Globals.loading.startLoading("Logout...");	

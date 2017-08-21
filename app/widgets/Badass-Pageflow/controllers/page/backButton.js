@@ -11,4 +11,7 @@ if(OS_IOS){
 $.button.title = properties.properties.title || "";
 $.button.addEventListener('click', properties.properties.callback || function(e) {
     properties.pageflow.back();
+    if(OS_ANDROID){
+         Ti.UI.Android.hideSoftKeyboard();
+    }    
 });

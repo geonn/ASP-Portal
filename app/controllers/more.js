@@ -1,19 +1,19 @@
+function init() {
 var list_title = ["My Profile","Edit Profile","Groups","Apply Leave","Calendar","Favourite Post","Feed Back","Log Out"];
 var list_controller = ['my_profile','edit_profile','group_view','','calendar','','group_post',''];
 var list_button = [,"edit_profile","addGroup",,,,,];
-var u_id = Ti.App.Properties.getString("u_id")||"";
-
-function init() {
+var u_id = Ti.App.Properties.getString("u_id")||"";	
 	$.list_more.removeAllChildren();
 	var u_model = Alloy.createCollection("staff");
 	var u_res = u_model.getDataById(u_id);
 	for(var i = 0; i < list_title.length; i++) {
 		var list_view = $.UI.create("View", {
-			classes: ['wfill', 'padding'],
+			classes:['wfill', 'padding'],
 			pageIndex:list_controller[i],
 			pageButton:list_button[i],
 			pageTitle:list_title[i],
 			titileIndex:list_title[i],
+			u_id:u_id,
 			bottom: 0,
 			height: 40
 		});
@@ -58,7 +58,7 @@ function init() {
 		
 		if (i != 7) {
 			list_view.addEventListener("click",function(e){
-				addPage(e.source.pageIndex,e.source.pageTitle,{u_id:u_id});
+				addPage(e.source.pageIndex,e.source.pageTitle,{u_id:e.source.u_id});
 			});	
 		}else{
 			list_view.addEventListener("click",function(e){
@@ -70,7 +70,16 @@ function init() {
 				},2000);
 			});
 		};
+		list_view = undefined;
+		view_img = undefined;
+		img = undefined;
+		list_label = undefined;
+		hr = undefined;
 	}
+	list_title = undefined;
+	list_container = undefined;
+	u_id = undefined;
+	list_button = undefined;
 	u_model = null;
 	u_res - null;
 }

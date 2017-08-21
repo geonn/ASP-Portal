@@ -1,5 +1,25 @@
 <Alloy>
 	<ScrollView class="hfill wfill contwfill conthsize vert">
-		<View class="vert wfill hsize" top="0" id="list_more"></View>
+		<View class="vert wfill hsize" top="0" id="list_more">
+			<!-- <View class="wfill padding" height="40" bottom="0">
+				<View left="5" width="38" height="38" touchEnabled="false">
+					<ImageView class="wfill hfill" touchEnabled="false"></ImageView>
+				</View>
+				<Label class="wfill hsize h4" left="50" touchEnabled="false" text="My Profile"></Label>
+			</View>
+			<View class="hr" top="10" left="10" right="10" backgroundColor="#EDF3F6"></View>
+			<View class="wfill padding" height="40" bottom="0">
+				<View left="5" width="38" height="38" touchEnabled="false">
+					<ImageView class="wfill hfill" touchEnabled="false" image="/images/more_page/more2.png"></ImageView>
+				</View>
+				<Label class="wfill hsize h4" left="50" touchEnabled="false" text="Edit Profile"></Label>
+			</View>			
+			<View class="wfill padding" height="40" bottom="0">
+				<View left="5" width="38" height="38" touchEnabled="false">
+					<ImageView class="wfill hfill" touchEnabled="false" image="/images/more_page/more3.png"></ImageView>
+				</View>
+				<Label class="wfill hsize h4" left="50" touchEnabled="false" text="Calendar"></Label>
+			</View>	 -->			
+		</View>
 	</ScrollView>
 </Alloy>

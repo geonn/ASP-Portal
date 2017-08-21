@@ -1,0 +1,28 @@
+<Alloy>
+	<View id="father" class="wfill hfill" backgroundColor="#B3999999" zindex="4">
+		<View id="info_view" class="vert" backgroundColor="#fff" zindex="5">
+			<Label id="title" class="h4" textAlign="center" color="#fff" height="
+				50" backgroundColor="#00CB85" top="0" text="Group Info"></Label>	
+			<ScrollView id="scrollView" class="wfill vert contwfill conthsize">
+				<View id="nameContainer" class="wfill hsize horz" top="5">
+					<ImageView id="g_image" left="10" borderColor="#fff" defaultImage="/images/camera_icon.png" width="60" height="60" borderRadius="30"></ImageView>
+					<View id="g_name_member" class="wsize hsize vert">
+						<Label id="g_name" platform="ios" class="wfill h4" height="22" textAlign="left" top="5" left="10" right="10"></Label>
+						<Label id="g_name" platform="android" class="wfill h3 hsize" textAlign="left" top="5" left="10" right="10" ellipsize="true" wordWrap="false"></Label>
+						<Label id="member" class="wfill hsize" textAlign="left" top="10" bottom="10" left="10"></Label>
+					</View>
+				</View>
+				<View id="createdContainer" class="wfill hsize horz" left="10">
+					<Label id="createdText" class="wsize hsize" text="created by "></Label>
+					<Label id="creator" onClick="showCreator" class="wsize hsize bold"></Label>
+				</View>
+				<View id="hr1" class="hr" backgroundColor="#ccc" top="10"></View>
+				<Label id="imageChange" onClick="mediaOptions" class="wfill h4 hsize" text="Change cover photo" textAlign="left" top="10" left="10" right="10" ellipsize="true" wordWrap="false"></Label>
+				<Label id="members" onClick="showmember" class="wfill h4 hsize" text="Members" textAlign="left" top="10" left="10" right="10" ellipsize="true" wordWrap="false"></Label>
+				<Label id="leaveGroup" onClick="doleaveGroup" class="wfill h4 hsize" text="Leave Group" textAlign="left" color="red" top="10" left="10" right="10" ellipsize="true" wordWrap="false"></Label>				
+			</ScrollView>	
+			<View id="hr" class="hr" backgroundColor="#ccc"></View>
+			<Label id="ok_button" onClick="closeView" class="h3" textAlign="center" height="50" backgroundColor="#fff" bottom="0" text="Close"></Label>
+		</View>
+	</View>
+</Alloy>

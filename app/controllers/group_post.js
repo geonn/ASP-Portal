@@ -1,6 +1,7 @@
 var args = arguments[0] || {};//args.g_id
 var model = Alloy.createCollection("groups");
-var g_id = args.g_id;
+var g_id = args.g_id || undefined;
+var g_name;
 var arr = model.getData(args.g_id);
 var cell_width;
 var pwidth = Titanium.Platform.displayCaps.platformWidth;
@@ -8,7 +9,8 @@ var i_model = Alloy.createCollection("images_table");
 var countdown = require("countdown_between_2date.js");
 var offset=0;
 var post_index = 1;
-
+var offset1 = 0;
+var u_id = Ti.App.Properties.getString("u_id") || undefined;
 if(OS_ANDROID){
 	cell_width = Math.floor((pixelToDp(pwidth) / 2)) - 2;
 }else{
@@ -17,10 +19,13 @@ if(OS_ANDROID){
 $.img_view.setHeight(cell_width);
 
 function init(){
+	$.scrollView.scrollTo(0,0,[animation=false]);	
 	Alloy.Globals.loading.startLoading("Loading...");
 	$.group_img.setImage(arr[0].image);
 	$.group_name.setText(arr[0].name);
-	
+	g_name = arr[0].name;
+	$.mother_view.removeAllChildren();	
+	addPostView();	
 	var checker = Alloy.createCollection('updateChecker');
 	var isUpdate = checker.getCheckerById("2");
 	API.callByPost({url:"getPostList",params:{g_id: args.g_id, last_updated: isUpdate.updated}},{
@@ -59,8 +64,13 @@ function render_post(params){
 		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],top:"0",text:entry.description,p_id:entry.id});
 		var hr = $.UI.create("View",{classes:['hr']});
 		var comment_container = $.UI.create("View",{classes:['wfill','hsize','padding'],p_id:entry.id});
+<<<<<<< HEAD
 		var comment_count = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",touchEnabled: false, text:entry.comment_count+" comments",left:"0"});
 		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],touchEnabled: false,right:0});
+=======
+		var comment_count = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:entry.comment_count+" comments",left:"0",p_id:entry.id});
+		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],right:0,p_id:entry.id});
+>>>>>>> 6f6cd26b53dd5d1320de84dfa3f90b3fa0fb7331
 		var comment_img = $.UI.create("ImageView",{image:"/images/comment.png",touchEnabled:false});
 		var comment_button = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:"Comment",touchEnabled:false});
 		var img_container = $.UI.create("View",{classes:['wfill','hsize','padding'],backgroundColor:"#000", touchEnabled: false});
@@ -94,9 +104,15 @@ function render_post(params){
                     e.source.parent.children[1].children[0].text = count;
                     count = undefined;
                 }
+				small_image_container = undefined;
+				image = undefined;                
             });
 			img_container.add(image_container);
 			img_container.add(imgcount_container);
+			imglength=undefined;
+			image_container=undefined;
+			imgcount_container=undefined;
+			imgcount=undefined;			
 		}
 		container.add(hr);
 		container.add(comment_container);
@@ -127,21 +143,42 @@ function render_post(params){
 			addPage("post_detail","Post Detail",{p_id:e.source.p_id});
 		});
 		comment_container.addEventListener("click",function(e){
-			Alloy.Globals.loading.startLoading("Loading...");			
-			addPage("post_comment","Post Comment",{p_id:e.source.p_id, comment:e.source});
-		});
+			Alloy.Globals.loading.startLoading("Loading...");
+			addPage("post_comment","Post Comment",{p_id:e.source.p_id,comment_count:e.source.children[0]});
+		});	
+		imgArr=undefined;
+		container=undefined;
+		title_container=undefined;
+		user_img=undefined;
+		title_child_container=undefined;
+		username=undefined;
+		time=undefined;
+		more_container=undefined;
+		more=undefined;
+		description=undefined;
+		hr=undefined;
+		comment_container=undefined;
+		comment_count=undefined;
+		comment_button_container=undefined;
+		comment_img=undefined;
+		comment_button=undefined;
+		img_container=undefined;		
+>>>>>>> 6f6cd26b53dd5d1320de84dfa3f90b3fa0fb7331
 		post_index++;	
 	});
 	Alloy.Globals.loading.stopLoading();
 }
 
 function scrollChecker(e){
-	var theEnd = $.mother_view.rect.height;
+	var theEnd = $.scrollView.rect.height;
 	var total = (OS_ANDROID)?pixelToDp(e.y)+e.source.rect.height: e.y+e.source.rect.height;
 	var nearEnd = theEnd - 200;
 	if (total >= nearEnd){
 		render();
 	}
+	theEnd = undefined;
+	total = undefined;
+	nearEnd = undefined;
 }
 
 function postOptions(params){
@@ -152,13 +189,18 @@ function postOptions(params){
 	var dialog = Ti.UI.createOptionDialog(opts);	
 	dialog.addEventListener("click",function(e){
 		if(checking&&e.index == 0){
-			addPage("post","Edit Post",{p_id: params.p_id,edit:true});
+			addPage("post","Edit Post",{p_id: params.p_id,edit:true});		
 		}
 		if(checking&&e.index == 1){
 			deletePost(params.p_id,params.post_index);
 		}
 	});	
 	dialog.show();
+	u_id = undefined;
+	options = undefined;	
+	checking = undefined;
+	opts = undefined;
+	dialog = undefined;
 }
 
 function deletePost(p_id,p_index){
@@ -175,58 +217,64 @@ function deletePost(p_id,p_index){
 					Alloy.Globals.loading.stopLoading();		
 					alert("Success to delete post.");
 				}
+				res = undefined;
 			}
 		});
 	});
 }
 
 function group_info(){
-	var model = Alloy.createCollection("my_group");
-	API.callByPost({url:"getGroupListMemberByGid",params:{g_id:g_id}},{
-		onload:function(responseText){
-			var res = JSON.parse(responseText);
-			var data = res.data || {};
-			model.saveArray(data);
-			renderGroupInfo(model.getMemberByG_id(g_id));
-		}
+	$.grandmother.add(Alloy.createController("groupInfo",{motherView:$.args.motherView,childView:$.args.childView,mother:$.grandmother,g_id:g_id,arr:arr[0],GroupImg:$.group_img,outsideImg:$.args.outsideimg}).getView());		
+}
+function addMember(){
+	Alloy.Globals.loading.startLoading("Loading...");				
+	addPage("groupMemberView","Group Member",{g_id:g_id});	
+}
+function addPostView(){
+	console.log("add Post");
+	var container = $.UI.create("View",{classes:['horz','wfill','hsize','padding'],top:10,left:"0",right:"0",backgroundColor:"#fff"});
+	var	image = $.UI.create("ImageView",{classes:['padding'],width:"45",height:"45",image:"/images/asp_square_logo.png"});
+	var title = $.UI.create("Label",{classes:['hsize','h4'], width:"auto",text:"Posting something..."});
+	container.add(image);
+	container.add(title);
+	$.mother_view.add(container);
+	container.addEventListener("click",function(){
+		addPage("post", g_name+" Post",{post_group:true,g_id:g_id,g_name:g_name,refreshName:"group_post_init"});
 	});
 }
-function renderGroupInfo(param){
-	console.log("group member:"+JSON.stringify(param));
-	var father = $.UI.create("View",{classes:['wfill','hfill'],backgroundColor:'#B3999999',zIndex:'4'});
-	var info_view = $.UI.create("View",{classes:['vert'],height:cell_width*2.5,width:cell_width*1.8,backgroundColor:'#fff',zIndex:'5'});
-	var title = $.UI.create("Label",{classes:['h4'],textAlign:'center',color:"#fff",height:'50',width:cell_width*1.8,backgroundColor:'#00CB85',top:'0',text:'Group Info'});
-	var scrollView = $.UI.create("ScrollView",{classes:['wfill','vert','contwfill','conthsize'],height:cell_width*2-100});
-	var g_name = (OS_IOS)?$.UI.create("Label",{classes:['wfill','h4'],height:'22',text:"Group name: "+arr[0].name,textAlign:'left',top:'5',left:'10',right:'10'}):$.UI.create("Label",{classes:['wfill','h3','bold','hsize'],text:arr[0].name,textAlign:'left',top:'5',left:'10',right:'10',ellipsize:true,wordWrap: false});
-	var member = $.UI.create("Label",{classes:['wfill','h4'],height:'22',text:"Member:",textAlign:'left',top:'10',left:'10'});
-	var ok_button = $.UI.create("Label",{classes:['h3'],textAlign:'center',height:'40',width:cell_width*1.8,backgroundColor:'#fff',bottom:'0',text:'ok'});
-	var hr = $.UI.create("View",{classes: ['hr'],backgroundColor: '#EDF3F6',top:"20"});
-	param.forEach(function(entry){
-		var container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:0,u_id:entry.u_id});
-		var small_container = $.UI.create("View",{classes:['hsize','horz'],width:"84%",left:"0",touchEnabled:false});
-		var image = $.UI.create("ImageView",{classes:['padding'],left:5,width:45,height:45,image:entry.u_image,defaultImage:"/images/default_profile.png",touchEnabled:false});
-		var title = $.UI.create("Label",{classes:['wfill','hsize'],text:entry.u_name,touchEnabled:false});
-		if(OS_ANDROID){
-			title.ellipsize=true;
-			title.wordWrap=false;
+
+function doleaveGroup(e){
+	COMMON.createAlert("Warning","Are you sure want to leave this group?",function(e){
+		if(u_id == undefined){
+			alert("User Id is null\nPlease Login Again");
+			doLogout();
+			return;
 		}
-		small_container.add(image);
-		small_container.add(title);
-		container.add(small_container);		
-		scrollView.add(container);
-		container.addEventListener("click",function(e){
-			addPage("my_profile","My Profile",{u_id:e.source.u_id});			
+		if(g_id == undefined){
+			alert("Group id is null");
+			Alloy.Globals.pageFlow.back();
+			return;		
+		}
+		API.callByPost({url:"deleteGroupMember",params:{u_id:u_id,g_id:g_id}},{
+			onload:function(responseText){
+				var res = JSON.parse(responseText);
+				if(res.status == "success"){
+					alert("Success");
+					$.args.motherView.remove($.args.childView);							
+					Alloy.Globals.pageFlow.back();		
+				}
+			}
 		});
-	});
-	info_view.add(title);
-	info_view.add(g_name);
-	info_view.add(member);
-	info_view.add(scrollView);
-	info_view.add(hr);
-	info_view.add(ok_button);
-	father.add(info_view);
-	ok_button.addEventListener("click",function(e){
-		$.grandmother.remove(father);
-	});
-	$.grandmother.add(father);	
+	});	
 }
+exports.removeEventListeners = function() {
+	Ti.App.removeEventListener("group_post_init",init);
+};
+Ti.App.addEventListener("group_post_init",init);
+
+
+
+$.swipeRefresh.addEventListener('refreshing',function(e){
+	init();
+	e.source.setRefreshing(false);		
+});

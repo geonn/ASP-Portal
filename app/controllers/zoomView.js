@@ -1,17 +1,10 @@
 var args = arguments[0] || {};
 //console.log(blob);
-var blob =(OS_ANDROID) ?require('To.ImageCache').remoteImage(args.img_path):args.img_path;
+var img = args.img_path;
 
 function init(){
 	if(OS_ANDROID){
-		var TiTouchImageView = require('org.iotashan.TiTouchImageView');
-		var imageView = TiTouchImageView.createView({
-			image:blob,
-			maxZoom:5,
-			minZoom:1,
-			zIndex:9,
-		});
-		$.imageMother.add(imageView);
+		$.webview.url = img;
 	}else{
 		var Ziv = Ti.UI.createScrollView({
 			width :Ti.UI.FILL, 

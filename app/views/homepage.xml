@@ -3,7 +3,7 @@
   		<View class="wfill hfill vert">
 		    <ScrollableView id="scrollableView" onScrollend="doScroll" top="50" scrollingEnabled="true">    	
 		    	<View class="wfill hfill" id="discussion" bottom="50" backgroundColor='#eff3f6'></View>
-		    	<View class="wfill hfill" id="notification"></View>
+		    	<View class="wfill hfill" id="notification" backgroundColor="#eff3f6"></View>
 		    	<View class="wfill hfill" id="more" backgroundColor="#fff"></View>
 	    	</ScrollableView>
     	</View>
