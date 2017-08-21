@@ -64,13 +64,8 @@ function render_post(params){
 		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],top:"0",text:entry.description,p_id:entry.id});
 		var hr = $.UI.create("View",{classes:['hr']});
 		var comment_container = $.UI.create("View",{classes:['wfill','hsize','padding'],p_id:entry.id});
-<<<<<<< HEAD
-		var comment_count = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",touchEnabled: false, text:entry.comment_count+" comments",left:"0"});
-		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],touchEnabled: false,right:0});
-=======
 		var comment_count = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:entry.comment_count+" comments",left:"0",p_id:entry.id});
 		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],right:0,p_id:entry.id});
->>>>>>> 6f6cd26b53dd5d1320de84dfa3f90b3fa0fb7331
 		var comment_img = $.UI.create("ImageView",{image:"/images/comment.png",touchEnabled:false});
 		var comment_button = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:"Comment",touchEnabled:false});
 		var img_container = $.UI.create("View",{classes:['wfill','hsize','padding'],backgroundColor:"#000", touchEnabled: false});
@@ -162,8 +157,7 @@ function render_post(params){
 		comment_button_container=undefined;
 		comment_img=undefined;
 		comment_button=undefined;
-		img_container=undefined;		
->>>>>>> 6f6cd26b53dd5d1320de84dfa3f90b3fa0fb7331
+		img_container=undefined;
 		post_index++;	
 	});
 	Alloy.Globals.loading.stopLoading();
