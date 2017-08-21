@@ -16,12 +16,10 @@
 			</View>
 			<ScrollView id="scrollview" onScroll="scrollChecker" class="hfill wfill contwfill conthsize" backgroundColor="#fff">
 				<Widget src="nl.fokkezb.loading" name="view" id="myInstance" />
-				<View id="mother_view" bottom="0" opacity="0" class="wfill hfill vert">
-					<Label class="wfill hsize h5 padding" color="#999" text="Staffs"/>
-				</View>	
+				<View id="mother_view" top="0" opacity="0" class="wfill hsize vert"></View>	
 			</ScrollView>
 		</View>
-		<ScrollView class="wfill horz" height="50" id="selectedList" contentWidth="auto" contentHeight="Ti.UI.SIZE" borderColor='#eff3f6' zIndex="10" bottom="0" right="50" scrollType="horizontal" backgroundColor="#fff"></ScrollView>
+		<ScrollView class="wfill horz" height="0" id="selectedList" contentWidth="auto" contentHeight="Ti.UI.SIZE" borderColor='#eff3f6' zIndex="10" bottom="0" right="50" scrollType="horizontal" backgroundColor="#fff"></ScrollView>
 		<Button width="50" height="50" id="addgroup" onClick="doSubmit" zIndex="10" bottom="0" right="0" textAlign="center" backgroundColor="#23C282" color="#fff" title="Add"></Button>
 	</View>
 </Alloy>
