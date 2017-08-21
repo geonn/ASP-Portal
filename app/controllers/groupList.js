@@ -17,15 +17,15 @@ function init() {
 			var arrr = res.group;
 			var modell = Alloy.createCollection("groups");
 			model.saveArray(arr);
-			modell.saveArray(arrr);
+			modell.saveArray(arrr);			
 			model = null;
 			arr = null;
 			res =null;				
+			var model = Alloy.createCollection("my_group");
+			var arr = model.getDataById(u_id);
+			render_list(arr);			
 		}
 	});
-	var model = Alloy.createCollection("my_group");
-	var arr = model.getDataById(u_id);
-	render_list(arr);
 }
 
 function render_list(e) {
@@ -35,7 +35,8 @@ function render_list(e) {
 			width: cell_width-10,
 			left: '5',
 			right: '5',
-			g_id:data.g_id
+			g_id:data.g_id,
+			g_name:data.g_name
 		});
 		var view_img = $.UI.create("View",{
 			height: cell_width - 30,
@@ -81,7 +82,7 @@ function render_list(e) {
 		view_group.add(view_img);
 		view_group.add(group_title);
 		view_group.addEventListener("click", function(e){
-			addPage("group_post", e.source.g_name, {motherView:$.group_list,childView:e.source,g_id: e.source.g_id});
+			addPage("group_post", e.source.g_name, {motherView:$.group_list,childView:e.source,g_id: e.source.g_id,outsideimg:e.source.children[0].children[0]});
 		});
 		$.group_list.add(view_group);
 	});

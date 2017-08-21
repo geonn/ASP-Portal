@@ -43,8 +43,6 @@ function init(){
 function closeApp(){
 	$.index.close();	
 	$.destroy();
-	var activity = Titanium.Android.currentActivity;
-	activity.finish();	
 	console.log("close lah");
 }
 function loadingPage(){
@@ -59,7 +57,7 @@ function loadingViewFinish(){
 }
 $.index.addEventListener("android:back",function(e){
 	Alloy.Globals.pageFlow.back();
-    if(OS_ANDROID){
+    if(Alloy.Globals.pageFlow.countPages() >1 && OS_ANDROID){
          Ti.UI.Android.hideSoftKeyboard();
     }	
 	console.log(Alloy.Globals.pageFlow.countPages());

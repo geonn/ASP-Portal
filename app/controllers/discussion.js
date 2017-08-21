@@ -129,7 +129,7 @@ function render_post(params){
 		});
 		comment_container.addEventListener("click",function(e){
 			Alloy.Globals.loading.startLoading("Loading...");			
-			addPage("post_comment","Post Comment",{p_id:e.source.p_id});
+			addPage("post_comment","Post Comment",{p_id:e.source.p_id,comment_count:e.source.children[0]});
 		});	
 		imgArr=undefined;
 		container=undefined;
@@ -256,6 +256,14 @@ function clickButtons(){
 	buttonsExpanded = !buttonsExpanded;
 	$.buttonsView.resize(size,size);
 }
+exports.removeEventListeners = function() {
+	Ti.App.removeEventListener("discussion:refresh",refresh);
+};
+// $.swipeRefresh.addEventListener('refreshing',function(e){
+	// refresh();
+	// e.source.setRefreshing(false);		
+// });
+
 Ti.App.addEventListener("discussion:refresh",refresh);
 function doLogout(){
 	Alloy.Globals.loading.startLoading("Logout...");	
