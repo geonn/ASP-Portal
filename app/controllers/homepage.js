@@ -25,3 +25,7 @@ function doScroll(e){
 	scrollImage(e.currentPage);
 }	
 
+exports.removeEventListeners = function() {
+	Ti.App.removeEventListener("current_page", page);
+
+};

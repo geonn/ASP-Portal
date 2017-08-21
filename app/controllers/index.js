@@ -44,7 +44,6 @@ function init(){
 function closeApp(){
 	$.index.close();	
 	$.destroy();
-	console.log("close lah");
 }
 function loadingPage(){
 	loadingView.getView().open();
