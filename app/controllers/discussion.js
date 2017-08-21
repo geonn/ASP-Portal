@@ -69,11 +69,11 @@ function render_post(params){
 				small_image_container.add(image);
 				image_container.addView(small_image_container);		
 				image.addEventListener("click",function(e){
-					try {
+					//try {
 						addPage("zoomView","Image Preview",{img_path:e.source.imageBig});
-					}catch(e) {
-						alert("Image is not yet save to local!!!\nPlease Try Again !!");
-					}
+					//}catch(e) {
+						//alert("Image is not yet save to local!!!\nPlease Try Again !!");
+					//}
 				});
                 image_container.addEventListener("scrollend",function(e){
                     if(e.currentPage != undefined && e.source.parent.children[1].children[0].imglength > 1) {

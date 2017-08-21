@@ -141,11 +141,11 @@ function render_post(params){
 				small_image_container.add(image);
 				image_container.addView(small_image_container);
 				image.addEventListener("click",function(e){
-					try {
+					//try {
 						addPage("zoomView","Image Preview",{img_path:e.source.image});
-					}catch(e) {
-						//
-					}
+					// }catch(e) {
+						// //
+					// }
 				});	
 			});
 			image_container.addEventListener("scrollend",function(e){
