@@ -1,8 +1,9 @@
 var args = arguments[0] || {};
 var p_id = args.p_id || null;
 var u_id = Ti.App.Properties.getString('u_id')||undefined;
+var comment_container = args.comment;
 var countdown = require("countdown_between_2date.js");
-
+//console.log(JSON.stringify(comment_container));
 function add_image(){}
 function init() {
 	if(p_id == null){
