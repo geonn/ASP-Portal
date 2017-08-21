@@ -24,7 +24,7 @@ function init() {
 	title();
 	days();
 	
-	var hlday = [{title: "crismest", date: "2017/8/25"}, {title: "crismest", date: "2017/8/24"}, {title: "crismest", date: "2017/8/20"}];
+	var hlday = [{title: "Merry Christmas", date: "2017/8/25"}, {title: "Merry Christmas", date: "2017/8/24"}, {title: "Merry Christmas", date: "2017/8/20"}];
 	render_calendar(hlday);
 	
 	var data = [{title: "todo", date: "2017/12/25", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/25", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/25", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/26", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/26", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/26", s_time: "12:55", e_time: "13:55"}];

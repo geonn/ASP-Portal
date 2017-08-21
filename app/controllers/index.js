@@ -31,7 +31,7 @@ function loginPage(){
 	});			
 }
 init();
-function init(){
+function init(){Ti.App.Properties.setString("u_id", "346");
 	var u_id = Ti.App.Properties.getString("u_id") || "";
 	if(u_id == ""){
 		$.index.open();		
@@ -61,9 +61,9 @@ $.index.addEventListener("android:back",function(e){
          Ti.UI.Android.hideSoftKeyboard();
     }
     
-	if(Ti.App.Properties.getString("current_page") ==0){
+	if(Ti.App.Properties.getString("current_page") == 0 && Alloy.Globals.pageFlow.countPages() == 1){
 		$.index.close();
-	}else {
+	}else if(Alloy.Globals.pageFlow.countPages() == 1) {
 		Ti.App.fireEvent("scroll_page");
 	}
 });
