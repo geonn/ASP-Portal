@@ -267,8 +267,10 @@ exports.removeEventListeners = function() {
 Ti.App.addEventListener("group_post_init",init);
 
 
+if(OS_ANDROID){
+	$.swipeRefresh.addEventListener('refreshing',function(e){
+		init();
+		e.source.setRefreshing(false);		
+	});	
+}
 
-$.swipeRefresh.addEventListener('refreshing',function(e){
-	init();
-	e.source.setRefreshing(false);		
-});
