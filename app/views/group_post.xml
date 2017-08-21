@@ -1,6 +1,7 @@
 <Alloy>
 	<View class="wfill hfill" id="grandmother">
-	 <SwipeRefresh module="com.rkam.swiperefreshlayout" id="swipeRefresh" platform="android">		
+	<ImageView top="0" image="/images/btn-down.png"></ImageView>
+	<SwipeRefresh module="com.rkam.swiperefreshlayout" id="swipeRefresh" platform="android">		
 	<ScrollView class="hfill wfill contwfill conthsize vert" id="scrollView" backgroundColor="#EEF3F6">
 		<View class="wfill hsize vert">
 			<View class="wfill" id="img_view" backgroundColor="#000">
@@ -10,12 +11,12 @@
 					<Label class="wsize hsize h4" left="10" right="10" id="group_member" text="Members" color="#e5e5e5"></Label>
 				</View>
 			</View>
-			<View class="wfill hsize" backgroundColor="#fff">
-				<View class="hsize vert" width="33%" left="0" onClick="doleaveGroup">
+			<View class="wfill hsize horz" backgroundColor="#fff">
+				<View class="hsize vert" width="33%" onClick="doleaveGroup">
 					<ImageView height="35" width="35" image="/images/g_thick.png"></ImageView>
 					<Label class="wsize hsize h5" text="Joined" color="#668CFC"></Label>
 				</View>
-				<View class="hsize vert wfill" onClick="addMember">
+				<View class="hsize vert" width="33%" onClick="addMember">
 					<ImageView height="35" width="35" image="/images/p_add.png"></ImageView>
 					<Label class="wsize hsize h5" text="Add Members" color="#90949C"></Label>
 				</View>
@@ -23,7 +24,7 @@
 					<ImageView height="35" width="35" image="/images/p_search.png"></ImageView>
 					<Label class="wsize hsize h5" text="Search" color="#90949C"></Label>
 				</View> -->
-				<View class="hsize vert" width="33%" right="0" onClick="group_info" zIndex="3">
+				<View class="hsize vert" width="33%" onClick="group_info">
 					<ImageView height="35" width="35" image="/images/p_info.png"></ImageView>
 					<Label class="wsize hsize h5" text="Info" color="#90949C"></Label>
 				</View>
@@ -34,7 +35,7 @@
 			
 		</View>
 	</ScrollView>
-	 </SwipeRefresh>	
+	</SwipeRefresh>	
 	 
 	 <ScrollView class="hfill wfill contwfill conthsize vert" id="scrollView" backgroundColor="#EEF3F6" platform="ios">
 		<View class="wfill hsize vert">
@@ -45,20 +46,20 @@
 					<Label class="wsize hsize h4" left="10" right="10" id="group_member" text="Members" color="#e5e5e5"></Label>
 				</View>
 			</View>
-			<View class="wfill hsize" backgroundColor="#fff">
-				<View class="hsize vert" width="25%" left="0" onClick="doleaveGroup">
+			<View class="wfill hsize horz" backgroundColor="#fff">
+				<View class="hsize vert" width="33%" onClick="doleaveGroup">
 					<ImageView height="35" width="35" image="/images/g_thick.png"></ImageView>
 					<Label class="wsize hsize h5" text="Joined" color="#668CFC"></Label>
 				</View>
-				<View class="hsize vert" width="25%" left="25%" onClick="addMember">
+				<View class="hsize vert" width="33%" onClick="addMember">
 					<ImageView height="35" width="35" image="/images/p_add.png"></ImageView>
 					<Label class="wsize hsize h5" text="Add Members" color="#90949C"></Label>
 				</View>
-				<View class="hsize vert" width="25%" right="25%">
+				<!-- <View class="hsize vert" width="25%" right="25%">
 					<ImageView height="35" width="35" image="/images/p_search.png"></ImageView>
 					<Label class="wsize hsize h5" text="Search" color="#90949C"></Label>
-				</View>
-				<View class="hsize vert" width="25%" right="0" onClick="group_info">
+				</View> -->
+				<View class="hsize vert" width="33%" onClick="group_info">
 					<ImageView height="35" width="35" image="/images/p_info.png"></ImageView>
 					<Label class="wsize hsize h5" text="Info" color="#90949C"></Label>
 				</View>

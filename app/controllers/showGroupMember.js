@@ -7,10 +7,6 @@ var args = arguments[0] || {};//args.g_id
 var g_id = args.g_id;
 var checker = "/images/checkbox_checked.png";
 
-if (OS_IOS) {
-	$.selectedList.bottom = 50;
-	$.mother_view.bottom = 100;
-};
 function doLogout(){
 	Alloy.Globals.loading.startLoading("Logout...");	
 	Ti.App.Properties.removeAllProperties();

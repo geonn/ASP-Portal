@@ -266,6 +266,16 @@ exports.removeEventListeners = function() {
 };
 Ti.App.addEventListener("group_post_init",init);
 
+if (OS_IOS) {
+	var refreshing = false;
+	$.scrollView.addEventListener("scroll", function(e){
+		if (e.y <= 0-(cell_width*0.5) && !refreshing) {
+			refreshing = true;
+			init();
+			refreshing = false;
+	    }
+	});
+};
 
 if(OS_ANDROID){
 	$.swipeRefresh.addEventListener('refreshing',function(e){
