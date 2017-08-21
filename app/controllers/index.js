@@ -1,4 +1,5 @@
 Alloy.Globals.pageFlow = $.pageflow;
+Ti.App.Properties.setString("current_page", 0);
 var my_group = Alloy.createCollection("my_group");
 var group = Alloy.createCollection("groups");
 var isExistPage = false;
@@ -59,10 +60,12 @@ $.index.addEventListener("android:back",function(e){
 	Alloy.Globals.pageFlow.back();
     if(Alloy.Globals.pageFlow.countPages() >1 && OS_ANDROID){
          Ti.UI.Android.hideSoftKeyboard();
-    }	
-	console.log(Alloy.Globals.pageFlow.countPages());
-	if(Alloy.Globals.pageFlow.countPages() <=1){
+    }
+    
+	if(Ti.App.Properties.getString("current_page") ==0){
 		$.index.close();
+	}else {
+		Ti.App.fireEvent("scroll_page");
 	}
 });
 

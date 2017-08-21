@@ -15,9 +15,12 @@ function scrollImage(page){
 	}
 }
 function scrollto(e){
-	$.scrollableView.scrollToView(e.source.page);
-	scrollImage(e.source.page);	
+	var page = e.source.page || 0;
+	$.scrollableView.scrollToView(page);
+	scrollImage(page);
+	Ti.App.Properties.setString("current_page", page);
 }
+Ti.App.addEventListener("scroll_page", scrollto);
 function doScroll(e){
 	scrollImage(e.currentPage);
 }	
