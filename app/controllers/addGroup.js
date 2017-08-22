@@ -120,9 +120,11 @@ function showBar(param,position){
 	if (OS_IOS) {
 		$.selectedList.setHeight(50);
 		$.addgroup.bottom = 50;
+		$.addgroup.setHeight(50);
 	}else{
 		$.mother_view.setBottom(40);
 		$.selectedList.setHeight(50);
+		$.addgroup.setHeight(50);
 	};
 	var container = $.UI.create("View",{classes:['small-padding'],height:40,width:40,borderRadius:20,backgroundImage:(param.img_path != undefined)?param.img_path:"/images/default_profile.png",staffId:param.id,position:position,backgroundColor:"#23C282"});
 	$.selectedList.add(container);
@@ -141,10 +143,12 @@ function showBar(param,position){
 		if($.selectedList.getChildren().length==0){
 			if (OS_IOS) {
 				$.selectedList.setHeight(0);
+				$.addgroup.setHeight(0);
 			}else {
 				setTimeout(function(){
 					$.mother_view.setBottom(0);
 					$.selectedList.setHeight(0);
+					$.addgroup.setHeight(0);
 				},500);
 			}
 		}

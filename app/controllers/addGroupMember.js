@@ -10,10 +10,6 @@ var my_gmodel = Alloy.createCollection("my_group");
 var u_arr = my_gmodel.getU_idByG_id(g_id);
 var model = Alloy.createCollection("staff");
 
-if (OS_IOS) {
-	$.selectedList.bottom = 50;
-	$.mother_view.bottom = 100;
-};
 function doLogout(){
 	Alloy.Globals.loading.startLoading("Logout...");	
 	Ti.App.Properties.removeAllProperties();

@@ -1,4 +1,5 @@
 Alloy.Globals.pageFlow = $.pageflow;
+Ti.App.Properties.setString("current_page", 0);
 var my_group = Alloy.createCollection("my_group");
 var group = Alloy.createCollection("groups");
 var isExistPage = false;
@@ -33,7 +34,6 @@ function loginPage(){
 }
 init();
 function init(){
-	Ti.App.Properties.setString("u_id","347");	
 	var u_id = Ti.App.Properties.getString("u_id") || "";
 	if(u_id == ""){
 		$.index.open();		
@@ -46,7 +46,6 @@ function init(){
 function closeApp(){
 	$.index.close();	
 	$.destroy();
-	console.log("close lah");
 }
 function loadingPage(){
 	loadingView.getView().open();
@@ -62,10 +61,12 @@ $.index.addEventListener("android:back",function(e){
 	Alloy.Globals.pageFlow.back();
     if(Alloy.Globals.pageFlow.countPages() >1 && OS_ANDROID){
          Ti.UI.Android.hideSoftKeyboard();
-    }	
-	console.log(Alloy.Globals.pageFlow.countPages());
-	if(Alloy.Globals.pageFlow.countPages() <=1){
+    }
+    
+	if(Ti.App.Properties.getString("current_page") == 0 && Alloy.Globals.pageFlow.countPages() == 1){
 		$.index.close();
+	}else if(Alloy.Globals.pageFlow.countPages() == 1) {
+		Ti.App.fireEvent("scroll_page");
 	}
 });
 Ti.App.addEventListener("index:close",closeApp);
