@@ -63,26 +63,33 @@ function render_comment(params){
 		comment = undefined;
 		time = undefined;
 	});
+	setTimeout(function(){
+		$.scrollView.scrollToBottom();	
+	},500);
 	Alloy.Globals.loading.stopLoading();	
 }
 function doSubmit(){
+	Alloy.Globals.loading.startLoading("Loading...");		
 	var u_id = Ti.App.Properties.getString('u_id')||null;
 	var comment = $.comment.value || null;
+	$.comment.setValue("");	
     if(OS_ANDROID){
          Ti.UI.Android.hideSoftKeyboard();
     }		
 	if(u_id == undefined){
+		Alloy.Globals.loading.stopLoading();			
 		alert("User Id is null\nPlease Login Again");
-		doLogout();
+		doLogout();			
 		return;
 	}
 	if(comment == null){
+		Alloy.Globals.loading.stopLoading();			
 		alert("Please type something on field box.");
 		return;	
 	}		
 	var params = {u_id:u_id,p_id:p_id,comment:comment};
 	API.callByPost({url:"doPostComment",params:params},{
-		onload:function(responseText){
+		onload:function(responseText){			
 			var res = JSON.parse(responseText);
 			console.log("comment:"+JSON.stringify(res));
 			$.args.comment_count.text = res.data[0].total_comment+" comments";

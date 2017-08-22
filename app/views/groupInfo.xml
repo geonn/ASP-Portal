@@ -16,10 +16,14 @@
 					<Label id="createdText" class="wsize hsize" text="created by "></Label>
 					<Label id="creator" onClick="showCreator" class="wsize hsize bold"></Label>
 				</View>
-				<View id="hr1" class="hr" backgroundColor="#ccc" top="10"></View>
-				<Label id="imageChange" onClick="mediaOptions" class="wfill h4 hsize" text="Change cover photo" textAlign="left" top="15" left="10" right="10" ellipsize="true" wordWrap="false"></Label>
-				<Label id="members" onClick="showmember" class="wfill h4 hsize" text="Members" textAlign="left" top="15" left="10" right="10" ellipsize="true" wordWrap="false"></Label>
-				<Label id="leaveGroup" onClick="doleaveGroup" class="wfill h4 hsize" text="Leave Group" textAlign="left" color="red" top="15" left="10" right="10" ellipsize="true" wordWrap="false"></Label>				
+				<View id="hr1"  backgroundColor="#ccc" class="hr" top="10"></View>
+				<Label id="imageChange" onClick="mediaOptions" class="wfill h4 hsize" text="Change cover photo" textAlign="left" top="5" bottom="5" left="10" right="10" ellipsize="true" wordWrap="false"></Label>
+				<View class="hr" left="10" right="10"></View>
+				<Label id="members" onClick="showmember" class="wfill h4 hsize" text="Members" textAlign="left" top="5" bottom="5" left="10" right="10" ellipsize="true" wordWrap="false"></Label>
+				<View class="hr" left="10" bottom="15" right="10"></View>
+				<View class="hr" left="10" top="17" right="10"></View>				
+				<Label id="leaveGroup" onClick="doleaveGroup" class="wfill h4 hsize" text="Leave Group" textAlign="left" color="red" top="5" bottom="5"  left="10" right="10" ellipsize="true" wordWrap="false"></Label>
+				<View class="hr" left="10" right="10"></View>								
 			</ScrollView>	
 			<View id="hr" class="hr" backgroundColor="#ccc"></View>
 			<Label id="ok_button" onClick="closeView" class="h3" textAlign="center" height="50" backgroundColor="#fff" bottom="0" text="Close"></Label>

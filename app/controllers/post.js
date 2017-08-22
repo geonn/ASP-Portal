@@ -141,7 +141,6 @@ function doSubmit(){
 	API.callByPost({url:url,params:params},{
 	onload:function(responceText){
 		var res = JSON.parse(responceText);
-		console.log("result:"+JSON.stringify(res));
 		var p_id = res.data[0].id;
 		var image_counter = 0;
 		if(res.status != "success"){
