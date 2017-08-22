@@ -1,17 +1,17 @@
 <Alloy>
 	<View class="wfill hfill"  bubbleParent="false">	
-		<View class="wfill" height="0" zIndex="9" id="bounceView" onClick="clickButtons" backgroundColor="#66000000"></View>
+		<!-- <View class="wfill" height="0" zIndex="9" id="bounceView" onClick="clickButtons" backgroundColor="#66000000"></View>
 		<Widget src="To.BounceView" bottom="10" right="10" width="60" height="60" id="buttonsView" zIndex="10">
 		    <View width="60" height="60" backgroundImage="/images/pop_more_logo.png" backgroundColor="#23c282" borderColor="#fff" borderRadius="30" right="0" bottom="0" zIndex="5" onClick="clickButtons" />
 		    <View width="60" height="60" backgroundImage="/images/friend.png" backgroundColor="#fff" borderColor="#fff" borderRadius="30" right="0" top="0" zIndex="3" />
 		    <View width="60" height="60" backgroundImage="/images/refresh_logo.png" backgroundColor="#fff" onClick="refresh" borderColor="#fff" borderRadius="30" left="0" top="0" zIndex="3" />
 		    <View width="60" height="60" backgroundImage="/images/logout_green_logo.png" backgroundColor="#fff" onClick="doLogout" borderColor="#fff" borderRadius="30" left="0" bottom="0" zIndex="3" />
-		</Widget>		
-	 <!-- <SwipeRefresh module="com.rkam.swiperefreshlayout" id="swipeRefresh" platform="android" bubbleParent="false">		 -->					
+		</Widget>	 -->	
+	 <SwipeRefresh module="com.rkam.swiperefreshlayout" id="swipeRefresh" platform="android" bubbleParent="false">						
 		<ScrollView id="scrollview" onScroll="scrollChecker" scrollingEnabled="true" bubbleParent="false" class="hfill wfill contwfill conthsize">
 			<Widget src="nl.fokkezb.loading" name="view" id="myInstance" />
 			<View id="mother_view" top="10" opacity="0" class="wfill hsize vert"></View>	
 		</ScrollView>
-	 <!-- </SwipeRefresh>	 -->		
+	 </SwipeRefresh>			
 	</View>
 </Alloy>

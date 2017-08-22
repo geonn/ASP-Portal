@@ -190,11 +190,6 @@ function postOptions(params){
 		}
 	});	
 	dialog.show();
-	u_id = undefined;
-	options = undefined;	
-	checking = undefined;
-	opts = undefined;
-	dialog = undefined;
 }
 
 function deletePost(p_id,p_index){
@@ -207,7 +202,7 @@ function deletePost(p_id,p_index){
 					Alloy.Globals.loading.stopLoading();							
 					alert("Something wrong right now please try again later.");
 				}else{
-					refresh({});			
+					init();			
 					Alloy.Globals.loading.stopLoading();		
 					alert("Success to delete post.");
 				}

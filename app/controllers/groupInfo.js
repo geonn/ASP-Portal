@@ -13,6 +13,7 @@ if(OS_ANDROID){
 	cell_width = Math.floor(pwidth / 2) - 2;
 }
 function init(){
+	$.g_image.image = $.args.GroupImg.image;
 	$.info_view.height = cell_width*2.5;
 	$.info_view.width = cell_width*1.8;
 	$.title.width = cell_width*1.8;

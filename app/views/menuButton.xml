@@ -1,5 +1,5 @@
 <Alloy>
     <View id="view">
-        <Button id="navBarMenubutton" title="Next" backgroundColor="#23c282" color="#fff" class="com.jolicode.pageflow.burgerButton" />
+        <Button id="navBarMenubutton" backgroundColor="#23c282" color="#fff" class="com.jolicode.pageflow.burgerButton" />
     </View>
 </Alloy>

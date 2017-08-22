@@ -47,11 +47,11 @@ function render_post(params){
 		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],top:"0",text:entry.description,p_id:entry.id});
 		var hr = $.UI.create("View",{classes:['hr']});
 		var comment_container = $.UI.create("View",{classes:['wfill','hsize','padding'],p_id:entry.id});
-		var comment_count = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:entry.comment_count+" comments",left:"0",p_id:entry.id});
-		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],right:0,p_id:entry.id});
+		var comment_count = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:entry.comment_count+" comments",left:"0",p_id:entry.id,touchEnabled:false});
+		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],right:0,p_id:entry.id,touchEnabled:false});
 		var comment_img = $.UI.create("ImageView",{image:"/images/comment.png",touchEnabled:false});
 		var comment_button = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:"Comment",touchEnabled:false});
-		var img_container = $.UI.create("View",{classes:['wfill','hsize','padding'],backgroundColor:"#000"});
+		var img_container = $.UI.create("View",{classes:['wfill','hsize','padding'],backgroundColor:"#000",touchEnabled:false});
 		container.add(title_container);
 		container.add(description);
 		container.add(img_container);
@@ -239,7 +239,6 @@ function addPostView(){
 	$.mother_view.add(container);
 	container.addEventListener("click",function(){
 		addPage("post", "Post");
-		refresh({});				
 	});
 	$.scrollview.scrollingEnabled = false;
 	getData();	
@@ -259,10 +258,10 @@ function clickButtons(){
 exports.removeEventListeners = function() {
 	Ti.App.removeEventListener("discussion:refresh",refresh);
 };
-// $.swipeRefresh.addEventListener('refreshing',function(e){
-	// refresh();
-	// e.source.setRefreshing(false);		
-// });
+$.swipeRefresh.addEventListener('refreshing',function(e){
+	refresh({});
+	e.source.setRefreshing(false);		
+});
 
 Ti.App.addEventListener("discussion:refresh",refresh);
 function doLogout(){

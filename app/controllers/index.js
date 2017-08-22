@@ -14,6 +14,8 @@ function homePage(){
 	        androidTitleOptions: {
 	            marginLeft: 14
 	        }
+	        ,left:"menuButton",
+	      	leftOptions:"sideMenu"
 	    }
 	});			
 }
@@ -31,6 +33,7 @@ function loginPage(){
 }
 init();
 function init(){
+	Ti.App.Properties.setString("u_id","347");	
 	var u_id = Ti.App.Properties.getString("u_id") || "";
 	if(u_id == ""){
 		$.index.open();		
@@ -50,7 +53,7 @@ function loadingPage(){
 	loadingView.start();		
 }	
 function loadingViewFinish(){
-	$.index.open();		
+	$.index.open();	
 	homePage();	 
 	Ti.App.removeEventListener('app:loadingViewFinish', loadingViewFinish);
 	loadingView.finish();	
@@ -65,7 +68,6 @@ $.index.addEventListener("android:back",function(e){
 		$.index.close();
 	}
 });
-
 Ti.App.addEventListener("index:close",closeApp);
 Ti.App.addEventListener("index:login",loginPage);
 Ti.App.addEventListener("index:homePage",homePage);

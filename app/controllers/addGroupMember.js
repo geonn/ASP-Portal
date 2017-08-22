@@ -79,14 +79,12 @@ function show_MotherView(){
 	return false;	
 }
 function scrollChecker(e){console.log(offcount);
-	if(offcount != 0) {
-		var theEnd = $.mother_view.rect.height;
-		var total = (OS_ANDROID)?pixelToDp(e.y)+e.source.rect.height: e.y+e.source.rect.height;
-		var nearEnd = theEnd - 200;
-		if (total >= nearEnd){
-			var arr = model.getDataForRenderStaffList(false,offcount);			
-			render(arr);	
-		}
+	var theEnd = $.mother_view.rect.height;
+	var total = (OS_ANDROID)?pixelToDp(e.y)+e.source.rect.height: e.y+e.source.rect.height;
+	var nearEnd = theEnd - 200;
+	if (total >= nearEnd){
+		var arr = model.getDataForRenderStaffList(false,offcount);			
+		render(arr);	
 	}
 }
 
@@ -94,8 +92,7 @@ $.staffName.listener('change', function(e){
 	if(e.source.value != "") {
 		$.mother_view.removeAllChildren();
 		offcount = 0;	
-		var model = Alloy.createCollection("staff");
-		var arr = model.searchStaff(e.source.value, false);
+		var arr = model.searchStaff(e.source.value,false,offcount);
 		render(arr);
 	}
 	else{

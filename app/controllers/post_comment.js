@@ -2,7 +2,7 @@ var args = arguments[0] || {};
 var p_id = args.p_id || null;
 var u_id = Ti.App.Properties.getString('u_id')||undefined;
 var countdown = require("countdown_between_2date.js");
-
+console.log("object comment"+JSON.stringify($.args.comment_count));
 function add_image(){}
 function init() {
 	if(p_id == null){

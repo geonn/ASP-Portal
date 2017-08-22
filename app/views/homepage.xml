@@ -1,33 +1,30 @@
 <Alloy>
     <View id="homepage">
+    	<View id="sideMenu" class="wfill hfill" width="0" left="0" onClick="sideMenu" backgroundColor="#66000000" zIndex="100">
+    		<View class="hfill vert" id="sideMenu1" width="80%" backgroundColor="#fff" left="0" ></View>
+		</View>
   		<View class="wfill hfill vert">
 		    <ScrollableView id="scrollableView" onScrollend="doScroll" top="50" scrollingEnabled="true">    	
 		    	<View class="wfill hfill" id="discussion" bottom="50" backgroundColor='#eff3f6'></View>
 		    	<View class="wfill hfill" id="notification" backgroundColor="#eff3f6"></View>
-		    	<View class="wfill hfill" id="more" backgroundColor="#fff"></View>
+		    	<!-- <View class="wfill hfill" id="more" backgroundColor="#fff"></View> -->
 	    	</ScrollableView>
     	</View>
-    	<View class="wfill" height="50" backgroundColor="#fff" top="0" zIndex="1" id="bottomNavigation" platform="android">
-    		<View class="hsize" width="33%" onClick="scrollto" page="0" left="0" zIndex="2">
+    	<View class="wfill horz" height="50" backgroundColor="#fff" top="0" zIndex="1" id="bottomNavigation" platform="android">
+    		<View class="hfill" width="50%" onClick="scrollto" page="0">
     			<ImageView class="wsize hsize" touchEnabled="false" image="/images/navigationButton/0_green.png"></ImageView>
     		</View>
-    		<View class="wfill hsize" onClick="scrollto" page="1">
+    		<View class="hfill" width="49%" onClick="scrollto" page="1">
     			<ImageView class="wsize hsize" touchEnabled="false" image="/images/navigationButton/1_grey.png"></ImageView>
-    		</View>
-    		<View class="hsize" width="33%" onClick="scrollto" page="2" right="0">
-    			<ImageView class="wsize hsize" touchEnabled="false" image='/images/navigationButton/2_grey.png'></ImageView>
-    		</View>    		    		
+    		</View>	    		
     	</View>
     	<View class="wfill" height="50" backgroundColor="#fff" top="0" zIndex="1" id="bottomNavigation" platform="ios">
-    		<View class="hsize" width="33%" onClick="scrollto" page="0" left="0" zIndex="2">
-    			<ImageView height="30" width="30" touchEnabled="false" image="/images/navigationButton/0_green.png"></ImageView>
+    		<View class="hfill" width="50%" onClick="scrollto" page="0">
+    			<ImageView height="30" width="30"touchEnabled="false" image="/images/navigationButton/0_green.png"></ImageView>
     		</View>
-    		<View class="wfill hsize" onClick="scrollto" page="1">
+    		<View class="hfill" width="49%" onClick="scrollto" page="1">
     			<ImageView height="30" width="30" touchEnabled="false" image="/images/navigationButton/1_grey.png"></ImageView>
-    		</View>
-    		<View class="hsize" width="33%" onClick="scrollto" page="2" right="0">
-    			<ImageView height="30" width="30" touchEnabled="false" image='/images/navigationButton/2_grey.png'></ImageView>
-    		</View>    		    		
+    		</View>		    		
     	</View>
     	<View class="hr" backgroundColor="#EEF3F6" top="50"></View>
     </View>
