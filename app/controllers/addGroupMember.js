@@ -38,7 +38,7 @@ function render(arr){
 		};
 		var container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:0,staff:arr[i],check:false,id:arr[i].id,name:arr[i].name});
 		var small_container = $.UI.create("View",{classes:['hsize','horz'],width:"84%",left:"0",touchEnabled:false});
-		var image = $.UI.create("ImageView",{classes:['padding'],left:5,width:45,height:45,defaultImage:arr[i].img_path,image:"/images/default_profile.png",touchEnabled:false});
+		var image = $.UI.create("ImageView",{classes:['padding'],left:5,width:45,height:45,image:arr[i].img_path,defaultImage:"/images/default_profile.png",touchEnabled:false});
 		var title = $.UI.create("Label",{classes:['wfill','hsize'],text:arr[i].name,touchEnabled:false});
 		var checkBox = $.UI.create("ImageView",{width:20,height:20,right:10,image:unchecker,touchEnabled:false});
 		if(OS_ANDROID){
@@ -75,14 +75,12 @@ function show_MotherView(){
 	return false;	
 }
 function scrollChecker(e){console.log(offcount);
-	if(offcount != 0) {
-		var theEnd = $.mother_view.rect.height;
-		var total = (OS_ANDROID)?pixelToDp(e.y)+e.source.rect.height: e.y+e.source.rect.height;
-		var nearEnd = theEnd - 200;
-		if (total >= nearEnd){
-			var arr = model.getDataForRenderStaffList(false,offcount);			
-			render(arr);	
-		}
+	var theEnd = $.mother_view.rect.height;
+	var total = (OS_ANDROID)?pixelToDp(e.y)+e.source.rect.height: e.y+e.source.rect.height;
+	var nearEnd = theEnd - 200;
+	if (total >= nearEnd){
+		var arr = model.getDataForRenderStaffList(false,offcount);			
+		render(arr);	
 	}
 }
 
@@ -90,8 +88,7 @@ $.staffName.listener('change', function(e){
 	if(e.source.value != "") {
 		$.mother_view.removeAllChildren();
 		offcount = 0;	
-		var model = Alloy.createCollection("staff");
-		var arr = model.searchStaff(e.source.value, false);
+		var arr = model.searchStaff(e.source.value,false,offcount);
 		render(arr);
 	}
 	else{

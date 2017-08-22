@@ -15,6 +15,8 @@ function homePage(){
 	        androidTitleOptions: {
 	            marginLeft: 14
 	        }
+	        ,left:"menuButton",
+	      	leftOptions:"sideMenu"
 	    }
 	});			
 }
@@ -31,7 +33,7 @@ function loginPage(){
 	});			
 }
 init();
-function init(){Ti.App.Properties.setString("u_id", "346");
+function init(){
 	var u_id = Ti.App.Properties.getString("u_id") || "";
 	if(u_id == ""){
 		$.index.open();		
@@ -50,7 +52,7 @@ function loadingPage(){
 	loadingView.start();		
 }	
 function loadingViewFinish(){
-	$.index.open();		
+	$.index.open();	
 	homePage();	 
 	Ti.App.removeEventListener('app:loadingViewFinish', loadingViewFinish);
 	loadingView.finish();	
@@ -67,7 +69,20 @@ $.index.addEventListener("android:back",function(e){
 		Ti.App.fireEvent("scroll_page");
 	}
 });
-
+var networkCheck = true;
+setInterval(function(){
+	if (Titanium.Network.networkType === Titanium.Network.NETWORK_NONE && networkCheck) {
+		networkCheck = false;
+	   COMMON.createAlert("Warning","Now that your phone does not have a network,\n This issue will affect your experience.\n Would you like to leave the portal?",function(){
+	   		$.index.close();
+	   });
+	   setTimeout(function(){
+	   		networkCheck = true;
+	   },100000);
+	} else {
+	   Titanium.API.info(' connection present ');
+	}	
+},10000);
 Ti.App.addEventListener("index:close",closeApp);
 Ti.App.addEventListener("index:login",loginPage);
 Ti.App.addEventListener("index:homePage",homePage);

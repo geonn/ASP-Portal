@@ -4,11 +4,11 @@ var post_group = args.post_group || false;
 var p_id = args.p_id || "";
 var refreshName = args.refreshName || null;
 var num = args.g_id || 0;
+var num1 = 0;
 console.log("num:"+num);
 var u_id = Ti.App.Properties.getString("u_id")||"";
 var my_group = Alloy.createCollection("my_group");
 var group_id = [];
-$.lb_group.setText(args.g_name);
 group_id[0] = "";
 var group_name = [];
 group_name[0] = "Public Post";
@@ -16,11 +16,15 @@ var u_model = Alloy.createCollection("staff");
 var u_res = u_model.getDataById(u_id);
 $.u_img.image = (u_res.img_path!="") ? u_res.img_path : "/images/asp_square_logo.png";
 
-if(edit){
-	setData();
-}else{
-	$.u_name.text = Ti.App.Properties.getString("u_name")||"";
+function init(){
+	if(edit){
+		setData();
+	}else{
+		$.u_name.text = Ti.App.Properties.getString("u_name")||"";
+	}	
+	$.lb_group.text =(post_group)?args.g_name:group_name[0];
 }
+init();
 function setData(){
 	var model = Alloy.createCollection("post");
 	var res = model.getDataById(p_id);
@@ -29,36 +33,40 @@ function setData(){
 	$.u_name.text = res.u_name;
 }
 function mediaOptions(){
-	if($.imageMother.children.length > 2){
-		alert("Limit reached!\nPlease remove image of bottom to add new image.");
-		return;
-	}	
-	var options = ['Camera','Gallery','Cancel'];
-	var opts = {cancel: 2,options:options,destructive: 0,title: 'Options'};	
-	var dialog = Ti.UI.createOptionDialog(opts);	
-	dialog.addEventListener("click",function(e){
-		if(e.index == 0){
-			if (Ti.Media.hasCameraPermissions()) {			
-				openCamera();
-			}else{
-				Ti.Media.requestCameraPermissions(function(e) {
-		            if(e.success){
-		                openCamera();
-		            }else{
-		                alert('You denied permission');
-		            }	
-		        });    			
-			}	
-		}		
-		if(e.index == 1){
-			if(OS_ANDROID){
-				add_image();			
-			}else{
-				showGMImagePicker();
+	if(!edit){
+		if($.imageMother.children.length > 2){
+			alert("Limit reached!\nPlease remove image of bottom to add new image.");
+			return;
+		}	
+		var options = ['Camera','Gallery','Cancel'];
+		var opts = {cancel: 2,options:options,destructive: 0,title: 'Options'};	
+		var dialog = Ti.UI.createOptionDialog(opts);	
+		dialog.addEventListener("click",function(e){
+			if(e.index == 0){
+				if (Ti.Media.hasCameraPermissions()) {			
+					openCamera();
+				}else{
+					Ti.Media.requestCameraPermissions(function(e) {
+			            if(e.success){
+			                openCamera();
+			            }else{
+			                alert('You denied permission');
+			            }	
+			        });    			
+				}	
+			}		
+			if(e.index == 1){
+				if(OS_ANDROID){
+					add_image();			
+				}else{
+					showGMImagePicker();
+				}
 			}
-		}
-	});	
-	dialog.show();
+		});	
+		dialog.show();		
+	}else{
+		alert("Edit post cannot change image or add images.");
+	}
 }
 function add_image() {
 	var gallerypicker = require('titutorial.gallerypicker');
@@ -125,7 +133,7 @@ function doSubmit(){
 		doLogout();
 		return;
 	}
-	var title =	(post_group)?args.g_name:group_name[num];
+	var title =	(post_group)?args.g_name:group_name[num1];
 	Alloy.Globals.loading.startLoading("Posting");
 	var url = (edit)?"editPost":"doPost";
 	var params = (edit)?{id:p_id,title:"Public Post",u_id:u_id,description:description,status:1}:{u_id:u_id,g_id:g_id,title:title,description:description,status:1};
@@ -133,7 +141,6 @@ function doSubmit(){
 	API.callByPost({url:url,params:params},{
 	onload:function(responceText){
 		var res = JSON.parse(responceText);
-		console.log("result:"+JSON.stringify(res));
 		var p_id = res.data[0].id;
 		var image_counter = 0;
 		if(res.status != "success"){
@@ -238,6 +245,7 @@ function select_group(e) {
 		dialog.addEventListener("click", function(e) {
 			if(e.index >= 0) {
 				$.lb_group.setText(group_name[e.index]);
+				num1 = e.index;
 				num = group_id[e.index];
 			}
 		}); 	
