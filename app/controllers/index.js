@@ -69,6 +69,20 @@ $.index.addEventListener("android:back",function(e){
 		Ti.App.fireEvent("scroll_page");
 	}
 });
+var networkCheck = true;
+setInterval(function(){
+	if (Titanium.Network.networkType === Titanium.Network.NETWORK_NONE && networkCheck) {
+		networkCheck = false;
+	   COMMON.createAlert("Warning","Now that your phone does not have a network,\n This issue will affect your experience.\n Would you like to leave the portal?",function(){
+	   		$.index.close();
+	   });
+	   setTimeout(function(){
+	   		networkCheck = true;
+	   },100000);
+	} else {
+	   Titanium.API.info(' connection present ');
+	}	
+},10000);
 Ti.App.addEventListener("index:close",closeApp);
 Ti.App.addEventListener("index:login",loginPage);
 Ti.App.addEventListener("index:homePage",homePage);
