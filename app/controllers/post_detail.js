@@ -8,6 +8,7 @@ Ti.App.Properties.setString('current_post_id', p_id);
 function init(){
 	var model = Alloy.createCollection("post");
 	var res = model.getDataById(p_id);
+	console.log(res);
 	setData(res);
 }init();
 
