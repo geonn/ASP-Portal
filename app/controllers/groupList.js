@@ -87,6 +87,7 @@ function render_list(e) {
 		});
 		$.group_list.add(view_group);
 	});
+	Alloy.Globals.loading.stopLoading();
 }
 Ti.App.addEventListener("groupList:init",init);
 

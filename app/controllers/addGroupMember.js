@@ -9,6 +9,7 @@ var unchecker = "/images/checkbox_unchecked.png";
 var my_gmodel = Alloy.createCollection("my_group");
 var u_arr = my_gmodel.getU_idByG_id(g_id);
 var model = Alloy.createCollection("staff");
+var arr = model.getDataForRenderStaffList(false,offcount);		
 
 function doLogout(){
 	Alloy.Globals.loading.startLoading("Logout...");	
@@ -20,13 +21,12 @@ function doLogout(){
 }
 function init(){
 	var offcount = 0;	
-	Alloy.Globals.loading.stopLoading();	
+	//Alloy.Globals.loading.stopLoading();	
 	$.myInstance.show('',false);
 	$.scrollview.scrollingEnabled = false;
-	var arr = model.getDataForRenderStaffList(false,offcount);		
 	setTimeout(function(){
 		render(arr);		
-	},2000);
+	},1000);
 }init();
 function render(arr){
 	if(offcount == 0) {
@@ -92,7 +92,7 @@ $.staffName.listener('change', function(e){
 		render(arr);
 	}
 	else{
-		$.scrollview.scrollTo(0,0,[animation=false]);						
+		//$.scrollview.scrollTo(0,0,[animation=false]);						
 		$.mother_view.removeAllChildren();
 		init();
 	}

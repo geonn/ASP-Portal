@@ -21,7 +21,7 @@ function scrollChecker(e){
 	var nearEnd = theEnd - 200;
 	if(total >= nearEnd){
 		getData();
-	}
+	}	
 }
 function render_post(params){	
 	params.forEach(function(entry){
@@ -128,7 +128,7 @@ function render_post(params){
 			addPage("post_detail","Post Detail",{p_id:e.source.p_id});
 		});
 		comment_container.addEventListener("click",function(e){
-			Alloy.Globals.loading.startLoading("Loading...");			
+			//Alloy.Globals.loading.startLoading("Loading...");			
 			addPage("post_comment","Post Comment",{p_id:e.source.p_id,comment_count:e.source.children[0]});
 		});	
 		imgArr=undefined;
@@ -154,18 +154,21 @@ function render_post(params){
 	show_MotherView();	
 }
 function refresh(e){
-	$.scrollview.scrollTo(0,0,[animation=false]);
-	if(buttonsExpanded){
-		clickButtons();
-	}
+	console.log("asdf");
+	//$.scrollview.scrollTo(0,0,[animation=false]);
 	$.mother_view.opacity = 0;	
 	$.myInstance.show('',false);			
 	var firename = e.refreshName || null;
-	//Alloy.Globals.loading.startLoading("Refreshing...");	
 	$.mother_view.removeAllChildren();	
+	get_Data(firename);
+	console.log("asdf");
+}
+function get_Data(firename){
+	console.log("asdf");
 	var checker = Alloy.createCollection('updateChecker'); 
 	var u_id = Ti.App.Properties.getString("u_id")||undefined;	
 	var isUpdate = checker.getCheckerById("2",u_id);
+	console.log("asdf");
 	API.callByPost({url:"getPostList",params:{last_updated: isUpdate, u_id: u_id}},{
 		onload:function(responseText){
 			var res = JSON.parse(responseText);
@@ -185,8 +188,9 @@ function refresh(e){
 			checker.updateModule(2,"post",currentDateTime(),u_id);		
 //			Alloy.Globals.loading.stopLoading();			
 		}
-	});
+	});	
 }
+
 function postOptions(params){
 	var u_id = Ti.App.Properties.getString("u_id")||"";
 	var options = (u_id == params.u_id)?['Edit','Delete','Cancel']:['Favourite','Report','Cancel'];
@@ -205,7 +209,7 @@ function postOptions(params){
 }
 function deletePost(p_id,p_index){
 	COMMON.createAlert("Warning","Are you sure want to delete this post?",function(e){
-		$.scrollview.scrollTo(0,0,[animation=false]);
+		//$.scrollview.scrollTo(0,0,[animation=false]);
 		Alloy.Globals.loading.startLoading("Posting");		
 		API.callByPost({url:"deletePost",params:{id:p_id,status:2}},{
 			onload:function(responceText){
@@ -231,9 +235,9 @@ function show_MotherView(){
 }
 function addPostView(){
 	console.log("add Post");
-	var container = $.UI.create("View",{classes:['horz','wfill','hsize','padding'],top:1,left:"0",right:"0",backgroundColor:"#fff"});
-	var	image = $.UI.create("ImageView",{classes:['padding'],width:"45",height:"45",image:"/images/asp_square_logo.png"});
-	var title = $.UI.create("Label",{classes:['hsize','h4'], width:"auto",text:"Posting something..."});
+	var container = $.UI.create("View",{classes:['horz','wfill','toucha3a3a3','hsize','padding'],top:1,left:"0",right:"0",backgroundColor:"#fff"});
+	var	image = $.UI.create("ImageView",{classes:['padding'],width:"45",height:"45",image:"/images/asp_square_logo.png",touchEnabled:false});
+	var title = $.UI.create("Label",{classes:['hsize','h4'], width:"auto",text:"Posting something...",touchEnabled:false});
 	container.add(image);
 	container.add(title);
 	$.mother_view.add(container);

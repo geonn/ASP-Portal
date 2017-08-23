@@ -19,34 +19,15 @@ if(OS_ANDROID){
 $.img_view.setHeight(cell_width);
 
 function init(){
-	$.scrollView.scrollTo(0,0,[animation=false]);	
-	Alloy.Globals.loading.startLoading("Loading...");
+	Alloy.Globals.loading.stopLoading();
+	//$.scrollView.scrollTo(0,0,[animation=false]);	
+	$.mother_view.opacity = 0;	
+	$.myInstance.show('',false);	
 	$.group_img.setImage(arr[0].image);
 	$.group_name.setText(arr[0].name);
 	g_name = arr[0].name;
 	$.mother_view.removeAllChildren();	
 	addPostView();	
-	var checker = Alloy.createCollection('updateChecker');
-	var isUpdate = checker.getCheckerById("2");
-	API.callByPost({url:"getPostList",params:{g_id: args.g_id, last_updated: isUpdate.updated}},{
-		onload:function(responseText){
-			var res = JSON.parse(responseText);
-			var arr = res.data || null;
-			var model = Alloy.createCollection("post");
-			model.saveArray(arr);
-			if(res.images != undefined){
-				i_model.saveArray(res.images);	
-			}
-			model = null;
-			arr = null;
-			res =null;
-			Alloy.Globals.loading.stopLoading();
-			var model_p = Alloy.createCollection("post");
-			var res = model_p.getData(false,offset,args.g_id);	
-			model_p = null;
-			render_post(res);console.log(JSON.stringify(res));
-		}
-	});
 }
 init();	
 
@@ -139,7 +120,7 @@ function render_post(params){
 			addPage("post_detail","Post Detail",{p_id:e.source.p_id});
 		});
 		comment_container.addEventListener("click",function(e){
-			Alloy.Globals.loading.startLoading("Loading...");
+		//	Alloy.Globals.loading.startLoading("Loading...");
 			addPage("post_comment","Post Comment",{p_id:e.source.p_id,comment_count:e.source.children[0]});
 		});	
 		imgArr=undefined;
@@ -161,7 +142,8 @@ function render_post(params){
 		img_container=undefined;
 		post_index++;	
 	});
-	Alloy.Globals.loading.stopLoading();
+	$.mother_view.opacity = 1;		
+	$.myInstance.hide();
 }
 
 function scrollChecker(e){
@@ -214,23 +196,25 @@ function deletePost(p_id,p_index){
 }
 
 function group_info(){
-	$.grandmother.add(Alloy.createController("groupInfo",{motherView:$.args.motherView,childView:$.args.childView,mother:$.grandmother,g_id:g_id,arr:arr[0],GroupImg:$.group_img,outsideImg:$.args.outsideimg}).getView());		
+	setTimeout(function(){
+		$.grandmother.add(Alloy.createController("groupInfo",{motherView:$.args.motherView,childView:$.args.childView,mother:$.grandmother,g_id:g_id,arr:arr[0],GroupImg:$.group_img,outsideImg:$.args.outsideimg}).getView());			
+	},300);
 }
-function addMember(){
-	Alloy.Globals.loading.startLoading("Loading...");				
+function addMember(){			
 	addPage("groupMemberView","Group Member",{g_id:g_id});	
 }
 function addPostView(){
 	console.log("add Post");
-	var container = $.UI.create("View",{classes:['horz','wfill','hsize','padding'],top:10,left:"0",right:"0",backgroundColor:"#fff"});
-	var	image = $.UI.create("ImageView",{classes:['padding'],width:"45",height:"45",image:"/images/asp_square_logo.png"});
-	var title = $.UI.create("Label",{classes:['hsize','h4'], width:"auto",text:"Posting something..."});
+	var container = $.UI.create("View",{classes:['horz','wfill','toucha3a3a3','hsize','padding'],top:10,left:"0",right:"0",backgroundColor:"#fff"});
+	var	image = $.UI.create("ImageView",{classes:['padding'],width:"45",height:"45",image:"/images/asp_square_logo.png",touchEnabled:false});
+	var title = $.UI.create("Label",{classes:['hsize','h4'], width:"auto",text:"Posting something...",touchEnabled:false});
 	container.add(image);
 	container.add(title);
 	$.mother_view.add(container);
 	container.addEventListener("click",function(){
 		addPage("post", g_name+" Post",{post_group:true,g_id:g_id,g_name:g_name,refreshName:"group_post_init"});
 	});
+	get_Data();
 }
 
 function doleaveGroup(e){
@@ -272,7 +256,31 @@ if (OS_IOS) {
 	    }
 	});
 };
-
+function get_Data(){
+	var checker = Alloy.createCollection('updateChecker');
+	var isUpdate = checker.getCheckerById("2");
+	API.callByPost({url:"getPostList",params:{g_id: args.g_id, last_updated: isUpdate.updated}},{
+		onload:function(responseText){
+			var res = JSON.parse(responseText);
+			var arr = res.data || null;
+			var model = Alloy.createCollection("post");
+			model.saveArray(arr);
+			if(res.images != undefined){
+				i_model.saveArray(res.images);	
+			}
+			model = null;
+			arr = null;
+			res =null;
+			Alloy.Globals.loading.stopLoading();
+			var model_p = Alloy.createCollection("post");
+			var res = model_p.getData(false,offset,args.g_id);	
+			model_p = null;
+			setTimeout(function(){
+				render_post(res);				
+			},1000);
+		}
+	});	
+}
 if(OS_ANDROID){
 	$.swipeRefresh.addEventListener('refreshing',function(e){
 		init();

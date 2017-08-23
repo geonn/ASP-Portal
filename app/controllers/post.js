@@ -17,6 +17,7 @@ var u_res = u_model.getDataById(u_id);
 $.u_img.image = (u_res.img_path!="") ? u_res.img_path : "/images/asp_square_logo.png";
 
 function init(){
+	Alloy.Globals.loading.stopLoading();
 	if(edit){
 		setData();
 	}else{

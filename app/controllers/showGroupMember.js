@@ -37,7 +37,7 @@ function render(arr){
 	$.mother_view.removeAllChildren();
 	console.log("group member:"+JSON.stringify(arr));
 	for(var i=0;i<arr.length||show_MotherView();i++){
-		var container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:0,u_id:arr[i].u_id});
+		var container = $.UI.create("View",{classes:['wfill','hsize','padding','toucha3a3a3'],top:0,u_id:arr[i].u_id});
 		var small_container = $.UI.create("View",{classes:['hsize','horz'],width:"84%",left:"0",touchEnabled:false});
 		var image = $.UI.create("ImageView",{classes:['padding'],left:5,width:45,height:45,image:arr[i].u_image,defaultImage:"/images/default_profile.png",touchEnabled:false});
 		var title = $.UI.create("Label",{classes:['wfill','hsize'],text:arr[i].u_name,touchEnabled:false});
@@ -84,7 +84,7 @@ $.staffName.listener('change', function(e){
 		render(arr);
 	}
 	else{
-		$.scrollview.scrollTo(0,0,[animation=false]);						
+		//$.scrollview.scrollTo(0,0,[animation=false]);						
 		$.mother_view.removeAllChildren();
 		init();
 	}

@@ -11,10 +11,10 @@
 	    	</ScrollableView>
     	</View>
     	<View class="wfill horz" height="50" backgroundColor="#fff" top="0" zIndex="1" id="bottomNavigation" platform="android">
-    		<View class="hfill" width="50%" onClick="scrollto" page="0">
+    		<View class="hfill toucha3a3a3" width="50%" onClick="scrollto" page="0">
     			<ImageView class="wsize hsize" touchEnabled="false" image="/images/navigationButton/0_green.png"></ImageView>
     		</View>
-    		<View class="hfill" width="49%" onClick="scrollto" page="1">
+    		<View class="hfill toucha3a3a3" width="49%" onClick="scrollto" page="1">
     			<ImageView class="wsize hsize" touchEnabled="false" image="/images/navigationButton/1_grey.png"></ImageView>
     		</View>	    		
     	</View>
