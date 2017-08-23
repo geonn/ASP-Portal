@@ -1,14 +1,14 @@
 <Alloy>
 	<View id="view" class="wfill hfill">
 		<!-- <Button id="navBarMenubutton" class="com.jolicode.pageflow.burgerButton" /> -->
-		<ScrollView class="hfill wfill contwfill conthsize vert" backgroundColor="#fff" bottom="50">
+		<ScrollView class="hfill wfill contwfill conthsize vert" id="scrollView" backgroundColor="#fff" bottom="50">
 			<View class="vert wfill hsize" top="0" id="list_comment">
 				
 			</View>
 		</ScrollView>
 		<View class="wfill" height="50" bottom="0" zIndex="10">
 			<View class="horz hsize" left="0" width="80%" onClick="add_image">
-				<ImageView class="padding" width="40" height="35" image="/images/blue_pin_logo.png"></ImageView>
+				<ImageView class="padding" width="28" height="28" image="/images/blue_pin_logo.png"></ImageView>
 				<TextField class="wfill h4" height="50" hintText="Write Something..." id="comment" hintTextColor="gray" color="#000"></TextField>
 			</View>
 			<View class="wsize hsize" right="0" onClick="doSubmit">

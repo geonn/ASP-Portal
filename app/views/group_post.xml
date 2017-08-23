@@ -1,32 +1,77 @@
 <Alloy>
 	<View class="wfill hfill" id="grandmother">
-	<ScrollView id="mother_view" class="hfill wfill contwfill conthsize vert" backgroundColor="#EEF3F6">
-		<View class="wfill" id="img_view" backgroundColor="#000">
-			<ImageView class="wfill hsize" image="/images/group_picture_square.png" id="group_img"></ImageView>
-			<View class="wsize hsize vert" left="10" bottom="5" backgroundColor="66787878">
-				<Label class="wsize hsize h3" left="10" right="10" id="group_name" text="Group Name" color="#e5e5e5"></Label>
-				<Label class="wsize hsize h4" left="10" right="10" id="group_member" text="Members" color="#e5e5e5"></Label>
+	<ImageView top="0" image="/images/btn-down.png"></ImageView>
+	<SwipeRefresh module="com.rkam.swiperefreshlayout" id="swipeRefresh" platform="android">		
+	<ScrollView class="hfill wfill contwfill conthsize vert" id="scrollView" backgroundColor="#EEF3F6">
+		<View class="wfill hsize vert">
+			<View class="wfill" id="img_view" backgroundColor="#000">
+				<ImageView class="wfill hsize" defaultImage="/images/group_picture_square.png" id="group_img"></ImageView>
+				<View class="wsize hsize vert" left="10" bottom="5" backgroundColor="66787878">
+					<Label class="wsize hsize h3" left="10" right="10" id="group_name" text="Group Name" color="#e5e5e5"></Label>
+					<Label class="wsize hsize h4" left="10" right="10" id="group_member" text="Members" color="#e5e5e5"></Label>
+				</View>
 			</View>
+			<View class="wfill hsize horz" backgroundColor="#fff">
+				<View class="hsize vert toucha3a3a3" width="33%" onClick="doleaveGroup">
+					<ImageView height="35" width="35" image="/images/g_thick.png" touchEnabled="false"></ImageView>
+					<Label class="wsize hsize h5" text="Joined" color="#668CFC" touchEnabled="false"></Label>
+				</View>
+				<View class="hsize vert toucha3a3a3" width="33%" onClick="addMember">
+					<ImageView height="35" width="35" image="/images/p_add.png" touchEnabled="false"></ImageView>
+					<Label class="wsize hsize h5" text="Add Members" color="#90949C" touchEnabled="false"></Label>
+				</View>
+				<!-- <View class="hsize vert" width="25%" right="25%">
+					<ImageView height="35" width="35" image="/images/p_search.png"></ImageView>
+					<Label class="wsize hsize h5" text="Search" color="#90949C"></Label>
+				</View> -->
+				<View class="hsize vert toucha3a3a3" width="33%" onClick="group_info">
+					<ImageView height="35" width="35" image="/images/p_info.png" touchEnabled="false"></ImageView>
+					<Label class="wsize hsize h5" text="Info" color="#90949C" touchEnabled="false"></Label>
+				</View>
+			</View>
+			<Label top="10" left="10" text="Group Posts"></Label>			
 		</View>
-		<View class="wfill hsize" backgroundColor="#fff">
-			<View class="hsize vert" width="25%" left="0" onClick="doleaveGroup">
-				<ImageView height="35" width="35" image="/images/g_thick.png"></ImageView>
-				<Label class="wsize hsize h5" text="Joined" color="#668CFC"></Label>
-			</View>
-			<View class="hsize vert" width="25%" left="25%" onClick="addMember">
-				<ImageView height="35" width="35" image="/images/p_add.png"></ImageView>
-				<Label class="wsize hsize h5" text="Add Members" color="#90949C"></Label>
-			</View>
-			<View class="hsize vert" width="25%" right="25%">
-				<ImageView height="35" width="35" image="/images/p_search.png"></ImageView>
-				<Label class="wsize hsize h5" text="Search" color="#90949C"></Label>
-			</View>
-			<View class="hsize vert" width="25%" right="0" onClick="group_info">
-				<ImageView height="35" width="35" image="/images/p_info.png"></ImageView>
-				<Label class="wsize hsize h5" text="Info" color="#90949C"></Label>
-			</View>
+		<View class="wfill hsize">
+			<Widget src="nl.fokkezb.loading" name="view" id="myInstance" />			
+			<View class="wfill hsize vert" id="mother_view" top="0">
+				
+			</View>			
 		</View>
-		<Label top="10" left="10" text="Group Posts"></Label>
+	</ScrollView>
+	</SwipeRefresh>	
+	 
+	 <ScrollView class="hfill wfill contwfill conthsize vert" id="scrollView" backgroundColor="#EEF3F6" platform="ios">
+		<View class="wfill hsize vert">
+			<View class="wfill" id="img_view" backgroundColor="#000">
+				<ImageView class="wfill hsize" defaultImage="/images/group_picture_square.png" id="group_img"></ImageView>
+				<View class="wsize hsize vert" left="10" bottom="5" backgroundColor="66787878">
+					<Label class="wsize hsize h3" left="10" right="10" id="group_name" text="Group Name" color="#e5e5e5"></Label>
+					<Label class="wsize hsize h4" left="10" right="10" id="group_member" text="Members" color="#e5e5e5"></Label>
+				</View>
+			</View>
+			<View class="wfill hsize horz" backgroundColor="#fff">
+				<View class="hsize vert" width="33%" onClick="doleaveGroup">
+					<ImageView height="35" width="35" image="/images/g_thick.png"></ImageView>
+					<Label class="wsize hsize h5" text="Joined" color="#668CFC"></Label>
+				</View>
+				<View class="hsize vert" width="33%" onClick="addMember">
+					<ImageView height="35" width="35" image="/images/p_add.png"></ImageView>
+					<Label class="wsize hsize h5" text="Add Members" color="#90949C"></Label>
+				</View>
+				<!-- <View class="hsize vert" width="25%" right="25%">
+					<ImageView height="35" width="35" image="/images/p_search.png"></ImageView>
+					<Label class="wsize hsize h5" text="Search" color="#90949C"></Label>
+				</View> -->
+				<View class="hsize vert" width="33%" onClick="group_info">
+					<ImageView height="35" width="35" image="/images/p_info.png"></ImageView>
+					<Label class="wsize hsize h5" text="Info" color="#90949C"></Label>
+				</View>
+			</View>
+			<Label top="10" left="10" text="Group Posts"></Label>			
+		</View>
+		<View class="wfill hsize vert" id="mother_view">
+			
+		</View>
 	</ScrollView>
 	</View>
 </Alloy>

@@ -21,6 +21,7 @@ var getMyGroupList = "http://"+API_DOMAIN+"/api/getMyGroupList?user="+USER+"&key
 var getGroupListMemberByGid = "http://"+API_DOMAIN+"/api/getGroupListMemberByGid?user="+USER+"&key="+KEY;
 var addGroupMember = "http://"+API_DOMAIN+"/api/addGroupMember?user="+USER+"&key="+KEY;
 var deleteGroupMember = "http://"+API_DOMAIN+"/api/deleteGroupMember?user="+USER+"&key="+KEY;
+var updateGroupPhoto = "http://"+API_DOMAIN+"/api/updateGroupPhoto?user="+USER+"&key="+KEY;
 //API that call in sequence
 var APILoadingList = [
  {url: "getStaffList", type: "api_model", model: "staff", checkId: "1"},

@@ -3,7 +3,7 @@
 		<Widget src="com.jolicode.pageflow" id="pageflow" />
 	</Window>
 	<Window class="container" theme="Theme.AppCompat.NoTitleBar" fullscreen="flase" platform="android">
-		<Widget src="com.jolicode.pageflow" id="pageflow" />
+		<Widget class="wfill hfill" src="com.jolicode.pageflow" id="pageflow"/>
 	</Window>
 </Alloy>
  

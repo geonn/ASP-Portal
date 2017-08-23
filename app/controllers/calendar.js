@@ -24,7 +24,7 @@ function init() {
 	title();
 	days();
 	
-	var hlday = [{title: "crismest", date: "2017/8/25"}, {title: "crismest", date: "2017/8/24"}, {title: "crismest", date: "2017/8/20"}];
+	var hlday = [{title: "Merry Christmas", date: "2017/8/25"}, {title: "Merry Christmas", date: "2017/8/24"}, {title: "Merry Christmas", date: "2017/8/20"}];
 	render_calendar(hlday);
 	
 	var data = [{title: "todo", date: "2017/12/25", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/25", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/25", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/26", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/26", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/26", s_time: "12:55", e_time: "13:55"}];
@@ -36,6 +36,10 @@ function init() {
 		arr[e.date].child.push(e);
 	});
 	todolist(arr);
+	
+	hlday = null;
+	data = null;
+	arr = null;
 }
 
 function title(e) {
@@ -71,6 +75,9 @@ function title(e) {
 	
 	$.title.add(title_month);
 	$.title.add(title_year);
+	
+	title_month = null;
+	title_year = null;
 }
 
 function change_month(e) {
@@ -87,15 +94,24 @@ function change_month(e) {
 			if(cr[0].num != month_num) {
 				month_num = cr[0].num;
 				$.title.setBackgroundColor(title_color[e.index]);
-				var cr = $.add_days.getChildren();
-				$.add_days.remove(cr[0]);
+				var cr2 = $.add_days.getChildren();
+				$.add_days.remove(cr2[0]);
 				var hlday = [{title: "crismest", date: "2017/8/25"}, {title: "crismest", date: "2017/8/24"}, {title: "crismest", date: "2017/8/20"}];
 				render_calendar(hlday);
+				
+				cr2 = null;
+				hlday = null;
 			}
+			
+			cr = null;
 		}
 	});
 	
 	dialog.show();
+	
+	options = null;
+	opts = null;
+	dialog = null;
 }
 
 function change_year(e) {
@@ -117,15 +133,23 @@ function change_year(e) {
 			
 			if(cr[1].text != year_text) {
 				year_text = cr[1].text;
-				var cr = $.add_days.getChildren();
-				$.add_days.remove(cr[0]);
+				var cr2 = $.add_days.getChildren();
+				$.add_days.remove(cr2[0]);
 				var hlday = [{title: "crismest", date: "2017/8/25"}, {title: "crismest", date: "2017/8/24"}, {title: "crismest", date: "2017/8/20"}];
 				render_calendar(hlday);
+				
+				cr2 = null;
+				hlday = null;
 			}
+			cr = null;
 		}
 	});
 	
 	dialog.show();
+	options = null;
+	y_count = null;
+	opts = null;
+	dialog = null;
 }
 
 function days(e) {	
@@ -163,7 +187,6 @@ function render_calendar(e) {
 	
 	var t = true;
 	var first_day;
-	var cr = $.title.getChildren();
 	
 	for(var i = 1; i <= lastDay.getDate(); i++) {
 		var day = new Date(cr[1].text + "/" + cr[0].num + "/" + i);
@@ -180,6 +203,7 @@ function render_calendar(e) {
 				if(chk_date[0] == day.getFullYear() && chk_date[1] == cr[0].num && chk_date[2] == i) {
 					chk_hlday.push(entry);
 				}
+				chk_date = null;
 			});
 		}
 		
@@ -209,9 +233,20 @@ function render_calendar(e) {
 		}
 		
 		list_date.add(label_date);
+		
+		day = null;
+		chk_hlday = null;
+		label_date = null;
 	}
 	
 	$.add_days.add(list_date);
+	
+	cr = null;
+	lastDay = null;
+	list_date = null;
+	t = null;
+	first_day = null;
+	
 }
 
 function selected_date(e) {
@@ -229,6 +264,12 @@ function selected_date(e) {
 	change_color = e.text + day.getDay();
 	
 	addPage("todolist", e.date, {u_id:u_id, date:e.date, holiday:e.holiday});
+	
+	cr_view = null;
+	cr_lb = null;
+	cl = null;
+	t = null;
+	day = null;
 }
 
 function todolist(e) {
@@ -308,6 +349,8 @@ function todolist(e) {
 			e_time = null;
 			date = null;
 		});
+		
+		date = null;
 	}
 }
 
@@ -319,6 +362,8 @@ function detail(e) {
 			ok: "ok"
 		});
 		alert.show();
+		
+		alert = null;
 	}
 }
 

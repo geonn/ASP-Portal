@@ -1,11 +1,15 @@
 "#navBarMenubutton": {
-    backgroundImage: ''
+    backgroundImage: '/images/hamburger.png'
 }
 "#navBarMenubutton[platform=android]": {
-    width: 48,
-    height: 48,
+    width: 24,
+    height: 20,
 }
 "#navBarMenubutton[platform=ios]": {
-    width: 44,
-    height: 44,
+    width: 20,
+    height: 16,
+}
+"#view":{
+	width:50,
+	height:Ti.UI.FILL
 }

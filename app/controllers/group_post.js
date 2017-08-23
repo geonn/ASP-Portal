@@ -1,9 +1,8 @@
 var args = arguments[0] || {};//args.g_id
 var model = Alloy.createCollection("groups");
 var g_id = args.g_id || undefined;
-var usermodel = Alloy.createCollection("staff");
+var g_name;
 var arr = model.getData(args.g_id);
-var creatordata = usermodel.getSmallDataById(arr[0].u_id);
 var cell_width;
 var pwidth = Titanium.Platform.displayCaps.platformWidth;
 var i_model = Alloy.createCollection("images_table");
@@ -20,31 +19,15 @@ if(OS_ANDROID){
 $.img_view.setHeight(cell_width);
 
 function init(){
-	Alloy.Globals.loading.startLoading("Loading...");
+	Alloy.Globals.loading.stopLoading();
+	//$.scrollView.scrollTo(0,0,[animation=false]);	
+	$.mother_view.opacity = 0;	
+	$.myInstance.show('',false);	
 	$.group_img.setImage(arr[0].image);
 	$.group_name.setText(arr[0].name);
-	addPostView();
-	var checker = Alloy.createCollection('updateChecker');
-	var isUpdate = checker.getCheckerById("2");
-	API.callByPost({url:"getPostList",params:{g_id: args.g_id, last_updated: isUpdate.updated}},{
-		onload:function(responseText){
-			var res = JSON.parse(responseText);
-			var arr = res.data || null;
-			var model = Alloy.createCollection("post");
-			model.saveArray(arr);
-			if(res.images != undefined){
-				i_model.saveArray(res.images);	
-			}
-			model = null;
-			arr = null;
-			res =null;
-			Alloy.Globals.loading.stopLoading();
-			var model_p = Alloy.createCollection("post");
-			var res = model_p.getData(false,offset,args.g_id);	
-			model_p = null;
-			render_post(res);console.log(JSON.stringify(res));
-		}
-	});
+	g_name = arr[0].name;
+	$.mother_view.removeAllChildren();	
+	addPostView();	
 }
 init();	
 
@@ -61,12 +44,12 @@ function render_post(params){
 		var more = $.UI.create("ImageView",{right:"0",top:"0",image:'/images/btn-down.png',touchEnabled:false});
 		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],top:"0",text:entry.description,p_id:entry.id});
 		var hr = $.UI.create("View",{classes:['hr']});
-		var comment_container = $.UI.create("View",{classes:['wfill','hsize','padding']});
+		var comment_container = $.UI.create("View",{classes:['wfill','hsize','padding'],p_id:entry.id});
 		var comment_count = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:entry.comment_count+" comments",left:"0",p_id:entry.id});
 		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],right:0,p_id:entry.id});
 		var comment_img = $.UI.create("ImageView",{image:"/images/comment.png",touchEnabled:false});
 		var comment_button = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:"Comment",touchEnabled:false});
-		var img_container = $.UI.create("View",{classes:['wfill','hsize','padding'],backgroundColor:"#000"});
+		var img_container = $.UI.create("View",{classes:['wfill','hsize','padding'],backgroundColor:"#000", touchEnabled: false});
 		container.add(title_container);
 		container.add(description);
 		container.add(img_container);
@@ -80,15 +63,16 @@ function render_post(params){
 			imgcount_container.add(img_icon);
 			imgArr.forEach(function(entry1){
 				var small_image_container = $.UI.create("View",{classes:['wfill','hsize']});
-				var image = $.UI.create("ImageView",{classes:['wfill','hsize'], defaultImage: "/images/loading.png",image:entry1.img_300thumb,imageBig:entry1.img_path});		
+				//var image = $.UI.create("ImageView",{classes:['wfill','hsize'], defaultImage: "/images/loading.png",image:entry1.img_300thumb,imageBig:entry1.img_path});		
+				var image = $.UI.create("ImageView",{classes:['wfill','hsize'],image:entry1.img_path, defaultImage: "/images/loading.png"});
 				small_image_container.add(image);
 				image_container.addView(small_image_container);		
-				image.addEventListener("click",function(e){
-					try {
-						addPage("zoomView","Image Preview",{img_path:e.source.imageBig});
-					}catch(e) {
-						//
-					}
+				image.addEventListener("click",function(e){	
+					//try {
+						addPage("zoomView","Image Preview",{img_path:e.source.image});
+					// }catch(e) {
+						// //
+					// }
 				});
 			});
 			image_container.addEventListener("scrollend",function(e){
@@ -135,13 +119,9 @@ function render_post(params){
 		time.addEventListener("click",function(e){
 			addPage("post_detail","Post Detail",{p_id:e.source.p_id});
 		});
-		comment_count.addEventListener("click",function(e){
-			Alloy.Globals.loading.startLoading("Loading...");			
-			addPage("post_comment","Post Comment",{p_id:e.source.p_id});
-		});	
-		comment_button_container.addEventListener("click",function(e){
-			Alloy.Globals.loading.startLoading("Loading...");			
-			addPage("post_comment","Post Comment",{p_id:e.source.p_id});
+		comment_container.addEventListener("click",function(e){
+		//	Alloy.Globals.loading.startLoading("Loading...");
+			addPage("post_comment","Post Comment",{p_id:e.source.p_id,comment_count:e.source.children[0]});
 		});	
 		imgArr=undefined;
 		container=undefined;
@@ -159,14 +139,15 @@ function render_post(params){
 		comment_button_container=undefined;
 		comment_img=undefined;
 		comment_button=undefined;
-		img_container=undefined;		
+		img_container=undefined;
 		post_index++;	
 	});
-	Alloy.Globals.loading.stopLoading();
+	$.mother_view.opacity = 1;		
+	$.myInstance.hide();
 }
 
 function scrollChecker(e){
-	var theEnd = $.mother_view.rect.height;
+	var theEnd = $.scrollView.rect.height;
 	var total = (OS_ANDROID)?pixelToDp(e.y)+e.source.rect.height: e.y+e.source.rect.height;
 	var nearEnd = theEnd - 200;
 	if (total >= nearEnd){
@@ -192,11 +173,6 @@ function postOptions(params){
 		}
 	});	
 	dialog.show();
-	u_id = undefined;
-	options = undefined;	
-	checking = undefined;
-	opts = undefined;
-	dialog = undefined;
 }
 
 function deletePost(p_id,p_index){
@@ -209,7 +185,7 @@ function deletePost(p_id,p_index){
 					Alloy.Globals.loading.stopLoading();							
 					alert("Something wrong right now please try again later.");
 				}else{
-					refresh({});			
+					init();			
 					Alloy.Globals.loading.stopLoading();		
 					alert("Success to delete post.");
 				}
@@ -220,78 +196,27 @@ function deletePost(p_id,p_index){
 }
 
 function group_info(){
-	var model = Alloy.createCollection("my_group");
-	API.callByPost({url:"getGroupListMemberByGid",params:{g_id:g_id}},{
-		onload:function(responseText){
-			var res = JSON.parse(responseText);
-			var data = res.data || {};
-			model.saveArray(data);
-			renderGroupInfo(model.getMemberCountByG_id(g_id));
-		}
-	});
+	setTimeout(function(){
+		$.grandmother.add(Alloy.createController("groupInfo",{motherView:$.args.motherView,childView:$.args.childView,mother:$.grandmother,g_id:g_id,arr:arr[0],GroupImg:$.group_img,outsideImg:$.args.outsideimg}).getView());			
+	},300);
 }
-function addMember(){
-	Alloy.Globals.loading.startLoading("Loading...");				
-	addPage("groupMemberView","Group Member",{g_id:g_id});
+function addMember(){			
+	addPage("groupMemberView","Group Member",{g_id:g_id});	
 }
 function addPostView(){
 	console.log("add Post");
-	var container = $.UI.create("View",{classes:['horz','wfill','hsize','padding'],top:10,left:"0",right:"0",backgroundColor:"#fff"});
-	var	image = $.UI.create("ImageView",{classes:['padding'],width:"45",height:"45",image:"/images/asp_square_logo.png"});
-	var title = $.UI.create("Label",{classes:['hsize','h4'], width:"auto",text:"Posting something..."});
+	var container = $.UI.create("View",{classes:['horz','wfill','toucha3a3a3','hsize','padding'],top:10,left:"0",right:"0",backgroundColor:"#fff"});
+	var	image = $.UI.create("ImageView",{classes:['padding'],width:"45",height:"45",image:"/images/asp_square_logo.png",touchEnabled:false});
+	var title = $.UI.create("Label",{classes:['hsize','h4'], width:"auto",text:"Posting something...",touchEnabled:false});
 	container.add(image);
 	container.add(title);
 	$.mother_view.add(container);
 	container.addEventListener("click",function(){
-		addPage("post", "Post");
+		addPage("post", g_name+" Post",{post_group:true,g_id:g_id,g_name:g_name,refreshName:"group_post_init"});
 	});
+	get_Data();
 }
-function renderGroupInfo(param){
-	console.log("group member:"+JSON.stringify(param));
-	var father = $.UI.create("View",{classes:['wfill','hfill'],backgroundColor:'#B3999999',zIndex:'4'});
-	var info_view = $.UI.create("View",{classes:['vert'],height:cell_width*2.5,width:cell_width*1.8,backgroundColor:'#fff',zIndex:'5'});
-	var title = $.UI.create("Label",{classes:['h4'],textAlign:'center',color:"#fff",height:'50',width:cell_width*1.8,backgroundColor:'#00CB85',top:'0',text:'Group Info'});
-	var scrollView = $.UI.create("ScrollView",{classes:['wfill','vert','contwfill','conthsize'],height:cell_width*2.5-101});
-	var nameContainer = $.UI.create("View",{classes:['wfill','hsize','horz'],top:5});
-	var g_name_member = $.UI.create("View",{classes:['wsise','hsize','vert']});
-	var g_name = (OS_IOS)?$.UI.create("Label",{classes:['wfill','h4'],height:'22',text:arr[0].name,textAlign:'left',top:'5',left:'10',right:'10'}):$.UI.create("Label",{classes:['wfill','h3','hsize'],text:arr[0].name,textAlign:'left',top:'5',left:'10',right:'10',ellipsize:true,wordWrap: false});
-	var g_image = $.UI.create("View",{left:10,borderColor:"#fff",backgroundImage:"/images/camera_icon.png", width:"60",height:"60",borderRadius:"30"});	
-	var creatorContainer = $.UI.create("View",{classes:['wfill','hsize','horz'],left:10});
-	var createdText = $.UI.create("Label",{classes:['wsize','hsize'],text:"Created by "});
-	var creator = $.UI.create("Label",{classes:['wsize','hsize','bold'],text:creatordata.name});
-	var member = $.UI.create("Label",{classes:['wfill','hsize'],text:param.memberCount+" Members",textAlign:'left',top:'10',bottom:10,left:'10'});
-	var ok_button = $.UI.create("Label",{classes:['h3'],textAlign:'center',height:'50',width:cell_width*1.8,backgroundColor:'#fff',bottom:'0',text:'ok'});
-	var hr = $.UI.create("View",{classes: ['hr'],backgroundColor: '#ccc'});
-	var hr1 = $.UI.create("View",{classes: ['hr'],backgroundColor: '#ccc',top:10});
-	var imageChange = $.UI.create("Label",{classes:['wfill','h4','hsize'],text:"Change cover photo",textAlign:'left',top:'10',left:'10',right:'10',ellipsize:true,wordWrap: false});
-	var members = $.UI.create("Label",{classes:['wfill','h4','hsize'],text:"Members",textAlign:'left',top:'10',left:'10',right:'10',ellipsize:true,wordWrap: false});
-	var leaveGroup1 = $.UI.create("Label",{classes:['wfill','h4','hsize'],color:"red",text:"Leave Group",textAlign:'left',top:'10',left:'10',right:'10',ellipsize:true,wordWrap: false});
-	g_name_member.add(g_name);
-	g_name_member.add(member);
-	nameContainer.add(g_image);
-	nameContainer.add(g_name_member);
-	creatorContainer.add(createdText);
-	creatorContainer.add(creator);
-	scrollView.add(nameContainer);
-	scrollView.add(creatorContainer);
-	scrollView.add(hr1);
-	scrollView.add(imageChange);
-	scrollView.add(members);
-	scrollView.add(leaveGroup1);
-	info_view.add(title);
-	info_view.add(scrollView);
-	info_view.add(hr);
-	info_view.add(ok_button);
-	father.add(info_view);
-	ok_button.addEventListener("click",function(e){
-		$.grandmother.remove(father);
-	});
-	members.addEventListener("click",function(){
-		addPage("showGroupMember",arr[0].name+" Members",{g_id:g_id});
-	});
-	leaveGroup1.addEventListener("click",doleaveGroup);
-	$.grandmother.add(father);	
-}
+
 function doleaveGroup(e){
 	COMMON.createAlert("Warning","Are you sure want to leave this group?",function(e){
 		if(u_id == undefined){
@@ -316,3 +241,50 @@ function doleaveGroup(e){
 		});
 	});	
 }
+exports.removeEventListeners = function() {
+	Ti.App.removeEventListener("group_post_init",init);
+};
+Ti.App.addEventListener("group_post_init",init);
+
+if (OS_IOS) {
+	var refreshing = false;
+	$.scrollView.addEventListener("scroll", function(e){
+		if (e.y <= 0-(cell_width*0.5) && !refreshing) {
+			refreshing = true;
+			init();
+			refreshing = false;
+	    }
+	});
+};
+function get_Data(){
+	var checker = Alloy.createCollection('updateChecker');
+	var isUpdate = checker.getCheckerById("2");
+	API.callByPost({url:"getPostList",params:{g_id: args.g_id, last_updated: isUpdate.updated}},{
+		onload:function(responseText){
+			var res = JSON.parse(responseText);
+			var arr = res.data || null;
+			var model = Alloy.createCollection("post");
+			model.saveArray(arr);
+			if(res.images != undefined){
+				i_model.saveArray(res.images);	
+			}
+			model = null;
+			arr = null;
+			res =null;
+			Alloy.Globals.loading.stopLoading();
+			var model_p = Alloy.createCollection("post");
+			var res = model_p.getData(false,offset,args.g_id);	
+			model_p = null;
+			setTimeout(function(){
+				render_post(res);				
+			},1000);
+		}
+	});	
+}
+if(OS_ANDROID){
+	$.swipeRefresh.addEventListener('refreshing',function(e){
+		init();
+		e.source.setRefreshing(false);		
+	});	
+}
+

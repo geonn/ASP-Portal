@@ -1,10 +1,10 @@
 <Alloy>
 	<View class="wfill hfill">
 		<View class="wfill horz" height="50" top="0" backgroundColor="#fff" zIndex="10" id="groupNavigation">
-			<View class="hfill" width="50%" onClick="scrollto" page="0">
+			<View class="hfill toucha3a3a3" width="50%" onClick="scrollto" page="0">
 				<Label class="wsize hsize normal_font" touchEnabled="false" color="#23c282" text="Your Groups"></Label>			
 			</View>
-			<View class="hfill" width="49%" onClick="scrollto" page="1">			
+			<View class="hfill toucha3a3a3" width="49%" onClick="scrollto" page="1">			
 				<Label class="wsize hsize normal_font" touchEnabled="false" color="#E1E1E1" text="Create Groups"></Label>	
 			</View>    		
 		</View> 

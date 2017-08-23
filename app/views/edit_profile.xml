@@ -9,9 +9,9 @@
 			</View>
 			<View class="hr" top="10" right="10" left="10"></View>
 			<View class="wfill horz" height="33">
-				<Label class="h4" left="10" top="10" text="Name:" color="#000"></Label>
-				<TextField class="wfill hsize h4" right="10" top="10" textAlign="right" id="name" color="#696e76" platform="ios"/>
-				<TextField class="wfill hsize h4" right="10" bottom="-11" textAlign="right" id="name" color="#696e76" platform="android"/>
+				<Label class="wsize hsize h4" left="10" top="10" text="Name:" color="#000"></Label>
+				<TextField class="wsize hsize h4" right="10" top="10" textAlign="right" id="name" color="#696e76" platform="ios"/>
+				<TextField class="wsize hsize h4" right="10" bottom="-11" textAlign="right" id="name" color="#696e76" platform="android"/>
 			</View>
 			<View class="hr" top="10" right="10" left="10"></View>
 			<View class="wfill" height="33">

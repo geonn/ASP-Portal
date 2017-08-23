@@ -1,9 +1,11 @@
 init();
+var widthAnimate1 = Ti.UI.createAnimation({duration:200,width:"100%"});
+var widthAnimate2 = Ti.UI.createAnimation({duration:200,width:0});
 function init(){
 	Alloy.Globals.pageFlow.stopLoading();		
 	$.discussion.add(Alloy.createController("discussion").getView());
 	$.notification.add(Alloy.createController('notification').getView());
-	$.more.add(Alloy.createController("more").getView());
+	$.sideMenu1.add(Alloy.createController("more").getView());
 }
 
 function scrollImage(page){
@@ -15,10 +17,28 @@ function scrollImage(page){
 	}
 }
 function scrollto(e){
-	$.scrollableView.scrollToView(e.source.page);
-	scrollImage(e.source.page);	
+	var page = e.source.page || 0;
+	$.scrollableView.scrollToView(page);
+	scrollImage(page);
+	Ti.App.Properties.setString("current_page", page);
 }
+Ti.App.addEventListener("scroll_page", scrollto);
 function doScroll(e){
 	scrollImage(e.currentPage);
 }	
 
+var sideExpaned = false;
+function sideMenu(){
+	if(sideExpaned){
+		$.sideMenu.animate(widthAnimate2);
+	}
+	else{
+		$.sideMenu.animate(widthAnimate1);
+	}
+	sideExpaned = !sideExpaned;			
+}
+exports.removeEventListeners = function() {
+	Ti.App.removeEventListener("sideMenu",sideMenu);
+	Ti.App.removeEventListener("scroll_page", scrollto);
+};
+Ti.App.addEventListener("sideMenu",sideMenu);

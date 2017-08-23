@@ -28,7 +28,7 @@ function init(){
 	}else{
 		female_chkbox();
 	}
-}
+} 
 
 init();
 
@@ -38,6 +38,7 @@ function doSubmit(){
 	var name = $.name.getValue();
 	var mobile = $.mobile.getValue();
 	var position = $.position.getValue();
+	var empno = Ti.App.Properties.getString("empno")||"";
 	if(name == ""){
 		alert("Name cannot be blank!");
 	}else if(mobile == ""){
@@ -45,7 +46,7 @@ function doSubmit(){
 	}else if(position == ""){
 		alert("Position cannot be blank!");
 	}else{
-		var params = {u_id:u_id, name:name, mobile:mobile, gender:gender, position:position};
+		var params = {u_id:u_id,empno:empno,name:name, mobile:mobile, gender:gender, position:position};
 		_.extend(params, {Filedata: blob});	
 		API.callByPost({
 			url: "getEditProfile",
