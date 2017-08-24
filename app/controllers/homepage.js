@@ -30,12 +30,12 @@ function doScroll(e){
 var sideExpaned = false;
 function sideMenu(){
 	if(sideExpaned){
-		$.sideMenu.animate(widthAnimate2);
+		(OS_ANDROID)?$.sideMenu.animate(widthAnimate2):$.sideMenu.setWidth(0);
 	}
 	else{
-		$.sideMenu.animate(widthAnimate1);
+		(OS_ANDROID)?$.sideMenu.animate(widthAnimate1):$.sideMenu.setWidth("100%");
 	}
-	sideExpaned = !sideExpaned;			
+	sideExpaned = !sideExpaned;		
 }
 exports.removeEventListeners = function() {
 	Ti.App.removeEventListener("sideMenu",sideMenu);

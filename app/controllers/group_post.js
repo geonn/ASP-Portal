@@ -15,6 +15,21 @@ if(OS_ANDROID){
 	cell_width = Math.floor((pixelToDp(pwidth) / 2)) - 2;
 }else{
 	cell_width = Math.floor(pwidth / 2) - 2;
+	var control = Ti.UI.createRefreshControl({
+    	tintColor:"#00CB85"
+	});
+	$.scrollView.refreshControl = control;
+	control.addEventListener('refreshstart',function(e){
+	    Ti.API.info('refreshstart');
+	    setTimeout(function(e){
+	        Ti.API.debug('Timeout');
+	        $.scrollView.scrollTo(0,0,true);	
+			setTimeout(function(){
+				init();
+			},500);	        
+	        control.endRefreshing();
+	    }, 1000);
+	});	
 }
 $.img_view.setHeight(cell_width);
 
@@ -22,7 +37,7 @@ function init(){
 	Alloy.Globals.loading.stopLoading();
 	//$.scrollView.scrollTo(0,0,[animation=false]);	
 	$.mother_view.opacity = 0;	
-	$.myInstance.show('',false);	
+	//$.myInstance.show('',false);	
 	$.group_img.setImage(arr[0].image);
 	$.group_name.setText(arr[0].name);
 	g_name = arr[0].name;
@@ -44,7 +59,7 @@ function render_post(params){
 		var more = $.UI.create("ImageView",{right:"0",top:"0",image:'/images/btn-down.png',touchEnabled:false});
 		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],top:"0",text:entry.description,p_id:entry.id});
 		var hr = $.UI.create("View",{classes:['hr']});
-		var comment_container = $.UI.create("View",{classes:['wfill','hsize','padding'],p_id:entry.id});
+		var comment_container = (OS_ANDROID)?$.UI.create("View",{classes:['wfill','hsize','padding'],p_id:entry.id}):$.UI.create("View",{classes:['wfill','hsize'],left:"10",right:"10",p_id:entry.id});
 		var comment_count = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:entry.comment_count+" comments",left:"0",p_id:entry.id});
 		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],right:0,p_id:entry.id});
 		var comment_img = $.UI.create("ImageView",{image:"/images/comment.png",touchEnabled:false});
@@ -143,7 +158,7 @@ function render_post(params){
 		post_index++;	
 	});
 	$.mother_view.opacity = 1;		
-	$.myInstance.hide();
+	//$.myInstance.hide();
 }
 
 function scrollChecker(e){
@@ -207,7 +222,7 @@ function addPostView(){
 	console.log("add Post");
 	var container = $.UI.create("View",{classes:['horz','wfill','toucha3a3a3','hsize','padding'],top:10,left:"0",right:"0",backgroundColor:"#fff"});
 	var	image = $.UI.create("ImageView",{classes:['padding'],width:"45",height:"45",image:"/images/asp_square_logo.png",touchEnabled:false});
-	var title = $.UI.create("Label",{classes:['hsize','h4'], width:"auto",text:"Posting something...",touchEnabled:false});
+	var title = $.UI.create("Label",{classes:['hsize','h4'], width:"auto",text:"Posting something in group...",touchEnabled:false});
 	container.add(image);
 	container.add(title);
 	$.mother_view.add(container);
@@ -246,16 +261,6 @@ exports.removeEventListeners = function() {
 };
 Ti.App.addEventListener("group_post_init",init);
 
-if (OS_IOS) {
-	var refreshing = false;
-	$.scrollView.addEventListener("scroll", function(e){
-		if (e.y <= 0-(cell_width*0.5) && !refreshing) {
-			refreshing = true;
-			init();
-			refreshing = false;
-	    }
-	});
-};
 function get_Data(){
 	var checker = Alloy.createCollection('updateChecker');
 	var isUpdate = checker.getCheckerById("2");

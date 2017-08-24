@@ -18,7 +18,7 @@
     			<ImageView class="wsize hsize" touchEnabled="false" image="/images/navigationButton/1_grey.png"></ImageView>
     		</View>	    		
     	</View>
-    	<View class="wfill" height="50" backgroundColor="#fff" top="0" zIndex="1" id="bottomNavigation" platform="ios">
+    	<View class="wfill horz" height="50" backgroundColor="#fff" top="0" zIndex="1" id="bottomNavigation" platform="ios">
     		<View class="hfill" width="50%" onClick="scrollto" page="0">
     			<ImageView height="30" width="30"touchEnabled="false" image="/images/navigationButton/0_green.png"></ImageView>
     		</View>

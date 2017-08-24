@@ -4,5 +4,9 @@
 		<Widget src="nl.fokkezb.loading" name="view" id="myInstance" />					
 		<View class="wfill hsize vert" id="motherView"></View>
 	</ScrollView>
-	</SwipeRefresh>		
+	</SwipeRefresh>	
+	<ScrollView platform="ios" id="scrollview" class="hfill wfill contwfill conthsize" onScroll="scrollChecker" bubbleParent="false">
+		<Widget src="nl.fokkezb.loading" name="view" id="myInstance" />					
+		<View class="wfill hsize vert" id="motherView"></View>
+	</ScrollView>	
 </Alloy>

@@ -38,9 +38,10 @@ function render(arr){
 	console.log("group member:"+JSON.stringify(arr));
 	for(var i=0;i<arr.length||show_MotherView();i++){
 		var container = $.UI.create("View",{classes:['wfill','hsize','padding','toucha3a3a3'],top:0,u_id:arr[i].u_id});
-		var small_container = $.UI.create("View",{classes:['hsize','horz'],width:"84%",left:"0",touchEnabled:false});
-		var image = $.UI.create("ImageView",{classes:['padding'],left:5,width:45,height:45,image:arr[i].u_image,defaultImage:"/images/default_profile.png",touchEnabled:false});
-		var title = $.UI.create("Label",{classes:['wfill','hsize'],text:arr[i].u_name,touchEnabled:false});
+		var small_container = $.UI.create("View",{height:'65',width:"84%",left:"0",touchEnabled:false});
+		var userImg = (arr[i].u_image != "")?arr[i].u_image:"/images/default_profile.png";
+		var image = $.UI.create("ImageView",{classes:['padding'],left:5,width:45,height:45,image:userImg,touchEnabled:false});
+		var title = $.UI.create("Label",{classes:['wfill','hsize'],left:'60',text:arr[i].u_name,touchEnabled:false});
 		var checkBox = $.UI.create("ImageView",{width:20,height:20,right:10,image:checker,touchEnabled:false});
 		
 		if(OS_ANDROID){

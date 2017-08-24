@@ -2,7 +2,23 @@ var args = arguments[0] || {};
 var data;
 var offcount = 0;
 var u_id = Ti.App.Properties.getString("u_id");
-
+if (OS_IOS) {
+	var control = Ti.UI.createRefreshControl({
+    	tintColor:"#00CB85"
+	});
+	$.scrollview.refreshControl = control;
+	control.addEventListener('refreshstart',function(e){
+	    Ti.API.info('refreshstart');
+	    setTimeout(function(e){
+	        Ti.API.debug('Timeout');
+	        $.scrollview.scrollTo(0,0,true);	
+			setTimeout(function(){
+				init();
+			},500);	        
+	        control.endRefreshing();
+	    }, 1000);
+	});	
+};
 function init(){
 	offcount = 0;
 	$.motherView.removeAllChildren();		

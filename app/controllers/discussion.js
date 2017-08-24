@@ -5,6 +5,23 @@ var post_index = 1;
 var refreshName = args.refreshName||null;
 var i_model = Alloy.createCollection("images_table");
 var countdown = require("countdown_between_2date.js");
+if (OS_IOS) {
+	var control = Ti.UI.createRefreshControl({
+    	tintColor:"#00CB85"
+	});
+	$.scrollview.refreshControl = control;
+	control.addEventListener('refreshstart',function(e){
+	    Ti.API.info('refreshstart');
+	    setTimeout(function(e){
+	        Ti.API.debug('Timeout');
+	        $.scrollview.scrollTo(0,0,true);
+			setTimeout(function(){
+				refresh({});
+			},500);	        
+	        control.endRefreshing();
+	    }, 1000);
+	});	
+};
 function init(){
 	offset = 0;
 	addPostView();
@@ -46,7 +63,7 @@ function render_post(params){
 		var more = $.UI.create("ImageView",{right:"0",top:"0",image:'/images/btn-down.png',touchEnabled:false});
 		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],top:"0",text:entry.description,p_id:entry.id});
 		var hr = $.UI.create("View",{classes:['hr']});
-		var comment_container = $.UI.create("View",{classes:['wfill','hsize','padding'],p_id:entry.id});
+		var comment_container = (OS_IOS)?$.UI.create("View",{classes:['wfill','hsize'],left:"10",right:"10",p_id:entry.id}):$.UI.create("View",{classes:['wfill','hsize','padding'],p_id:entry.id});
 		var comment_count = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:entry.comment_count+" comments",left:"0",p_id:entry.id,touchEnabled:false});
 		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],right:0,p_id:entry.id,touchEnabled:false});
 		var comment_img = $.UI.create("ImageView",{image:"/images/comment.png",touchEnabled:false});

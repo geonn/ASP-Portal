@@ -6,6 +6,21 @@ if(OS_ANDROID){
 	cell_width = Math.floor((pixelToDp(pwidth) / 2));
 }else{
 	cell_width = Math.floor(pwidth / 2);
+	var control = Ti.UI.createRefreshControl({
+    	tintColor:"#00CB85"
+	});
+	$.scrollview.refreshControl = control;
+	control.addEventListener('refreshstart',function(e){
+	    Ti.API.info('refreshstart');
+	    setTimeout(function(e){
+	        Ti.API.debug('Timeout');
+	        $.scrollview.scrollTo(0,0,true);	
+			setTimeout(function(){
+				init();
+			},500);	        
+	        control.endRefreshing();
+	    }, 1000);
+	});	
 }
 
 function init() {

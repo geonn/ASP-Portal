@@ -9,11 +9,25 @@ var u_model = Alloy.createCollection("staff");
 var u_res = u_model.getDataById(u_id);
 var i_model = Alloy.createCollection("images_table");
 var countdown = require("countdown_between_2date.js");
-
 if(OS_ANDROID){
 	cell_width = Math.floor((pixelToDp(pwidth) / 2)) - 2;
 }else{
 	cell_width = Math.floor(pwidth / 2) - 2;
+	var control = Ti.UI.createRefreshControl({
+    	tintColor:"#00CB85"
+	});
+	$.mother_view.refreshControl = control;
+	control.addEventListener('refreshstart',function(e){
+	    Ti.API.info('refreshstart');
+	    setTimeout(function(e){
+	        Ti.API.debug('Timeout');
+	        $.mother_view.scrollTo(0,0,true);	
+			setTimeout(function(){
+				refresh();
+			},500);	        
+	        control.endRefreshing();
+	    }, 1000);
+	});	
 }
 
 var img_blur = mod.createBasicBlurView({
@@ -39,19 +53,13 @@ function pixelToDp(px) {
     return ( parseInt(px) / (Titanium.Platform.displayCaps.dpi / 160));
 }
 
-function init(){	
-	setData(u_res);
-	var p_model = Alloy.createCollection("post");
-	var p_res = p_model.getDataByU_id(false,offset,u_id);
-	u_model = null;
-	p_model = null;
-	render_post(p_res);
-	Alloy.Globals.loading.startLoading("Loading...");	
+function init(){		
 	if (u_res.gender == "m") {
 		$.gender.image = "/images/icon_male.png";
 	}else{
 		$.gender.image = "/images/icon_female.png";
 	};
+	setData(u_res);
 }
 function setData(u_res){
 	$.user_name.setText(u_res.name);
@@ -59,6 +67,12 @@ function setData(u_res){
 	$.user_position.setText(u_res.position||"Not yet Assign");
 	$.user_contact.setText(u_res.mobile||"Not yet Assign");	
 	$.img.image = (u_res.img_path!="")?u_res.img_path:"/images/my_profile_square.png";
+	offset = 0;
+	var p_model = Alloy.createCollection("post");
+	var p_res = p_model.getDataByU_id(false,offset,u_id);
+	u_model = null;
+	p_model = null;
+	render_post(p_res);
 }
 
 function hower_name(){
@@ -80,7 +94,6 @@ function hower_position(){
 	//alert(u_res.position);
 	createMessage("Position",u_res.position);
 }
-
 refresh();
 function refresh(e){
 	if(u_id == null){
@@ -119,7 +132,7 @@ function render_post(params){
 		var more = $.UI.create("ImageView",{right:"0",top:"0",image:'/images/btn-down.png',touchEnabled:false});
 		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],top:"0",text:entry.description,p_id:entry.id});
 		var hr = $.UI.create("View",{classes:['hr']});
-		var comment_container = $.UI.create("View",{classes:['wfill','hsize','padding']});
+		var comment_container = (OS_IOS)?$.UI.create("View",{classes:['wfill','hsize'],left:"10",right:"10"}):$.UI.create("View",{classes:['wfill','hsize','padding']});
 		var comment_count = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:entry.comment_count+" comments",left:"0",p_id:entry.id});
 		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],right:0,p_id:entry.id});
 		var comment_img = $.UI.create("ImageView",{image:"/images/comment.png",p_id:entry.id});
@@ -192,10 +205,27 @@ function render_post(params){
 		comment_button_container.addEventListener("click",function(e){
 			//Alloy.Globals.loading.startLoading("Loading...");			
 			addPage("post_comment","Post Comment",{p_id:e.source.p_id});
-		});	
+		});
+		imgArr=undefined;
+		container=undefined;
+		title_container=undefined;
+		user_img=undefined;
+		title_child_container=undefined;
+		username=undefined;
+		time=undefined;
+		more_container=undefined;
+		more=undefined;
+		description=undefined;
+		hr=undefined;
+		comment_container=undefined;
+		comment_count=undefined;
+		comment_button_container=undefined;
+		comment_img=undefined;
+		comment_button=undefined;
+		img_container=undefined;	
 		post_index++;	
 	});
-	Alloy.Globals.loading.stopLoading();
+	offset += 10;
 }
 function postOptions(params){
 	var u_id = Ti.App.Properties.getString("u_id")||"";
@@ -231,10 +261,12 @@ function deletePost(p_id,p_index){
 		});
 	});
 }
-$.swipeRefresh.addEventListener('refreshing',function(e){
-	refresh();
-	e.source.setRefreshing(false);		
-});
+if (OS_ANDROID) {
+	$.swipeRefresh.addEventListener('refreshing',function(e){
+		refresh();
+		e.source.setRefreshing(false);		
+	});
+};
 function createMessage(t,e){
 	var box = Titanium.UI.createAlertDialog({
 		title: t,
@@ -243,5 +275,20 @@ function createMessage(t,e){
 	box.show();
 };
 
+function scrollChecker(e){
+	var theEnd = $.mother_list.rect.height;
+	var total = (OS_ANDROID)?pixelToDp(e.y)+e.source.rect.height: e.y+e.source.rect.height;
+	var nearEnd = theEnd - 200;
+	if(total >= nearEnd){
+		getData();
+	}
+}
+
+function getData(){
+	var model = Alloy.createCollection("post");
+	var res = model.getDataByU_id(false,offset,u_id);
+	model = null;
+	render_post(res);
+}
 
 Ti.App.addEventListener("my_profile:refresh",refresh);
