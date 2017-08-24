@@ -113,6 +113,7 @@ function render_post(params){
 		title_container.add(title_child_container);
 		$.mother_view.add(container);
 		description.addEventListener("click",function(e){
+			console.log("parent:"+JSON.stringify(e.source.parent.children[4].children[0]));
 			addPage("post_detail","Post Detail",{p_id:e.source.p_id});
 		});
 		more_container.addEventListener("click",function(e){

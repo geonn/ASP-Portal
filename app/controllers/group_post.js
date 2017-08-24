@@ -64,12 +64,12 @@ function render_post(params){
 			imgArr.forEach(function(entry1){
 				var small_image_container = $.UI.create("View",{classes:['wfill','hsize']});
 				//var image = $.UI.create("ImageView",{classes:['wfill','hsize'], defaultImage: "/images/loading.png",image:entry1.img_300thumb,imageBig:entry1.img_path});		
-				var image = $.UI.create("ImageView",{classes:['wfill','hsize'],image:entry1.img_path, defaultImage: "/images/loading.png"});
+				var image = $.UI.create("ImageView",{classes:['wfill','hsize'],image:entry1.img_300thumb,imageBig:entry1.img_path, defaultImage: "/images/loading.png"});
 				small_image_container.add(image);
 				image_container.addView(small_image_container);		
 				image.addEventListener("click",function(e){	
 					//try {
-						addPage("zoomView","Image Preview",{img_path:e.source.image});
+						addPage("zoomView","Image Preview",{img_path:e.source.imageBig});
 					// }catch(e) {
 						// //
 					// }

@@ -23,12 +23,10 @@
 		<View class="wfill vert" height="50" bottom="0" zIndex="99" backgroundColor="#fff">
 			<View class="hr"></View>
 			<View class="wfill hfill" onClick="goComment">
-				<View class="wsize hsize" left="10">
-					<Label class="wsize hsize h5" color="#90949C" text="? comments" id="count_coment"></Label>
-				</View>
-				<View class="wsize hsize horz" right="10">
-					<ImageView image="/images/comment.png"></ImageView>
-					<Label class="wsize hsize h4" color="#90949C" text="comment"></Label>
+				<Label class="wsize hsize h5" left="10" color="#90949C" touchEnabled="false" text="? comments" id="count_coment"></Label>
+				<View class="wsize hsize horz" right="10" touchEnabled="false">
+					<ImageView image="/images/comment.png" touchEnabled="false"></ImageView>
+					<Label class="wsize hsize h4" color="#90949C" touchEnabled="false" text="comment"></Label>
 				</View>
 			</View>
 		</View>	

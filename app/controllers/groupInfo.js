@@ -125,22 +125,24 @@ function add_image() {
 	});
 }
 function showGMImagePicker() {
-	var picker = require('ti.gmimagepicker');		 
-	picker.openPhotoGallery({
-		maxSelectablePhotos: 1,
-		// allowMultiple: false, // default is true
-	    success: function (e) {
-	        Ti.API.error('successaaa: ' + JSON.stringify(e));
-	        console.log("native path:"+JSON.stringify(e));
-	        renderPhotos(e.media);
-	    },
-	    cancel: function (e) {
-	    	Ti.API.error('cancel: ' + JSON.stringify(e));
-	    },
-	    error: function (e) {
-	        Ti.API.error('error: ' + JSON.stringify(e));
-	    }
-	});
+	setTimeout(function(){
+		var picker = require('ti.gmimagepicker');		 
+		picker.openPhotoGallery({
+			maxSelectablePhotos: 1,
+			// allowMultiple: false, // default is true
+		    success: function (e) {
+		        Ti.API.error('successaaa: ' + JSON.stringify(e));
+		        console.log("native path:"+JSON.stringify(e));
+		        renderPhotos(e.media);
+		    },
+		    cancel: function (e) {
+		    	Ti.API.error('cancel: ' + JSON.stringify(e));
+		    },
+		    error: function (e) {
+		        Ti.API.error('error: ' + JSON.stringify(e));
+		    }
+		});		
+	},300);
 }
 function renderPhotos(media) {
     for (var i=0; i < media.length; i++) {
@@ -198,7 +200,9 @@ function changeImage(){
 	},1000);
 }
 function closeView(){
-	$.args.mother.remove($.getView()); 
+	setTimeout(function(){
+		$.args.mother.remove($.getView()); 		
+	},300);
 }
 function showmember(){
 	addPage("showGroupMember",arr.name+" Members",{g_id:g_id});

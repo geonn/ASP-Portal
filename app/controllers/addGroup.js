@@ -176,7 +176,7 @@ function render(){
 	var arr = model.getDataForRenderStaffList(false,offcount);
 	
 	for(var i=0;i<arr.length||show_MotherView();i++){
-		var container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:0,staff:arr[i],check:false,position:arr[i].id});
+		var container = $.UI.create("View",{classes:['wfill','hsize','padding','toucha3a3a3'],top:0,staff:arr[i],check:false,position:arr[i].id});
 		var small_container = $.UI.create("View",{classes:['hsize','horz'],width:"84%",left:"0",touchEnabled:false});
 		var image = $.UI.create("ImageView",{classes:['padding'],left:5,width:45,height:45,image:"/images/default_profile.png",touchEnabled:false});
 		var title = $.UI.create("Label",{classes:['wfill','hsize'],text:arr[i].name,touchEnabled:false});
