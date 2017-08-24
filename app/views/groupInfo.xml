@@ -13,19 +13,25 @@
 				</View>
 				<View id="createdContainer" class="wfill hsize horz" left="10" top="10">
 					<Label id="createdText" class="wsize hsize" text="created by "></Label>
-					<Label id="creator" onClick="showCreator" class="wsize hsize bold"></Label>
+					<Label id="creator" class="toucha3a3a3" onClick="showCreator" class="wsize hsize bold"></Label>
 				</View>
 				<View id="hr1"  backgroundColor="#ccc" class="hr" top="10"></View>
-				<Label id="imageChange" onClick="mediaOptions" class="wfill h4 hsize" text="Change cover photo" textAlign="left" top="10" bottom="10" left="10" right="10" ellipsize="true" wordWrap="false"></Label>
+				<View class="wfill hsize toucha3a3a3" onClick="mediaOptions">
+					<Label id="imageChange" touchEnabled="false" class="wfill h4 hsize" text="Change cover photo" textAlign="left" top="5" bottom="5" left="10" right="10" ellipsize="true" wordWrap="false"></Label>					
+				</View>
 				<View class="hr" left="10" right="10"></View>
-				<Label id="members" onClick="showmember" class="wfill h4 hsize" text="Members" textAlign="left" top="10" bottom="10" left="10" right="10" ellipsize="true" wordWrap="false"></Label>
-				<View class="hr" left="10" bottom="20" right="10"></View>
-				<View class="hr" left="10" top="20" right="10"></View>				
-				<Label id="leaveGroup" onClick="doleaveGroup" class="wfill h4 hsize" text="Leave Group" textAlign="left" color="red" top="10" bottom="10"  left="10" right="10" ellipsize="true" wordWrap="false"></Label>
+				<View class="wfill hsize toucha3a3a3" onClick="showmember">
+					<Label id="members" touchEnabled="false" class="wfill h4 hsize" text="Members" textAlign="left" top="5" bottom="5" left="10" right="10" ellipsize="true" wordWrap="false"></Label>					
+				</View>
+				<View class="hr" left="10" bottom="15" right="10"></View>
+				<View class="hr" left="10" top="17" right="10"></View>	
+				<View class="wfill hsize toucha3a3a3" onClick="doleaveGroup">
+					<Label id="leaveGroup" touchEnabled="false" class="wfill h4 hsize" text="Leave Group" textAlign="left" color="red" top="5" bottom="5"  left="10" right="10" ellipsize="true" wordWrap="false"></Label>					
+				</View>
 				<View class="hr" left="10" right="10"></View>								
 			</ScrollView>	
 			<View id="hr" class="hr" backgroundColor="#ccc"></View>
-			<Label id="ok_button" onClick="closeView" class="h3" textAlign="center" height="50" backgroundColor="#fff" bottom="0" text="Close"></Label>
+			<Label id="ok_button" onClick="closeView" class="wfill toucha3a3a3 h3" textAlign="center" height="50" backgroundColor="#fff" bottom="0" text="Close"></Label>
 		</View>
 	</View>
 </Alloy>

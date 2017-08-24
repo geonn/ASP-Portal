@@ -36,7 +36,7 @@ function render(arr){
 		if(!u_arr.every(function(bo){return bo!= arr[i].id;})){
 			continue;
 		};
-		var container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:0,staff:arr[i],check:false,id:arr[i].id,name:arr[i].name});
+		var container = $.UI.create("View",{classes:['wfill','hsize','padding','toucha3a3a3'],top:0,staff:arr[i],check:false,id:arr[i].id,name:arr[i].name});
 		var small_container = $.UI.create("View",{height:'65',width:"84%",left:"0",touchEnabled:false});
 		var userImg = (arr[i].img_path != "")?arr[i].img_path:"/images/default_profile.png";
 		var image = $.UI.create("ImageView",{classes:['padding'],left:5,width:45,height:45,image:userImg,touchEnabled:false});
