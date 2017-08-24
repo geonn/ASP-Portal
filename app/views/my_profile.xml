@@ -1,6 +1,7 @@
 <Alloy>
 	<SwipeRefresh module="com.rkam.swiperefreshlayout" id="swipeRefresh" platform="android" bubbleParent="false">							
-	<ScrollView id="mother_view" onScroll="scrollChecker" class="hfill wfill contwfill conthsize vert" backgroundColor="#EEF3F6">	
+	<ScrollView id="mother_view" onScroll="scrollChecker" class="hfill wfill contwfill conthsize vert" backgroundColor="#EEF3F6">
+		<View class="wfill hsize vert" id="mother_list">	
 		<View class="wfill hsize" backgroundColor="#fff">
 			<View id="testing" class="wfill hsize" zIndex="1"></View>
 			<View id="testing1" class="wfill hsize" backgroundColor="#66787878" zIndex="2"></View>
@@ -41,8 +42,7 @@
 			</View>
 		</View>
 		<Label top="10" left="10" text="Recently Posts"></Label>
-		<View class="wfill hsize vert" id="mother_post">
-			
+		<View class="wfill hsize vert" id="mother_post"></View>
 		</View>
 	</ScrollView>
 	</SwipeRefresh>

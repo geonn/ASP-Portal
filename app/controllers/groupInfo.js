@@ -16,6 +16,7 @@ function init(){
 	$.g_image.image = $.args.GroupImg.image;
 	$.info_view.height = cell_width*2.5;
 	$.info_view.width = cell_width*1.8;
+	$.g_name.width = cell_width*1.8-90;
 	$.title.width = cell_width*1.8;
 	$.scrollView.height = cell_width*2.5-101;
 	$.ok_button.width = cell_width*1.8;
