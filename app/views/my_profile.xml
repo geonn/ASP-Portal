@@ -1,4 +1,5 @@
 <Alloy>
+	<SwipeRefresh module="com.rkam.swiperefreshlayout" id="swipeRefresh" platform="android" bubbleParent="false">							
 	<ScrollView id="mother_view" class="hfill wfill contwfill conthsize vert" backgroundColor="#EEF3F6">	
 		<View class="wfill hsize" backgroundColor="#fff">
 			<View id="testing" class="wfill hsize" zIndex="1"></View>
@@ -44,4 +45,5 @@
 			
 		</View>
 	</ScrollView>
+	</SwipeRefresh>
 </Alloy>

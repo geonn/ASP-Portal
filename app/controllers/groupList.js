@@ -9,6 +9,13 @@ if(OS_ANDROID){
 }
 
 function init() {
+	Alloy.Globals.loading.stopLoading();
+	$.group_list.opacity = 0;		
+	$.myInstance.show('',false);	
+	$.group_list.removeAllChildren();	
+	get_Data();			
+}
+function get_Data(){
 	API.callByPost({url:"getMyGroupList",params:{u_id:u_id}},{
 		onload:function(responseText){
 			var res = JSON.parse(responseText);
@@ -25,9 +32,8 @@ function init() {
 			var arr = model.getDataById(u_id);
 			render_list(arr);			
 		}
-	});
+	});	
 }
-
 function render_list(e) {
 	e.forEach(function(data) {
 		var view_group = $.UI.create("View", {
@@ -87,10 +93,16 @@ function render_list(e) {
 		});
 		$.group_list.add(view_group);
 	});
-	Alloy.Globals.loading.stopLoading();
+	$.group_list.opacity = 1;		
+	$.myInstance.hide();	
 }
 Ti.App.addEventListener("groupList:init",init);
-
+if(OS_ANDROID){
+$.swipeRefresh.addEventListener('refreshing',function(e){
+	init();
+	e.source.setRefreshing(false);		
+});	
+}
 function pixelToDp(px) {
 	return ( parseInt(px) / (Titanium.Platform.displayCaps.dpi / 160));
 }

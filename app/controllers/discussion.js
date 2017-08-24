@@ -154,21 +154,16 @@ function render_post(params){
 	show_MotherView();	
 }
 function refresh(e){
-	console.log("asdf");
-	//$.scrollview.scrollTo(0,0,[animation=false]);
 	$.mother_view.opacity = 0;	
 	$.myInstance.show('',false);			
 	var firename = e.refreshName || null;
 	$.mother_view.removeAllChildren();	
 	get_Data(firename);
-	console.log("asdf");
 }
 function get_Data(firename){
-	console.log("asdf");
 	var checker = Alloy.createCollection('updateChecker'); 
 	var u_id = Ti.App.Properties.getString("u_id")||undefined;	
 	var isUpdate = checker.getCheckerById("2",u_id);
-	console.log("asdf");
 	API.callByPost({url:"getPostList",params:{last_updated: isUpdate, u_id: u_id}},{
 		onload:function(responseText){
 			var res = JSON.parse(responseText);
@@ -262,10 +257,12 @@ function clickButtons(){
 exports.removeEventListeners = function() {
 	Ti.App.removeEventListener("discussion:refresh",refresh);
 };
+if(OS_ANDROID){
 $.swipeRefresh.addEventListener('refreshing',function(e){
 	refresh({});
 	e.source.setRefreshing(false);		
-});
+});	
+}
 
 Ti.App.addEventListener("discussion:refresh",refresh);
 function doLogout(){

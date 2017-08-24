@@ -231,7 +231,10 @@ function deletePost(p_id,p_index){
 		});
 	});
 }
-
+$.swipeRefresh.addEventListener('refreshing',function(e){
+	refresh();
+	e.source.setRefreshing(false);		
+});
 function createMessage(t,e){
 	var box = Titanium.UI.createAlertDialog({
 		title: t,

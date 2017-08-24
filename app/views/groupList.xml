@@ -1,8 +1,13 @@
 <Alloy>
 	<View class="wfill hfill">
+	 <SwipeRefresh module="com.rkam.swiperefreshlayout" id="swipeRefresh" platform="android" bubbleParent="false">								
 		<ScrollView id="scrollview" class="vert hfill wfill contwfill conthsize" backgroundColor="#fff">
-			<View class="horz wfill hfill" id="group_list"></View>
+			<View class="wfill hfill">
+				<Widget src="nl.fokkezb.loading" top="10" name="view" id="myInstance" />								
+				<View class="wfill hsize horz" id="group_list" top="0"></View>
+			</View>
 			<View class="wfill" height="70" platform="ios"></View>
 		</ScrollView>
+	</SwipeRefresh>	
 	</View>
 </Alloy>

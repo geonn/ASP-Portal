@@ -60,10 +60,10 @@ function loadingViewFinish(){
 }
 $.index.addEventListener("android:back",function(e){
 	Alloy.Globals.pageFlow.back();
+	Alloy.Globals.loading.stopLoading();
     if(Alloy.Globals.pageFlow.countPages() >1 && OS_ANDROID){
          Ti.UI.Android.hideSoftKeyboard();
     }
-    
 	if(Ti.App.Properties.getString("current_page") == 0 && Alloy.Globals.pageFlow.countPages() == 1){
 		$.index.close();
 	}else if(Alloy.Globals.pageFlow.countPages() == 1) {

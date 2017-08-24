@@ -224,7 +224,8 @@
   touchFeedbackColor:"#666",	
 }
 '.touchRealEmpty':{
-  touchFeedback:true	
+  touchFeedback:true,
+   touchFeedbackColor:"#fff", 
 }
 ,
 ".red": {

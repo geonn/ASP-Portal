@@ -121,6 +121,41 @@ exports.definition = {
                 collection.trigger('sync');
                 return arr;
 			},
+			getDataByU_id:function(u_id,unlimit,offset){
+				var collection = this;
+				var sql_limit = (unlimit)?"":" limit "+offset+",20";				
+				var sql = "select notification.*, staff.img_path as u_image from "+collection.config.adapter.collection_name+" left join staff on notification.from_uid = staff.id where notification.status !=0 and to_uid="+u_id+" order by notification.updated"+sql_limit;
+				
+				db = Ti.Database.open(collection.config.adapter.db_name);
+				if(Ti.Platform.osname != "android"){
+					db.file.setRemoteBackup(false);
+				}
+                var res = db.execute(sql);
+                var arr = [];
+				var count = 0;   
+                while (res.isValidRow()){
+                	var row_count = res.fieldCount;
+                	arr[count] = {
+                		id: res.fieldByName('id'),
+                		u_image:res.fieldByName('u_image'),
+						from_uid: res.fieldByName('from_uid'),
+						to_uid: res.fieldByName('to_uid'),
+						title: res.fieldByName('title'),
+						message:res.fieldByName('message'),
+						post_id: res.fieldByName('post_id'),
+						type: res.fieldByName('type'),
+						status: res.fieldByName('status'),
+						created: res.fieldByName('created'),
+						updated: res.fieldByName('updated'),
+					};
+                	res.next();
+					count++;
+                }
+                res.close();
+                db.close();
+                collection.trigger('sync');
+                return arr;				
+			},
 		});
 
 		return Collection;

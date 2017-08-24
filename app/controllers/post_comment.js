@@ -39,8 +39,8 @@ function init() {
 function render_comment(params){
 	$.list_comment.removeAllChildren();
 	params.forEach(function(entry){
-		var container = $.UI.create("View",{classes:['wfill','hsize','horz'],u_id:entry.u_id,c_id:entry.id,bottom:10,borderRadius:"5",backgroundColor:"#fff"});
-		var profileImg = $.UI.create("ImageView",{classes:['padding'],width:55,height:55,image:(entry.img_path != "")?entry.img_path:"/images/default_profile.png"});
+		var container = $.UI.create("View",{classes:['wfill','toucha3a3a3','hsize','horz'],u_id:entry.u_id,c_id:entry.id,bottom:10});
+		var profileImg = $.UI.create("ImageView",{classes:['padding','touchRealEmpty'],u_id:entry.u_id,width:55,height:55,image:(entry.img_path != "")?entry.img_path:"/images/default_profile.png"});
 		var small_container = $.UI.create("View",{classes:['wfill','hsize','vert'],touchEnabled:false,top:5});
 		var name = $.UI.create("Label",{classes:['wsize','hsize','h4','bold'],left:0,top:0,text:entry.name});
 		var comment = $.UI.create("Label",{classes:['wsize','hsize','h4'],left:0,right:10,touchEnabled:false,text:entry.comment});
@@ -55,6 +55,9 @@ function render_comment(params){
 			if(u_id == e.source.u_id){
 				deleteOptions(true,e.source.c_id);
 			}
+		});
+		profileImg.addEventListener("click",function(e){
+			addPage("my_profile","My Profile",{u_id:e.source.u_id});
 		});
 		container = undefined;
 		profileImg = undefined;

@@ -11,8 +11,8 @@
 				<ImageView class="padding" width="28" height="28" image="/images/blue_pin_logo.png"></ImageView>
 				<TextField class="wfill h4" height="50" hintText="Write Something..." id="comment" hintTextColor="gray" color="#000"></TextField>
 			</View>
-			<View class="wsize hsize" right="0" onClick="doSubmit">
-				<ImageView class="wsize hsize padding" image="/images/blue_send_logo.png"></ImageView>
+			<View class="wsize hsize touchRealEmpty" backgroundColor="transparent" right="0" onClick="doSubmit">
+				<ImageView touchEnabled="false" class="wsize hsize padding" image="/images/blue_send_logo.png"></ImageView>
 			</View>
 		</View>
 	</View>
