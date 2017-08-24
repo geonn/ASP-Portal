@@ -37,7 +37,7 @@ function init(){
 	Alloy.Globals.loading.stopLoading();
 	//$.scrollView.scrollTo(0,0,[animation=false]);	
 	$.mother_view.opacity = 0;	
-	//$.myInstance.show('',false);	
+	$.myInstance.show('',false);	
 	$.group_img.setImage(arr[0].image);
 	$.group_name.setText(arr[0].name);
 	g_name = arr[0].name;
@@ -158,7 +158,7 @@ function render_post(params){
 		post_index++;	
 	});
 	$.mother_view.opacity = 1;		
-	//$.myInstance.hide();
+	$.myInstance.hide();
 }
 
 function scrollChecker(e){

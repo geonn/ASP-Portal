@@ -4,6 +4,10 @@ var u_id = Ti.App.Properties.getString("u_id")||"";
 
 if(OS_ANDROID){
 	cell_width = Math.floor((pixelToDp(pwidth) / 2));
+$.swipeRefresh.addEventListener('refreshing',function(e){
+	init();
+	e.source.setRefreshing(false);		
+});		
 }else{
 	cell_width = Math.floor(pwidth / 2);
 	var control = Ti.UI.createRefreshControl({
@@ -112,12 +116,6 @@ function render_list(e) {
 	$.myInstance.hide();	
 }
 Ti.App.addEventListener("groupList:init",init);
-if(OS_ANDROID){
-$.swipeRefresh.addEventListener('refreshing',function(e){
-	init();
-	e.source.setRefreshing(false);		
-});	
-}
 function pixelToDp(px) {
 	return ( parseInt(px) / (Titanium.Platform.displayCaps.dpi / 160));
 }

@@ -69,8 +69,11 @@
 			</View>
 			<Label top="10" left="10" text="Group Posts"></Label>			
 		</View>
-		<View class="wfill hsize vert" id="mother_view">
-			
+		<View class="wfill hsize">
+			<Widget src="nl.fokkezb.loading" name="view" id="myInstance" />			
+			<View class="wfill hsize vert" id="mother_view" top="0">
+				
+			</View>			
 		</View>
 	</ScrollView>
 	</View>
