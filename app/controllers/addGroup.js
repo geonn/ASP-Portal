@@ -205,7 +205,7 @@ function show_MotherView(){
 	$.scrollview.scrollingEnabled = true;	
 	return false;	
 }
-function scrollChecker(e){console.log(offcount);
+function scrollChecker(e){
 	if(offcount != 0) {
 		var theEnd = $.mother_view.rect.height;
 		var total = (OS_ANDROID)?pixelToDp(e.y)+e.source.rect.height: e.y+e.source.rect.height;
