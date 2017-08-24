@@ -157,6 +157,7 @@ function render_post(params){
 		img_container=undefined;
 		post_index++;	
 	});
+	offset += 10;
 	$.mother_view.opacity = 1;		
 	//$.myInstance.hide();
 }
@@ -166,7 +167,7 @@ function scrollChecker(e){
 	var total = (OS_ANDROID)?pixelToDp(e.y)+e.source.rect.height: e.y+e.source.rect.height;
 	var nearEnd = theEnd - 200;
 	if (total >= nearEnd){
-		render();
+		get_data_local();
 	}
 	theEnd = undefined;
 	total = undefined;
@@ -277,15 +278,21 @@ function get_Data(){
 			arr = null;
 			res =null;
 			Alloy.Globals.loading.stopLoading();
-			var model_p = Alloy.createCollection("post");
-			var res = model_p.getData(false,offset,args.g_id);	
-			model_p = null;
+			offset = 0;
 			setTimeout(function(){
-				render_post(res);				
+				get_data_local();
 			},1000);
 		}
 	});	
 }
+
+function get_data_local(){
+	var model_p = Alloy.createCollection("post");
+	var res = model_p.getData(false,offset,args.g_id);	
+	model_p = null;
+	render_post(res);
+}
+
 if(OS_ANDROID){
 	$.swipeRefresh.addEventListener('refreshing',function(e){
 		init();

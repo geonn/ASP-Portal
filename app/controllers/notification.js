@@ -2,7 +2,12 @@ var args = arguments[0] || {};
 var data;
 var offcount = 0;
 var u_id = Ti.App.Properties.getString("u_id");
-if (OS_IOS) {
+var countdown = require("countdown_between_2date.js");
+var pwidth = Titanium.Platform.displayCaps.platformWidth;
+if(OS_ANDROID){
+	cell_width = Math.floor((pixelToDp(pwidth) / 2)) - 2;
+}else{
+	cell_width = Math.floor(pwidth / 2) - 2;
 	var control = Ti.UI.createRefreshControl({
     	tintColor:"#00CB85"
 	});
@@ -17,12 +22,16 @@ if (OS_IOS) {
 			},500);	        
 	        control.endRefreshing();
 	    }, 1000);
-	});	
-};
+	});
+}
+
 function init(){
 	offcount = 0;
 	$.motherView.removeAllChildren();		
 	$.motherView.opacity = 0;	
+	if (OS_IOS) {
+		$.motherView.setBottom(50);
+	};
 	$.myInstance.show('',false);	
 	getDataFromServer();
 }
@@ -53,8 +62,12 @@ function render(){
 		var container = $.UI.create("View",{classes:['wfill','hsize','horz','toucha3a3a3'], record: data[i], backgroundColor:"#fff"});
 		var image = $.UI.create("ImageView",{width:50,height:50,classes:['padding'],image:data[i].u_image,defaultImage:"/images/asp_square_logo.png"});
 		var detailContainer = $.UI.create("View",{classes:['wfill','hsize','padding','vert'], touchEnabled: false, left:0});
-		var description = $.UI.create('Label',{classes:['wsize','hsize'],left:10, touchEnabled: false, text: data[i].title});
-		var time = $.UI.create('Label',{classes:['wsize','hsize','h5','grey'], touchEnabled: false, left:10,text: data[i].updated});
+		var description = $.UI.create('Label',{width:cell_width*2-90,height:30,left:10, touchEnabled: false, text: data[i].title});
+		if(OS_ANDROID){
+				description.ellipsize=true;
+				description.wordWrap=false;
+			}
+		var time = $.UI.create('Label',{classes:['wsize','hsize','h5','grey'], touchEnabled: false, left:10,text: countdown.getTimePost(data[i].updated)});
 		detailContainer.add(description);
 		detailContainer.add(time);
 		container.add(image);

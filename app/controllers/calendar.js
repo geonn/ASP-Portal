@@ -21,6 +21,7 @@ function pixelToDp(px) {
 }
 
 function init() {
+	Alloy.Globals.loading.stopLoading();
 	title();
 	days();
 	

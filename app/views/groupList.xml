@@ -10,7 +10,7 @@
 		</ScrollView>
 	</SwipeRefresh>	
 	<ScrollView id="scrollview" class="vert hfill wfill contwfill conthsize" backgroundColor="#fff">
-		<View class="wfill hfill">
+		<View class="wfill hsize">
 			<Widget src="nl.fokkezb.loading" top="10" name="view" id="myInstance" />								
 			<View class="wfill hsize horz" id="group_list" top="0"></View>
 		</View>

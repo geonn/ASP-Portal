@@ -124,7 +124,7 @@ exports.definition = {
 			getDataByU_id:function(u_id,unlimit,offset){
 				var collection = this;
 				var sql_limit = (unlimit)?"":" limit "+offset+",20";				
-				var sql = "select notification.*, staff.img_path as u_image from "+collection.config.adapter.collection_name+" left join staff on notification.from_uid = staff.id where notification.status !=0 and to_uid="+u_id+" order by notification.updated"+sql_limit;
+				var sql = "select notification.*, staff.img_path as u_image from "+collection.config.adapter.collection_name+" left join staff on notification.from_uid = staff.id where notification.status !=0 and to_uid="+u_id+" order by notification.updated DESC"+sql_limit;
 				
 				db = Ti.Database.open(collection.config.adapter.db_name);
 				if(Ti.Platform.osname != "android"){
