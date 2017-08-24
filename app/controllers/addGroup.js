@@ -126,7 +126,7 @@ function showBar(param,position){
 		$.selectedList.setHeight(50);
 		$.addgroup.setHeight(50);
 	};
-	var container = $.UI.create("View",{classes:['small-padding'],height:40,width:40,borderRadius:20,backgroundImage:(param.img_path != undefined)?param.img_path:"/images/default_profile.png",staffId:param.id,position:position,backgroundColor:"#23C282"});
+	var container = $.UI.create("View",{classes:['small-padding'],height:40,width:40,borderRadius:20,backgroundImage:(param.img_path != "")?param.img_path:"/images/default_profile.png",staffId:param.id,position:position});
 	$.selectedList.add(container);
 	
 	container.addEventListener("click",function(e){
