@@ -2,15 +2,15 @@
 	<View class="wfill hfill">
 		<View class="wfill hsize" id="imageGroup_big"></View>
 		<View class="wfill hfill vert" backgroundColor="#eff3f6">
-			<View class="wfill hsize horz" bottom="20" backgroundColor="#fff">
-				<View left="10" borderColor="#fff" backgroundImage="/images/camera_icon.png" width="50" id="imageGroup" height="50" platform="android" borderRadius="25" onClick="add_image"></View>		
-				<View left="10" borderColor="#fff" backgroundImage="/images/camera_icon.png" width="50" id="imageGroup" height="50" platform="ios" borderRadius="25" onClick="showGMImagePicker"></View>
-				<Widget left="10" right="10" class="wfill hsize" src="input-materialdesign" titleHint="Group Name" id="groupname"/>   			
+			<View class="wfill hsize" bottom="20" backgroundColor="#fff">
+				<View top="10" left="10" borderColor="#fff" backgroundImage="/images/camera_icon.png" width="50" id="imageGroup" height="50" platform="android" borderRadius="25" onClick="add_image"></View>		
+				<View top="10" left="10" borderColor="#fff" backgroundImage="/images/camera_icon.png" width="50" id="imageGroup" height="50" platform="ios" borderRadius="25" onClick="showGMImagePicker"></View>
+				<Widget left="70" right="10" class="wfill hsize" src="input-materialdesign" titleHint="Group Name" id="groupname"/>   			
 			</View>
 			<View class="wfill hsize vert" backgroundColor="#fff">
-				<View class="wfill hsize horz">
-					<View left="10" borderColor="#fff" id="zoom" backgroundImage="/images/zoom_tools.png" width="45" height="45" borderRadius="22.5"></View>
-					<Widget left="10" right="10" class="wfill hsize" src="input-materialdesign" titleHint="Staff Name" id="staffName"/>   													
+				<View class="wfill hsize">
+					<View top="10" bottom="10" left="10" borderColor="#fff" id="zoom" backgroundImage="/images/zoom_tools.png" width="45" height="45" borderRadius="22.5"></View>
+					<Widget left="65" right="10" class="wfill hsize" src="input-materialdesign" titleHint="Staff Name" id="staffName"/>   													
 				</View>
 				<View class="hr"></View>
 			</View>
@@ -20,6 +20,6 @@
 			</ScrollView>
 		</View>
 		<ScrollView class="wfill horz" height="0" id="selectedList" contentWidth="auto" contentHeight="Ti.UI.SIZE" borderColor='#eff3f6' zIndex="10" bottom="0" right="50" scrollType="horizontal" backgroundColor="#fff"></ScrollView>
-		<Button width="50" height="50" id="addgroup" onClick="doSubmit" zIndex="10" bottom="0" right="0" textAlign="center" backgroundColor="#23C282" color="#fff" title="Add"></Button>
+		<Button width="50" height="0" id="addgroup" onClick="doSubmit" zIndex="10" bottom="0" right="0" textAlign="center" backgroundColor="#23C282" color="#fff" title="Add"></Button>
 	</View>
 </Alloy>

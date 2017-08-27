@@ -6,8 +6,18 @@ var countdown = require("countdown_between_2date.js");
 Ti.App.Properties.setString('current_post_id', p_id);
 
 function init(){
+	Alloy.Globals.loading.stopLoading();	
 	var model = Alloy.createCollection("post");
+	console.log("P_id:"+p_id);
 	var res = model.getDataById(p_id);
+	if(res == undefined){
+		alert("Post no longer exists!");
+		setTimeout(function(){
+			Alloy.Globals.pageFlow.back();			
+		},1000);
+		return;	
+	}
+	console.log(res);
 	setData(res);
 }init();
 
@@ -96,8 +106,8 @@ function goProfile(){
 	addPage("my_profile","My Profile",{u_id:u_id1});
 }
 
-function goComment(){
-	addPage("post_comment","Post Comment",{p_id:p_id});
+function goComment(e){
+	addPage("post_comment","Post Comment",{p_id:p_id,comment_count:e.source.children[0]});
 }
 
 Ti.App.addEventListener("post_detail:init",init);

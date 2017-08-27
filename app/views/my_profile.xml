@@ -1,5 +1,7 @@
 <Alloy>
-	<ScrollView id="mother_view" class="hfill wfill contwfill conthsize vert" backgroundColor="#EEF3F6">	
+	<SwipeRefresh module="com.rkam.swiperefreshlayout" id="swipeRefresh" platform="android" bubbleParent="false">							
+	<ScrollView id="mother_view" onScroll="scrollChecker" class="hfill wfill contwfill conthsize vert" backgroundColor="#EEF3F6">
+		<View class="wfill hsize vert" id="mother_list">	
 		<View class="wfill hsize" backgroundColor="#fff">
 			<View id="testing" class="wfill hsize" zIndex="1"></View>
 			<View id="testing1" class="wfill hsize" backgroundColor="#66787878" zIndex="2"></View>
@@ -40,8 +42,53 @@
 			</View>
 		</View>
 		<Label top="10" left="10" text="Recently Posts"></Label>
-		<View class="wfill hsize vert" id="mother_post">
-			
+		<View class="wfill hsize vert" id="mother_post"></View>
+		</View>
+	</ScrollView>
+	</SwipeRefresh>
+	<ScrollView platform="ios" onScroll="scrollChecker" id="mother_view" class="hfill wfill contwfill conthsize vert" backgroundColor="#EEF3F6">	
+		<View class="wfill hsize vert" id="mother_list">
+		<View class="wfill hsize" backgroundColor="#fff">
+			<View id="testing" class="wfill hsize" zIndex="1"></View>
+			<View id="testing1" class="wfill hsize" backgroundColor="#66787878" zIndex="2"></View>
+			<View class="hsize" width="50%" left="0" zIndex="3" id="imgv" backgroundColor="#000">
+				<ImageView class="hsize" id="img" image="" backgroundColor="#000"></ImageView>
+			</View>
+			<View class="hsize" width="50%" right="0" zIndex="3">
+				<View class="wsize hsize vert" left="0">
+					<View class="wfill hsize" left="0" onClick="hower_name">
+						<View class="img_padding" height="30" width="30" left="0">
+							<ImageView id="gender" image="/images/icon_female.png"></ImageView>
+						</View>	
+						<Label height="20" color="#fff" left="35" id="user_name" text="" platform="ios"></Label>
+						<Label height="20" color="#fff" left="35" id="user_name" text="" ellipsize="true" wordWrap="false" platform="android"></Label>
+					</View>
+					<View class="wfill hsize" left="0" onClick="hower_email">
+						<View class="img_padding" height="30" width="30" left="0">
+							<ImageView image="/images/icon_email.png"></ImageView>
+						</View>
+						<Label height="20" color="#fff" left="35" id="user_email" text="" platform="ios"></Label>
+						<Label height="20" color="#fff" left="35" id="user_email" text="" ellipsize="true" wordWrap="false" platform="android"></Label>
+					</View>
+					<View class="wfill hsize" left="0" onClick="hower_mobile">
+						<View class="img_padding" height="30" width="30" left="0">
+							<ImageView image="/images/icon_contact.png"></ImageView>
+						</View>
+						<Label height="20" color="#fff" left="35" id="user_contact" text="" platform="ios"></Label>
+						<Label height="20" color="#fff" left="35" id="user_contact" text="" ellipsize="true" wordWrap="false" platform="android"></Label>
+					</View>	
+					<View class="wfill hsize" left="0" onClick="hower_position">
+						<View class="img_padding" height="30" width="30" left="0">
+							<ImageView image="/images/icon_position.png"></ImageView>
+						</View>
+						<Label height="20" color="#fff" left="35" id="user_position" text="" platform="ios"></Label>
+						<Label height="20" color="#fff" left="35" id="user_position" text="" ellipsize="true" wordWrap="false" platform="android"></Label>
+					</View>	
+				</View>
+			</View>
+		</View>
+		<Label top="10" left="10" text="Recently Posts"></Label>
+		<View class="wfill hsize vert" id="mother_post"></View>
 		</View>
 	</ScrollView>
 </Alloy>

@@ -1,6 +1,12 @@
 var args = arguments[0] || {};
 var u_id = args.u_id || null;
 
+function init(){
+	Alloy.Globals.loading.stopLoading();
+	savePw();
+}
+init();
+
 function savePw(){
 	pw1 = $.password1.getValue();
 	pw2 = $.password2.getValue();
@@ -8,7 +14,7 @@ function savePw(){
 	console.log(u_id+": "+pw1+" "+pw2+" "+pw3);
 	
 	if(pw1 == "" || pw2 == "" || pw3 ==""){
-		alert("Please fill in all text field!!!");
+		alert("Please fill out all of this form!!!");
 	}else{
 		var params = {u_id:u_id, current_password:pw1, password:pw2, password2:pw3};
 		API.callByPost({

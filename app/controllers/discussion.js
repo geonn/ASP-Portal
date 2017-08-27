@@ -5,6 +5,23 @@ var post_index = 1;
 var refreshName = args.refreshName||null;
 var i_model = Alloy.createCollection("images_table");
 var countdown = require("countdown_between_2date.js");
+if (OS_IOS) {
+	var control = Ti.UI.createRefreshControl({
+    	tintColor:"#00CB85"
+	});
+	$.scrollview.refreshControl = control;
+	control.addEventListener('refreshstart',function(e){
+	    Ti.API.info('refreshstart');
+	    setTimeout(function(e){
+	        Ti.API.debug('Timeout');
+	        $.scrollview.scrollTo(0,0,true);
+			setTimeout(function(){
+				refresh({});
+			},500);	        
+	        control.endRefreshing();
+	    }, 1000);
+	});	
+};
 function init(){
 	offset = 0;
 	addPostView();
@@ -21,14 +38,14 @@ function scrollChecker(e){
 	var nearEnd = theEnd - 200;
 	if(total >= nearEnd){
 		getData();
-	}
+	}	
 }
 function render_post(params){	
 	params.forEach(function(entry){
 		var imgArr = i_model.getImageByCateandPriId(true,undefined,2,entry.id);
 		var container = $.UI.create("View",{classes:['view_class','vert','padding'],left:"0",right:"0",backgroundColor:"#fff",post_index:post_index});
 		var title_container = $.UI.create('View',{classes:['wfill','horz'],height:80});
-		var user_img = $.UI.create("ImageView",{classes:['padding'],width:55,height:55,image:(entry.u_img!="")?entry.u_img:"/images/my_profile_square.png",u_id:entry.u_id});
+		var user_img = $.UI.create("ImageView",{classes:['padding'],width:55,height:55,image:(entry.u_img!="")?entry.u_img:"/images/my_profile_square.png",u_id:entry.u_id,defaultImage:"/images/asp_square_logo.png"});
 		var title_child_container = $.UI.create("View",{classes:['wfill','hfill','padding'],left:0});
 		var username = $.UI.create("Label",{classes:['wsize','hsize','h4','bold'],text:entry.u_name,left:"0",top:"0",u_id:entry.u_id});
 		//var time_group = $.UI.create("View",{classes:['wsize','hsize','horz'],left:"0",bottom:"0"});
@@ -46,12 +63,12 @@ function render_post(params){
 		var more = $.UI.create("ImageView",{right:"0",top:"0",image:'/images/btn-down.png',touchEnabled:false});
 		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],top:"0",text:entry.description,p_id:entry.id});
 		var hr = $.UI.create("View",{classes:['hr']});
-		var comment_container = $.UI.create("View",{classes:['wfill','hsize','padding'],p_id:entry.id});
+		var comment_container = (OS_IOS)?$.UI.create("View",{classes:['wfill','hsize'],left:"10",right:"10",p_id:entry.id}):$.UI.create("View",{classes:['wfill','hsize','padding'],p_id:entry.id});
 		var comment_count = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:entry.comment_count+" comments",left:"0",p_id:entry.id,touchEnabled:false});
 		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],right:0,p_id:entry.id,touchEnabled:false});
 		var comment_img = $.UI.create("ImageView",{image:"/images/comment.png",touchEnabled:false});
 		var comment_button = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:"Comment",touchEnabled:false});
-		var img_container = $.UI.create("View",{classes:['wfill','hsize','padding'],backgroundColor:"#000",touchEnabled:false});
+		var img_container = $.UI.create("View",{classes:['wfill','hsize','padding'],backgroundColor:"#000"});
 		container.add(title_container);
 		container.add(description);
 		container.add(img_container);
@@ -60,7 +77,7 @@ function render_post(params){
 			var image_container = $.UI.create("ScrollableView",{classes:['wfill'],height:250,top:"0",scrollingEnabled:true});
 			var imgcount_container = (imglength > 1) ? $.UI.create("View",{classes:['wsize','hsize','horz'],backgroundColor:"#99000000",imglength:imglength,zIndex:10,right:10,top:10,borderRadius:"5"}) : $.UI.create("View",{classes:['wsize','hsize'],imglength:imglength,zIndex:10,right:10,top:10,borderRadius:"5"});
 			var imgcount = (imglength > 1) ? $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,right:5,color:"#fff",text:"1/"+imglength,imglength:imglength}) : $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,right:5,imglength:imglength});
-			var img_icon = (imglength > 1) ? $.UI.create("ImageView", {image: "/images/img_icon.png", width:20, height: 17, right: 10}) :  $.UI.create("ImageView", {width:0, height:0});
+			var img_icon = (imglength > 1) ? $.UI.create("ImageView", {image: "/images/img_icon.png", width:20, height:17, right:10}) :  $.UI.create("ImageView", {width:0, height:0});
 			imgcount_container.add(imgcount);
 			imgcount_container.add(img_icon);
 			imgArr.forEach(function(entry1){
@@ -113,6 +130,7 @@ function render_post(params){
 		title_container.add(title_child_container);
 		$.mother_view.add(container);
 		description.addEventListener("click",function(e){
+			console.log("parent:"+JSON.stringify(e.source.parent.children[4].children[0]));
 			addPage("post_detail","Post Detail",{p_id:e.source.p_id});
 		});
 		more_container.addEventListener("click",function(e){
@@ -128,7 +146,7 @@ function render_post(params){
 			addPage("post_detail","Post Detail",{p_id:e.source.p_id});
 		});
 		comment_container.addEventListener("click",function(e){
-			Alloy.Globals.loading.startLoading("Loading...");			
+			//Alloy.Globals.loading.startLoading("Loading...");			
 			addPage("post_comment","Post Comment",{p_id:e.source.p_id,comment_count:e.source.children[0]});
 		});	
 		imgArr=undefined;
@@ -154,15 +172,13 @@ function render_post(params){
 	show_MotherView();	
 }
 function refresh(e){
-	$.scrollview.scrollTo(0,0,[animation=false]);
-	if(buttonsExpanded){
-		clickButtons();
-	}
 	$.mother_view.opacity = 0;	
 	$.myInstance.show('',false);			
 	var firename = e.refreshName || null;
-	//Alloy.Globals.loading.startLoading("Refreshing...");	
 	$.mother_view.removeAllChildren();	
+	get_Data(firename);
+}
+function get_Data(firename){
 	var checker = Alloy.createCollection('updateChecker'); 
 	var u_id = Ti.App.Properties.getString("u_id")||undefined;	
 	var isUpdate = checker.getCheckerById("2",u_id);
@@ -185,8 +201,9 @@ function refresh(e){
 			checker.updateModule(2,"post",currentDateTime(),u_id);		
 //			Alloy.Globals.loading.stopLoading();			
 		}
-	});
+	});	
 }
+
 function postOptions(params){
 	var u_id = Ti.App.Properties.getString("u_id")||"";
 	var options = (u_id == params.u_id)?['Edit','Delete','Cancel']:['Favourite','Report','Cancel'];
@@ -205,7 +222,7 @@ function postOptions(params){
 }
 function deletePost(p_id,p_index){
 	COMMON.createAlert("Warning","Are you sure want to delete this post?",function(e){
-		$.scrollview.scrollTo(0,0,[animation=false]);
+		//$.scrollview.scrollTo(0,0,[animation=false]);
 		Alloy.Globals.loading.startLoading("Posting");		
 		API.callByPost({url:"deletePost",params:{id:p_id,status:2}},{
 			onload:function(responceText){
@@ -231,9 +248,9 @@ function show_MotherView(){
 }
 function addPostView(){
 	console.log("add Post");
-	var container = $.UI.create("View",{classes:['horz','wfill','hsize','padding'],top:1,left:"0",right:"0",backgroundColor:"#fff"});
-	var	image = $.UI.create("ImageView",{classes:['padding'],width:"45",height:"45",image:"/images/asp_square_logo.png"});
-	var title = $.UI.create("Label",{classes:['hsize','h4'], width:"auto",text:"Posting something..."});
+	var container = $.UI.create("View",{classes:['horz','wfill','toucha3a3a3','hsize','padding'],top:1,left:"0",right:"0",backgroundColor:"#fff"});
+	var	image = $.UI.create("ImageView",{classes:['padding'],width:"45",height:"45",image:"/images/asp_square_logo.png",touchEnabled:false});
+	var title = $.UI.create("Label",{classes:['hsize','h4'], width:"auto",text:"Posting something...",touchEnabled:false});
 	container.add(image);
 	container.add(title);
 	$.mother_view.add(container);
@@ -258,10 +275,12 @@ function clickButtons(){
 exports.removeEventListeners = function() {
 	Ti.App.removeEventListener("discussion:refresh",refresh);
 };
+if(OS_ANDROID){
 $.swipeRefresh.addEventListener('refreshing',function(e){
 	refresh({});
 	e.source.setRefreshing(false);		
-});
+});	
+}
 
 Ti.App.addEventListener("discussion:refresh",refresh);
 function doLogout(){

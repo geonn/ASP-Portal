@@ -2,6 +2,7 @@ var args = arguments[0] || {};//u_id date holiday
 var c_bol = true;
 
 function init() {
+	Alloy.Globals.loading.stopLoading();
 	if(args.holiday != "noholiday") {
 		add_list(args.holiday);
 	}

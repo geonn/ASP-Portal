@@ -8,8 +8,8 @@
 				<Label class="h4 bold" top="10" text="" id="email" color="#000" textAlign="center" onClick="showEmail"></Label>
 			</View>
 			<View class="hr" top="10" right="10" left="10"></View>
-			<View class="wfill horz" height="33">
-				<Label class="h4" left="10" top="10" text="Name:" color="#000"></Label>
+			<View class="wfill" height="33">
+				<Label class="wsize hsize h4" left="10" top="10" text="Name:" color="#000" zIndex="9" backgroundColor="#fff"></Label>
 				<TextField class="wfill hsize h4" right="10" top="10" textAlign="right" id="name" color="#696e76" platform="ios"/>
 				<TextField class="wfill hsize h4" right="10" bottom="-11" textAlign="right" id="name" color="#696e76" platform="android"/>
 			</View>
@@ -24,14 +24,14 @@
 				</View>
 			</View>
 			<View class="hr" top="10" right="10" left="10"></View>
-			<View class="wfill horz" height="33">
+			<View class="wfill" height="33">
 				<Label class="h4" left="10" top="10" text="Mobile:" color="#000"></Label>
 				<TextField class="wfill hsize h4" top="10" right="10" textAlign="right" id="mobile" color="#696e76" platform="ios"/>
 				<TextField class="wfill hsize h4" bottom="-11" right="10" textAlign="right" id="mobile" color="#696e76" platform="android"/>
 			</View>
 			<View class="hr" top="10" right="10" left="10"></View>
-			<View class="wfill horz" height="33">
-				<Label class="h4" left="10" top="10" text="Position:" color="#000"></Label>
+			<View class="wfill" height="33">
+				<Label class="h4" left="10" top="10" text="Position:" color="#000" zIndex="9" backgroundColor="#fff"></Label>
 				<TextField class="wfill hsize h4" top="10" right="10" textAlign="right" id="position" color="#696e76" platform="ios"/>
 				<TextField class="wfill hsize h4" bottom="-11" right="10" textAlign="right" id="position" color="#696e76" platform="android"/>
 			</View>

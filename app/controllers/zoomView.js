@@ -5,6 +5,7 @@ var img = args.img_path;
 function init(){
 	//if(OS_ANDROID){
 		$.webview.url = img;
+		Alloy.Globals.loading.stopLoading();
 	// }else{
 		// var Ziv = Ti.UI.createScrollView({
 			// width :Ti.UI.FILL, 

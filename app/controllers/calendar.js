@@ -21,6 +21,7 @@ function pixelToDp(px) {
 }
 
 function init() {
+	Alloy.Globals.loading.stopLoading();
 	title();
 }
 
@@ -348,8 +349,8 @@ function todolist(e) {
 			list_time.add(s_time);
 			list_time.add(to);
 			list_time.add(e_time);
-			$.holidays.add(date);
-			$.holidays.add(parent);
+			//$.holidays.add(date);
+			//$.holidays.add(parent);
 			
 			parent = null;
 			title = null;

@@ -126,7 +126,7 @@ function showBar(param,position){
 		$.selectedList.setHeight(50);
 		$.addgroup.setHeight(50);
 	};
-	var container = $.UI.create("View",{classes:['small-padding'],height:40,width:40,borderRadius:20,backgroundImage:(param.img_path != undefined)?param.img_path:"/images/default_profile.png",staffId:param.id,position:position,backgroundColor:"#23C282"});
+	var container = $.UI.create("View",{classes:['small-padding'],height:40,width:40,borderRadius:20,backgroundImage:(param.img_path != "")?param.img_path:"/images/default_profile.png",staffId:param.id,position:position});
 	$.selectedList.add(container);
 	
 	container.addEventListener("click",function(e){
@@ -176,10 +176,11 @@ function render(){
 	var arr = model.getDataForRenderStaffList(false,offcount);
 	
 	for(var i=0;i<arr.length||show_MotherView();i++){
-		var container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:0,staff:arr[i],check:false,position:arr[i].id});
-		var small_container = $.UI.create("View",{classes:['hsize','horz'],width:"84%",left:"0",touchEnabled:false});
-		var image = $.UI.create("ImageView",{classes:['padding'],left:5,width:45,height:45,image:"/images/default_profile.png",touchEnabled:false});
-		var title = $.UI.create("Label",{classes:['wfill','hsize'],text:arr[i].name,touchEnabled:false});
+		var container = $.UI.create("View",{classes:['wfill','hsize','padding','toucha3a3a3'],top:0,staff:arr[i],check:false,position:arr[i].id});
+		var small_container = $.UI.create("View",{height:'65',width:"84%",left:"0",touchEnabled:false});
+		var userImg = (arr[i].img_path != "")?arr[i].img_path:"/images/default_profile.png";
+		var image = $.UI.create("ImageView",{classes:['padding'],left:5,width:45,height:45,image:userImg,touchEnabled:false});
+		var title = $.UI.create("Label",{classes:['wfill','hsize'],left:'60',text:arr[i].name,touchEnabled:false});
 		var checkBox = $.UI.create("ImageView",{width:20,height:20,right:10,image:unchecker,touchEnabled:false});
 		if(OS_ANDROID){
 			title.ellipsize=true;
@@ -204,7 +205,7 @@ function show_MotherView(){
 	$.scrollview.scrollingEnabled = true;	
 	return false;	
 }
-function scrollChecker(e){console.log(offcount);
+function scrollChecker(e){
 	if(offcount != 0) {
 		var theEnd = $.mother_view.rect.height;
 		var total = (OS_ANDROID)?pixelToDp(e.y)+e.source.rect.height: e.y+e.source.rect.height;
@@ -265,12 +266,12 @@ $.staffName.listener('change', function(e){
 					img = "/images/checkbox_unchecked.png";
 				}
 				if(ii == $.selectedList.getChildren().length - 1 || cdtion) {
-					var container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:0,staff:arr[i],check:boll,position:arr[i].id});
-					var small_container = $.UI.create("View",{classes:['hsize','horz'],width:"84%",left:"0",touchEnabled:false});
+					var container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:0,staff:arr[i],check:false,position:arr[i].id});
+					var small_container = $.UI.create("View",{height:'65',width:"84%",left:"0",touchEnabled:false});
 					var userImg = (arr[i].img_path != "")?arr[i].img_path:"/images/default_profile.png";
 					var image = $.UI.create("ImageView",{classes:['padding'],left:5,width:45,height:45,image:userImg,touchEnabled:false});
-					var title = $.UI.create("Label",{classes:['wfill','hsize'],text:arr[i].name,touchEnabled:false});
-					var checkBox = $.UI.create("ImageView",{width:20,height:20,right:10,image:img,touchEnabled:false});
+					var title = $.UI.create("Label",{classes:['wfill','hsize'],left:'60',text:arr[i].name,touchEnabled:false});
+					var checkBox = $.UI.create("ImageView",{width:20,height:20,right:10,image:unchecker,touchEnabled:false});
 					if(OS_ANDROID){
 						title.ellipsize=true;
 						title.wordWrap=false;
@@ -291,12 +292,12 @@ $.staffName.listener('change', function(e){
 				}
 			}
 			}else{
-				var container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:0,staff:arr[i],check:boll,position:arr[i].id});
-				var small_container = $.UI.create("View",{classes:['hsize','horz'],width:"84%",left:"0",touchEnabled:false});
+				var container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:0,staff:arr[i],check:false,position:arr[i].id});
+				var small_container = $.UI.create("View",{height:'65',width:"84%",left:"0",touchEnabled:false});
 				var userImg = (arr[i].img_path != "")?arr[i].img_path:"/images/default_profile.png";
 				var image = $.UI.create("ImageView",{classes:['padding'],left:5,width:45,height:45,image:userImg,touchEnabled:false});
-				var title = $.UI.create("Label",{classes:['wfill','hsize'],text:arr[i].name,touchEnabled:false});
-				var checkBox = $.UI.create("ImageView",{width:20,height:20,right:10,image:img,touchEnabled:false});
+				var title = $.UI.create("Label",{classes:['wfill','hsize'],left:'60',text:arr[i].name,touchEnabled:false});
+				var checkBox = $.UI.create("ImageView",{width:20,height:20,right:10,image:unchecker,touchEnabled:false});
 				if(OS_ANDROID){
 					title.ellipsize=true;
 					title.wordWrap=false;
@@ -313,5 +314,7 @@ $.staffName.listener('change', function(e){
 				});
 			}
 		}
+	}else{
+		render();
 	}
 });

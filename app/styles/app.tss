@@ -19,7 +19,7 @@
 },
 "Window[platform=android]": {
     windowSoftInputMode: Titanium.UI.Android.SOFT_INPUT_ADJUST_PAN
-}
+},
 ".line":{
 	height: '1',
 	backgroundColor: '#404041',
@@ -85,7 +85,7 @@
 }
 
 '.wfill':{
-	width: Ti.UI.FILL
+	width: Ti.UI.FILL,
 }
 
 '.wsize':{
@@ -214,7 +214,20 @@
 	},
 	color: "#404041"
 },
-
+'.toucha3a3a3':{
+  touchFeedback:true,
+  backgroundColor:'#fff',
+  touchFeedbackColor:"#cccccc"
+},
+'.touchempty':{
+  touchFeedback:true,
+  touchFeedbackColor:"#666",	
+}
+'.touchRealEmpty':{
+  touchFeedback:true,
+   touchFeedbackColor:"#fff", 
+}
+,
 ".red": {
 	color: "#ED1C24"
 },

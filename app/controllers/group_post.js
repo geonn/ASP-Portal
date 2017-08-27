@@ -15,38 +15,34 @@ if(OS_ANDROID){
 	cell_width = Math.floor((pixelToDp(pwidth) / 2)) - 2;
 }else{
 	cell_width = Math.floor(pwidth / 2) - 2;
+	var control = Ti.UI.createRefreshControl({
+    	tintColor:"#00CB85"
+	});
+	$.scrollView.refreshControl = control;
+	control.addEventListener('refreshstart',function(e){
+	    Ti.API.info('refreshstart');
+	    setTimeout(function(e){
+	        Ti.API.debug('Timeout');
+	        $.scrollView.scrollTo(0,0,true);	
+			setTimeout(function(){
+				init();
+			},500);	        
+	        control.endRefreshing();
+	    }, 1000);
+	});	
 }
 $.img_view.setHeight(cell_width);
 
 function init(){
-	$.scrollView.scrollTo(0,0,[animation=false]);	
-	Alloy.Globals.loading.startLoading("Loading...");
+	Alloy.Globals.loading.stopLoading();
+	//$.scrollView.scrollTo(0,0,[animation=false]);	
+	$.mother_view.opacity = 0;	
+	//$.myInstance.show('',false);	
 	$.group_img.setImage(arr[0].image);
 	$.group_name.setText(arr[0].name);
 	g_name = arr[0].name;
 	$.mother_view.removeAllChildren();	
 	addPostView();	
-	var checker = Alloy.createCollection('updateChecker');
-	var isUpdate = checker.getCheckerById("2");
-	API.callByPost({url:"getPostList",params:{g_id: args.g_id, last_updated: isUpdate.updated}},{
-		onload:function(responseText){
-			var res = JSON.parse(responseText);
-			var arr = res.data || null;
-			var model = Alloy.createCollection("post");
-			model.saveArray(arr);
-			if(res.images != undefined){
-				i_model.saveArray(res.images);	
-			}
-			model = null;
-			arr = null;
-			res =null;
-			Alloy.Globals.loading.stopLoading();
-			var model_p = Alloy.createCollection("post");
-			var res = model_p.getData(false,offset,args.g_id);	
-			model_p = null;
-			render_post(res);console.log(JSON.stringify(res));
-		}
-	});
 }
 init();	
 
@@ -55,7 +51,7 @@ function render_post(params){
 		var imgArr = i_model.getImageByCateandPriId(true,undefined,2,entry.id);
 		var container = $.UI.create("View",{classes:['view_class','vert','padding'],left:"0",right:"0",backgroundColor:"#fff",post_index:post_index});
 		var title_container = $.UI.create('View',{classes:['wfill','horz'],height:68});
-		var user_img = $.UI.create("ImageView",{classes:['padding'],width:45,height:45,image:entry.u_img,u_id:entry.u_id});
+		var user_img = $.UI.create("ImageView",{classes:['padding'],width:45,height:45,image:entry.u_img,u_id:entry.u_id,defaultImage:"/images/asp_square_logo.png"});
 		var title_child_container = $.UI.create("View",{classes:['wfill','hfill','padding'],left:0});
 		var username = $.UI.create("Label",{classes:['wsize','hsize','h4','bold'],text:entry.u_name,left:"0",top:"0",u_id:entry.u_id});
 		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:"0",bottom:0,color:"#7CC6FF",text:countdown.getTimePost(entry.created),p_id:entry.id});
@@ -63,12 +59,12 @@ function render_post(params){
 		var more = $.UI.create("ImageView",{right:"0",top:"0",image:'/images/btn-down.png',touchEnabled:false});
 		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],top:"0",text:entry.description,p_id:entry.id});
 		var hr = $.UI.create("View",{classes:['hr']});
-		var comment_container = $.UI.create("View",{classes:['wfill','hsize','padding'],p_id:entry.id});
+		var comment_container = (OS_ANDROID)?$.UI.create("View",{classes:['wfill','hsize','padding'],p_id:entry.id}):$.UI.create("View",{classes:['wfill','hsize'],left:"10",right:"10",p_id:entry.id});
 		var comment_count = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:entry.comment_count+" comments",left:"0",p_id:entry.id});
 		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],right:0,p_id:entry.id});
 		var comment_img = $.UI.create("ImageView",{image:"/images/comment.png",touchEnabled:false});
 		var comment_button = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:"Comment",touchEnabled:false});
-		var img_container = $.UI.create("View",{classes:['wfill','hsize','padding'],backgroundColor:"#000", touchEnabled: false});
+		var img_container = $.UI.create("View",{classes:['wfill','hsize','padding']});
 		container.add(title_container);
 		container.add(description);
 		container.add(img_container);
@@ -83,12 +79,12 @@ function render_post(params){
 			imgArr.forEach(function(entry1){
 				var small_image_container = $.UI.create("View",{classes:['wfill','hsize']});
 				//var image = $.UI.create("ImageView",{classes:['wfill','hsize'], defaultImage: "/images/loading.png",image:entry1.img_300thumb,imageBig:entry1.img_path});		
-				var image = $.UI.create("ImageView",{classes:['wfill','hsize'],image:entry1.img_path, defaultImage: "/images/loading.png"});
+				var image = $.UI.create("ImageView",{classes:['wfill','hsize'],image:entry1.img_300thumb,imageBig:entry1.img_path, defaultImage: "/images/loading.png"});
 				small_image_container.add(image);
 				image_container.addView(small_image_container);		
 				image.addEventListener("click",function(e){	
 					//try {
-						addPage("zoomView","Image Preview",{img_path:e.source.image});
+						addPage("zoomView","Image Preview",{img_path:e.source.imageBig});
 					// }catch(e) {
 						// //
 					// }
@@ -139,7 +135,7 @@ function render_post(params){
 			addPage("post_detail","Post Detail",{p_id:e.source.p_id});
 		});
 		comment_container.addEventListener("click",function(e){
-			Alloy.Globals.loading.startLoading("Loading...");
+		//	Alloy.Globals.loading.startLoading("Loading...");
 			addPage("post_comment","Post Comment",{p_id:e.source.p_id,comment_count:e.source.children[0]});
 		});	
 		imgArr=undefined;
@@ -161,7 +157,9 @@ function render_post(params){
 		img_container=undefined;
 		post_index++;	
 	});
-	Alloy.Globals.loading.stopLoading();
+	offset += 10;
+	$.mother_view.opacity = 1;		
+	//$.myInstance.hide();
 }
 
 function scrollChecker(e){
@@ -169,7 +167,7 @@ function scrollChecker(e){
 	var total = (OS_ANDROID)?pixelToDp(e.y)+e.source.rect.height: e.y+e.source.rect.height;
 	var nearEnd = theEnd - 200;
 	if (total >= nearEnd){
-		render();
+		get_data_local();
 	}
 	theEnd = undefined;
 	total = undefined;
@@ -214,23 +212,25 @@ function deletePost(p_id,p_index){
 }
 
 function group_info(){
-	$.grandmother.add(Alloy.createController("groupInfo",{motherView:$.args.motherView,childView:$.args.childView,mother:$.grandmother,g_id:g_id,arr:arr[0],GroupImg:$.group_img,outsideImg:$.args.outsideimg}).getView());		
+	setTimeout(function(){
+		$.grandmother.add(Alloy.createController("groupInfo",{motherView:$.args.motherView,childView:$.args.childView,mother:$.grandmother,g_id:g_id,arr:arr[0],GroupImg:$.group_img,outsideImg:$.args.outsideimg}).getView());			
+	},300);
 }
-function addMember(){
-	Alloy.Globals.loading.startLoading("Loading...");				
+function addMember(){			
 	addPage("groupMemberView","Group Member",{g_id:g_id});	
 }
 function addPostView(){
 	console.log("add Post");
-	var container = $.UI.create("View",{classes:['horz','wfill','hsize','padding'],top:10,left:"0",right:"0",backgroundColor:"#fff"});
-	var	image = $.UI.create("ImageView",{classes:['padding'],width:"45",height:"45",image:"/images/asp_square_logo.png"});
-	var title = $.UI.create("Label",{classes:['hsize','h4'], width:"auto",text:"Posting something..."});
+	var container = $.UI.create("View",{classes:['horz','wfill','toucha3a3a3','hsize','padding'],top:10,left:"0",right:"0",backgroundColor:"#fff"});
+	var	image = $.UI.create("ImageView",{classes:['padding'],width:"45",height:"45",image:"/images/asp_square_logo.png",touchEnabled:false});
+	var title = $.UI.create("Label",{classes:['hsize','h4'], width:"auto",text:"Posting something in group...",touchEnabled:false});
 	container.add(image);
 	container.add(title);
 	$.mother_view.add(container);
 	container.addEventListener("click",function(){
 		addPage("post", g_name+" Post",{post_group:true,g_id:g_id,g_name:g_name,refreshName:"group_post_init"});
 	});
+	get_Data();
 }
 
 function doleaveGroup(e){
@@ -262,16 +262,36 @@ exports.removeEventListeners = function() {
 };
 Ti.App.addEventListener("group_post_init",init);
 
-if (OS_IOS) {
-	var refreshing = false;
-	$.scrollView.addEventListener("scroll", function(e){
-		if (e.y <= 0-(cell_width*0.5) && !refreshing) {
-			refreshing = true;
-			init();
-			refreshing = false;
-	    }
-	});
-};
+function get_Data(){
+	var checker = Alloy.createCollection('updateChecker');
+	var isUpdate = checker.getCheckerById("2");
+	API.callByPost({url:"getPostList",params:{g_id: args.g_id, last_updated: isUpdate.updated}},{
+		onload:function(responseText){
+			var res = JSON.parse(responseText);
+			var arr = res.data || null;
+			var model = Alloy.createCollection("post");
+			model.saveArray(arr);
+			if(res.images != undefined){
+				i_model.saveArray(res.images);	
+			}
+			model = null;
+			arr = null;
+			res =null;
+			Alloy.Globals.loading.stopLoading();
+			offset = 0;
+			setTimeout(function(){
+				get_data_local();
+			},1000);
+		}
+	});	
+}
+
+function get_data_local(){
+	var model_p = Alloy.createCollection("post");
+	var res = model_p.getData(false,offset,args.g_id);	
+	model_p = null;
+	render_post(res);
+}
 
 if(OS_ANDROID){
 	$.swipeRefresh.addEventListener('refreshing',function(e){

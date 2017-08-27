@@ -29,31 +29,34 @@ Ti.Gesture.addEventListener('orientationchange', function(e) {
     }
 });
 function addPage(pageName,title,args,rightNav){
-	if(typeof pageName==undefined){
-		alert("Page Name is undefined");
-		return;		
-	}
-	title = (typeof title != "undefined")?title:"Title";
-	args = (typeof args != "undefined")?args:{};
-	if(typeof rightNav == "undefined"){
-		Alloy.Globals.pageFlow.addChild({
-			arguments:args,
-		    controller: pageName,
-		    navBar: {
-		        title: title,
-		    }
-		});			
-	}else{
-		Alloy.Globals.pageFlow.addChild({
-			arguments:args,
-		    controller: pageName,
-		    navBar: {
-		        title: title,
-	      		right:rightNav.pageName,
-	      		rightOptions:rightNav.eventName
-		    }
-		});			
-	}
+	setTimeout(function(){
+	Alloy.Globals.loading.startLoading("Loading...");			
+		if(typeof pageName==undefined){
+			alert("Page Name is undefined");
+			return;		
+		}
+		title = (typeof title != "undefined")?title:"Title";
+		args = (typeof args != "undefined")?args:{};
+		if(typeof rightNav == "undefined"){
+			Alloy.Globals.pageFlow.addChild({
+				arguments:args,
+			    controller: pageName,
+			    navBar: {
+			        title: title,
+			    }
+			});			
+		}else{
+			Alloy.Globals.pageFlow.addChild({
+				arguments:args,
+			    controller: pageName,
+			    navBar: {
+			        title: title,
+	      			right:rightNav.pageName,
+	      			rightOptions:rightNav.eventName
+			    }
+			});			
+		}		
+	},300);
 }
 function parent(key, e){
 	// if key.value undefined mean it look for key only

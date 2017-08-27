@@ -4,13 +4,12 @@
 "#navBarMenubutton[platform=android]": {
     width: 24,
     height: 20,
-    left:10
 }
 "#navBarMenubutton[platform=ios]": {
     width: 20,
     height: 16,
 }
 "#view":{
-	width:100,
-	height:30
+	width:50,
+	height:Ti.UI.FILL
 }

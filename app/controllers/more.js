@@ -8,7 +8,7 @@ var u_id = Ti.App.Properties.getString("u_id")||"";
 	var u_res = u_model.getDataById(u_id);
 	for(var i = 0; i < list_title.length; i++) {
 		var list_view = $.UI.create("View", {
-			classes:['wfill', 'padding'],
+			classes:['wfill', 'padding','toucha3a3a3'],
 			pageIndex:list_controller[i],
 			pageButton:list_button[i],
 			pageTitle:list_title[i],
