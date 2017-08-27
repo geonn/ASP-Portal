@@ -1,0 +1,38 @@
+<Alloy>
+	<View class="wfill hfill" id="win_calenderEvent">
+		<View class="vert hfill wfill" backgroundColor="#eff3f6">
+			<View class="vert wfill hsize" bottom="1" backgroundColor="#fff">
+				<Widget class="wfill hsize" left="10" right="10" src="input-materialdesign" titleHint="Write Some Thing..." id="title"/>
+				<View class="wfill hsize" bottom="10">
+					<View class="horz wsize hsize" left="10">
+						<Label class="wsize hsize">Start Time: </Label>
+						<View class="hsize" width="40" left="10" backgroundColor="gray">
+							<Label class="wfill hsize" bottom="1" backgroundColor="#fff" color="#000" id="s_time" onClick="timepicker" text="00:00"></Label>
+						</View>
+					</View>
+					<View class="horz wsize hsize" right="15">
+						<Label class="wsize hsize">End Time: </Label>
+						<View class="hsize" width="40" left="10" backgroundColor="gray">
+							<Label class="wfill hsize" bottom="1" backgroundColor="#fff" color="#000" id="e_time" onClick="timepicker" text="00:00"></Label>
+						</View>
+					</View>
+				</View>
+				<ScrollView class="wfill horz" id="selectedList" contentWidth="auto" contentHeight="Ti.UI.SIZE" bottom="10" scrollType="horizontal"></ScrollView>
+				<View class="wfill hsize">
+					<Widget src="nl.fokkezb.button" left="10" width="80" onClick="submit" paramCenter="true" height="35" title="Add" bottom="10" style="bs-success"/>
+				</View>
+			</View>
+			<View class="wfill hsize vert" id="search_bar" backgroundColor="#fff">
+				<View class="wfill hsize horz">
+					<View left="10" borderColor="#fff" id="zoom" backgroundImage="/images/zoom_tools.png" width="45" height="45" borderRadius="22.5"></View>
+					<Widget left="10" right="10" class="wfill hsize" src="input-materialdesign" titleHint="Staff Name" id="staffName"/>   													
+				</View>
+				<View class="hr"></View>
+			</View>
+			<ScrollView class="wfill hfill contwfill conthsize" scrollType="vertical"onScroll="scrollChecker" top="1" id="scroll_list">
+				<Widget src="nl.fokkezb.loading" name="view" id="myInstance" />
+				<View class="wfill hsize vert" id="staff_list"></View>
+			</ScrollView>
+		</View>
+	</View>
+</Alloy>

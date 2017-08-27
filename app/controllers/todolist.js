@@ -8,50 +8,11 @@ function init() {
 	if($.festival.getChildren().length <= 2) {
 		$.festival.removeAllChildren();
 		$.festival.top = 0;
+		$.todolist.top = 0;
 	}
 	if($.todolist.getChildren().length <= 2) {
 		$.todolist.removeAllChildren();
 	}
-}
-
-function timepicker(id) {
-	var picker = Ti.UI.createPicker({
-		type: Ti.UI.PICKER_TYPE_TIME
-	});
-
-	picker.showTimePickerDialog({
-		callback : function(time){
-			try{
-				id.source.text = time.value.getHours() + ':' + (time.value.getMinutes().lenght >= 1) ? time.value.getMinutes() : "0" + time.value.getMinutes();
-			}catch(e) {
-				//
-			}
-		}
-	});
-}
-
-$.s_time.addEventListener('click', function(e) {
-	timepicker(e);
-});
-
-$.e_time.addEventListener('click', function(e) {
-	timepicker(e);
-});
-
-function submit(e) {
-	var arr;
-	if($.title.getValue() != "" && $.s_time.getText() != "" && $.e_time.getText() != "") {
-		arr = [{title: $.title.getValue(), s_time: $.s_time.getText(), e_time: $.e_time.getText()}];
-		add_list(arr);
-	}else {
-		arr = {title: "Alert", msg: "Please insert something"};
-		alert(arr);
-	}
-	
-	$.title.setValue("");
-	$.s_time.setText("00:00");
-	$.e_time.setText("00:00");
-	arr = null;
 }
 
 function add_list(e) {
@@ -158,7 +119,7 @@ function detail(e) {
 	arr = null;
 }
 
-function alert(e) {console.log(JSON.stringify(e)+e.title);
+function alert(e) {
 	var alert = Titanium.UI.createAlertDialog({
 		title: e.title,
 		message: e.msg,
@@ -168,4 +129,30 @@ function alert(e) {console.log(JSON.stringify(e)+e.title);
 	
 	alert = null;
 }
+
+function addEvent(e) {
+	var options = ["Personal", "Group"];
+	var opts = {cancel: 5, options: options, destructive: 0, title: 'Add Type'};
+	var dialog = Ti.UI.createOptionDialog(opts);
+	
+	dialog.addEventListener("click", function(e) {
+		if(e.index >= 0 && e.index <= 1) {
+			addPage("addCalendarEvent", "Add Event", {u_id:args.u_id, date:args.date, type:e.source.options[e.index], todolistview:$.todolist});
+		}
+	});
+	dialog.show();
+}
+Ti.App.addEventListener("todolist:addEvent", addEvent);
+
+function argsAddListData(e) {
+	var arr = [{title: e.title, s_time: e.s_time, e_time: e.e_time}];
+	add_list(arr);
+}
+Ti.App.addEventListener("todolist:argsAddListData", argsAddListData);
+
+exports.removeEventListeners = function(e) {
+	Ti.App.removeEventListener("todolist:addEvent", addEvent);
+	Ti.App.removeEventListener("todolist:argsAddListData", argsAddListData);
+};
+
 init();
