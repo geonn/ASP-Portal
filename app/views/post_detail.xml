@@ -1,6 +1,6 @@
 <Alloy>
 	<View class="wfill hfill" backgroundColor="#fff">
-		<ScrollView id="mother_view" class="hfill wfill contwfill conthsize vert" bottom="50" backgroundColor="#fff">
+		<ScrollView id="mother_view" class="hfill wfill contwfill conthsize vert" backgroundColor="#fff">
 			<View class="wfill horz" height="75" top="0">
 				<View class="wsize hsize padding" onClick="goProfile">
 					<ImageView height="55" width="55" image="" id="img"></ImageView>
@@ -13,22 +13,28 @@
 					<ImageView top="0" right="0" image="/images/btn-down.png" onClick="postOptions"></ImageView>
 				</View>
 			</View>
-			<View class="wfill hfill vert padding" top="0">
+			<View class="wfill hsize vert padding" top="0">
 				<View class="wfill hsize padding" top="0" left="2" right="2">
 					<Label class="wsize hsize h4 padding" text="" id="desc"></Label>
 				</View>
-				<View class="wfill" id="p_img"></View>
+				<View class="wfill hsize" id="p_img"></View>
+			</View>
+			<View class="wfill vert" onClick="goComment" height="40" bottom="0" backgroundColor="#fff">
+				<View class="hr" touchEnabled="false"></View>
+				<View class="wfill" height="38" touchEnabled="false">
+					<Label class="wsize hsize h5" left="10" touchEnabled="false" color="#90949C" touchEnabled="false" text="? comments" id="count_coment"></Label>
+					<View class="wsize hsize horz" right="10" touchEnabled="false">
+						<ImageView image="/images/comment.png" touchEnabled="false"></ImageView>
+						<Label class="wsize hsize h4" color="#90949C" touchEnabled="false" text="comment"></Label>
+					</View>
+				</View>
+				<View class="hr"></View>				
+			</View>	
+			<View class="wfill hsize vert" backgroundColor="#eff3f6">
+				<Label class="padding wsize hsize small_font" left="10">Comment List</Label>								
+				<View class="vert wfill hsize" backgroundColor="#eff3f6" id="list_comment">
+				</View>				
 			</View>
 		</ScrollView>
-		<View class="wfill vert" height="50" bottom="0" zIndex="99" backgroundColor="#fff">
-			<View class="hr"></View>
-			<View class="wfill hfill" onClick="goComment">
-				<Label class="wsize hsize h5" left="10" color="#90949C" touchEnabled="false" text="? comments" id="count_coment"></Label>
-				<View class="wsize hsize horz" right="10" touchEnabled="false">
-					<ImageView image="/images/comment.png" touchEnabled="false"></ImageView>
-					<Label class="wsize hsize h4" color="#90949C" touchEnabled="false" text="comment"></Label>
-				</View>
-			</View>
-		</View>	
 	</View>
 </Alloy>
