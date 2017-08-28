@@ -1,0 +1,5 @@
+<Alloy>
+	<View id="view" width="20" height="20" right="15">
+        <Button class="wfill hfill" id="navBaraddEventButton" backgroundImage="/images/add.png" backgroundColor="#23c282" class="com.jolicode.pageflow.burgerButton" />
+    </View>
+</Alloy>

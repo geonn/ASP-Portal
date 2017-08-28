@@ -51,7 +51,7 @@ function render_post(params){
 		var imgArr = i_model.getImageByCateandPriId(true,undefined,2,entry.id);
 		var container = $.UI.create("View",{classes:['view_class','vert','padding'],left:"0",right:"0",backgroundColor:"#fff",post_index:post_index});
 		var title_container = $.UI.create('View',{classes:['wfill','horz'],height:68});
-		var user_img = $.UI.create("ImageView",{classes:['padding'],width:45,height:45,image:entry.u_img,u_id:entry.u_id});
+		var user_img = $.UI.create("ImageView",{classes:['padding'],width:45,height:45,image:entry.u_img,u_id:entry.u_id,defaultImage:"/images/asp_square_logo.png"});
 		var title_child_container = $.UI.create("View",{classes:['wfill','hfill','padding'],left:0});
 		var username = $.UI.create("Label",{classes:['wsize','hsize','h4','bold'],text:entry.u_name,left:"0",top:"0",u_id:entry.u_id});
 		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:"0",bottom:0,color:"#7CC6FF",text:countdown.getTimePost(entry.created),p_id:entry.id});
@@ -64,7 +64,7 @@ function render_post(params){
 		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],right:0,p_id:entry.id});
 		var comment_img = $.UI.create("ImageView",{image:"/images/comment.png",touchEnabled:false});
 		var comment_button = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:"Comment",touchEnabled:false});
-		var img_container = $.UI.create("View",{classes:['wfill','hsize','padding'],backgroundColor:"#000", touchEnabled: false});
+		var img_container = $.UI.create("View",{classes:['wfill','hsize','padding']});
 		container.add(title_container);
 		container.add(description);
 		container.add(img_container);

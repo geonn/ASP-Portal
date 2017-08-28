@@ -23,24 +23,6 @@ function pixelToDp(px) {
 function init() {
 	Alloy.Globals.loading.stopLoading();
 	title();
-	days();
-	
-	var hlday = [{title: "Merry Christmas", date: "2017/8/25"}, {title: "Merry Christmas", date: "2017/8/24"}, {title: "Merry Christmas", date: "2017/8/20"}];
-	render_calendar(hlday);
-	
-	var data = [{title: "todo", date: "2017/12/25", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/25", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/25", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/26", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/26", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/26", s_time: "12:55", e_time: "13:55"}];
-	var arr = [];
-	data.forEach(function(e) {
-		arr[e.date] = arr[e.date] || {};
-		arr[e.date].title = e.date;
-		arr[e.date].child = arr[e.date].child || [];
-		arr[e.date].child.push(e);
-	});
-	todolist(arr);
-	
-	hlday = null;
-	data = null;
-	arr = null;
 }
 
 function title(e) {
@@ -79,6 +61,8 @@ function title(e) {
 	
 	title_month = null;
 	title_year = null;
+	
+	days_bar();
 }
 
 function change_month(e) {
@@ -86,10 +70,10 @@ function change_month(e) {
 	var opts = {cancel: 12, options: options, destructive: 0, title: 'Month'};
 	var dialog = Ti.UI.createOptionDialog(opts);
 	
-	dialog.addEventListener("click", function(e) {
+	dialog.addEventListener("click", function(e) {console.log(JSON.stringify(e));
 		if(e.index >= 0 && e.index <= 11) {
 			var cr = $.title.getChildren();
-			cr[0].setText(options[e.index]);
+			cr[0].setText(e.source.options[e.index]);
 			cr[0].num = e.index + 1;
 			
 			if(cr[0].num != month_num) {
@@ -130,7 +114,7 @@ function change_year(e) {
 	dialog.addEventListener("click", function(e) {
 		if(e.index >= 0 && e.index <= 4) {
 			var cr = $.title.getChildren();
-			cr[1].setText(options[e.index]);
+			cr[1].setText(e.source.options[e.index]);
 			
 			if(cr[1].text != year_text) {
 				year_text = cr[1].text;
@@ -147,13 +131,14 @@ function change_year(e) {
 	});
 	
 	dialog.show();
+	
 	options = null;
 	y_count = null;
 	opts = null;
 	dialog = null;
 }
 
-function days(e) {	
+function days_bar(e) {	
 	for(var i = 0; i < day_of_week.length; i++) {
 		var label_day = $.UI.create("Label", {
 			classes: ['hsize', 'h4'],
@@ -170,6 +155,7 @@ function days(e) {
 		
 		label_day = null;
 	}
+	render_calendar();//pass array
 }
 
 function render_calendar(e) {
@@ -248,6 +234,19 @@ function render_calendar(e) {
 	t = null;
 	first_day = null;
 	
+	//var data = [{title: "todo", date: "2017/12/25", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/25", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/25", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/26", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/26", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/26", s_time: "12:55", e_time: "13:55"}];
+	var arr = [];
+	// data.forEach(function(e) {
+		// arr[e.date] = arr[e.date] || {};
+		// arr[e.date].title = e.date;
+		// arr[e.date].child = arr[e.date].child || [];
+		// arr[e.date].child.push(e);
+	// });
+	$.holidays.removeAllChildren();
+	todolist(arr);
+	
+	data = null;
+	arr = null;
 }
 
 function selected_date(e) {
@@ -264,7 +263,7 @@ function selected_date(e) {
 	var day = new Date(t[1].text + "/" + $.title.getChildren()[0].num + "/1");
 	change_color = e.text + day.getDay();
 	
-	addPage("todolist", e.date, {u_id:u_id, date:e.date, holiday:e.holiday});
+	addPage("todolist", e.date, {u_id:u_id, date:e.date, holiday:e.holiday}, {pageName: "addEventButton", eventName: "todolist:addEvent"});
 	
 	cr_view = null;
 	cr_lb = null;
@@ -283,7 +282,8 @@ function todolist(e) {
 		
 		e[key].child.forEach(function(entry) {
 			var parent = $.UI.create("View", {
-				classes: ['wfill', 'hsize', 'vert'],
+				classes: ['wfill', 'hsize'],
+				top: 1,
 				bottom: 1,
 				backgroundColor: "#fff",
 				time: entry.s_time + " - " + entry.e_time,
@@ -291,14 +291,22 @@ function todolist(e) {
 			});
 	
 			var title = (OS_IOS) ? $.UI.create("Label", {
-				classes: ['wfill', 'small-padding'],
+				classes: ['size', 'h5'],
+				top: 5,
+				bottom: 5,
+				left: 5,
+				right: "25%",
 				height: 19,
 				color: "#000",
 				text: entry.title,
 				time: entry.s_time + " - " + entry.e_time,
 				title: entry.title
 			}) : $.UI.create("Label", {
-				classes: ['wfill', 'small-padding'],
+				classes: ['wsize', 'h5'],
+				top: 5,
+				bottom: 5,
+				left: 5,
+				right: "25%",
 				height: 19,
 				ellipsize: true,
 				wordWrap: false,
@@ -309,20 +317,22 @@ function todolist(e) {
 			});
 			
 			var list_time = $.UI.create("View", {
-				classes: ['wfill', 'hsize', 'horz', 'small-padding'],
-				top: 0,
+				classes: ['wsize', 'hsize', 'horz'],
+				top: 5,
+				bottom: 5,
+				right: 5,
 				time: entry.s_time + " - " + entry.e_time,
 				title: entry.title
 			});
 			
 			var s_time = $.UI.create("Label", {
-				classes: ['wsize', 'hsize'],
+				classes: ['wsize', 'hsize', 'h5'],
 				color: "#000",
 				text: entry.s_time
 			});
 			
 			var to = $.UI.create("Label", {
-				classes: ['wsize', 'hsize'],
+				classes: ['wsize', 'hsize', 'h5'],
 				color: "#000",
 				text: " - "
 			});
@@ -339,8 +349,8 @@ function todolist(e) {
 			list_time.add(s_time);
 			list_time.add(to);
 			list_time.add(e_time);
-			$.holidays.add(date);
-			$.holidays.add(parent);
+			//$.holidays.add(date);
+			//$.holidays.add(parent);
 			
 			parent = null;
 			title = null;

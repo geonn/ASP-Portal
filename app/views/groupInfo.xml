@@ -6,8 +6,8 @@
 				<View id="nameContainer" class="wfill hsize horz" top="5">
 					<ImageView id="g_image" left="10" borderColor="#fff" defaultImage="/images/camera_icon.png" width="60" height="60" borderRadius="30"></ImageView>
 					<View id="g_name_member" class="wsize hsize vert">
-						<Label id="g_name" platform="ios" class="h4" height="22" textAlign="left" top="5" left="10" right="10"></Label>
-						<Label id="g_name" platform="android" class="h3" height="22" textAlign="left" top="5" left="10" right="10" ellipsize="true" wordWrap="false"></Label>
+						<Label id="g_name" platform="ios" class="h4" height="30" textAlign="left" top="5" left="10" right="10"></Label>
+						<Label id="g_name" platform="android" class="h3" height="30" textAlign="left" top="5" left="10" right="10" ellipsize="true" wordWrap="false"></Label>
 						<Label id="member" class="wsize hsize" textAlign="left" top="10" bottom="10" left="10"></Label>
 					</View>
 				</View>

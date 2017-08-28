@@ -20,6 +20,6 @@
 			</ScrollView>
 		</View>
 		<ScrollView class="wfill horz" height="0" id="selectedList" contentWidth="auto" contentHeight="Ti.UI.SIZE" borderColor='#eff3f6' zIndex="10" bottom="0" right="50" scrollType="horizontal" backgroundColor="#fff"></ScrollView>
-		<Button width="50" height="50" id="addgroup" onClick="doSubmit" zIndex="10" bottom="0" right="0" textAlign="center" backgroundColor="#23C282" color="#fff" title="Add"></Button>
+		<Button width="50" height="0" id="addgroup" onClick="doSubmit" zIndex="10" bottom="0" right="0" textAlign="center" backgroundColor="#23C282" color="#fff" title="Add"></Button>
 	</View>
 </Alloy>
