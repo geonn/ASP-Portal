@@ -57,7 +57,12 @@ function render_post(params){
 		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:"0",bottom:0,color:"#7CC6FF",text:countdown.getTimePost(entry.created),p_id:entry.id});
 		var more_container = $.UI.create("View",{classes:['hfill'],width:"30",right:"0",u_id:entry.u_id,p_id:entry.id,post_index:post_index});
 		var more = $.UI.create("ImageView",{right:"0",top:"0",image:'/images/btn-down.png',touchEnabled:false});
-		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],top:"0",text:entry.description,p_id:entry.id});
+		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],maxLines:'4',top:"0",bottom:"0",text:entry.description,p_id:entry.id});
+		if(OS_ANDROID){
+			description.ellipsize=true;
+			description.wordWrap=false;
+		}
+		var ctn_read = $.UI.create("Label",{classes:['wfill','hsize'],top:'0',left:'10',color:'#90949C',text:'Continue reading...',p_id:entry.id});
 		var hr = $.UI.create("View",{classes:['hr']});
 		var comment_container = (OS_ANDROID)?$.UI.create("View",{classes:['wfill','hsize','padding'],p_id:entry.id}):$.UI.create("View",{classes:['wfill','hsize'],left:"10",right:"10",p_id:entry.id});
 		var comment_count = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:entry.comment_count+" comments",left:"0",p_id:entry.id});
@@ -67,6 +72,7 @@ function render_post(params){
 		var img_container = $.UI.create("View",{classes:['wfill','hsize','padding']});
 		container.add(title_container);
 		container.add(description);
+		container.add(ctn_read);
 		container.add(img_container);
 		if(imgArr.length != 0){
 			var imglength = imgArr.length;
@@ -138,6 +144,9 @@ function render_post(params){
 		//	Alloy.Globals.loading.startLoading("Loading...");
 			addPage("post_comment","Post Comment",{p_id:e.source.p_id,comment_count:e.source.children[0]});
 		});	
+		ctn_read.addEventListener("click",function(e){
+			addPage("post_detail","Post Detail",{p_id:e.source.p_id});
+		});
 		imgArr=undefined;
 		container=undefined;
 		title_container=undefined;
@@ -155,6 +164,7 @@ function render_post(params){
 		comment_img=undefined;
 		comment_button=undefined;
 		img_container=undefined;
+		ctn_read-undefined;
 		post_index++;	
 	});
 	offset += 10;
