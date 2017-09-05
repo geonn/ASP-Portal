@@ -109,7 +109,7 @@ function goProfile(){
 }
 
 function goComment(e){
-	addPage("post_comment","Post Comment",{p_id:p_id,comment_count:e.source.children[0]});
+	addPage("post_comment","Post Comment",{p_id:p_id,comment_count:e.source.children[1].children[0],comment_count1:$.args.comment_count});
 }
 function commentInit() {
 	if(p_id == null){
@@ -177,38 +177,6 @@ function render_comment(params){
 		//$.scrollView.scrollToBottom();	
 	},500);
 	Alloy.Globals.loading.stopLoading();	
-}
-function doSubmit(){
-	Alloy.Globals.loading.startLoading("Loading...");		
-	var u_id = Ti.App.Properties.getString('u_id')||null;
-	var comment = $.comment.value || null;
-	$.comment.setValue("");	
-    if(OS_ANDROID){
-         Ti.UI.Android.hideSoftKeyboard();
-    }		
-	if(u_id == undefined){
-		Alloy.Globals.loading.stopLoading();			
-		alert("User Id is null\nPlease Login Again");
-		doLogout();			
-		return;
-	}
-	if(comment == null){
-		Alloy.Globals.loading.stopLoading();			
-		alert("Please type something on field box.");
-		return;	
-	}		
-	var params = {u_id:u_id,p_id:p_id,comment:comment};
-	API.callByPost({url:"doPostComment",params:params},{
-		onload:function(responseText){			
-			var res = JSON.parse(responseText);
-			console.log("comment:"+JSON.stringify(res));
-			try{
-			$.args.comment_count.text = res.data[0].total_comment+" comments";
-			}catch(e){}
-			init();
-			$.comment.setValue("");
-		},onerror:function(err){}
-	});
 }
 function deleteOptions(params,c_id){
 	var options = (params)?['Delete','Cancel']:['Report','Cancel'];

@@ -22,11 +22,7 @@
 				<View class="hr" left="10" right="10"></View>
 				<View class="wfill hsize toucha3a3a3" onClick="showmember">
 					<Label id="members" touchEnabled="false" class="wfill h4 hsize" text="Members" textAlign="left" top="5" bottom="5" left="10" right="10" ellipsize="true" wordWrap="false"></Label>					
-				</View>
-				<View class="hr" left="10" right="10"></View>
-				<View class="wfill hsize toucha3a3a3" onClick="showmember">
-					<Label id="calender" touchEnabled="false" class="wfill h4 hsize" text="Group Events" textAlign="left" top="5" bottom="5" left="10" right="10" ellipsize="true" wordWrap="false"></Label>					
-				</View>				
+				</View>		
 				<View class="hr" left="10" bottom="15" right="10"></View>
 				<View class="hr" left="10" top="17" right="10"></View>	
 				<View class="wfill hsize toucha3a3a3" onClick="doleaveGroup">

@@ -30,16 +30,9 @@ if(OS_ANDROID){
 	});	
 }
 
-var img_blur = mod.createBasicBlurView({
-	width:Ti.UI.FILL,
-	height:"200%",
-	blurRadius:10,
-	image: (u_res.img_path!="")?u_res.img_path:"/images/my_profile_square.png"
-});
 
 $.testing.setHeight(cell_width);
 $.testing1.setHeight(cell_width);
-$.testing.add(img_blur);
 $.img.setWidth(cell_width);
 $.imgv.setBorderRadius((cell_width / 2) - 10);
 $.imgv.setWidth(cell_width - 20);
@@ -59,9 +52,16 @@ function init(){
 	}else{
 		$.gender.image = "/images/icon_female.png";
 	};
-	setData(u_res);
+	setData(u_res); 
 }
 function setData(u_res){
+var img_blur = mod.createBasicBlurView({
+	width:Ti.UI.FILL,
+	height:"200%",
+	blurRadius:10,
+	image: (u_res.img_path!="")?u_res.img_path:"/images/my_profile_square.png"
+});	
+	$.testing.add(img_blur);
 	$.user_name.setText(u_res.name);
 	$.user_email.setText(u_res.email);
 	$.user_position.setText(u_res.position||"Not yet Assign");

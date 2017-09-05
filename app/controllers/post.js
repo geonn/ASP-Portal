@@ -11,6 +11,7 @@ var my_group = Alloy.createCollection("my_group");
 var group_id = [];
 group_id[0] = "";
 var group_name = [];
+var imageC = [3,2,1];
 group_name[0] = "Public Post";
 var u_model = Alloy.createCollection("staff");
 var u_res = u_model.getDataById(u_id);
@@ -71,29 +72,40 @@ function mediaOptions(){
 }
 function add_image() {
 	var gallerypicker = require('titutorial.gallerypicker');
+	var ImageFactory = require('ti.imagefactory');	
+	var count = 0;
+	if($.imageMother.children.length > 0){
+		console.log("asdf:"+$.imageMother.children.length);
+		count = $.imageMother.children.length;
+	}
+	console.log("asdf:"+imageC[count]);
 	gallerypicker.openGallery({
 		cancelButtonTitle : "Cancel",
 		doneButtonTitle : "Okay",
 		title : "Gallery",
 		errorMessage: "Limit reached",
-		limit : 3,
+		limit : imageC[count],
 		success : function(e) {
 			Ti.API.info("response is => " + JSON.stringify(e));
 			var imgArray = e.filePath.split(",");
 	
 			for(var i=0; i<imgArray.length; i++){
 				if(imgArray[i]){
+					var blob = Titanium.Filesystem.getFile("file://"+imgArray[i]).read();
+					var blobSize = blob.height/blob.width;			
 					var imgView = Ti.UI.createImageView({
 						top:'10dp',
 						classes:['wfill','hsize'],
-						image:"file://"+imgArray[i],
+						image:ImageFactory.imageAsResized(blob, { width:640,height:blobSize*640}),
 					});
 					imgView.addEventListener("longclick",function(e1){
 						$.imageMother.remove(e1.source);
 					});
 					$.imageMother.add(imgView);
+					imgView = undefined;
 				}
 			}
+			imgArray = undefined;
 		},
 		error : function(e) {
 			alert("error " + JSON.stringify(e));
@@ -102,11 +114,16 @@ function add_image() {
 			//alert("cancel " + JSON.stringify(e));
 		}
 	});
+	gallerypicker = undefined;
 }
 function showGMImagePicker() {
-	var picker = require('ti.gmimagepicker');		 
+	var picker = require('ti.gmimagepicker');	
+	var count = 0;
+	if($.imageMother.children.length > 0){
+		count = $.imageMother.children.length;
+	}		 
 	picker.openPhotoGallery({
-		maxSelectablePhotos: 3,
+		maxSelectablePhotos: imageC[count],
 		// allowMultiple: false, // default is true
 	    success: function (e) {
 	        Ti.API.error('successaaa: ' + JSON.stringify(e));

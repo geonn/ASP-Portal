@@ -97,6 +97,7 @@ function doSubmit(){
 			console.log("comment:"+JSON.stringify(res));
 			try{
 			$.args.comment_count.text = res.data[0].total_comment+" comments";
+			$.args.comment_count1.text = res.data[0].total_comment+" comments";
 			}catch(e){}
 			init();
 			$.comment.setValue("");

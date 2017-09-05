@@ -292,7 +292,10 @@ function get_data_local(){
 	model_p = null;
 	render_post(res);
 }
-
+function groupEvents(){
+	var u_id = Ti.App.Properties.getString("u_id")|| undefined;
+	addPage("calendar",g_name+" Events",{u_id:u_id,g_id:g_id,g_name:g_name});
+}
 if(OS_ANDROID){
 	$.swipeRefresh.addEventListener('refreshing',function(e){
 		init();

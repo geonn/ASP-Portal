@@ -1,5 +1,5 @@
-var offset=0;
 var args = arguments[0] || {};
+var offset = 0;
 var buttonsExpanded = false;
 var post_index = 1;
 var refreshName = args.refreshName||null;
@@ -130,8 +130,7 @@ function render_post(params){
 		title_container.add(title_child_container);
 		$.mother_view.add(container);
 		description.addEventListener("click",function(e){
-			console.log("parent:"+JSON.stringify(e.source.parent.children[4].children[0]));
-			addPage("post_detail","Post Detail",{p_id:e.source.p_id});
+			addPage("post_detail","Post Detail",{p_id:e.source.p_id,comment_count:e.source.parent.children[4].children[0]});
 		});
 		more_container.addEventListener("click",function(e){
  			postOptions({u_id:e.source.u_id,p_id:e.source.p_id,post_index:e.source.post_index});
@@ -273,7 +272,8 @@ function clickButtons(){
 	$.buttonsView.resize(size,size);
 }
 exports.removeEventListeners = function() {
-	Ti.App.removeEventListener("discussion:refresh",refresh);
+	Ti.App.removeEventListener("discussion:refresh",refresh);
+
 };
 if(OS_ANDROID){
 $.swipeRefresh.addEventListener('refreshing',function(e){
