@@ -4,7 +4,6 @@ var u_id = args.u_id || null;
 var cell_width;
 var post_index = 0;
 var pwidth = Titanium.Platform.displayCaps.platformWidth;
-var mod = require('bencoding.blur');
 var u_model = Alloy.createCollection("staff");
 var u_res = u_model.getDataById(u_id);
 var i_model = Alloy.createCollection("images_table");
@@ -52,10 +51,12 @@ function init(){
 	}else{
 		$.gender.image = "/images/icon_female.png";
 	};
-	setData(u_res); 
+	setTimeout(function(){
+		setData(u_res); 		
+	},1000);
 }
 function setData(u_res){
-var img_blur = mod.createBasicBlurView({
+var img_blur = Ti.UI.createImageView({
 	width:Ti.UI.FILL,
 	height:"200%",
 	blurRadius:10,
@@ -115,7 +116,6 @@ function refresh(e){
 			model = null;
 			arr = null;
 			res =null;	
-			Alloy.Globals.loading.stopLoading();			
 		}
 	});	
 }
@@ -227,6 +227,8 @@ function render_post(params){
 		ctn_read-undefined;	
 		post_index++;	
 	});
+			Alloy.Globals.loading.stopLoading();			
+	
 }
 function postOptions(params){
 	var u_id = Ti.App.Properties.getString("u_id")||"";

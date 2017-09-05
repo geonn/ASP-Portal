@@ -32,7 +32,9 @@ function init() {
 	$.group_list.opacity = 0;		
 	$.myInstance.show('',false);	
 	$.group_list.removeAllChildren();	
-	get_Data();			
+	setTimeout(function(){
+		get_Data();				
+	},1000);
 }
 function get_Data(){
 	API.callByPost({url:"getMyGroupList",params:{u_id:u_id}},{

@@ -1,5 +1,6 @@
 <Alloy>
 	<View class="wfill hfill" backgroundColor="#fff">
+	 <SwipeRefresh module="com.rkam.swiperefreshlayout" id="swipeRefresh" platform="android" bubbleParent="false">								
 		<ScrollView id="mother_view" class="hfill wfill contwfill conthsize vert" backgroundColor="#fff">
 			<View class="wfill horz" height="75" top="0">
 				<View class="wsize hsize padding" onClick="goProfile">
@@ -15,7 +16,7 @@
 			</View>
 			<View class="wfill hsize vert padding" top="0">
 				<View class="wfill hsize padding" top="0" left="2" right="2">
-					<Label class="wsize hsize h4 padding" text="" id="desc"></Label>
+					<Label class="wsize hsize h4 padding" left="0" text="" id="desc"></Label>
 				</View>
 				<View class="wfill hsize" id="p_img"></View>
 			</View>
@@ -36,5 +37,6 @@
 				</View>				
 			</View>
 		</ScrollView>
+		</SwipeRefresh>
 	</View>
 </Alloy>

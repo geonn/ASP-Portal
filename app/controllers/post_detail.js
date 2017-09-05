@@ -5,7 +5,23 @@ var u_id = Ti.App.Properties.getString('u_id')||undefined;
 var i_model = Alloy.createCollection("images_table");
 var countdown = require("countdown_between_2date.js");
 Ti.App.Properties.setString('current_post_id', p_id);
-
+if (OS_IOS) {
+	var control = Ti.UI.createRefreshControl({
+    	tintColor:"#00CB85"
+	});
+	$.mother_view.refreshControl = control;
+	control.addEventListener('refreshstart',function(e){
+	    Ti.API.info('refreshstart');
+	    setTimeout(function(e){
+	        Ti.API.debug('Timeout');
+	        $.mother_view.scrollTo(0,0,true);
+			setTimeout(function(){
+				init();
+			},500);	        
+	        control.endRefreshing();
+	    }, 1000);
+	});	
+};
 function init(){
 	Alloy.Globals.loading.stopLoading();	
 	var model = Alloy.createCollection("post");
@@ -33,6 +49,7 @@ function setData(params){
 	$.img.image = (u_res.img_path!="")?u_res.img_path:"/images/my_profile_square.png";
 	var imgArr = i_model.getImageByCateandPriId(true,undefined,2,p_id);
 	var count_img = 1;
+	$.p_img.removeAllChildren();
 	if(imgArr.length != 0){
 		var imglength = imgArr.length;
 		var image_container = $.UI.create("ScrollableView",{classes:['wfill'],height:250,backgroundColor:"#000",top:"0",scrollingEnabled:true});
@@ -218,4 +235,8 @@ function deleteComment(c_id){
 		}		
 	});
 }
+$.swipeRefresh.addEventListener('refreshing',function(e){
+	init();
+	e.source.setRefreshing(false);		
+});	
 Ti.App.addEventListener("post_detail:init",init);
