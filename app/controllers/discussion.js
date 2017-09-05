@@ -61,16 +61,22 @@ function render_post(params){
 		};
 		var more_container = $.UI.create("View",{classes:['hfill'],width:"30",right:"0",u_id:entry.u_id,p_id:entry.id,post_index:post_index});
 		var more = $.UI.create("ImageView",{right:"0",top:"0",image:'/images/btn-down.png',touchEnabled:false});
-		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],top:"0",text:entry.description,p_id:entry.id});
+		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],maxLines:'4',top:"0",bottom:'0',text:entry.description,p_id:entry.id});
+		if(OS_ANDROID){
+			description.ellipsize=true;
+			description.wordWrap=false;
+		}
+		var ctn_read = $.UI.create("Label",{classes:['wfill','hsize'],top:'0',left:'10',color:'#90949C',text:'Continue reading...',p_id:entry.id});
 		var hr = $.UI.create("View",{classes:['hr']});
 		var comment_container = (OS_IOS)?$.UI.create("View",{classes:['wfill','hsize'],left:"10",right:"10",p_id:entry.id}):$.UI.create("View",{classes:['wfill','hsize','padding'],p_id:entry.id});
 		var comment_count = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:entry.comment_count+" comments",left:"0",p_id:entry.id,touchEnabled:false});
 		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],right:0,p_id:entry.id,touchEnabled:false});
 		var comment_img = $.UI.create("ImageView",{image:"/images/comment.png",touchEnabled:false});
 		var comment_button = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:"Comment",touchEnabled:false});
-		var img_container = $.UI.create("View",{classes:['wfill','hsize','padding'],backgroundColor:"#000"});
+		var img_container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:10,backgroundColor:"#000"});
 		container.add(title_container);
 		container.add(description);
+		container.add(ctn_read);
 		container.add(img_container);
 		if(imgArr.length != 0){
 			var imglength = imgArr.length;
@@ -104,6 +110,7 @@ function render_post(params){
 			});
 			img_container.add(image_container);
 			img_container.add(imgcount_container);
+			img_container=undefined;
 			imglength=undefined;
 			image_container=undefined;
 			imgcount_container=undefined;
@@ -144,6 +151,9 @@ function render_post(params){
 		time.addEventListener("click",function(e){
 			addPage("post_detail","Post Detail",{p_id:e.source.p_id});
 		});
+		ctn_read.addEventListener("click",function(e){
+			addPage("post_detail","Post Detail",{p_id:e.source.p_id});
+		});
 		comment_container.addEventListener("click",function(e){
 			//Alloy.Globals.loading.startLoading("Loading...");			
 			addPage("post_comment","Post Comment",{p_id:e.source.p_id,comment_count:e.source.children[0]});
@@ -164,7 +174,7 @@ function render_post(params){
 		comment_button_container=undefined;
 		comment_img=undefined;
 		comment_button=undefined;
-		img_container=undefined;
+		ctn_read=undefined;
 		post_index++;	
 	});
 	params = undefined;
