@@ -12,19 +12,19 @@
 				</View>
 			</View>
 			<View class="wfill hsize horz" backgroundColor="#fff">
-				<View class="hsize vert toucha3a3a3" width="33%" onClick="doleaveGroup">
+				<View class="hsize vert toucha3a3a3" width="25%" onClick="doleaveGroup">
 					<ImageView height="35" width="35" image="/images/g_thick.png" touchEnabled="false"></ImageView>
 					<Label class="wsize hsize h5" text="Joined" color="#668CFC" touchEnabled="false"></Label>
 				</View>
-				<View class="hsize vert toucha3a3a3" width="33%" onClick="addMember">
+				<View class="hsize vert toucha3a3a3" width="25%" onClick="addMember">
 					<ImageView height="35" width="35" image="/images/p_add.png" touchEnabled="false"></ImageView>
 					<Label class="wsize hsize h5" text="Add Members" color="#90949C" touchEnabled="false"></Label>
 				</View>
-				<!-- <View class="hsize vert" width="25%" right="25%">
-					<ImageView height="35" width="35" image="/images/p_search.png"></ImageView>
-					<Label class="wsize hsize h5" text="Search" color="#90949C"></Label>
-				</View> -->
-				<View class="hsize vert toucha3a3a3" width="33%" onClick="group_info">
+				<View class="hsize vert toucha3a3a3" width="25%" onClick="groupEvents">
+					<ImageView height="35" width="35" image="/images/addevent.png"></ImageView>
+					<Label class="wsize hsize h5" text="Events" color="#90949C"></Label>
+				</View>
+				<View class="hsize vert toucha3a3a3" width="24%" onClick="group_info">
 					<ImageView height="35" width="35" image="/images/p_info.png" touchEnabled="false"></ImageView>
 					<Label class="wsize hsize h5" text="Info" color="#90949C" touchEnabled="false"></Label>
 				</View>
@@ -50,27 +50,30 @@
 				</View>
 			</View>
 			<View class="wfill hsize horz" backgroundColor="#fff">
-				<View class="hsize vert" width="33%" onClick="doleaveGroup">
+				<!-- <View class="hsize vert" width="25%" onClick="doleaveGroup">
 					<ImageView height="35" width="35" image="/images/g_thick.png"></ImageView>
 					<Label class="wsize hsize h5" text="Joined" color="#668CFC"></Label>
 				</View>
-				<View class="hsize vert" width="33%" onClick="addMember">
+				<View class="hsize vert" width="25%" onClick="addMember">
 					<ImageView height="35" width="35" image="/images/p_add.png"></ImageView>
 					<Label class="wsize hsize h5" text="Add Members" color="#90949C"></Label>
 				</View>
-				<!-- <View class="hsize vert" width="25%" right="25%">
+				<View class="hsize vert" width="25%">
 					<ImageView height="35" width="35" image="/images/p_search.png"></ImageView>
-					<Label class="wsize hsize h5" text="Search" color="#90949C"></Label>
-				</View> -->
-				<View class="hsize vert" width="33%" onClick="group_info">
+					<Label class="wsize hsize h5" text="Group Events" color="#90949C"></Label>
+				</View>
+				<View class="hsize vert" width="24%" onClick="group_info">
 					<ImageView height="35" width="35" image="/images/p_info.png"></ImageView>
 					<Label class="wsize hsize h5" text="Info" color="#90949C"></Label>
-				</View>
+				</View> -->
 			</View>
 			<Label top="10" left="10" text="Group Posts"></Label>			
 		</View>
-		<View class="wfill hsize vert" id="mother_view">
-			
+		<View class="wfill hsize">
+			<Widget src="nl.fokkezb.loading" name="view" id="myInstance" />			
+			<View class="wfill hsize vert" id="mother_view" top="0">
+				
+			</View>			
 		</View>
 	</ScrollView>
 	</View>

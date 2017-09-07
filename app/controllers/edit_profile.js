@@ -1,7 +1,6 @@
 var args = arguments[0] || {};
 var pwidth = Titanium.Platform.displayCaps.platformWidth;
 var cell_width;
-var mod = require('bencoding.blur');
 var u_id = args.u_id || null;
 var u_model = Alloy.createCollection("staff");
 var u_res = u_model.getDataById(u_id);
@@ -86,7 +85,7 @@ function doSubmit(){
 //Ti.App.addEventListener("edit_profile:editProfile",editProfile);
 
 function userProfileImage(){
-	var img_blur = mod.createBasicBlurView({
+	var img_blur = Ti.UI.createImageView({
 		width:Ti.UI.FILL,
 		height:"200%",
 		blurRadius:10,
@@ -168,8 +167,8 @@ function userProfileImage(){
 									width:Ti.UI.FILL,
 									height:Ti.UI.SIZE
 								});
-								
-								img_view.children[0].image = "file://"+imgArray[i];
+// // 								
+								 img_view.children[0].image = "file://"+imgArray[i];
 								img_mother.add(imgView);
 								$.imageGroup_big.add(imgView2);
 							}

@@ -4,6 +4,10 @@ var u_id = Ti.App.Properties.getString("u_id")||"";
 
 if(OS_ANDROID){
 	cell_width = Math.floor((pixelToDp(pwidth) / 2));
+$.swipeRefresh.addEventListener('refreshing',function(e){
+	init();
+	e.source.setRefreshing(false);		
+});		
 }else{
 	cell_width = Math.floor(pwidth / 2);
 	var control = Ti.UI.createRefreshControl({
@@ -28,7 +32,9 @@ function init() {
 	$.group_list.opacity = 0;		
 	$.myInstance.show('',false);	
 	$.group_list.removeAllChildren();	
-	get_Data();			
+	setTimeout(function(){
+		get_Data();				
+	},1000);
 }
 function get_Data(){
 	API.callByPost({url:"getMyGroupList",params:{u_id:u_id}},{
@@ -112,12 +118,6 @@ function render_list(e) {
 	$.myInstance.hide();	
 }
 Ti.App.addEventListener("groupList:init",init);
-if(OS_ANDROID){
-$.swipeRefresh.addEventListener('refreshing',function(e){
-	init();
-	e.source.setRefreshing(false);		
-});	
-}
 function pixelToDp(px) {
 	return ( parseInt(px) / (Titanium.Platform.displayCaps.dpi / 160));
 }
