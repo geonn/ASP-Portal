@@ -2,7 +2,7 @@
 	<View class="wfill hfill" id="win_calenderEvent">
 		<View class="vert hfill wfill" backgroundColor="#eff3f6">
 			<View class="vert wfill hsize" bottom="1" backgroundColor="#fff">
-				<Widget class="wfill hsize" left="10" right="10" src="input-materialdesign" titleHint="Write Some Thing..." id="title"/>
+				<Widget class="wfill hsize" left="10" right="10" src="input-materialdesign" titleHint="" id="title"/>
 				<View class="wfill hsize" bottom="10">
 					<View class="horz wsize hsize" left="10">
 						<Label class="wsize hsize">Start Time: </Label>
@@ -23,13 +23,13 @@
 					<View class="hr" id="hr"></View>
 				</View>
 				<View class="wfill hsize" top="10">
-					<Widget src="nl.fokkezb.button" left="10" width="80" onClick="submit" paramCenter="true" height="35" title="Add" bottom="10" style="bs-success"/>
+					<Widget src="nl.fokkezb.button" left="10" width="80" onClick="submit" paramCenter="true" height="35" title="Edit" bottom="10" style="bs-success"/>
 				</View>
 			</View>
 			<View class="wfill hsize vert" id="search_bar" backgroundColor="#fff">
 				<View class="wfill hsize horz">
 					<View left="10" borderColor="#fff" id="zoom" backgroundImage="/images/zoom_tools.png" width="45" height="45" borderRadius="22.5"></View>
-					<Widget left="10" right="10" class="wfill hsize" src="input-materialdesign" titleHint="Search." id="search"/>   													
+					<Widget left="10" right="10" class="wfill hsize" src="input-materialdesign" titleHint="Search." id="search"/>
 				</View>
 				<View class="hr"></View>
 			</View>

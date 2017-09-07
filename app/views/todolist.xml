@@ -2,13 +2,26 @@
 	<View class="wfill hfill" id="win_calender">
 		<View class="vert hfill wfill" backgroundColor="#eff3f6">
 			<ScrollView class="vert wfill hfill contwfill conthsize" scrollType="vertical" top="0">
-				<View class="vert wfill hsize" id="festival" top="0">
+				<View class="vert wfill hsize" top="0">
 					<Label class="wfill hsize h4" text=" Festival" backgroundColor="#fff"></Label>
 					<View class="hr" backgroundColor="#ccc"></View>
+					<View class="wfill hsize vert" id="festival">
+						<Label class="wfill" height="50" text=" No Festival In This Day." id="no_festival"></Label>
+					</View>
 				</View>
-				<View class="vert wfill hsize" id="todolist" top="20">
-					<Label class="wfill hsize h4" text=" Event" backgroundColor="#fff"></Label>
+				<View class="vert wfill hsize" top="20">
+					<Label class="wfill hsize h4" text=" Personal Event" backgroundColor="#fff"></Label>
 					<View class="hr" backgroundColor="#ccc"></View>
+					<View class="wfill hsize vert" id="personal_todolist">
+						<Label class="wfill" height="50" text=" No Personal Event In This Day." id="p_event"></Label>
+					</View>
+				</View>
+				<View class="vert wfill hsize" top="20">
+					<Label class="wfill hsize h4" text=" Group Event" backgroundColor="#fff"></Label>
+					<View class="hr" backgroundColor="#ccc"></View>
+					<View class="wfill hsize vert" id="group_todolist">
+						<Label class="wfill" height="50" text=" No Group Event In This Day." id="g_event"></Label>
+					</View>
 				</View>
 			</ScrollView>
 		</View>
