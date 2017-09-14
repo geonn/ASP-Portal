@@ -22,11 +22,20 @@ var getGroupListMemberByGid = "http://"+API_DOMAIN+"/api/getGroupListMemberByGid
 var addGroupMember = "http://"+API_DOMAIN+"/api/addGroupMember?user="+USER+"&key="+KEY;
 var deleteGroupMember = "http://"+API_DOMAIN+"/api/deleteGroupMember?user="+USER+"&key="+KEY;
 var updateGroupPhoto = "http://"+API_DOMAIN+"/api/updateGroupPhoto?user="+USER+"&key="+KEY;
+var getMyEventsList = "http://"+API_DOMAIN+"/api/getMyEventsList?user="+USER+"&key="+KEY;
+var addEvent = "http://"+API_DOMAIN+"/api/addEvent?user="+USER+"&key="+KEY;
+var editEvent = "http://"+API_DOMAIN+"/api/editEvent?user="+USER+"&key="+KEY;
+var deleteEvent = "http://"+API_DOMAIN+"/api/deleteEvent?user="+USER+"&key="+KEY;
+var addEventsMember = "http://"+API_DOMAIN+"/api/addEventsMember?user="+USER+"&key="+KEY;
+var deleteEventsMember = "http://"+API_DOMAIN+"/api/deleteEventsMember?user="+USER+"&key="+KEY;
+var getHoliday = "http://"+API_DOMAIN+"/api/getHoliday?user="+USER+"&key="+KEY;
 //API that call in sequence
 var APILoadingList = [
  {url: "getStaffList", type: "api_model", model: "staff", checkId: "1"},
  {url: "getPostList", type: "api_model", model: "post", checkId: "2"},
- {url: "getMyGroupList", type: "api_model", model: "my_group", checkId: "3"}
+ {url: "getMyGroupList", type: "api_model", model: "my_group", checkId: "3"},
+ {url: "getMyEventsList", type: "api_model", model: "my_eventslist", checkId: "4"},
+ {url: "getHoliday", type: "api_model", model: "holiday", checkId: "5"} 
 ];
 var defaultRetryTimes = 5;
 
@@ -37,11 +46,9 @@ var defaultRetryTimes = 5;
 // call API by post method
 exports.callByPost = function(e, handler){	 
 	var url = (typeof e.new != "undefined")?"http://"+API_DOMAIN+"/api/"+e.url+"?user="+USER+"&key="+KEY:eval(e.url);
-	console.log(url);
 	var _result = contactServerByPost(url, e.params || {});   
-	_result.onload = function(ex) {  
+	_result.onload = function(ex) {
 		try{
-			console.log(this.responseText);
 			JSON.parse(this.responseText);
 		}
 		catch(e){
@@ -103,12 +110,10 @@ exports.callByPostVoice = function(e, onload, onerror){
 };
 exports.callByGet  = function(e, onload, onerror){
 	var url =  eval(e.url) + "?"+e.params;
-	console.log(url);
 	var _result = contactServerByGet(encodeURI(url));   
 	_result.onload = function(e) {   
 		onload && onload(this.responseText); 
 	};
-		
 	_result.onerror = function(e) { 
 		onerror && onerror(); 
 	};	
@@ -118,7 +123,6 @@ exports.callByGet  = function(e, onload, onerror){
 exports.checkAppVersion = function(callback_download){
 	var appVersion = Ti.App.Properties.getString("appVersion");
 	var url = checkAppVersionUrl + "&appVersion="+appVersion+"&appPlatform="+Titanium.Platform.osname;
-	console.log(url);
 	var client = Ti.Network.createHTTPClient({
 		// function called when the response data is available
 		onload : function(e) {
@@ -129,7 +133,6 @@ exports.checkAppVersion = function(callback_download){
 		},
 		// function called when an error occurs, including a timeout
 		onerror : function(e) {
-			console.log("error check version");
 		},
 		timeout : 60000  // in milliseconds
 	}); 
@@ -140,21 +143,14 @@ exports.checkAppVersion = function(callback_download){
 
 // call API by post method
 exports.callByPostWithJson = function(e, onload, onerror){
-	
 	var deviceToken = Ti.App.Properties.getString('deviceToken');
 	if(deviceToken != ""){  
 		var url = eval(e.url);
-		console.log(url);
 		var _result = contactServerByPostWithJson(url, e.params || {});   
-		_result.onload = function(ex) { 
-			console.log('success callByPost');
-			console.log(this.responseText);
+		_result.onload = function(ex) {
 			onload && onload(this.responseText); 
 		};
-		
 		_result.onerror = function(ex) {
-			console.log('failure callByPost');
-			console.log(ex);
 			//API.callByPost(e, onload, onerror); 
 		};
 	}
@@ -173,15 +169,11 @@ exports.callByPostImage = function(e, onload, onerror) {
 	if(item_id != "" && typeof item_id != 'undefined'){
 		itemStr =  "&item_id="+item_id;
 	}
-	// console.log(url+"&u_id="+e.params.u_id+itemStr);return false;
 	var _result = contactServerByPostImage(url+"&u_id="+e.params.u_id+itemStr,e.img);
-	_result.onload = function(e) { 
-		console.log('success');
+	_result.onload = function(e) {
 		onload && onload(this.responseText); 
 	};
-	
-	_result.onerror = function(ex) { 
-		console.log("onerror");
+	_result.onerror = function(ex) {
 		API.callByPostImage(e, onload);
 		//onerror && onerror();
 	};
@@ -190,7 +182,6 @@ exports.callByPostImage = function(e, onload, onerror) {
 
 // update user device token
 exports.updateNotificationToken = function(e){
-	
 	var deviceToken = Ti.App.Properties.getString('deviceToken');
 	if(deviceToken != ""){ 
 		var records = {};
@@ -203,7 +194,6 @@ exports.updateNotificationToken = function(e){
 		var _result = contactServerByPost(url,records);   
 		_result.onload = function(e) {  
 		};
-		
 		_result.onerror = function(ex) { 
 		};
 	}
@@ -219,11 +209,8 @@ exports.sendNotification = function(e){
 	var url = sendNotificationUrl+"?message="+e.message+"&to_id="+e.to_id+"&u_id="+u_id+"&target="+e.target;
 	var _result = contactServerByGet(url);   
 	_result.onload = function(ex) {
-		console.log(ex);
 	};
-	
-	_result.onerror = function(ex) { 
-		console.log(ex);
+	_result.onerror = function(ex) {
 	};
 };
 
@@ -244,14 +231,13 @@ exports.loadAPIBySequence = function (e){ //counter,
 	}
 	
 	var url = api['url'];
-	if(api['url'] == "getMyGroupList"){
+	if(api['url'] == "getMyGroupList" || api['url'] == "getMyEventsList"){
 		if(u_id == undefined){
 			doLogout();
 			return;
 		}		
 		params={u_id:u_id};
 	}
-	console.log(url);
 	API.callByPost({
 		url: url,
 		params: params
@@ -261,6 +247,7 @@ exports.loadAPIBySequence = function (e){ //counter,
 				eval("_.isFunction("+api['method']+") && "+api['method']+"(responseText)");
 			}else if(api['type'] == "api_model"){
 				var res = JSON.parse(responseText);
+				var model_name = api['model'];
 				if(res.images != undefined){
 					var img_model = Alloy.createCollection("images_table");
 					img_model.saveArray(res.images);
@@ -271,9 +258,14 @@ exports.loadAPIBySequence = function (e){ //counter,
 					g_model.saveArray(res.group);
 					g_model = undefined;
 				}
-				var arr = res.data; 
-		       	var model = Alloy.createCollection(api['model']);
-		        model.saveArray(arr);			        	
+				if(res.events != undefined) {
+					var e_model = Alloy.createCollection(api['model']);
+					e_model.saveArray(res.events);
+					model_name = "event_member";
+				}
+				var arr = res.data;
+		       	var model = Alloy.createCollection(model_name);
+		        model.saveArray(arr);
 		        checker.updateModule(APILoadingList[counter]['checkId'],APILoadingList[counter]['model'],currentDateTime1(),u_id);					
 				arr = undefined;
 				model = undefined;
@@ -344,7 +336,6 @@ function contactServerByPost(url,records) {
 	if(OS_ANDROID){
 	 	client.setRequestHeader('ContentType', 'application/x-www-form-urlencoded'); 
 	 }
-	console.log(records);
 	client.open("POST", url);
 	client.send(records);
 	return client;
@@ -357,7 +348,6 @@ function contactServerByPostWithJson(url,records) {
 	
 	client.setRequestHeader('ContentType', 'application/json');
 	//client.setRequestHeader('processData', false);
-	console.log(records);
 	client.open("POST", url);
 	client.send(records);
 	return client;

@@ -5,7 +5,7 @@ ID       type Name
 1		getStaffList
 2		getPostList
 3		getMyGroupList
-4		getPostCommentList
+4		getMyEventsList
 ************************************/
 
 exports.definition = {

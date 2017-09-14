@@ -1,3 +1,4 @@
+var args = arguments[0] || {};//u_id g_id
 var date = new Date();
 var num_to_name = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
 var day_of_week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -5,7 +6,6 @@ var month_num = 0;
 var year_text = "";
 var title_color = ["#B91E79", "#6B62A1", "#82A062", "#C1D58E", "#62A228", "#9FC22A", "#B7BB1E", "#DCA918", "#D28A28", "#812A16", "#3B4791", "#455056"];
 var change_color = "";
-var u_id = Ti.App.Properties.getString("u_id")||"";
 
 var cell_width;
 var pwidth = Titanium.Platform.displayCaps.platformWidth;
@@ -22,7 +22,20 @@ function pixelToDp(px) {
 
 function init() {
 	Alloy.Globals.loading.stopLoading();
-	title();
+	var params = {u_id: args.u_id};
+	API.callByPost({url:"getMyEventsList", params:params},{
+		onload:function(responceText){
+			var res = JSON.parse(responceText);
+			var e_model = Alloy.createCollection("my_eventslist");
+			e_model.saveArray(res.events);
+			var ee_model = Alloy.createCollection("event_member");
+			ee_model.saveArray(res.data);
+			res = e_model = ee_model = null;
+			title();
+		},onerror:function(err){
+		}
+	});
+	params = null;
 }
 
 function title(e) {
@@ -70,7 +83,7 @@ function change_month(e) {
 	var opts = {cancel: 12, options: options, destructive: 0, title: 'Month'};
 	var dialog = Ti.UI.createOptionDialog(opts);
 	
-	dialog.addEventListener("click", function(e) {console.log(JSON.stringify(e));
+	dialog.addEventListener("click", function(e) {
 		if(e.index >= 0 && e.index <= 11) {
 			var cr = $.title.getChildren();
 			cr[0].setText(e.source.options[e.index]);
@@ -81,9 +94,22 @@ function change_month(e) {
 				$.title.setBackgroundColor(title_color[e.index]);
 				var cr2 = $.add_days.getChildren();
 				$.add_days.remove(cr2[0]);
-				var hlday = [{title: "crismest", date: "2017/8/25"}, {title: "crismest", date: "2017/8/24"}, {title: "crismest", date: "2017/8/20"}];
+				var lastDay = new Date($.title.getChildren()[1].getText(), $.title.getChildren()[0].num);
+				lastDay.setDate(1);
+				lastDay.setHours(-1);
+				lastDay.setHours(23);
+				lastDay.setMinutes(59);
+				lastDay.setSeconds(59);
+				var month = ($.title.getChildren()[0].num.toString().length >= 2) ? $.title.getChildren()[0].num : "0" + $.title.getChildren()[0].num;
+				var f_date = $.title.getChildren()[1].getText() + "-" + month + "-01";
+				var l_date = $.title.getChildren()[1].getText() + "-" + month + "-" + lastDay.getDate();
+				var model = Alloy.createCollection("holiday");
+				var hlday = model.getDataByDate(f_date, l_date);
 				render_calendar(hlday);
-				
+				lastDay = null;
+				f_date = null;
+				l_date = null;
+				model = null;
 				cr2 = null;
 				hlday = null;
 			}
@@ -120,9 +146,22 @@ function change_year(e) {
 				year_text = cr[1].text;
 				var cr2 = $.add_days.getChildren();
 				$.add_days.remove(cr2[0]);
-				var hlday = [{title: "crismest", date: "2017/8/25"}, {title: "crismest", date: "2017/8/24"}, {title: "crismest", date: "2017/8/20"}];
+				var lastDay = new Date($.title.getChildren()[1].getText(), $.title.getChildren()[0].num);
+				lastDay.setDate(1);
+				lastDay.setHours(-1);
+				lastDay.setHours(23);
+				lastDay.setMinutes(59);
+				lastDay.setSeconds(59);
+				var month = ($.title.getChildren()[0].num.toString().length >= 2) ? $.title.getChildren()[0].num : "0" + $.title.getChildren()[0].num;
+				var f_date = $.title.getChildren()[1].getText() + "-" + month + "-01";
+				var l_date = $.title.getChildren()[1].getText() + "-" + month + "-" + lastDay.getDate();
+				var model = Alloy.createCollection("holiday");
+				var hlday = model.getDataByDate(f_date, l_date);
 				render_calendar(hlday);
-				
+				lastDay = null;
+				f_date = null;
+				l_date = null;
+				model = null;
 				cr2 = null;
 				hlday = null;
 			}
@@ -155,7 +194,23 @@ function days_bar(e) {
 		
 		label_day = null;
 	}
-	render_calendar();//pass array
+	var lastDay = new Date($.title.getChildren()[1].getText(), $.title.getChildren()[0].num);
+	lastDay.setDate(1);
+	lastDay.setHours(-1);
+	lastDay.setHours(23);
+	lastDay.setMinutes(59);
+	lastDay.setSeconds(59);
+	var month = ($.title.getChildren()[0].num.toString().length >= 2) ? $.title.getChildren()[0].num : "0" + $.title.getChildren()[0].num;
+	var f_date = $.title.getChildren()[1].getText() + "-" + month + "-01";
+	var l_date = $.title.getChildren()[1].getText() + "-" + month + "-" + lastDay.getDate();
+	var model = Alloy.createCollection("holiday");
+	var hlday = model.getDataByDate(f_date, l_date);
+	render_calendar(hlday);
+	lastDay = null;
+	f_date = null;
+	l_date = null;
+	model = null;
+	hlday = null;
 }
 
 function render_calendar(e) {
@@ -186,7 +241,7 @@ function render_calendar(e) {
 		
 		if(e != undefined) {
 			e.forEach(function(entry) {
-				var chk_date = entry.date.split("/");
+				var chk_date = entry.event_date.split("-");
 				if(chk_date[0] == day.getFullYear() && chk_date[1] == cr[0].num && chk_date[2] == i) {
 					chk_hlday.push(entry);
 				}
@@ -206,7 +261,7 @@ function render_calendar(e) {
 			text: (i <= 0) ? "" : i,
 			date: day.getFullYear() + "/" + cr[0].num + "/" + i,
 			day: day.getDay(),
-			holiday: (chk_hlday != "") ? chk_hlday : "noholiday"
+			holiday: (chk_hlday.length != 0) ? chk_hlday : "noholiday"
 		});
 		
 		if(i == date.getDate()) {
@@ -234,17 +289,20 @@ function render_calendar(e) {
 	t = null;
 	first_day = null;
 	
-	//var data = [{title: "todo", date: "2017/12/25", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/25", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/25", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/26", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/26", s_time: "12:55", e_time: "13:55"}, {title: "todo", date: "2017/12/26", s_time: "12:55", e_time: "13:55"}];
+	var d = (date.getDate().toString().length >= 2) ? date.getDate() : "0" + date.getDate();
+	var m = (date.getMonth().toString().length >= 2) ? date.getMonth() + 1 : "0" + (date.getMonth() + 1);
+	var y = date.getFullYear();
+	var model = Alloy.createCollection("my_eventslist");
+	var data = model.getDataToday(y + "-" + m + "-" + d);
 	var arr = [];
-	// data.forEach(function(e) {
-		// arr[e.date] = arr[e.date] || {};
-		// arr[e.date].title = e.date;
-		// arr[e.date].child = arr[e.date].child || [];
-		// arr[e.date].child.push(e);
-	// });
+	data.forEach(function(e) {
+		arr[e.event_date] = arr[e.event_date] || {};
+		arr[e.event_date].title = e.event_date;
+		arr[e.event_date].child = arr[e.event_date].child || [];
+		arr[e.event_date].child.push(e);
+	});
 	$.holidays.removeAllChildren();
 	todolist(arr);
-	
 	data = null;
 	arr = null;
 }
@@ -263,7 +321,7 @@ function selected_date(e) {
 	var day = new Date(t[1].text + "/" + $.title.getChildren()[0].num + "/1");
 	change_color = e.text + day.getDay();
 	
-	addPage("todolist", e.date, {u_id:u_id, date:e.date, holiday:e.holiday}, {pageName: "addEventButton", eventName: "todolist:addEvent"});
+	addPage("todolist", e.date, {u_id:args.u_id, g_id:args.g_id, date:e.date, holiday:e.holiday}, {pageName: "addEventButton", eventName: "todolist:addEvent"});
 	
 	cr_view = null;
 	cr_lb = null;
@@ -281,12 +339,14 @@ function todolist(e) {
 		});
 		
 		e[key].child.forEach(function(entry) {
+			var ss_time = entry.start_time.substring(11, 16);
+			var ee_time = entry.end_time.substring(11, 16);
 			var parent = $.UI.create("View", {
 				classes: ['wfill', 'hsize'],
 				top: 1,
 				bottom: 1,
 				backgroundColor: "#fff",
-				time: entry.s_time + " - " + entry.e_time,
+				time: ss_time + " - " + ee_time,
 				title: entry.title
 			});
 	
@@ -299,8 +359,7 @@ function todolist(e) {
 				height: 19,
 				color: "#000",
 				text: entry.title,
-				time: entry.s_time + " - " + entry.e_time,
-				title: entry.title
+				touchEnabled: false
 			}) : $.UI.create("Label", {
 				classes: ['wsize', 'h5'],
 				top: 5,
@@ -312,8 +371,7 @@ function todolist(e) {
 				wordWrap: false,
 				color: "#000",
 				text: entry.title,
-				time: entry.s_time + " - " + entry.e_time,
-				title: entry.title
+				touchEnabled: false
 			});
 			
 			var list_time = $.UI.create("View", {
@@ -321,26 +379,28 @@ function todolist(e) {
 				top: 5,
 				bottom: 5,
 				right: 5,
-				time: entry.s_time + " - " + entry.e_time,
-				title: entry.title
+				touchEnabled: false
 			});
 			
 			var s_time = $.UI.create("Label", {
 				classes: ['wsize', 'hsize', 'h5'],
 				color: "#000",
-				text: entry.s_time
+				text: ss_time,
+				touchEnabled: false
 			});
 			
 			var to = $.UI.create("Label", {
 				classes: ['wsize', 'hsize', 'h5'],
 				color: "#000",
-				text: " - "
+				text: " - ",
+				touchEnabled: false
 			});
 			
 			var e_time = $.UI.create("Label", {
 				classes: ['wsize', 'hsize'],
 				color: "#000",
-				text: entry.e_time
+				text: ee_time,
+				touchEnabled: false
 			});
 			
 			parent.addEventListener("click", detail);
@@ -349,8 +409,8 @@ function todolist(e) {
 			list_time.add(s_time);
 			list_time.add(to);
 			list_time.add(e_time);
-			//$.holidays.add(date);
-			//$.holidays.add(parent);
+			$.holidays.add(date);
+			$.holidays.add(parent);
 			
 			parent = null;
 			title = null;
@@ -366,16 +426,14 @@ function todolist(e) {
 }
 
 function detail(e) {
-	if(e.source.time != undefined && e.source.title != undefined) {
-		var alert = Titanium.UI.createAlertDialog({
-			title: e.source.time,
-			message: e.source.title,
-			ok: "ok"
-		});
-		alert.show();
-		
-		alert = null;
-	}
+	var alert = Titanium.UI.createAlertDialog({
+		title: e.source.time,
+		message: e.source.title,
+		ok: "ok"
+	});
+	alert.show();
+	
+	alert = null;
 }
 
 init();

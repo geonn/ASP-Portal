@@ -290,6 +290,95 @@ exports.definition = {
                 db.close();
                 collection.trigger('sync');
                 return arr;
+			},CalendarGetGroupById: function(u_id, unlimit,offset){
+				var collection = this;
+				var columns = collection.config.columns;
+				
+				var names = [];
+				for (var k in columns) {
+	                names.push(k);
+	            }
+				offset = offset || 0;
+				var sql_limit = (unlimit)?"":" limit "+offset+",15";
+				var collection = this;
+				var sql = "select * from " + collection.config.adapter.collection_name + " mg JOIN groups g on mg.g_id = g.id WHERE mg.status = 1 AND mg.u_id = "+u_id+sql_limit;
+				db = Ti.Database.open(collection.config.adapter.db_name);
+				
+				if(Ti.Platform.osname != "android"){
+					db.file.setRemoteBackup(false);
+				}
+                var res = db.execute(sql);
+                var arr = [];
+				var count = 0;
+				
+                while (res.isValidRow()){
+                	var row_count = res.fieldCount;
+                	arr[count] = {
+                		id: res.fieldByName('g_id'),
+						name: res.fieldByName("name"),
+						img_path: res.fieldByName('image')
+					};
+                	res.next();
+					count++;
+                }
+                res.close();
+                db.close();
+                collection.trigger('sync');
+                return arr;
+			},searchMyGroup: function(u_id, unlimit, offset, value){
+				var collection = this;
+				var columns = collection.config.columns;
+				
+				var names = [];
+				for (var k in columns) {
+	                names.push(k);
+	            }
+				offset = offset || 0;
+				var sql_limit = (unlimit)?"":" limit "+offset+",15";
+				var collection = this;
+				var sql = "select * from " + collection.config.adapter.collection_name + " mg JOIN groups g on mg.g_id = g.id WHERE mg.status = 1 AND mg.u_id = "+u_id+" AND g.name like '%"+value+"%' order by g.name"+sql_limit;
+				db = Ti.Database.open(collection.config.adapter.db_name);
+				
+				if(Ti.Platform.osname != "android"){
+					db.file.setRemoteBackup(false);
+				}
+                var res = db.execute(sql);
+                var arr = [];
+				var count = 0;
+				
+                while (res.isValidRow()){
+                	var row_count = res.fieldCount;
+                	arr[count] = {
+                		id: res.fieldByName('g_id'),
+						name: res.fieldByName("name"),
+						img_path: res.fieldByName('image')
+					};
+                	res.next();
+					count++;
+                }
+                res.close();
+                db.close();
+                collection.trigger('sync');
+                return arr;
+			},getGroupByGId: function(g_id){
+				var collection = this;
+				var sql = "select * from " + collection.config.adapter.collection_name + " mg JOIN groups g on mg.g_id = g.id WHERE mg.status = 1 AND mg.g_id = "+g_id;
+				db = Ti.Database.open(collection.config.adapter.db_name);
+				if(Ti.Platform.osname != "android"){
+					db.file.setRemoteBackup(false);
+				}
+                var res = db.execute(sql);
+                var arr;
+                if(res.isValidRow()){
+                	arr = {
+                		id: res.fieldByName('g_id'),
+						name: res.fieldByName("name")
+					};
+                }
+                res.close();
+                db.close();
+                collection.trigger('sync');
+                return arr;
 			},
 		});
 
