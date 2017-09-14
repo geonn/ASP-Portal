@@ -38,8 +38,8 @@ function setData(){
 function mediaOptions(){
 	if(!edit){
 
-		var options = ['Capture Image','Get image by internal storage','Capture Video','Get video by internal storage','Cancel'];
-		var opts = {cancel: 4,options:options,destructive: 0,title: 'Options'};	
+		var options = ['Capture Image','Get image by internal storage','Cancel'];
+		var opts = {cancel: 2,options:options,destructive: 0,title: 'Options'};	
 		var dialog = Ti.UI.createOptionDialog(opts);	
 		dialog.addEventListener("click",function(e){
 			if(e.index == 0){
@@ -71,36 +71,36 @@ function mediaOptions(){
 					showGMImagePicker();
 				}
 			}
-			if(e.index == 2){				
-				if (Ti.Media.hasCameraPermissions()) {			
-					openVideoRecorder()
-				}else{
-					Ti.Media.requestCameraPermissions(function(e) {
-			            if(e.success){
-							openVideoRecorder()
-			            }else{
-			                alert('You denied permission');
-			            }	
-			        });    			
-				}	
-			}				
-			if(e.index == 3){
-				if(OS_ANDROID){
-					if(Titanium.Filesystem.hasStoragePermissions()){
-						addImageV2();
-					}else{
-						Titanium.Filesystem.requestStoragePermissions(function(e) {
-						    if (e.success) {
-								addImageV2();
-						    } else {
-								common.createAlert("Warning","You don't have file storage permission!!!\nYou can go to setting enabled the permission.",function(e){
-
-								});
-						    }
-						}); 							
-					}					
-				}
-			}
+			// if(e.index == 2){				
+				// if (Ti.Media.hasCameraPermissions()) {			
+					// openVideoRecorder()
+				// }else{
+					// Ti.Media.requestCameraPermissions(function(e) {
+			            // if(e.success){
+							// openVideoRecorder()
+			            // }else{
+			                // alert('You denied permission');
+			            // }	
+			        // });    			
+				// }	
+			// }				
+			// if(e.index == 3){
+				// if(OS_ANDROID){
+					// if(Titanium.Filesystem.hasStoragePermissions()){
+						// addImageV2();
+					// }else{
+						// Titanium.Filesystem.requestStoragePermissions(function(e) {
+						    // if (e.success) {
+								// addImageV2();
+						    // } else {
+								// common.createAlert("Warning","You don't have file storage permission!!!\nYou can go to setting enabled the permission.",function(e){
+// 
+								// });
+						    // }
+						// }); 							
+					// }					
+				// }
+			// }
 		});	
 		dialog.show();		
 	}else{

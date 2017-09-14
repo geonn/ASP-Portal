@@ -62,7 +62,7 @@ function render_post(params){
 		};
 		var more_container = $.UI.create("View",{classes:['hfill'],width:"30",right:"0",u_id:entry.u_id,p_id:entry.id,post_index:post_index});
 		var more = $.UI.create("ImageView",{right:"0",top:"0",image:'/images/btn-down.png',touchEnabled:false});
-		// var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],maxLines:'4',top:"0",bottom:'0',text:entry.description,p_id:entry.id});
+		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],maxLines:'4',top:"0",bottom:'0',text:entry.description,p_id:entry.id});
 		// if(OS_ANDROID){
 			// description.ellipsize=true;
 			// description.wordWrap=false;
@@ -98,6 +98,7 @@ function render_post(params){
 			var imgcount_container = (imglength > 1) ? $.UI.create("View",{classes:['wsize','hsize','horz'],backgroundColor:"#99000000",imglength:imglength,zIndex:10,right:10,top:10,borderRadius:"5"}) : $.UI.create("View",{classes:['wsize','hsize'],imglength:imglength,zIndex:10,right:10,top:10,borderRadius:"5"});
 			var imgcount = (imglength > 1) ? $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,right:5,color:"#fff",text:"1/"+imglength,imglength:imglength}) : $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,right:5,imglength:imglength});
 			var img_icon = (imglength > 1) ? $.UI.create("ImageView", {image: "/images/img_icon.png", width:20, height:17, right:10}) :  $.UI.create("ImageView", {width:0, height:0});
+			(OS_ANDROID)?img_icon.right =0:img_icon.right=10;
 			imgcount_container.add(imgcount);
 			imgcount_container.add(img_icon);
 			imgArr.forEach(function(entry1){

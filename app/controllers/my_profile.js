@@ -120,6 +120,7 @@ function refresh(e){
 	});	
 }
 function render_post(params){
+	console.log("asdf");
 	params.forEach(function(entry){
 		var imgArr = i_model.getImageByCateandPriId(true,undefined,2,entry.id);
 		var videoArr = i_model.getVideoByCateandPriId(true,undefined,2,entry.id);		
@@ -228,7 +229,7 @@ function render_post(params){
 		more_container.add(more);
 		title_child_container.add(more_container); 
 		title_container.add(title_child_container);
-		$.mother_view.add(container);
+		$.mother_post.add(container);
 		description.addEventListener("click",function(e){
 			addPage("post_detail","Post Detail",{p_id:e.source.p_id,comment_count:e.source.parent.children[4].children[0]});
 		});
@@ -270,7 +271,7 @@ function render_post(params){
 		ctn_read=undefined;
 		post_index++;	
 	});
-			Alloy.Globals.loading.stopLoading();			
+	Alloy.Globals.loading.stopLoading();			
 	
 }
 function postOptions(params){

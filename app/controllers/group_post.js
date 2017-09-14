@@ -47,6 +47,7 @@ function init(){
 init();	
 
 function render_post(params){
+	console.log("asdf");
 	params.forEach(function(entry){
 		var imgArr = i_model.getImageByCateandPriId(true,undefined,2,entry.id);
 		var videoArr = i_model.getVideoByCateandPriId(true,undefined,2,entry.id);		
@@ -203,7 +204,7 @@ function render_post(params){
 }
 
 function scrollChecker(e){
-	var theEnd = $.scrollView.rect.height;
+	var theEnd = $.mother_view.rect.height;
 	var total = (OS_ANDROID)?pixelToDp(e.y)+e.source.rect.height: e.y+e.source.rect.height;
 	var nearEnd = theEnd - 200;
 	if (total >= nearEnd){
