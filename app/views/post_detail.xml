@@ -18,7 +18,8 @@
 				<View class="wfill hsize padding" top="0" left="2" right="2">
 					<Label class="wsize hsize h4 padding" left="0" text="" id="desc"></Label>
 				</View>
-				<View class="wfill hsize" id="p_img"></View>
+				<View id="videoContainer" class="wfill hsize" top="10" backgroundColor="#000"></View>				
+				<View class="wfill hsize" id="p_img" top="10"></View>
 			</View>
 			<View class="wfill vert" onClick="goComment" height="40" bottom="0" backgroundColor="#fff">
 				<View class="hr" touchEnabled="false"></View>

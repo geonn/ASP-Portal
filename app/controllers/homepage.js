@@ -1,6 +1,8 @@
 init();
 var widthAnimate1 = Ti.UI.createAnimation({duration:200,width:"100%"});
 var widthAnimate2 = Ti.UI.createAnimation({duration:200,width:0});
+var opaAnimate1 = Ti.UI.createAnimation({duration:200,opacity:1});
+var opaAnimate2 = Ti.UI.createAnimation({duration:200,opacity:0});
 function init(){
 	Alloy.Globals.pageFlow.stopLoading();		
 	$.discussion.add(Alloy.createController("discussion").getView());
@@ -31,9 +33,11 @@ var sideExpaned = false;
 function sideMenu(){
 	if(sideExpaned){
 		(OS_ANDROID)?$.sideMenu.animate(widthAnimate2):$.sideMenu.setWidth(0);
+		$.sideMenu.animate(opaAnimate2);
 	}
 	else{
 		(OS_ANDROID)?$.sideMenu.animate(widthAnimate1):$.sideMenu.setWidth("100%");
+		$.sideMenu.animate(opaAnimate1);		
 	}
 	sideExpaned = !sideExpaned;		
 }

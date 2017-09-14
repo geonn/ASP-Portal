@@ -122,12 +122,23 @@ function refresh(e){
 function render_post(params){
 	params.forEach(function(entry){
 		var imgArr = i_model.getImageByCateandPriId(true,undefined,2,entry.id);
+		var videoArr = i_model.getVideoByCateandPriId(true,undefined,2,entry.id);		
 		var container = $.UI.create("View",{classes:['view_class','vert','padding'],left:"0",right:"0",backgroundColor:"#fff",post_index:post_index});
-		var title_container = $.UI.create('View',{classes:['wfill','horz'],height:68});
-		var user_img = $.UI.create("ImageView",{classes:['padding'],width:45,height:45,image:(u_res.img_path!="")?u_res.img_path:"/images/my_profile_square.png",u_id:entry.u_id,defaultImage:"/images/asp_square_logo.png"});
+		var title_container = $.UI.create('View',{classes:['wfill','horz'],height:80});
+		var user_img = $.UI.create("ImageView",{classes:['padding'],width:55,height:55,image:(entry.u_img!="")?entry.u_img:"/images/my_profile_square.png",u_id:entry.u_id,defaultImage:"/images/asp_square_logo.png"});
 		var title_child_container = $.UI.create("View",{classes:['wfill','hfill','padding'],left:0});
-		var username = $.UI.create("Label",{classes:['wsize','hsize','h4','bold'],text:entry.u_name,left:"0",top:"0"});
-		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:"0",bottom:0,color:"#7CC6FF",text:countdown.getTimePost(entry.created),p_id:entry.id});
+		var username = $.UI.create("Label",{classes:['wsize','hsize','h4','bold'],text:entry.u_name,left:"0",top:"0",u_id:entry.u_id});
+		//var time_group = $.UI.create("View",{classes:['wsize','hsize','horz'],left:"0",bottom:"0"});
+		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:'0',bottom:'0',color:"#7CC6FF",text:countdown.getTimePost(entry.created),p_id:entry.id});
+		console.log(entry.title+" title");
+		if (entry.id != 0) {
+			var group_title = (entry.g_id > 0)?"Post in "+entry.title+" group":entry.title;
+			var group = $.UI.create("Label",{classes:['h6'],width:'180',height:'20',color:"#23c281",left:'0',top:'22',text: group_title, g_id:entry.g_id});
+			if(OS_ANDROID){
+				group.ellipsize=true;
+				group.wordWrap=false;
+			}
+		};
 		var more_container = $.UI.create("View",{classes:['hfill'],width:"30",right:"0",u_id:entry.u_id,p_id:entry.id,post_index:post_index});
 		var more = $.UI.create("ImageView",{right:"0",top:"0",image:'/images/btn-down.png',touchEnabled:false});
 		var description = $.UI.create("Label",{classes:['wfill','hsize','padding'],maxLines:'4',top:"0",bottom:'0',text:entry.description,p_id:entry.id});
@@ -136,47 +147,67 @@ function render_post(params){
 			description.wordWrap=false;
 		}
 		var ctn_read = $.UI.create("Label",{classes:['wfill','hsize'],top:'0',left:'10',color:'#90949C',text:'Continue reading...',p_id:entry.id});
-		var hr = $.UI.create("View",{classes:['hr'],top:'10'});
+		var hr = $.UI.create("View",{classes:['hr']});
 		var comment_container = (OS_IOS)?$.UI.create("View",{classes:['wfill','hsize'],left:"10",right:"10",p_id:entry.id}):$.UI.create("View",{classes:['wfill','hsize','padding'],p_id:entry.id});
 		var comment_count = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:entry.comment_count+" comments",left:"0",p_id:entry.id,touchEnabled:false});
 		var comment_button_container = $.UI.create("View",{classes:['wsize','hsize','horz'],right:0,p_id:entry.id,touchEnabled:false});
-		var comment_img = $.UI.create("ImageView",{image:"/images/comment.png",p_id:entry.id});
-		var comment_button = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:"Comment",p_id:entry.id});
+		var comment_img = $.UI.create("ImageView",{image:"/images/comment.png",touchEnabled:false});
+		var comment_button = $.UI.create("Label",{classes:['wsize','hsize','h6'],color:"#90949C",text:"Comment",touchEnabled:false});
+		var img_container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:10,backgroundColor:"#000"});
+		var video_container = $.UI.create("View",{classes:['wfill','hsize','padding'],top:10,backgroundColor:"#000"});	
 		container.add(title_container);
 		container.add(description);
 		container.add(ctn_read);
+		container.add(video_container);		
+		container.add(img_container);
+		if(videoArr.length != 0){
+			video_container.height = 250;
+			var videoContainer = $.UI.create("ImageView",{classes:['wfill','hsize']});
+			var playImage = $.UI.create("ImageView",{width:220,height:130,image:"/images/play-button.png",videoUrl:videoArr[0].img_path,zIndex:10});
+			video_container.add(videoContainer);
+			video_container.add(playImage);
+			playImage.addEventListener("click",function(e1){
+				console.log("Video path:"+e1.source.videoUrl);
+				addPage("zoomView","Video Preview",{img_path:e1.source.videoUrl,isVideo:true});
+			});
+		}
 		if(imgArr.length != 0){
-			var img_count = $.UI.create("View", {classes:['wfill', 'hsize'], left: 10, right: 10, top:10});
 			var imglength = imgArr.length;
-			var image_container = $.UI.create("ScrollableView",{classes:['wfill'],height:250,backgroundColor:"#000",top:"0",scrollingEnabled:true});
+			var image_container = $.UI.create("ScrollableView",{classes:['wfill'],height:250,top:"0",scrollingEnabled:true});
 			var imgcount_container = (imglength > 1) ? $.UI.create("View",{classes:['wsize','hsize','horz'],backgroundColor:"#99000000",imglength:imglength,zIndex:10,right:10,top:10,borderRadius:"5"}) : $.UI.create("View",{classes:['wsize','hsize'],imglength:imglength,zIndex:10,right:10,top:10,borderRadius:"5"});
 			var imgcount = (imglength > 1) ? $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,right:5,color:"#fff",text:"1/"+imglength,imglength:imglength}) : $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,right:5,imglength:imglength});
-			var img_icon = (imglength > 1) ? $.UI.create("ImageView", {image: "/images/img_icon.png", width:20, height: 17, right: 10}) :  $.UI.create("ImageView", {width:0, height:0});
+			var img_icon = (imglength > 1) ? $.UI.create("ImageView", {image: "/images/img_icon.png", width:20, height:17, right:10}) :  $.UI.create("ImageView", {width:0, height:0});
 			imgcount_container.add(imgcount);
 			imgcount_container.add(img_icon);
 			imgArr.forEach(function(entry1){
 				var small_image_container = $.UI.create("View",{classes:['wfill','hsize']});
-				var image = $.UI.create("ImageView",{classes:['wfill','hsize'],image:entry1.img_path, defaultImage: "/images/loading.png"});
+				var image = $.UI.create("ImageView",{classes:['wfill','hsize'], defaultImage: "/images/loading.png",image:entry1.img_300thumb,imageBig:entry1.img_path});
 				small_image_container.add(image);
-				image_container.addView(small_image_container);
+				image_container.addView(small_image_container);		
 				image.addEventListener("click",function(e){
 					//try {
-						addPage("zoomView","Image Preview",{img_path:e.source.image});
-					// }catch(e) {
-						// //
-					// }
-				});	
+						addPage("zoomView","Image Preview",{img_path:e.source.imageBig});
+					//}catch(e) {
+						//alert("Image is not yet save to local!!!\nPlease Try Again !!");
+					//}
+				});
+                image_container.addEventListener("scrollend",function(e){
+                    if(e.currentPage != undefined && e.source.parent.children[1].children[0].imglength > 1) {
+                        var count = (e.currentPage + 1) + "/" + e.source.parent.children[1].children[0].imglength;
+                        e.source.parent.children[1].children[0].text = count;
+                        count = undefined;
+                    }
+                });
+				small_image_container = undefined;
+				image = undefined;
 			});
-			image_container.addEventListener("scrollend",function(e){
-                if(e.currentPage != undefined && e.source.parent.children[1].children[0].imglength > 1) {
-                    var count = (e.currentPage + 1) + "/" + e.source.parent.children[1].children[0].imglength;
-                    e.source.parent.children[1].children[0].text = count;
-                    count = undefined;
-                }
-            });
-			img_count.add(image_container);
-			img_count.add(imgcount_container);
-			container.add(img_count);
+			img_container.add(image_container);
+			img_container.add(imgcount_container);
+			img_container=undefined;
+			imglength=undefined;
+			image_container=undefined;
+			imgcount_container=undefined;
+			imgcount=undefined;
 		}
 		container.add(hr);
 		container.add(comment_container);
@@ -185,28 +216,41 @@ function render_post(params){
 		comment_button_container.add(comment_img);
 		comment_button_container.add(comment_button);
 		title_container.add(user_img);
+		//time_group.add(time);
+		title_child_container.add(group);
+		if(entry.g_id != 0){
+			group.addEventListener("click",function(e){
+ 				addPage("group_post", "Group Posts", {g_id: e.source.g_id});
+			});
+		};
 		title_child_container.add(username);
 		title_child_container.add(time);
 		more_container.add(more);
-		title_child_container.add(more_container);
+		title_child_container.add(more_container); 
 		title_container.add(title_child_container);
-		$.mother_post.add(container);
+		$.mother_view.add(container);
 		description.addEventListener("click",function(e){
-			addPage("post_detail","Post Detail",{p_id:e.source.p_id});
-		});
-		time.addEventListener("click",function(e){
-			addPage("post_detail","Post Detail",{p_id:e.source.p_id});
+			addPage("post_detail","Post Detail",{p_id:e.source.p_id,comment_count:e.source.parent.children[4].children[0]});
 		});
 		more_container.addEventListener("click",function(e){
  			postOptions({u_id:e.source.u_id,p_id:e.source.p_id,post_index:e.source.post_index});
 		});
-		comment_container.addEventListener("click",function(e){
-			//Alloy.Globals.loading.startLoading("Loading...");			
-			addPage("post_comment","Post Comment",{p_id:e.source.p_id,comment_count:e.source.children[0]});
+		user_img.addEventListener("click",function(e){
+			addPage("my_profile","My Profile",{u_id:e.source.u_id});
+		});
+		username.addEventListener("click",function(e){
+			addPage("my_profile","My Profile",{u_id:e.source.u_id});
+		});
+		time.addEventListener("click",function(e){
+			addPage("post_detail","Post Detail",{p_id:e.source.p_id});
 		});
 		ctn_read.addEventListener("click",function(e){
 			addPage("post_detail","Post Detail",{p_id:e.source.p_id});
 		});
+		comment_container.addEventListener("click",function(e){
+			//Alloy.Globals.loading.startLoading("Loading...");			
+			addPage("post_comment","Post Comment",{p_id:e.source.p_id,comment_count:e.source.children[0]});
+		});	
 		imgArr=undefined;
 		container=undefined;
 		title_container=undefined;
@@ -223,8 +267,7 @@ function render_post(params){
 		comment_button_container=undefined;
 		comment_img=undefined;
 		comment_button=undefined;
-		img_container=undefined;
-		ctn_read-undefined;	
+		ctn_read=undefined;
 		post_index++;	
 	});
 			Alloy.Globals.loading.stopLoading();			

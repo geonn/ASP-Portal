@@ -1,5 +1,5 @@
 <Alloy>
 	<View class="wfill hfill" backgroundColor="#000" id="imageMother">
-		<WebView id="webview" backgroundColor="#000" class="wfill hsize" enableZoomControls="true" />
+		<WebView id="webview" backgroundColor="#000" class="wfill hsize" enableZoomControls="true" />	
 	</View>
 </Alloy>

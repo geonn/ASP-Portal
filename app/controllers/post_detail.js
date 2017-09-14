@@ -48,8 +48,22 @@ function setData(params){
 	$.date_time.setText(countdown.getTimePost(params.created));
 	$.img.image = (u_res.img_path!="")?u_res.img_path:"/images/my_profile_square.png";
 	var imgArr = i_model.getImageByCateandPriId(true,undefined,2,p_id);
+	var videoArr = i_model.getVideoByCateandPriId(true,undefined,2,p_id);		
 	var count_img = 1;
 	$.p_img.removeAllChildren();
+	$.videoContainer.removeAllChildren();
+	$.videoContainer.height = 0;	
+	if(videoArr.length != 0){
+		$.videoContainer.height = 250;
+		var videoContainer = $.UI.create("ImageView",{classes:['wfill','hsize']});
+		var playImage = $.UI.create("ImageView",{width:220,height:130,image:"/images/play-button.png",videoUrl:videoArr[0].img_path,zIndex:10});
+		$.videoContainer.add(videoContainer);
+		$.videoContainer.add(playImage);
+		playImage.addEventListener("click",function(e1){
+			console.log("Video path:"+e1.source.videoUrl);
+			addPage("zoomView","Video Preview",{img_path:e1.source.videoUrl,isVideo:true});
+		});
+	}		
 	if(imgArr.length != 0){
 		var imglength = imgArr.length;
 		var image_container = $.UI.create("ScrollableView",{classes:['wfill'],height:250,backgroundColor:"#000",top:"0",scrollingEnabled:true});

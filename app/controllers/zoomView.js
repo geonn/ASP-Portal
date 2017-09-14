@@ -1,36 +1,40 @@
 var args = arguments[0] || {};
+
 //console.log(blob);
 var img = args.img_path;
-
-function init(){
-	//if(OS_ANDROID){
+var videoPlayer;
+function init(){ 	
+	if($.args.isVideo!= undefined){
+		Alloy.Globals.loading.stopLoading();						
+		videoPlayer = Titanium.Media.createVideoPlayer({
+		    backgroundColor : '#000',
+		    width : Ti.UI.Fill,
+		    height: Ti.UI.SIZE,
+		    mediaControlStyle : Titanium.Media.VIDEO_CONTROL_DEFAULT,
+		    scalingMode : Titanium.Media.VIDEO_SCALING_ASPECT_FIT
+		});
+		videoPlayer.url = img;					
+		$.imageMother.add(videoPlayer);    		
+	}
+	else{
 		$.webview.url = img;
-		Alloy.Globals.loading.stopLoading();
-	// }else{
-		// var Ziv = Ti.UI.createScrollView({
-			// width :Ti.UI.FILL, 
-			// height :Ti.UI.FILL,        
-            // showHorizontalScrollIndicator:false,
-            // showVerticalScrollIndicator:false,
-            // maxZoomScale:10,
-            // minZoomScale:1.0,
-            // borderWidth :1, 
-      		// backgroundColor :"transparent",
-      		// zIndex :100
-		// });
-		// var Zimage = Ti.UI.createImageView({
-			// image: blob,
-			// width :"100%",
-			// height :Ti.UI.SIZE,
-			// zIndex :101,
-			// //enableZoomControls :"true"
-		// });		
-		// Ziv.add(Zimage);
-		// $.imageMother.add(Ziv);
-	// }		
+		Alloy.Globals.loading.stopLoading();					
+	}	
 }
 init();
 function closeWindow(){
 	$.destroy();
 	$.win.close();
 }
+exports.removeEventListeners = function() {
+	try{
+		$.imageMother.removeAllChildren();    		    
+	    console.log("Zoom no listener");			
+	    videoPlayer.hide();
+	    videoPlayer.release();
+	    videoPlayer = null;		
+	}
+	catch(err){
+		console.log(err);
+	}
+};

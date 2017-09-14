@@ -13,6 +13,11 @@ exports.checkAndUpdate = function(e){
 		panelList.addColumn("u_id", "INTEGER");
 		dbVersion = '1.1';
 	}
+	if(dbVersion == "1.1"){
+		var imageTable = Alloy.createCollection("images_table");
+		imageTable.addColumn("media_type","TEXT");
+		dbVersion = '1.2';
+	}
 	Ti.App.Properties.setString("dbVersion", dbVersion);
 };
 

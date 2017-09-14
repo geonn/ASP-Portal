@@ -81,8 +81,6 @@ function checkingInternet(){
 		   setTimeout(function(){
 		   		networkCheck = true;
 		   },100000);
-		} else {
-		   Titanium.API.info(' connection present ');
 		}	
 	},10000);	
 }

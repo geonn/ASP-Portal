@@ -28,6 +28,7 @@ var APILoadingList = [
  {url: "getPostList", type: "api_model", model: "post", checkId: "2"},
  {url: "getMyGroupList", type: "api_model", model: "my_group", checkId: "3"}
 ];
+var defaultRetryTimes = 5;
 
 /*********************
 **** API FUNCTION*****
@@ -65,7 +66,41 @@ exports.callByPost = function(e, handler){
 		}
 	};
 };
-
+exports.callByPostVoice = function(e, onload, onerror){
+	var retryTimes = (typeof e.retryTimes != "undefined")?e.retryTimes: defaultRetryTimes;
+	var deviceToken = Ti.App.Properties.getString('deviceToken');
+	if(deviceToken != ""){  
+		
+		var url = (typeof e.new != "undefined")?"http://"+API_DOMAIN+"/api/"+e.url+"?user="+USER+"&key="+KEY:eval(e.url);
+		console.log(url); 
+		console.log(e.type+"  e.type");
+		if(e.type == "voice"){
+			var _result = contactServerByPostVideo(url, e.params || {});  
+		}else{
+			var _result = contactServerByPost(url, e.params || {});  
+		}
+		_result.onload = function(ex) {  
+			onload && onload(this.responseText); 
+		};
+		
+		_result.onerror = function(ex) {  
+			console.log(ex);
+			if(retryTimes !== 0 && Titanium.Network.online){
+				retryTimes --;
+				_.extend(e, {retryTimes: retryTimes});
+				API.callByPost(e, onload, onerror); 
+			}else{
+				if(!callByPost_error_popup){
+					callByPost_error_popup = true;
+					common.createAlert("Error", "Unable connect to the server. Please try again later.", function(){
+						callByPost_error_popup = false;
+					});
+				}
+				onload('{"status":"error","error_message":"No internet connection."}');
+			}
+		};
+	}
+};
 exports.callByGet  = function(e, onload, onerror){
 	var url =  eval(e.url) + "?"+e.params;
 	console.log(url);
@@ -325,6 +360,20 @@ function contactServerByPostWithJson(url,records) {
 	console.log(records);
 	client.open("POST", url);
 	client.send(records);
+	return client;
+};
+function contactServerByPostVideo(url,params) { 
+	var client = Ti.Network.createHTTPClient({
+		timeout : 150000
+	});
+	 
+	//client.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');  
+	client.open("POST", url);
+	client.onsendstream = function(e) {
+		console.log("still running");
+	    console.log( Math.floor(e.progress * 100) + "%");
+	};
+	client.send(params); 
 	return client;
 };
 
