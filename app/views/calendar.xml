@@ -7,7 +7,7 @@
 				<View class="hr"></View>
 				<View class="wfill hsize" id="add_days" backgroundColor="#fff"></View>
 				<View class="hr"></View>
-				<ScrollView class="wfill hsize vert contwfill conthsize" scrollType="vertical" bottom="5" id="holidays" backgroundColor="#eff3f6"></ScrollView>
+				<ScrollView class="wfill hfill vert contwfill conthsize" scrollType="vertical" bottom="5" id="holidays" backgroundColor="#eff3f6"></ScrollView>
 			</View>
 		</View>
 	</View>

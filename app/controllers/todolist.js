@@ -271,6 +271,7 @@ function refresh() {
 	$.group_todolist.removeAllChildren();
 	init();
 }
+Ti.App.addEventListener("todolist:refresh", refresh);
 
 exports.removeEventListeners = function(e) {
 	Ti.App.removeEventListener("todolist:addEvent", addEvent);
