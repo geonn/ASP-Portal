@@ -249,8 +249,10 @@ function deleteComment(c_id){
 		}		
 	});
 }
-$.swipeRefresh.addEventListener('refreshing',function(e){
-	init();
-	e.source.setRefreshing(false);		
-});	
+if (OS_ANDROID) {
+	$.swipeRefresh.addEventListener('refreshing',function(e){
+		init();
+		e.source.setRefreshing(false);		
+	});	
+};	
 Ti.App.addEventListener("post_detail:init",init);
