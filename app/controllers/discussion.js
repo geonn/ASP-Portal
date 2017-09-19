@@ -82,15 +82,15 @@ function render_post(params){
 		container.add(video_container);		
 		container.add(img_container);
 		if(videoArr.length != 0){
-			// video_container.height = 250;
-			// var videoContainer = $.UI.create("ImageView",{classes:['wfill','hsize']});
-			// var playImage = $.UI.create("ImageView",{width:220,height:130,image:"/images/play-button.png",videoUrl:videoArr[0].img_path,zIndex:10});
-			// video_container.add(videoContainer);
-			// video_container.add(playImage);
-			// playImage.addEventListener("click",function(e1){
-				// console.log("Video path:"+e1.source.videoUrl);
-				// addPage("zoomView","Video Preview",{img_path:e1.source.videoUrl,isVideo:true});
-			// });
+			video_container.height = 250;
+			var videoContainer = $.UI.create("ImageView",{classes:['wfill','hsize'],image:videoArr[0].img_thumb});
+			var playImage = $.UI.create("ImageView",{width:220,height:130,image:"/images/play-button.png",videoUrl:videoArr[0].img_path,zIndex:10});
+			video_container.add(videoContainer);
+			video_container.add(playImage);
+			playImage.addEventListener("click",function(e1){
+				console.log("Video path:"+e1.source.videoUrl);
+				addPage("zoomView","Video Preview",{img_path:e1.source.videoUrl,isVideo:true});
+			});
 		}
 		if(imgArr.length != 0){
 			var imglength = imgArr.length;
