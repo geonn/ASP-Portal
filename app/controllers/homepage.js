@@ -3,6 +3,7 @@ var widthAnimate1 = Ti.UI.createAnimation({duration:200,width:"100%"});
 var widthAnimate2 = Ti.UI.createAnimation({duration:200,width:0});
 var opaAnimate1 = Ti.UI.createAnimation({duration:200,opacity:1});
 var opaAnimate2 = Ti.UI.createAnimation({duration:200,opacity:0});
+var time = 0;
 function init(){
 	Alloy.Globals.pageFlow.stopLoading();		
 	$.discussion.add(Alloy.createController("discussion").getView());
@@ -22,6 +23,16 @@ function scrollto(e){
 	var page = e.source.page || 0;
 	$.scrollableView.scrollToView(page);
 	scrollImage(page);
+	if(page == 0){
+		console.log("page 0");
+		time++;
+		if(time > 1){
+			$.discussion.children[0].children[0].scrollTo(0,0,true);
+		}
+	}else{
+		console.log("page 1");
+		time = 0;
+	}
 	Ti.App.Properties.setString("current_page", page);
 }
 Ti.App.addEventListener("scroll_page", scrollto);
