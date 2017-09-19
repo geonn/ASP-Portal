@@ -236,9 +236,9 @@ function render_post(params){
 		more_container.addEventListener("click",function(e){
  			postOptions({u_id:e.source.u_id,p_id:e.source.p_id,post_index:e.source.post_index});
 		});
-		user_img.addEventListener("click",function(e){
-			addPage("my_profile","My Profile",{u_id:e.source.u_id});
-		});
+		// user_img.addEventListener("click",function(e){
+			// addPage("my_profile","My Profile",{u_id:e.source.u_id});
+		// });
 		username.addEventListener("click",function(e){
 			addPage("my_profile","My Profile",{u_id:e.source.u_id});
 		});
