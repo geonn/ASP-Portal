@@ -38,8 +38,8 @@ function setData(){
 function mediaOptions(){
 	if(!edit){
 
-		var options = ['Capture Image','Get image by internal storage','Cancel'];
-		var opts = {cancel: 2,options:options,destructive: 0,title: 'Options'};	
+		var options = ['Capture Image','Get image by internal storage','Capture Video','Get video by internal storage','Cancel'];
+		var opts = {cancel: 4,options:options,destructive: 0,title: 'Options'};	
 		var dialog = Ti.UI.createOptionDialog(opts);	
 		dialog.addEventListener("click",function(e){
 			if(e.index == 0){
@@ -71,41 +71,96 @@ function mediaOptions(){
 					showGMImagePicker();
 				}
 			}
-			// if(e.index == 2){				
-				// if (Ti.Media.hasCameraPermissions()) {			
-					// openVideoRecorder()
-				// }else{
-					// Ti.Media.requestCameraPermissions(function(e) {
-			            // if(e.success){
-							// openVideoRecorder()
-			            // }else{
-			                // alert('You denied permission');
-			            // }	
-			        // });    			
-				// }	
-			// }				
-			// if(e.index == 3){
-				// if(OS_ANDROID){
-					// if(Titanium.Filesystem.hasStoragePermissions()){
-						// addImageV2();
-					// }else{
-						// Titanium.Filesystem.requestStoragePermissions(function(e) {
-						    // if (e.success) {
-								// addImageV2();
-						    // } else {
-								// common.createAlert("Warning","You don't have file storage permission!!!\nYou can go to setting enabled the permission.",function(e){
-// 
-								// });
-						    // }
-						// }); 							
-					// }					
-				// }
-			// }
+			if(e.index == 2){				
+				if (Ti.Media.hasCameraPermissions()) {			
+					openVideoRecorder();
+				}else{
+					Ti.Media.requestCameraPermissions(function(e) {
+			            if(e.success){
+							openVideoRecorder();
+			            }else{
+			                alert('You denied permission');
+			            }	
+			        });    			
+				}	
+			}				
+			if(e.index == 3){
+				if(OS_ANDROID){
+					if(Titanium.Filesystem.hasStoragePermissions()){
+						addImageV2();
+					}else{
+						Titanium.Filesystem.requestStoragePermissions(function(e) {
+						    if (e.success) {
+								addImageV2();
+						    } else {
+								common.createAlert("Warning","You don't have file storage permission!!!\nYou can go to setting enabled the permission.",function(e){
+
+								});
+						    }
+						}); 							
+					}					
+				}else{
+					Titanium.Media.openPhotoGallery({
+						mediaTypes:[Titanium.Media.MEDIA_TYPE_VIDEO],
+						success:function(event){
+							var result=event.media.nativePath;
+							video_blob = event.media;
+               		 		Ti.API.info(event);
+               		 		addImageV2_IOS(result);
+						}
+					});
+				}
+			}
 		});	
 		dialog.show();		
 	}else{
 		alert("Edit post cannot change image or add images.");
 	}
+}
+function openVideoRecorder_IOS(){ // Onn, i cant testing with simulator
+	Titanium.Media.showCamera({
+		success:function(event) {
+			// called when media returned from the camera
+			Ti.API.debug('Our type was: '+event.mediaType);
+			if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
+				var videoPlayer = Titanium.Media.createVideoPlayer({
+				    top : 0,
+				    autoplay : true,
+				    backgroundColor : '#000',
+				    width : Ti.UI.Fill,
+				    height: 250,
+				    mediaControlStyle : Titanium.Media.VIDEO_CONTROL_DEFAULT,
+				    scalingMode : Titanium.Media.VIDEO_SCALING_ASPECT_FIT
+				});
+				videoPlayer.url = event.media;
+				// var filePath = e.intent.data;
+		        // var file = Ti.Filesystem.getFile(filePath);
+		        // var copiedFile = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, file.name);
+		        // file.copy(copiedFile.nativePath); 		
+		       	// video_blob = copiedFile.read();
+				$.videoMother.add(videoPlayer); 
+			} else {
+				alert("got the wrong type back ="+event.mediaType);
+			}
+		},
+		cancel:function() {
+			// called when user cancels taking a picture
+		},
+		error:function(error) {
+			// called when there's an error
+			var a = Titanium.UI.createAlertDialog({title:'Camera'});
+			if (error.code == Titanium.Media.NO_CAMERA) {
+				a.setMessage('Please run this test on device');
+			} else {
+				a.setMessage('Unexpected error: ' + error.code);
+			}
+			a.show();
+		},
+		saveToPhotoGallery:true,
+	    // allowEditing and mediaTypes are iOS-only settings
+		allowEditing: true,
+		mediaTypes: [Ti.Media.MEDIA_TYPE_VIDEO]
+	});
 }
 function add_image() {
 	var gallerypicker = require('titutorial.gallerypicker');
@@ -152,6 +207,22 @@ function add_image() {
 		}
 	});
 	gallerypicker = undefined;
+}
+function addImageV2_IOS(e){
+	var videoPlayer = Titanium.Media.createVideoPlayer({
+	    top : 0,
+	    autoplay : true,
+	    backgroundColor : '#000',
+	    width : Ti.UI.Fill,
+	    height: 250,
+	    mediaControlStyle : Titanium.Media.VIDEO_CONTROL_DEFAULT,
+	    scalingMode : Titanium.Media.VIDEO_SCALING_ASPECT_FIT,
+	    url : e
+	});
+	videoPlayer.addEventListener("longpress",function(e1){
+		$.videoMother.remove(e1.source);
+	});
+	$.videoMother.add(videoPlayer); 	
 }
 function addImageV2(){
     var intent = Titanium.Android.createIntent({
@@ -253,12 +324,6 @@ function openVideoRecorder(){
 				});
 				videoPlayer.addEventListener("longpress",function(e1){
 					$.videoMother.remove(e1.source);
-				});
-				videoPlayer.addEventListener("durationavailable",function(e1){
-					console.log("duration:"+e1.duration);
-					videoPlayer.requestThumbnailImagesAtTimes([1],Titanium.Media.VIDEO_TIME_OPTION_NEAREST_KEYFRAME,function(e2){
-						console.log("blob:"+JSON.stringify(e2));					
-					});					
 				});
 				videoPlayer.url = e.intent.data;	
 		        var filePath = e.intent.data;

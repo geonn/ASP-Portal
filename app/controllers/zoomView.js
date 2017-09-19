@@ -8,11 +8,13 @@ function init(){
 		Alloy.Globals.loading.stopLoading();						
 		videoPlayer = Titanium.Media.createVideoPlayer({
 		    backgroundColor : '#000',
-		    width : Ti.UI.Fill,
-		    height: Ti.UI.SIZE,
 		    mediaControlStyle : Titanium.Media.VIDEO_CONTROL_DEFAULT,
 		    scalingMode : Titanium.Media.VIDEO_SCALING_ASPECT_FIT
 		});
+		if (OS_ANDROID) {
+			videoPlayer.width = Ti.UI.FILL;
+			videoPlayer.height = Ti.UI.SIZE;
+		};
 		videoPlayer.url = img;					
 		$.imageMother.add(videoPlayer);    		
 	}
