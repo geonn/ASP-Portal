@@ -1,5 +1,5 @@
 "#navBarMenubutton": {
-    backgroundImage: '/images/zoom_tools.png'
+    backgroundImage: '/images/zoom_tools1.png'
 }
 "#navBarMenubutton[platform=android]": {
     width: 40,
