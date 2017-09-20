@@ -78,9 +78,9 @@ function renderStaff(arr) {
 			classes: ['padding'],
 			width: 45,
 			height: 45,
-			image: entry.img_path,
+			image: (entry.img_path!="")?entry.img_path:"/images/default_profile.png",
 			defaultImage: "/images/default_profile.png",
-			touchEnabled: false
+			touchEnabled: false,
 		});
 		var view_name = $.UI.create("View", {
 			classes: ['wfill', 'hsize'],
@@ -196,17 +196,42 @@ function timepicker(e) {
 		type: Ti.UI.PICKER_TYPE_TIME
 	});
 
-	picker.showTimePickerDialog({
-		callback : function(time){
-			try {
-				var hour = (time.value.getHours().toString().length >= 2) ? time.value.getHours() : "0" + time.value.getHours();
-				var minute = (time.value.getMinutes().toString().length >= 2) ? time.value.getMinutes() : "0" + time.value.getMinutes();
-				e.source.text = hour + ':' + minute;
-				hour = null;
-				minute = null;
-			}catch(e) {}
-		}
-	});
+	if (OS_ANDROID) {
+		picker.showTimePickerDialog({
+			callback : function(time){
+				try {
+					var hour = (time.value.getHours().toString().length >= 2) ? time.value.getHours() : "0" + time.value.getHours();
+					var minute = (time.value.getMinutes().toString().length >= 2) ? time.value.getMinutes() : "0" + time.value.getMinutes();
+					e.source.text = hour + ':' + minute;
+					hour = null;
+					minute = null;
+				}catch(e) {}
+			}
+		});	
+	}else{
+		var view_vert = $.UI.create("View", {classes:['wfill','hfill'],backgroundColor:"66000000"});
+		var view_vertt = $.UI.create("View", {classes:['wfill','hsize','vert']});
+		var view_vert_ = $.UI.create("View", {classes:['wfill','hsize']});
+		var ok_button = $.UI.create("Button", {classes:['h4'], width: "40%", top:20, right:24, color:"#fff", title: "Done", backgroundColor:"#00CB85"});
+		var cancel_button = $.UI.create("Button", {classes:['h4'], width: "40%", left: 24, top:20, color:"#fff", title: "Cancel", backgroundColor:"#00CB85"});
+		cancel_button.addEventListener("click", function(){ 
+			$.win_calenderEvent.remove(view_vert);
+			view_vert = view_vertt = view_vert_ = ok_button = cancel_button = undefined;
+		});
+		ok_button.addEventListener("click", function(){
+			var hour = (picker.value.getHours().toString().length >= 2) ? picker.value.getHours() : "0" + picker.value.getHours();
+			var minute = (picker.value.getMinutes().toString().length >= 2) ? picker.value.getMinutes() : "0" + picker.value.getMinutes();
+			e.source.text = hour + ':' + minute;
+			$.win_calenderEvent.remove(view_vert);
+			view_vert = view_vertt = view_vert_ = ok_button = cancel_button = hour = minute = undefined;
+		});
+		view_vertt.add(picker);
+		view_vert_.add(cancel_button);
+		view_vert_.add(ok_button);
+		view_vertt.add(view_vert_);
+		view_vert.add(view_vertt);
+		$.win_calenderEvent.add(view_vert);
+	};
 }
 
 function submit(e) {

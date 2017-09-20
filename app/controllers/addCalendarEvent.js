@@ -60,7 +60,7 @@ function renderStaff(arr) {
 			classes: ['padding'],
 			width: 45,
 			height: 45,
-			image: entry.img_path,
+			image: (entry.img_path!="")?entry.img_path:"/images/default_profile.png",
 			defaultImage: "/images/default_profile.png",
 			touchEnabled:false
 		});
