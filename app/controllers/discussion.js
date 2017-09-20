@@ -35,7 +35,7 @@ function getData(){
 function scrollChecker(e){
 	var theEnd = $.mother_view.rect.height;
 	var total = (OS_ANDROID)?pixelToDp(e.y)+e.source.rect.height: e.y+e.source.rect.height;
-	var nearEnd = theEnd - 200;
+	var nearEnd = theEnd * 1.0;
 	if(total >= nearEnd){
 		getData();
 	}	
@@ -51,7 +51,6 @@ function render_post(params){
 		var username = $.UI.create("Label",{classes:['wsize','hsize','h4','bold'],text:entry.u_name,left:"0",top:"0",u_id:entry.u_id});
 		//var time_group = $.UI.create("View",{classes:['wsize','hsize','horz'],left:"0",bottom:"0"});
 		var time = $.UI.create("Label",{classes:['wsize','hsize','h5','grey'],left:'0',bottom:'0',color:"#7CC6FF",text:countdown.getTimePost(entry.created),p_id:entry.id});
-		console.log(entry.title+" title");
 		if (entry.id != 0) {
 			var group_title = (entry.g_id > 0)?"Post in "+entry.title+" group":entry.title;
 			var group = $.UI.create("Label",{classes:['h6'],width:'180',height:'20',color:"#23c281",left:'0',top:'22',text: group_title, g_id:entry.g_id});
