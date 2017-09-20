@@ -24,11 +24,21 @@ function init(){
 }
 init();
 function getData(){
-	var model = Alloy.createCollection("my_group");
-	var count = model.getMemberCountByG_id(g_id);
-	$.group_member.text = count.memberCount+" Members";
-	model = count = undefined;
-	setData();
+var model = Alloy.createCollection("my_group");
+ API.callByPost({url:"getGroupListMemberByGid",params:{g_id:g_id}},{
+  onload:function(responseText){
+   var res = JSON.parse(responseText);
+   var data = res.data || {};
+   model.saveArray(data);
+   var count = model.getMemberCountByG_id(g_id);
+   $.member.text = count.memberCount+" Members";
+   count = undefined;   
+   data = undefined;
+   res = undefined;
+   model = undefined;
+   setData();
+  }
+ });	
 }
 function setData(){
 	$.g_name.text = arr.name;

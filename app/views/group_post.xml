@@ -2,12 +2,14 @@
 	<View class="wfill hfill" id="grandmother">
 	<SwipeRefresh module="com.rkam.swiperefreshlayout" id="swipeRefresh" platform="android">		
 	<ScrollView class="hfill wfill contwfill conthsize vert" onScroll="scrollChecker" id="scrollView" backgroundColor="#EEF3F6">
-		<View class="wfill hsize vert">
-			<View class="wfill" id="img_view" backgroundColor="#000">
-				<ImageView class="wfill hsize" defaultImage="/images/group_picture_square.png" id="group_img"></ImageView>
-				<View class="wsize hsize vert" left="10" right="10" bottom="5" backgroundColor="#66787878">
-					<Label class="wsize hsize h3" left="10" right="10" id="group_name" text="Group Name" color="#e5e5e5"></Label>
-					<Label class="wsize hsize h4" left="10" right="10" id="group_member" text="Members" color="#e5e5e5"></Label>
+		<View class="wfill hsize vert" id="ScrollView1">
+			<View class="wfill hsize vert">
+				<View class="wfill" id="img_view" backgroundColor="#000">
+					<ImageView class="wfill hsize" defaultImage="/images/group_picture_square.png" id="group_img"></ImageView>
+					<View class="wsize hsize vert" left="10" right="10" bottom="5" backgroundColor="66787878">
+						<Label class="wsize hsize h3" left="10" right="10" id="group_name" text="Group Name" color="#e5e5e5"></Label>
+						<Label class="wsize hsize h4" left="10" right="10" id="group_member" text="Members" color="#e5e5e5"></Label>
+					</View>
 				</View>
 				<View class="wfill hsize horz" backgroundColor="#fff">
 					<View class="hsize vert toucha3a3a3" width="25%" onClick="doleaveGroup">
@@ -39,13 +41,15 @@
 	</ScrollView>
 	</SwipeRefresh>	
 	 
-	 <ScrollView class="hfill wfill contwfill conthsize vert" onScroll="scrollChecker" id="scrollView" backgroundColor="#EEF3F6" platform="ios">
-		<View class="wfill hsize vert">
-			<View class="wfill" id="img_view" backgroundColor="#000">
-				<ImageView class="wfill hsize" defaultImage="/images/group_picture_square.png" id="group_img"></ImageView>
-				<View class="wsize hsize vert" left="10" right="10" bottom="5" backgroundColor="#66787878">
-					<Label class="wsize hsize h3" left="10" right="10" id="group_name" text="Group Name" color="#e5e5e5"></Label>
-					<Label class="wsize hsize h4" left="10" right="10" id="group_member" text="Members" color="#e5e5e5"></Label>
+	<ScrollView class="hfill wfill contwfill conthsize vert" onScroll="scrollChecker" id="scrollView" backgroundColor="#EEF3F6" platform="ios">
+		<View class="wfill hsize vert" id="ScrollView1">
+			<View class="wfill hsize vert">
+				<View class="wfill" id="img_view" backgroundColor="#000">
+					<ImageView class="wfill hsize" defaultImage="/images/group_picture_square.png" id="group_img"></ImageView>
+					<View class="wsize hsize vert" left="10" right="10" bottom="5" backgroundColor="66787878">
+						<Label class="wsize hsize h3" left="10" right="10" id="group_name" text="Group Name" color="#e5e5e5"></Label>
+						<Label class="wsize hsize h4" left="10" right="10" id="group_member" text="Members" color="#e5e5e5"></Label>
+					</View>
 				</View>
 				<View class="wfill hsize horz" backgroundColor="#fff">
 					<View class="hsize vert toucha3a3a3" width="25%" onClick="doleaveGroup">
