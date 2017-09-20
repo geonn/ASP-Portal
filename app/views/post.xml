@@ -18,7 +18,7 @@
 						</View>
 					</View>
 					<View class="vert wfill hsize">
-						<TextArea class="h4 wfill hsize small-padding" id="description" hintText="Type Something..." hintTextColor="gray" color="#000"></TextArea>
+						<TextArea class="h4 wfill hsize small-padding" id="description" hintText="Type Something..." hintTextColor="gray" color="#000" value="Type Something..."></TextArea>
 					</View>
 					<View class="vert wfill hsize" id="videoMother">
 						

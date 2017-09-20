@@ -23,10 +23,11 @@ function init(){
 		setData();
 	}else{
 		$.u_name.text = Ti.App.Properties.getString("u_name")||"";
-	}	
+	}
 	$.lb_group.text =(post_group)?args.g_name:group_name[0];
 }
 init();
+
 function setData(){
 	var model = Alloy.createCollection("post");
 	var res = model.getDataById(p_id);
@@ -126,7 +127,7 @@ function mediaOptions(){
 }
 function openVideoRecorder_IOS(){ // Onn, i cant testing with simulator
 	Titanium.Media.showCamera({
-		videoQuality: Titanium.Media.QUALITY_LOW,
+		videoQuality: Titanium.Media.QUALITY_MEDIUM,
 		videoMaximumDuration: 300000,		 
 		success:function(event) {
 			// called when media returned from the camera
@@ -363,7 +364,7 @@ function doSubmit(){
 	var description =$.description.value || "";
 	var u_id = Ti.App.Properties.getString('u_id')||"";
 	var g_id = num;
-	if(description == ""){
+	if(description == "" || description == $.description.hintText){
 		alert("Please type something on field box");
 		return;
 	}
@@ -513,3 +514,16 @@ function select_group(e) {
 		dialog.show();		
 	}	
 }
+
+
+$.description.addEventListener('focus', function(e) {
+	if (e.source.value == e.source.hintText) {
+		e.source.value = "";
+	}
+});
+
+$.description.addEventListener('blur', function(e) {
+	if (e.source.value == "") {
+		e.source.value = e.source.hintText;
+	}
+});
