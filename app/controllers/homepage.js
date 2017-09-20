@@ -52,8 +52,13 @@ function sideMenu(){
 	}
 	sideExpaned = !sideExpaned;		
 }
+function searchMember(){
+	addPage('searchMember',"Search Member",{});	
+}
 exports.removeEventListeners = function() {
 	Ti.App.removeEventListener("sideMenu",sideMenu);
+	Ti.App.removeEventListener("searchMember",searchMember);
 	Ti.App.removeEventListener("scroll_page", scrollto);
 };
+Ti.App.addEventListener("searchMember",searchMember);
 Ti.App.addEventListener("sideMenu",sideMenu);

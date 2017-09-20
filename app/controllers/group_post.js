@@ -10,6 +10,7 @@ var countdown = require("countdown_between_2date.js");
 var offset=0;
 var post_index = 1;
 var offset1 = 0;
+var scrollCheckerBL = true;
 var u_id = Ti.App.Properties.getString("u_id") || undefined;
 if(OS_ANDROID){
 	cell_width = Math.floor((pixelToDp(pwidth) / 2)) - 2;
@@ -34,8 +35,8 @@ if(OS_ANDROID){
 $.img_view.setHeight(cell_width);
 
 function init(){
+	scrollCheckerBL = true;
 	Alloy.Globals.loading.stopLoading();
-	//$.scrollView.scrollTo(0,0,[animation=false]);	
 	$.mother_view.opacity = 0;	
 	$.myInstance.show('',false);	
 	$.group_img.setImage(arr[0].image);
@@ -218,17 +219,13 @@ function render_post(params){
 }
 
 function scrollChecker(e){
-	var theEnd = $.mother_view.rect.height;
+	var theEnd = $.ScrollView1.rect.height;
 	var total = (OS_ANDROID)?pixelToDp(e.y)+e.source.rect.height: e.y+e.source.rect.height;
-	var nearEnd = theEnd - 200;
-	if (total >= nearEnd){
+	var nearEnd = theEnd - 100;
+	if(total >= nearEnd && scrollCheckerBL){
 		get_data_local();
-	}
-	theEnd = undefined;
-	total = undefined;
-	nearEnd = undefined;
+	}	
 }
-
 function postOptions(params){
 	var u_id = Ti.App.Properties.getString("u_id")||"";
 	var options = (u_id == params.u_id)?['Edit','Delete','Cancel']:['Favourite','Report','Cancel'];
@@ -343,7 +340,8 @@ function get_Data(){
 
 function get_data_local(){
 	var model_p = Alloy.createCollection("post");
-	var res = model_p.getData(false,offset,args.g_id);	
+	var res = model_p.getData(false,offset,args.g_id);
+	scrollCheckerBL = (res.length != 0)?true:false;	
 	model_p = null;
 	render_post(res);
 }

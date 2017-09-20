@@ -17,7 +17,9 @@ function homePage(){
 	            marginLeft: 14
 	        }
 	        ,left:"menuButton",
-	      	leftOptions:"sideMenu"
+	      	leftOptions:"sideMenu",
+	      	right:"searchButton",
+	      	rightOptions:"searchMember"
 	    }
 	});			
 }

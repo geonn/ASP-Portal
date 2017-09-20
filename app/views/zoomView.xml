@@ -1,5 +1,8 @@
 <Alloy>
 	<View class="wfill hfill" backgroundColor="#000" id="imageMother">
+		<View class="wfill" height="180">
+			<Widget src="nl.fokkezb.loading" name="view" id="myInstance" />												
+		</View>
 		<WebView id="webview" backgroundColor="#000" class="wfill hsize" enableZoomControls="true" />	
 	</View>
 </Alloy>

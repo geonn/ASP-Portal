@@ -1,9 +1,6 @@
 function init(){
 	$.group_list.add(Alloy.createController("groupList").getView());
 	$.add_group.add(Alloy.createController("addGroup").getView());
-	setTimeout(function(){
-		Alloy.Globals.pageFlow.getCurrentPage().hideNavRight();			
-	},500);
 }
 init();
 function scrollto(e){

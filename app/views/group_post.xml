@@ -1,6 +1,5 @@
 <Alloy>
 	<View class="wfill hfill" id="grandmother">
-	<ImageView top="0" image="/images/btn-down.png"></ImageView>
 	<SwipeRefresh module="com.rkam.swiperefreshlayout" id="swipeRefresh" platform="android">		
 	<ScrollView class="hfill wfill contwfill conthsize vert" onScroll="scrollChecker" id="scrollView" backgroundColor="#EEF3F6">
 		<View class="wfill hsize vert">
@@ -10,32 +9,32 @@
 					<Label class="wsize hsize h3" left="10" right="10" id="group_name" text="Group Name" color="#e5e5e5"></Label>
 					<Label class="wsize hsize h4" left="10" right="10" id="group_member" text="Members" color="#e5e5e5"></Label>
 				</View>
+				<View class="wfill hsize horz" backgroundColor="#fff">
+					<View class="hsize vert toucha3a3a3" width="25%" onClick="doleaveGroup">
+						<ImageView height="35" width="35" image="/images/g_thick.png" touchEnabled="false"></ImageView>
+						<Label class="wsize hsize h5" text="Joined" color="#668CFC" touchEnabled="false"></Label>
+					</View>
+					<View class="hsize vert toucha3a3a3" width="25%" onClick="addMember">
+						<ImageView height="35" width="35" image="/images/p_add.png" touchEnabled="false"></ImageView>
+						<Label class="wsize hsize h5" text="Add Members" color="#90949C" touchEnabled="false"></Label>
+					</View>
+					<View class="hsize vert toucha3a3a3" width="25%" onClick="groupEvents">
+						<ImageView height="35" width="35" image="/images/addevent.png"></ImageView>
+						<Label class="wsize hsize h5" text="Events" color="#90949C"></Label>
+					</View>
+					<View class="hsize vert toucha3a3a3" width="24%" onClick="group_info">
+						<ImageView height="35" width="35" image="/images/p_info.png" touchEnabled="false"></ImageView>
+						<Label class="wsize hsize h5" text="Info" color="#90949C" touchEnabled="false"></Label>
+					</View>
+				</View>
+				<Label top="10" left="10" text="Group Posts"></Label>			
 			</View>
-			<View class="wfill hsize horz" backgroundColor="#fff">
-				<View class="hsize vert toucha3a3a3" width="25%" onClick="doleaveGroup">
-					<ImageView height="35" width="35" image="/images/g_thick.png" touchEnabled="false"></ImageView>
-					<Label class="wsize hsize h5" text="Joined" color="#668CFC" touchEnabled="false"></Label>
-				</View>
-				<View class="hsize vert toucha3a3a3" width="25%" onClick="addMember">
-					<ImageView height="35" width="35" image="/images/p_add.png" touchEnabled="false"></ImageView>
-					<Label class="wsize hsize h5" text="Add Members" color="#90949C" touchEnabled="false"></Label>
-				</View>
-				<View class="hsize vert toucha3a3a3" width="25%" onClick="groupEvents">
-					<ImageView height="35" width="35" image="/images/addevent.png"></ImageView>
-					<Label class="wsize hsize h5" text="Events" color="#90949C"></Label>
-				</View>
-				<View class="hsize vert toucha3a3a3" width="24%" onClick="group_info">
-					<ImageView height="35" width="35" image="/images/p_info.png" touchEnabled="false"></ImageView>
-					<Label class="wsize hsize h5" text="Info" color="#90949C" touchEnabled="false"></Label>
-				</View>
-			</View>
-			<Label top="10" left="10" text="Group Posts"></Label>			
-		</View>
-		<View class="wfill hsize">
-			<Widget src="nl.fokkezb.loading" name="view" id="myInstance" />			
-			<View class="wfill hsize vert" id="mother_view" top="0">
-				
-			</View>			
+			<View class="wfill hsize">
+				<Widget src="nl.fokkezb.loading" name="view" id="myInstance" />			
+				<View class="wfill hsize vert" id="mother_view" top="0">
+					
+				</View>			
+			</View>		
 		</View>
 	</ScrollView>
 	</SwipeRefresh>	
@@ -48,32 +47,32 @@
 					<Label class="wsize hsize h3" left="10" right="10" id="group_name" text="Group Name" color="#e5e5e5"></Label>
 					<Label class="wsize hsize h4" left="10" right="10" id="group_member" text="Members" color="#e5e5e5"></Label>
 				</View>
+				<View class="wfill hsize horz" backgroundColor="#fff">
+					<View class="hsize vert toucha3a3a3" width="25%" onClick="doleaveGroup">
+						<ImageView height="35" width="35" image="/images/g_thick.png" touchEnabled="false"></ImageView>
+						<Label class="wsize hsize h5" text="Joined" color="#668CFC" touchEnabled="false"></Label>
+					</View>
+					<View class="hsize vert toucha3a3a3" width="25%" onClick="addMember">
+						<ImageView height="35" width="35" image="/images/p_add.png" touchEnabled="false"></ImageView>
+						<Label class="wsize hsize h5" text="Add Members" color="#90949C" touchEnabled="false"></Label>
+					</View>
+					<View class="hsize vert toucha3a3a3" width="25%" onClick="groupEvents">
+						<ImageView height="35" width="35" image="/images/addevent.png"></ImageView>
+						<Label class="wsize hsize h5" text="Events" color="#90949C"></Label>
+					</View>
+					<View class="hsize vert toucha3a3a3" width="24%" onClick="group_info">
+						<ImageView height="35" width="35" image="/images/p_info.png" touchEnabled="false"></ImageView>
+						<Label class="wsize hsize h5" text="Info" color="#90949C" touchEnabled="false"></Label>
+					</View>
+				</View>
+				<Label top="10" left="10" text="Group Posts"></Label>			
 			</View>
-			<View class="wfill hsize horz" backgroundColor="#fff">
-				<View class="hsize vert toucha3a3a3" width="25%" onClick="doleaveGroup">
-					<ImageView height="35" width="35" image="/images/g_thick.png" touchEnabled="false"></ImageView>
-					<Label class="wsize hsize h5" text="Joined" color="#668CFC" touchEnabled="false"></Label>
-				</View>
-				<View class="hsize vert toucha3a3a3" width="25%" onClick="addMember">
-					<ImageView height="35" width="35" image="/images/p_add.png" touchEnabled="false"></ImageView>
-					<Label class="wsize hsize h5" text="Add Members" color="#90949C" touchEnabled="false"></Label>
-				</View>
-				<View class="hsize vert toucha3a3a3" width="25%" onClick="groupEvents">
-					<ImageView height="35" width="35" image="/images/addevent.png"></ImageView>
-					<Label class="wsize hsize h5" text="Events" color="#90949C"></Label>
-				</View>
-				<View class="hsize vert toucha3a3a3" width="24%" onClick="group_info">
-					<ImageView height="35" width="35" image="/images/p_info.png" touchEnabled="false"></ImageView>
-					<Label class="wsize hsize h5" text="Info" color="#90949C" touchEnabled="false"></Label>
-				</View>
-			</View>
-			<Label top="10" left="10" text="Group Posts"></Label>			
-		</View>
-		<View class="wfill hsize">
-			<Widget src="nl.fokkezb.loading" name="view" id="myInstance" />			
-			<View class="wfill hsize vert" id="mother_view" top="0">
-				
-			</View>			
+			<View class="wfill hsize">
+				<Widget src="nl.fokkezb.loading" name="view" id="myInstance" />			
+				<View class="wfill hsize vert" id="mother_view" top="0">
+					
+				</View>			
+			</View>		
 		</View>
 	</ScrollView>
 	</View>
