@@ -297,7 +297,6 @@ function clickButtons(){
 }
 exports.removeEventListeners = function() {
 	Ti.App.removeEventListener("discussion:refresh",refresh);
-
 };
 if(OS_ANDROID){
 	$.swipeRefresh.addEventListener('refreshing',function(e){

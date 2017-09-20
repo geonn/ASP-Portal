@@ -197,30 +197,36 @@ function detail(e) {
 }
 
 function alert(e) {
-	var bt_arr = (e.title == "Festival") ? ['Ok'] : ['Ok', 'Edit', 'Delete'];
-	var alert = Titanium.UI.createAlertDialog({
-		title: e.title,
-		message: e.msg,
-		buttonNames: bt_arr,
-		data: e.data
-	});
-	alert.addEventListener("click", function(e2) {
-		if(e2.index == 1 && e2.source.data.u_id == args.u_id) {
-			addPage("editCalendarEvent", "Edit Event", {date:args.date, time:e2.source.data.time, title:e2.source.data.title, e_id:e2.source.data.e_id, u_id:e2.source.data.u_id, g_id:e2.source.data.g_id});
-		}else if(e2.index == 2 && e2.source.data.u_id == args.u_id) {
-			var params = {e_id:e2.source.data.e_id};
-			API.callByPost({url:"deleteEvent", params:params}, {
-				onload:function(responceText) {
-					var res = JSON.parse(responceText);
-					getDataAndRefresh();
-				},onerror:function(err){
-				}
-			});
-		}
-	});
-	alert.show();
-	bt_arr = null;
-	alert = null;
+	if(e.data.u_id == args.u_id){
+		var bt_arr = (e.title == "Festival") ? ['Ok'] : ['Ok', 'Edit', 'Delete'];
+		var alert = Titanium.UI.createAlertDialog({
+			title: e.title,
+			message: e.msg,
+			buttonNames: bt_arr,
+			data: e.data
+		});
+		alert.addEventListener("click", function(e2) {
+			if(e2.index == 1 && e2.source.data.u_id == args.u_id) {
+				addPage("editCalendarEvent", "Edit Event", {date:args.date, time:e2.source.data.time, title:e2.source.data.title, e_id:e2.source.data.e_id, u_id:e2.source.data.u_id, g_id:e2.source.data.g_id});
+			}else if(e2.index == 2 && e2.source.data.u_id == args.u_id) {
+				var params = {e_id:e2.source.data.e_id};
+				API.callByPost({url:"deleteEvent", params:params}, {
+					onload:function(responceText) {
+						var res = JSON.parse(responceText);
+						getDataAndRefresh();
+					},onerror:function(err){
+					}
+				});
+			}
+		});
+		alert.show();
+		bt_arr = null;
+		alert = null;		
+	}else{
+		COMMON.createAlert("Warning",'You are not a creator!\nSo you are not able to manage.',function(){
+			
+		});
+	}
 }
 
 function getDataAndRefresh(){

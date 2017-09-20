@@ -54,15 +54,15 @@ function setData(params){
 	$.videoContainer.removeAllChildren();
 	$.videoContainer.height = 0;	
 	if(videoArr.length != 0){
-		// $.videoContainer.height = 250;
-		// var videoContainer = $.UI.create("ImageView",{classes:['wfill','hsize']});
-		// var playImage = $.UI.create("ImageView",{width:220,height:130,image:"/images/play-button.png",videoUrl:videoArr[0].img_path,zIndex:10});
-		// $.videoContainer.add(videoContainer);
-		// $.videoContainer.add(playImage);
-		// playImage.addEventListener("click",function(e1){
-			// console.log("Video path:"+e1.source.videoUrl);
-			// addPage("zoomView","Video Preview",{img_path:e1.source.videoUrl,isVideo:true});
-		// });
+		$.videoContainer.height = 250;
+		var videoContainer = $.UI.create("ImageView",{classes:['wfill','hsize']});
+		var playImage = $.UI.create("ImageView",{width:220,height:130,image:"/images/play-button.png",videoUrl:videoArr[0].img_path,zIndex:10});
+		$.videoContainer.add(videoContainer);
+		$.videoContainer.add(playImage);
+		playImage.addEventListener("click",function(e1){
+			console.log("Video path:"+e1.source.videoUrl);
+			addPage("zoomView","Video Preview",{img_path:e1.source.videoUrl,isVideo:true});
+		});
 	}		
 	if(imgArr.length != 0){
 		var imglength = imgArr.length;
