@@ -512,7 +512,7 @@ function select_group(e) {
 			}
 		}); 	
 		dialog.show();		
-	}	
+	}
 }
 
 
