@@ -1,6 +1,6 @@
 <Alloy>
 	<View class="wfill hfill padding">
-		<View class="wfill hsize vert" backgroundColor="#fff">
+		<ScrollView class="wfill hfill contwfill conthsize vert" backgroundColor="#fff">
 			<ImageView class="wfill hsize" image="/images/login_page_logo_title.png" backgroundColor="#eff3f6"></ImageView>
 			<Widget src="input-materialdesign" titleHint="Email" id="email"/>    			
 			<Widget src="input-materialdesign" titleHint="Password" id="password" password="true"/>   
@@ -10,6 +10,6 @@
 				<!-- <Widget class="wfill hsize" paramCenter="true" src="nl.fokkezb.button" onClick="forgetPassword" title="Forget Password ?" style="bs-link" /> -->
 				<View class="grey_line" width="25%" right="0"></View>
 			</View>	
-		</View>    			
+		</ScrollView>    			
 	</View>
 </Alloy>
