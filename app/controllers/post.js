@@ -129,7 +129,7 @@ function openVideoRecorder_IOS(){ // Onn, i cant testing with simulator
 		success:function(event) {
 			// called when media returned from the camera
 			Ti.API.debug('Our type was: '+event.mediaType);
-			if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
+			if(event.mediaType == Ti.Media.MEDIA_TYPE_VIDEO) {
 				var videoPlayer = Titanium.Media.createVideoPlayer({
 				    top : 0,
 				    autoplay : true,
