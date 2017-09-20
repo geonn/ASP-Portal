@@ -58,7 +58,7 @@ function init(){
 function setData(u_res){
 var img_blur = Ti.UI.createImageView({
 	width:Ti.UI.FILL,
-	height:"200%",
+	height:"250%",
 	blurRadius:10,
 	image: (u_res.img_path!="")?u_res.img_path:"/images/my_profile_square.png"
 });	
@@ -176,10 +176,10 @@ function render_post(params){
 			var imglength = imgArr.length;
 			var image_container = $.UI.create("ScrollableView",{classes:['wfill'],height:250,top:"0",scrollingEnabled:true});
 			var imgcount_container = (imglength > 1) ? $.UI.create("View",{classes:['wsize','hsize','horz'],backgroundColor:"#99000000",imglength:imglength,zIndex:10,right:10,top:10,borderRadius:"5"}) : $.UI.create("View",{classes:['wsize','hsize'],imglength:imglength,zIndex:10,right:10,top:10,borderRadius:"5"});
-			var imgcount = (imglength > 1) ? $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,right:5,color:"#fff",text:"1/"+imglength,imglength:imglength}) : $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,right:5,imglength:imglength});
-			var img_icon = (imglength > 1) ? $.UI.create("ImageView", {image: "/images/img_icon.png", width:20, height:17, right:10}) :  $.UI.create("ImageView", {width:0, height:0});
+			var imgcount = (imglength > 1) ? $.UI.create("Label",{classes:['wsize','hsize'],left:5,right:5,color:"#fff",text:"1/"+imglength,imglength:imglength}) : $.UI.create("Label",{classes:['wsize','hsize',"padding"],top:5,bottom:5,right:5,imglength:imglength});
+			//var img_icon = (imglength > 1) ? $.UI.create("ImageView", {image: "/images/img_icon.png", width:20, height:17, right:10}) :  $.UI.create("ImageView", {width:0, height:0});
 			imgcount_container.add(imgcount);
-			imgcount_container.add(img_icon);
+			//imgcount_container.add(img_icon);
 			imgArr.forEach(function(entry1){
 				var small_image_container = $.UI.create("View",{classes:['wfill','hsize']});
 				var image = $.UI.create("ImageView",{classes:['wfill','hsize'], defaultImage: "/images/loading.png",image:entry1.img_300thumb,imageBig:entry1.img_path});
