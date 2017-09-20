@@ -126,11 +126,16 @@ function mediaOptions(){
 }
 function openVideoRecorder_IOS(){ // Onn, i cant testing with simulator
 	Titanium.Media.showCamera({
+		videoQuality: Titanium.Media.QUALITY_LOW,
+		videoMaximumDuration: 300000,		 
 		success:function(event) {
 			// called when media returned from the camera
 			Ti.API.debug('Our type was: '+event.mediaType);
 			if(event.mediaType == Ti.Media.MEDIA_TYPE_VIDEO) {
-				var videoPlayer = Titanium.Media.createVideoPlayer({
+				var result=event.media.nativePath;
+				video_blob = event.media;
+				addImageV2_IOS(result);
+				/*var videoPlayer = Titanium.Media.createVideoPlayer({
 				    top : 0,
 				    autoplay : true,
 				    backgroundColor : '#000',
@@ -145,9 +150,9 @@ function openVideoRecorder_IOS(){ // Onn, i cant testing with simulator
 		        // var copiedFile = Ti.Filesystem.getFile(Ti.Filesystem.applicationDataDirectory, file.name);
 		        // file.copy(copiedFile.nativePath); 		
 		       	// video_blob = copiedFile.read();
-				$.videoMother.add(videoPlayer); 
+				$.videoMother.add(videoPlayer); */
 			} else {
-				alert("got the wrong type back ="+event.mediaType);
+				alert("Invalid Format");
 			}
 		},
 		cancel:function() {
@@ -456,7 +461,7 @@ function openCamera(){
 				console.log("Event Camera:"+JSON.stringify(event));				
 				$.imageMother.add(imgView);
 			} else {
-				alert("got the wrong type back ="+event.mediaType);
+				alert("Invalid Format");
 			}
 		},
 		cancel:function() {
