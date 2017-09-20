@@ -72,11 +72,19 @@ function mediaOptions(){
    		    }
 			if(e.index == 2){    
 				if (Ti.Media.hasCameraPermissions()) {   
-					openVideoRecorder();
+					if(OS_ANDROID){
+						openVideoRecorder();
+					}else{
+						openVideoRecorder_IOS();
+					}
 				}else{
 					Ti.Media.requestCameraPermissions(function(e) {
 						if(e.success){
-							openVideoRecorder();
+							if(OS_ANDROID){
+								openVideoRecorder();
+							}else{
+								openVideoRecorder_IOS();
+							}
 						}else{
 							alert('You denied permission');
 						} 
