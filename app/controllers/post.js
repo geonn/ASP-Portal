@@ -37,7 +37,7 @@ function setData(){
 function mediaOptions(){
 	if(!edit){
 
-		var options = ['Capture Image','Get image by internal storage','Capture Video','Get video by internal storage','Cancel'];
+		var options = ['Capture Image','Image From Library','Capture Video','Video From Library','Cancel'];
 		var opts = {cancel: 4,options:options,destructive: 0,title: 'Options'}; 
 		var dialog = Ti.UI.createOptionDialog(opts); 
   		dialog.addEventListener("click",function(e){
