@@ -19,7 +19,7 @@
 				</View>
 				<View class="wfill hsize vert" id="list_parent">
 					<View class="hr" id="hr"></View>
-					<ScrollView class="wfill horz" id="selectedList" contentWidth="auto" contentHeight="Ti.UI.SIZE" scrollType="horizontal"></ScrollView>
+					<ScrollView class="wfill horz hsize" id="selectedList" contentWidth="auto" contentHeight="Ti.UI.SIZE" scrollType="horizontal"></ScrollView>
 					<View class="hr" id="hr"></View>
 				</View>
 				<View class="wfill hsize" top="10">
@@ -27,9 +27,13 @@
 				</View>
 			</View>
 			<View class="wfill hsize vert" id="search_bar" backgroundColor="#fff">
-				<View class="wfill hsize horz">
+				<View class="wfill hsize horz" platform="android">
 					<View left="10" borderColor="#fff" id="zoom" backgroundImage="/images/zoom_tools.png" width="45" height="45" borderRadius="22.5"></View>
 					<Widget left="10" right="10" class="wfill hsize" src="input-materialdesign" titleHint="Search." id="search"/>
+				</View>
+				<View class="wfill hsize" platform="ios">
+					<View top="15" left="10" borderColor="#fff" id="zoom" backgroundImage="/images/zoom_tools.png" width="45" height="45" borderRadius="22.5"></View>
+					<Widget left="65" right="10" class="wfill hsize" src="input-materialdesign" titleHint="Search." id="search"/>   													
 				</View>
 				<View class="hr"></View>
 			</View>
