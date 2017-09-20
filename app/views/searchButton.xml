@@ -1,0 +1,5 @@
+<Alloy>
+    <View id="view" class="touchempty" backgroundColor="#23c282">
+        <Button id="navBarMenubutton" touchEnabled="false" color="#fff" class="com.jolicode.pageflow.burgerButton" />
+    </View>
+</Alloy>

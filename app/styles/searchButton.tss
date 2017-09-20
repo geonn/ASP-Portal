@@ -1,0 +1,15 @@
+"#navBarMenubutton": {
+    backgroundImage: '/images/zoom_tools.png'
+}
+"#navBarMenubutton[platform=android]": {
+    width: 40,
+    height: 36,
+}
+"#navBarMenubutton[platform=ios]": {
+    width: 36,
+    height: 32,
+}
+"#view":{
+	width:50,
+	height:Ti.UI.FILL
+}

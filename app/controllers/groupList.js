@@ -83,8 +83,6 @@ function render_list(e) {
 			classes: ["wfill", "hsize"],
 			defaultImage: "/images/group_picture_circle.png",
 			image: data.g_image,
-			g_id: data.g_id,
-			g_name:data.g_name,
 			touchEnabled:false
 		});
 		var group_title = (OS_ANDROID) ? $.UI.create("Label",{

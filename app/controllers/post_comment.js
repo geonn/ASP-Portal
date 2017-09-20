@@ -51,7 +51,7 @@ function render_comment(params){
 		container.add(profileImg);
 		container.add(small_container);
 		$.list_comment.add(container);		
-		container.addEventListener("longclick",function(e){
+		container.addEventListener("longpress",function(e){
 			if(u_id == e.source.u_id){
 				deleteOptions(true,e.source.c_id);
 			}

@@ -386,18 +386,23 @@ function doSubmit(){
 				});			
 			}
 			console.log("Video length:"+i<$.videoMother.children.length);
-			for(var i = 0;i<$.videoMother.children.length;i++){ 
-				// var f = Ti.Filesystem.getFile($.videoMother.children[i].url);
-				// var video = f.read();
-				// console.log("Video url:"+$.videoMother.children[i].url);
-				// console.log("video:"+JSON.stringify(video));
-				var params1 = {p_id:p_id,u_id:u_id};
-				_.extend(params1,{Filedata:video_blob,media_type:"video",img_thumb:video_image});
-				console.log("params video:"+JSON.stringify(params1));
-				API.callByPostVoice({url:"doPostImage",params:params1,type:"voice"},function(responseText){
-					discussion_refresh();					
-				}					
-				);
+			if($.videoMother.children.length != 0){
+				for(var i = 0;i<$.videoMother.children.length;i++){ 
+					// var f = Ti.Filesystem.getFile($.videoMother.children[i].url);
+					// var video = f.read();
+					// console.log("Video url:"+$.videoMother.children[i].url);
+					// console.log("video:"+JSON.stringify(video));
+					var params1 = {p_id:p_id,u_id:u_id};
+					_.extend(params1,{Filedata:video_blob,media_type:"video",img_thumb:video_image});
+					console.log("params video:"+JSON.stringify(params1));
+					API.callByPostVoice({url:"doPostImage",params:params1,type:"voice"},function(responseText){
+						discussion_refresh();					
+					}					
+					);
+				}				
+			}
+			else{
+				discussion_refresh();									
 			}
 		}else{
 			discussion_refresh();
