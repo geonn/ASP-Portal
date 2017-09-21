@@ -387,6 +387,7 @@ function doSubmit(){
 			return;
 		}
 		if($.imageMother.children.length > 0 || $.videoMother.children.length > 0){
+			console.log($.imageMother.children.length+" $.imageMother.children.length");
 			for(var i = 0;i<$.imageMother.children.length;i++){
 				var image = $.imageMother.children[i].toImage();
 				var params1 = {p_id:p_id,u_id:u_id};
@@ -446,13 +447,12 @@ function openCamera(){
 	Titanium.Media.showCamera({
 		success:function(event) {
 			// called when media returned from the camera
-			Ti.API.debug('Our type was: '+event.mediaType);
 			if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {		
 				var blobSize = event.height/event.width;			
 				var imgView = Ti.UI.createImageView({
 					top:'10dp',
 					classes:['wfill','hsize'],
-					image:ImageFactory.imageAsResized(event.media, { width:640,height:blobSize*640}),
+					image: event.media.imageAsThumbnail(640, blobSize*640)//ImageFactory.imageAsResized(event.media, { width:640,height:blobSize*640}),
 				});
 				imgView.addEventListener("longclick",function(e1){
 					$.imageMother.remove(e1.source);
