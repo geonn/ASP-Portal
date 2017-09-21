@@ -177,7 +177,6 @@ function openVideoRecorder_IOS(){ // Onn, i cant testing with simulator
 }
 function add_image() {
 	var gallerypicker = require('titutorial.gallerypicker');
-	var ImageFactory = require('ti.imagefactory');	
 	var count = 0;
 	if($.imageMother.children.length > 0){
 		console.log("asdf:"+$.imageMother.children.length);
@@ -201,7 +200,7 @@ function add_image() {
 					var imgView = Ti.UI.createImageView({
 						top:'10dp',
 						classes:['wfill','hsize'],
-						image:ImageFactory.imageAsResized(blob, { width:640,height:blobSize*640}),
+						image: event.media.imageAsThumbnail(640, blobSize*640),
 					});
 					imgView.addEventListener("longclick",function(e1){
 						$.imageMother.remove(e1.source);
@@ -444,8 +443,7 @@ function renderPhotos(media) {
 		$.imageMother.add(imgView);    	
 	};
 }
-function openCamera(){
-	var ImageFactory = require('ti.imagefactory');		
+function openCamera(){	
 	Titanium.Media.showCamera({
 		success:function(event) {
 			// called when media returned from the camera
