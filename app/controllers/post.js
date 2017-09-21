@@ -200,7 +200,7 @@ function add_image() {
 					var imgView = Ti.UI.createImageView({
 						top:'10dp',
 						classes:['wfill','hsize'],
-						image: event.media.imageAsThumbnail(640, blobSize*640),
+						image: blob.imageAsThumbnail(640, blobSize*640),
 					});
 					imgView.addEventListener("longclick",function(e1){
 						$.imageMother.remove(e1.source);
