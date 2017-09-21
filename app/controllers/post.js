@@ -396,6 +396,7 @@ function doSubmit(){
 					onload:function(responceText){			
 						console.log("success");
 						image_counter++;
+						($.videoMother.children.length == 0)?discussion_refresh():"";
 					},onerror:function(err){}
 				});			
 			}
@@ -414,9 +415,6 @@ function doSubmit(){
 					}					
 					);
 				}				
-			}
-			else{
-				discussion_refresh();									
 			}
 		}else{
 			discussion_refresh();
