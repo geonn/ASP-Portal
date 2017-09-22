@@ -5,6 +5,11 @@ function init(){
 function forgetPassword(e){
 	addPage("forgetPassword","Forget Password");
 }
+
+function navSignup(){
+	addPage("signup","Register");
+}
+
 function doLogin(e){
 	Alloy.Globals.pageFlow.startLoading("Loading...");
 	API.callByPost({url:"doLogin",params:{username:$.email.getValue()||"",password:$.password.getValue()||"",device_token: Ti.App.Properties.getString('deviceToken')||""}},

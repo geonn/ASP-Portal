@@ -80,7 +80,7 @@ function doSubmit(){
 			console.log("Edit Profile fail!");
 		}});	
 	}
-
+	Alloy.Globals.loading.stopLoading();
 }
 //Ti.App.addEventListener("edit_profile:editProfile",editProfile);
 

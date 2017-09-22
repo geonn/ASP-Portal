@@ -46,8 +46,10 @@ var defaultRetryTimes = 5;
 // call API by post method
 exports.callByPost = function(e, handler){	 
 	var url = (typeof e.new != "undefined")?"http://"+API_DOMAIN+"/api/"+e.url+"?user="+USER+"&key="+KEY:eval(e.url);
+	console.log(url);
 	var _result = contactServerByPost(url, e.params || {});   
 	_result.onload = function(ex) {
+		console.log(this.responseText);
 		try{
 			JSON.parse(this.responseText);
 		}
@@ -59,6 +61,9 @@ exports.callByPost = function(e, handler){
 	};
 	
 	_result.onerror = function(ex) {
+		console.log(url);
+		console.log(e.params);
+		console.log(ex);
 		if(ex.code == "-1009"){		
 			return;
 		}
