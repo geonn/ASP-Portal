@@ -34,7 +34,7 @@ function getData(){
 }
 function scrollChecker(e){
 	var theEnd = $.mother_view.rect.height;
-	var total = (OS_ANDROID)?pixelToDp(e.y)+e.source.rect.height: e.y+e.source.rect.height;
+	var total = (OS_ANDROID)?pixelToDp(e.y): e.y;
 	var nearEnd = theEnd * 1.0;
 	if(total >= nearEnd){
 		getData();
