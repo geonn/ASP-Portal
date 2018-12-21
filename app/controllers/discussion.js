@@ -5,23 +5,16 @@ var post_index = 1;
 var refreshName = args.refreshName||null;
 var i_model = Alloy.createCollection("images_table");
 var countdown = require("countdown_between_2date.js");
-if (OS_IOS) {
-	var control = Ti.UI.createRefreshControl({
-    	tintColor:"#00CB85"
-	});
-	$.scrollview.refreshControl = control;
-	control.addEventListener('refreshstart',function(e){
-	    Ti.API.info('refreshstart');
-	    setTimeout(function(e){
-	        Ti.API.debug('Timeout');
-	        $.scrollview.scrollTo(0,0,true);
-			setTimeout(function(){
-				refresh({});
-			},500);	        
-	        control.endRefreshing();
-	    }, 1000);
-	});	
-};
+
+var control = Ti.UI.createRefreshControl({
+	tintColor:"#00CB85"
+});
+$.scrollview.refreshControl = control;
+control.addEventListener('refreshstart',function(e){
+    Ti.API.info('refreshstart');
+    init();
+    control.endRefreshing();
+});	
 function init(){
 	offset = 0;
 	addPostView();
@@ -298,12 +291,6 @@ function clickButtons(){
 exports.removeEventListeners = function() {
 	Ti.App.removeEventListener("discussion:refresh",refresh);
 };
-if(OS_ANDROID){
-	$.swipeRefresh.addEventListener('refreshing',function(e){
-		refresh({});
-		e.source.setRefreshing(false);		
-	});	
-}
 
 Ti.App.addEventListener("discussion:refresh",refresh);
 function doLogout(){

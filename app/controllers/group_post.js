@@ -12,10 +12,8 @@ var post_index = 1;
 var offset1 = 0;
 var scrollCheckerBL = true;
 var u_id = Ti.App.Properties.getString("u_id") || undefined;
-if(OS_ANDROID){
-	cell_width = Math.floor((pixelToDp(pwidth) / 2)) - 2;
-}else{
-	cell_width = Math.floor(pwidth / 2) - 2;
+
+	cell_width = (OS_ANDROID)?Math.floor((pixelToDp(pwidth) / 2)) - 2:Math.floor(pwidth / 2) - 2;
 	var control = Ti.UI.createRefreshControl({
     	tintColor:"#00CB85"
 	});
@@ -31,7 +29,6 @@ if(OS_ANDROID){
 	        control.endRefreshing();
 	    }, 1000);
 	});	
-}
 $.img_view.setHeight(cell_width);
 
 function init(){
@@ -340,10 +337,3 @@ function groupEvents(){
 	var u_id = Ti.App.Properties.getString("u_id")|| undefined;
 	addPage("calendar",g_name+" Events",{u_id:u_id,g_id:g_id,g_name:g_name});
 }
-if(OS_ANDROID){
-	$.swipeRefresh.addEventListener('refreshing',function(e){
-		init();
-		e.source.setRefreshing(false);		
-	});	
-}
-

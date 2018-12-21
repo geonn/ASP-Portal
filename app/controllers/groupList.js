@@ -2,30 +2,16 @@ var cell_width;
 var pwidth = Titanium.Platform.displayCaps.platformWidth;
 var u_id = Ti.App.Properties.getString("u_id")||"";
 
-if(OS_ANDROID){
-	cell_width = Math.floor((pixelToDp(pwidth) / 2));
-$.swipeRefresh.addEventListener('refreshing',function(e){
-	init();
-	e.source.setRefreshing(false);		
-});		
-}else{
-	cell_width = Math.floor(pwidth / 2);
-	var control = Ti.UI.createRefreshControl({
-    	tintColor:"#00CB85"
-	});
-	$.scrollview.refreshControl = control;
-	control.addEventListener('refreshstart',function(e){
-	    Ti.API.info('refreshstart');
-	    setTimeout(function(e){
-	        Ti.API.debug('Timeout');
-	        $.scrollview.scrollTo(0,0,true);	
-			setTimeout(function(){
-				init();
-			},500);	        
-	        control.endRefreshing();
-	    }, 1000);
-	});	
-}
+cell_width = (OS_ANDROID)?Math.floor((pixelToDp(pwidth) / 2)) - 2:Math.floor(pwidth / 2) - 2;
+var control = Ti.UI.createRefreshControl({
+	tintColor:"#00CB85"
+});
+$.scrollview.refreshControl = control;
+control.addEventListener('refreshstart',function(e){
+    Ti.API.info('refreshstart');
+    init();
+    control.endRefreshing();
+});
 
 function init() {
 	Alloy.Globals.loading.stopLoading();

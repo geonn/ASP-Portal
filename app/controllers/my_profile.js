@@ -8,27 +8,17 @@ var u_model = Alloy.createCollection("staff");
 var u_res = u_model.getDataById(u_id);
 var i_model = Alloy.createCollection("images_table");
 var countdown = require("countdown_between_2date.js");
-if(OS_ANDROID){
-	cell_width = Math.floor((pixelToDp(pwidth) / 2)) - 2;
-}else{
-	cell_width = Math.floor(pwidth / 2) - 2;
-	var control = Ti.UI.createRefreshControl({
-    	tintColor:"#00CB85"
-	});
-	$.mother_view.refreshControl = control;
-	control.addEventListener('refreshstart',function(e){
-	    Ti.API.info('refreshstart');
-	    setTimeout(function(e){
-	        Ti.API.debug('Timeout');
-	        $.mother_view.scrollTo(0,0,true);	
-			setTimeout(function(){
-				refresh();
-			},500);	        
-	        control.endRefreshing();
-	    }, 1000);
-	});	
-}
 
+cell_width = (OS_ANDROID)?Math.floor((pixelToDp(pwidth) / 2)) - 2:Math.floor(pwidth / 2) - 2;
+var control = Ti.UI.createRefreshControl({
+	tintColor:"#00CB85"
+});
+$.scrollview.refreshControl = control;
+control.addEventListener('refreshstart',function(e){
+    Ti.API.info('refreshstart');
+    refresh();
+    control.endRefreshing();
+});
 
 $.testing.setHeight(cell_width);
 $.testing1.setHeight(cell_width);
@@ -308,12 +298,6 @@ function deletePost(p_id,p_index){
 		});
 	});
 }
-if (OS_ANDROID) {
-	$.swipeRefresh.addEventListener('refreshing',function(e){
-		refresh();
-		e.source.setRefreshing(false);		
-	});
-};
 function createMessage(t,e){
 	var box = Titanium.UI.createAlertDialog({
 		title: t,

@@ -5,7 +5,8 @@ var opaAnimate1 = Ti.UI.createAnimation({duration:200,opacity:1});
 var opaAnimate2 = Ti.UI.createAnimation({duration:200,opacity:0});
 var time = 0;
 function init(){
-	Alloy.Globals.pageFlow.stopLoading();		
+	Alloy.Globals.pageFlow.stopLoading();	
+	console.log("a");	
 	$.discussion.add(Alloy.createController("discussion").getView());
 	$.notification.add(Alloy.createController('notification').getView());
 	$.sideMenu1.add(Alloy.createController("more").getView());

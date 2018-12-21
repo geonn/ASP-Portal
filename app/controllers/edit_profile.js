@@ -153,27 +153,22 @@ function userProfileImage(){
 						var imgArray = e.filePath.split(",");
 						
 						img_mother.removeAllChildren();
-						$.imageGroup_big.removeAllChildren();
 						
 						for(var i=0; i<imgArray.length; i++){
 							if(imgArray[i]){
+								blob = gallerypicker.decodeBitmapResource(imgArray[i], 640, 640);
 								var imgView = Ti.UI.createImageView({
-									image: gallerypicker.decodeBitmapResource(imgArray[i], 640, 640),
-									width:Ti.UI.FILL,
-									height:Ti.UI.SIZE
-								});
-								var imgView2 = Ti.UI.createImageView({
-									image: gallerypicker.decodeBitmapResource(imgArray[i], 640, 640),
+									image: blob, //gallerypicker.decodeBitmapResource(imgArray[i], 640, 640),
 									width:Ti.UI.FILL,
 									height:Ti.UI.SIZE
 								});
 // // 								
-								 img_view.children[0].image = "file://"+imgArray[i];
+								img_view.children[0].image = "file://"+imgArray[i];
 								img_mother.add(imgView);
-								$.imageGroup_big.add(imgView2);
+								
 							}
 						}
-						blob = $.imageGroup_big.children[0].getImage();
+						
 					},
 					error : function(e) {
 						alert("error " + JSON.stringify(e));
@@ -194,25 +189,18 @@ function userProfileImage(){
 			    success: function (e) {
 			        Ti.API.error('success: ' + JSON.stringify(e));
 			        img_mother.removeAllChildren();
-					$.imageGroup_big.removeAllChildren();
 			        
 					for (var i=0; i < e.media.length; i++) {
 						var imgView = Ti.UI.createImageView({
-							image: e.media[i],
-							width:Ti.UI.FILL,
-							height:Ti.UI.SIZE
-						});
-						var imgView2 = Ti.UI.createImageView({
-							image: e.media[i],
+							image: e.media[i].imageAsResized(640, 640),
 							width:Ti.UI.FILL,
 							height:Ti.UI.SIZE
 						});
 						
-						img_view.children[0].image = e.media[i];
+						img_view.children[0].image = e.media[i].imageAsResized(640, 640);
 						img_mother.add(imgView);
-						$.imageGroup_big.add(imgView2);
 					};
-					blob = $.imageGroup_big.children[0].toImage();
+					blob =  e.media[i].imageAsResized(640, 640);
 			    },
 			    cancel: function (e) {
 			    	Ti.API.error('cancel: ' + JSON.stringify(e));

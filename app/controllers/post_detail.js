@@ -5,23 +5,17 @@ var u_id = Ti.App.Properties.getString('u_id')||undefined;
 var i_model = Alloy.createCollection("images_table");
 var countdown = require("countdown_between_2date.js");
 Ti.App.Properties.setString('current_post_id', p_id);
-if (OS_IOS) {
-	var control = Ti.UI.createRefreshControl({
-    	tintColor:"#00CB85"
-	});
-	$.mother_view.refreshControl = control;
-	control.addEventListener('refreshstart',function(e){
-	    Ti.API.info('refreshstart');
-	    setTimeout(function(e){
-	        Ti.API.debug('Timeout');
-	        $.mother_view.scrollTo(0,0,true);
-			setTimeout(function(){
-				init();
-			},500);	        
-	        control.endRefreshing();
-	    }, 1000);
-	});	
-};
+
+var control = Ti.UI.createRefreshControl({
+	tintColor:"#00CB85"
+});
+$.scrollview.refreshControl = control;
+control.addEventListener('refreshstart',function(e){
+    Ti.API.info('refreshstart');
+    init();
+    control.endRefreshing();
+});
+
 function init(){
 	Alloy.Globals.loading.stopLoading();	
 	var model = Alloy.createCollection("post");
@@ -249,10 +243,4 @@ function deleteComment(c_id){
 		}		
 	});
 }
-if (OS_ANDROID) {
-	$.swipeRefresh.addEventListener('refreshing',function(e){
-		init();
-		e.source.setRefreshing(false);		
-	});	
-};	
 Ti.App.addEventListener("post_detail:init",init);
